@@ -6,14 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.security.PrivateKey;
-
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ACCOUNTS")
-public class Account {
+public class Accounts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int accountID;

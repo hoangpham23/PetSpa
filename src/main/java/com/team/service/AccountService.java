@@ -1,9 +1,8 @@
 package com.team.service;
 
 
-import com.team.model.Account;
+import com.team.model.Accounts;
 import com.team.repository.AccountRepository;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,11 +15,11 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Account checkLogin(String email, String password) {
+    public Accounts checkLogin(String email, String password) {
         return accountRepository.findAccountByEmailAndPassword(email, password);
     }
 
-    public Account findAccountID(String email, String password) {
+    public Accounts findAccountID(String email, String password) {
         return accountRepository.findAccountByEmailAndPassword(email,password);
     }
 
@@ -29,11 +28,11 @@ public class AccountService {
     }
 
     public void createAccount(String email, String password) {
-        Account account = new Account();
-        account.setEmail(email);
-        account.setPassword(password);
-        account.setRole("CUS");
-        accountRepository.save(account);
+        Accounts accounts = new Accounts();
+        accounts.setEmail(email);
+        accounts.setPassword(password);
+        accounts.setRole("CUS");
+        accountRepository.save(accounts);
     }
 
 }
