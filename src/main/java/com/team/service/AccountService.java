@@ -1,6 +1,5 @@
 package com.team.service;
 
-
 import com.team.model.Accounts;
 import com.team.repository.AccountRepository;
 import org.springframework.stereotype.Service;
@@ -10,11 +9,13 @@ public class AccountService {
 
     private AccountRepository accountRepository ;
 
-
     public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
+    public void updatePassword(Accounts accounts){
+
+    }
     public Accounts checkLogin(String email, String password) {
         return accountRepository.findAccountByEmailAndPassword(email, password);
     }
@@ -34,5 +35,7 @@ public class AccountService {
         accounts.setRole("CUS");
         accountRepository.save(accounts);
     }
-
+    public Accounts findById(int id){
+        return accountRepository.findById(id);
+    }
 }
