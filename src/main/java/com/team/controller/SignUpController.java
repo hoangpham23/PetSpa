@@ -37,7 +37,7 @@ public class SignUpController {
         int customerId = accountService.findAccountID(email, password).getAccountID();
 
         Customer customer = customerService.createCustomer(customerId, customerName, phoneNumber, email);
-
+        System.out.println("Hello world");
         return ResponseEntity.status(HttpStatus.CREATED).body(customer);
     }
 
