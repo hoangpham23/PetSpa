@@ -3,6 +3,7 @@ package com.team.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "CUSTOMERS")
 public class Customers {
-
     @Id
     private int customerID;
     private String customerName;
