@@ -1,6 +1,6 @@
 package com.team.controller;
 
-import com.team.model.Account;
+import com.team.model.Accounts;
 import com.team.service.AccountService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -24,9 +24,9 @@ public class SignInController {
 
     @PostMapping("")
     public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password, HttpServletRequest request) {
-        Account account = accountService.checkLogin(email, password);
-        if (account != null) {
-            return ResponseEntity.ok().body(account);
+        Accounts accounts = accountService.checkLogin(email, password);
+        if (accounts != null) {
+            return ResponseEntity.ok().body(accounts);
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");

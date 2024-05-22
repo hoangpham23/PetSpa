@@ -1,13 +1,11 @@
 package com.team.controller;
 
 
-import com.team.model.Account;
-import com.team.model.Customer;
+import com.team.model.Customers;
 import com.team.service.AccountService;
 import com.team.service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -36,8 +34,8 @@ public class SignUpController {
         accountService.createAccount(email, password);
         int customerId = accountService.findAccountID(email, password).getAccountID();
 
-        Customer customer = customerService.createCustomer(customerId, customerName, phoneNumber, email);
-        return ResponseEntity.status(HttpStatus.CREATED).body(customer);
+        Customers customers = customerService.createCustomer(customerId, customerName, phoneNumber, email);
+        return ResponseEntity.status(HttpStatus.CREATED).body(customers);
     }
 
 }

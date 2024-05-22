@@ -1,13 +1,13 @@
 package com.team.repository;
 
-import com.team.model.Account;
+import com.team.model.Accounts;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface AccountRepository extends ListCrudRepository<Account, Integer> {
+public interface AccountRepository extends ListCrudRepository<Accounts, Integer> {
 
-    Account findAccountByEmailAndPassword(String email, String password);
+    Accounts findAccountByEmailAndPassword(String email, String password);
     boolean existsAccountByEmail(String email);
 }
