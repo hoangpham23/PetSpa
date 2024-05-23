@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+*{
+    margin :0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --bg-color: #ffffff;
+    --text-color: #333;
+    --header-color: #C2E1E6;
+    --footer-color: rgba(255, 46, 255, 0.11);
+    --pink-div-color: rgba(251, 226, 228, 1);
+    --shadow-color: rgba(0,0,0,.2);
+    --icon-color: #c2bcbc;
+}
+
+html{
+    font-size: 62.5%;
+    color :var(--text-color);
+}
+
+body {
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: transparent;
+    align-items: center;
+    z-index: 100;
+    transition: .5s;
+    justify-content: space-between;
+}
+
+.header .header-blue-background-rectangle {
+    position: absolute;
+    width: 100%;
+    height: 40px;
+    background-color: var(--header-color);
+    z-index: -1;
+    border-radius: 0 0 120px 0;
+    transition: .5s ease;
+}
+
+.header .header-pink-background-rectangle {
+    position: absolute;
+    width: 45rem;
+    height: 40px;
+    background-color: var(--pink-div-color);
+    z-index: -1;
+    border-radius: 0 0 120px 0;
+    transition: .5s ease;
+}
+
+.header .navbar-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.6rem 2.5rem 0rem 1.4rem;
+}
+
+.header .navbar-header .navbar{
+    display: flex;
+    align-items: center;
+
+}
+
+.header .navbar-header .navbar a{
+    font-size: 1.2rem;
+    color: var(--text-color);
+    font-weight: 500;
+    padding-right: 1.5rem;
+}
+
+.header .navbar-header p{
+    margin-top: 0.6rem;
+}
+
+section{
+    /* min-height: 100vh; */
+    padding: 5rem 7% 2rem;
+}
+
+.welcome-div .welcome-form form{
+    max-width: 70rem;
+    margin: 1rem auto;
+    text-align: center;
+    /* margin-bottom: 3rem; */
+}
+
+.welcome-div h1{
+    font-size: 3.6rem;
+}
+
+.welcome-div p{
+    font-size: 2.2rem;
+    font-weight: 1.6rem;
+    margin-top: 0.6rem;
+}
+
+.welcome-div .welcome-form .input-box{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    background-color: var(--bg-color);
+}
+
+.welcome-div .welcome-form .input-box p{
+    font-size: 1.6rem;
+    padding: 1rem 0 0 0;
+}
+
+.welcome-div .welcome-form .input-box input{
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.6rem;
+    color: var(--text-color);
+    background: var(--bg-color);
+    border-radius: 20px;
+    margin: .7rem 0;
+    box-shadow: 0 .1rem .5rem var(--shadow-color);
+}
+
+.welcome-div .welcome-form form .input-box input{
+    width: 49%;
+}
+
+.btn{
+    display: inline-block;
+    padding: 0.5rem 1.4rem; 
+    background: var(--header-color);
+    border-radius: 60px; 
+    box-shadow: 0 .2rem .5rem var(--shadow-color);
+    font-size: 1.6rem;
+    color: var(--text-color);
+    letter-spacing: 0.1rem;
+    font-weight: 600;
+    border: .2rem solid transparent;
+    transition: .5s ease;
+    margin-top: 1.5rem;
+}
+
+.btn:hover {
+    background:transparent;
+    color: #0b5864;
+    border-color: #0b5864;
+}
+
+.footer{
+    margin: 1.8rem 0 0 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.footer h1{
+    padding-top: 2.5rem;
+    font-weight: 800;
+    font-size: 4rem;
+    cursor: default;
+}
+
+.footer .footer-content{
+    font-size: 1.2rem;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.footer .footer-background-rectangle{
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    background-color: var(--footer-color);
+    z-index: -1;
+    transition: .5s ease;
+    min-width: 35px;
+    opacity:80%;
+}
