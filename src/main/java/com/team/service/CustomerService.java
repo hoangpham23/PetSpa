@@ -26,10 +26,5 @@ public class CustomerService {
         customers.setEmail(email);
         return customerRepository.save(customers);
     }
-    public Customers checkMail(String email){
-        return customerRepository.findByEmail(email);
-    }
-    public void update(Customers customers){
-        customerRepository.save(customers);
-    }
+
 }
