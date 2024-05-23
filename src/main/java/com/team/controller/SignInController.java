@@ -5,10 +5,9 @@ import com.team.service.AccountService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 
 @RestController
@@ -16,14 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class SignInController {
 
     private AccountService accountService;
-    ;
 
     public SignInController(AccountService accountService) {
         this.accountService = accountService;
     }
 
     @PostMapping("")
-    public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password, HttpServletRequest request) {
+    public ResponseEntity<?> login(@RequestBody Map<String, String> accountData, HttpServletRequest request) {
+        String email = accountData.get("email");
+        String password = accountData.get("password");
         Accounts accounts = accountService.checkLogin(email, password);
         if (accounts != null) {
             return ResponseEntity.ok().body(accounts);
