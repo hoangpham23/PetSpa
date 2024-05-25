@@ -18,4 +18,5 @@ public class Accounts {
     private String email;
     private String password;
     private String role;
+    private String otp;
 }
