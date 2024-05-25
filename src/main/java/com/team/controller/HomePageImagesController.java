@@ -3,6 +3,7 @@ package com.team.controller;
 import com.team.dto.ServiceImageDTO;
 import com.team.model.Service;
 import com.team.model.ServiceImages;
+import com.team.model.Services;
 import com.team.repository.ServiceRepository;
 import com.team.repository.ServicesImagesRepository;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,9 +34,9 @@ public class HomePageImagesController {
         List<ServiceImageDTO> result = new ArrayList<>();
 
         for (ServiceImages image : images) {
-            Optional<Service> serviceOpt = servicesRepository.findById(image.getServiceID());
+            Optional<Services> serviceOpt = servicesRepository.findById(image.getServiceID());
             if (serviceOpt.isPresent()) {
-                Service service = serviceOpt.get();
+                Services service = serviceOpt.get();
                 result.add(new ServiceImageDTO(image.getImageID(), image.getServiceID(), image.getImageURL(), service.getServiceName()));
             }
         }
