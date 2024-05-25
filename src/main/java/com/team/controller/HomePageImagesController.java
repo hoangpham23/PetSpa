@@ -43,32 +43,3 @@ public class HomePageImagesController {
         return result;
     }
 }
-
-//    @GetMapping("/images/name")
-//    @ResponseBody
-//    public Optional<ServiceImages> getAllImageByName(@RequestBody Map<String,String>  images){
-//        String serviceName = images.get("serviceName");
-//        Integer id = Integer.parseInt(images.get("id"));
-//
-//        SpaServices spaServices = servicesRepository.findServiceByName(serviceName);
-//        if (spaServices == null) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No image");
-//        }
-//        return servicesImagesRepository.findById(id);
-//    }
-//@GetMapping("/images/name")
-//@ResponseBody
-//public ResponseEntity<?> getAllImageByName(@RequestParam String serviceName, @RequestParam Integer id) {
-//    SpaServices spaServices = servicesRepository.findServiceByName(serviceName);
-//    if (spaServices == null) {
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Service not found");
-//    }
-//
-//    Optional<ServiceImages> serviceImage = servicesImagesRepository.findById(id);
-//    if (serviceImage.isPresent()) {
-//        return ResponseEntity.ok(serviceImage.get());
-//    } else {
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Image not found");
-//    }
-//}
-//}
