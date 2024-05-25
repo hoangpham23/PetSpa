@@ -13,9 +13,7 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public void updatePassword(Accounts accounts){
 
-    }
     public Accounts checkLogin(String email, String password) {
         return accountRepository.findAccountByEmailAndPassword(email, password);
     }

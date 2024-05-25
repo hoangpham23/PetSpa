@@ -14,9 +14,6 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-//    public Customer getCustomer(int accountID){
-//        return customerRepository.findCustomerByAccountID(accountID);
-//    }
 
     public Customers createCustomer(int customerID, String customerName, String phoneNumber, String email) {
         Customers customers = new Customers();
