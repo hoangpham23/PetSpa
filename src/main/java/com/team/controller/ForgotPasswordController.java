@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Random;
 
 
@@ -40,7 +41,8 @@ public class ForgotPasswordController {
 
     //send mail for email verification
     @PostMapping("")
-    public ResponseEntity<String> verifyMail(@RequestParam String email) {
+    public ResponseEntity<String> verifyMail(@RequestBody Map<String, String> data) {
+        String email = data.get("email");
         Customers customers = customerRepository.findByEmail(email);
         if (customers == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This account does not exist");
@@ -59,7 +61,10 @@ public class ForgotPasswordController {
 
 
     @PutMapping("/verify-otp")
-    public ResponseEntity<String> verifyOtp(@RequestParam String email, @RequestParam String password, @RequestParam String confirmPassword, @RequestParam Integer otp) {
+    public ResponseEntity<String> verifyOtp(@RequestBody Map<String, String> data) {
+        String email = data.get("email");
+        Integer otp = Integer.parseInt(data.get("otp"));
+        String password = data.get("password");
         Integer storedOtp = (Integer) httpSession.getAttribute(email);
         if (storedOtp == null || !storedOtp.equals(otp)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid OTP");
@@ -68,17 +73,12 @@ public class ForgotPasswordController {
         if (customers == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This account does not exist");
         }
-        if (!password.equals(confirmPassword)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Passwords do not match");
-        }
         Accounts accounts = accountRepository.findById(customers.getCustomerID());
         accounts.setPassword(password);
         accountRepository.save(accounts);
         httpSession.removeAttribute(email);
         return ResponseEntity.status(HttpStatus.OK).body("Password has been reset successfully");
     }
-
-
 
     private Integer otpGenerator(){
         Random random = new Random();
