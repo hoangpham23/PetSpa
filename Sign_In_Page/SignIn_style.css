@@ -1,0 +1,232 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+*{
+    margin :0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --bg-color: #ffffff;
+    --text-color: #333;
+    --btn-color: #C2E1E6;
+    --purple-div-color: #EBE0EB;
+    --footer-color: rgba(255, 46, 255, 0.11);
+    --pink-div-color: rgba(251, 226, 228, 1);
+    --shadow-color: rgba(0,0,0,.2);
+    --icon-color: #c2bcbc;
+}
+
+html{
+    font-size: 62.5%;
+    color :var(--text-color);
+}
+
+body {
+    /* background: linear-gradient(to bottom, #EBE0EB, #ffffff); */
+    color: var(--text-color);
+    overflow:hidden;
+}
+
+.signIn_page{
+    display: flex;
+    min-height: 100vh;
+    padding: 5rem 0;
+    justify-content: space-around;
+}
+
+.signIn-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-left: 8rem;
+}
+
+.signIn-img img {
+    max-width: 35.2rem;
+    height: auto; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.signIn-img::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: url('./img/SignInPage.jpg') no-repeat center center / cover;
+    filter: blur(15px);
+    z-index: -1;
+    border-radius: 8px;
+    clip-path: inset(10px); 
+    opacity: 80%;
+}
+
+.signIn_page .signIn_container{
+    padding-right: 6rem;
+}
+
+.signIn {
+    text-align: center;
+}
+
+.signIn_container .signIn .purple-background-rectangle {
+    position: absolute;
+    width: 45rem;
+    height: 37rem;
+    background-color: var(--purple-div-color);
+    z-index: -1;
+    border-radius: 10px;
+    transition: .5s ease;
+    opacity: 90%;
+}
+
+.signIn_container .signIn h3{
+    font-size: 3.6rem;
+    padding:1rem 16rem;
+}
+
+.signIn_container .signIn .signIn-form .input-box{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    background-color: rgba(235, 224, 235, 0.1);
+    margin-left: 2rem;
+    padding-right: 2rem;
+    padding-top: .3rem;
+}
+
+.signIn_container .signIn .signIn-form .input-box p{
+    font-size: 1.5rem;
+    padding: 1.2rem 0 0 0;
+}
+
+.signIn_container .signIn .signIn-form .input-box input{
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    background: var(--bg-color);
+    border-radius: 20px;
+    margin: .7rem 0;
+    box-shadow: 0 .1rem .5rem var(--shadow-color);
+}
+
+.signIn_container .signIn .signIn-form form .input-box input{
+    width: 59%;
+}
+
+.signIn_container .signIn .signIn-form .signIn-box{
+    margin-top: 1rem;
+}
+
+.forget-password {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.forget-password:hover {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.signIn_page .signIn_container .signIn .signIn-form a{
+    font-size: 1.2rem;
+}
+
+.signIn-btn{
+    display: inline-block;
+    padding: 0.5rem 1.4rem; 
+    background: var(--btn-color);
+    border-radius: 10px; 
+    box-shadow: 0 .2rem .5rem var(--shadow-color);
+    font-size: 1.6rem;
+    color: var(--text-color);
+    letter-spacing: 0.1rem;
+    font-weight: 600;
+    border: .2rem solid transparent;
+    transition: .5s ease;
+    margin-top: 1.5rem;
+    width: 40rem;
+}
+
+.signUp-btn{
+    display: inline-block;
+    padding: 0.5rem 1.4rem; 
+    background: var(--btn-color);
+    border-radius: 60px; 
+    box-shadow: 0 .2rem .5rem var(--shadow-color);
+    font-size: 1.6rem;
+    color: var(--text-color);
+    letter-spacing: 0.1rem;
+    font-weight: 600;
+    border: .2rem solid transparent;
+    transition: .5s ease;
+    margin-top: 1.5rem;
+}
+
+.signIn-btn:hover, 
+.signUp-btn:hover {
+    background:transparent;
+    color: #0b5864;
+    border-color: #0b5864;
+}
+
+.signIn_Google{
+    margin: 1rem 0;
+}
+
+.signIn_Google_container{
+    background: var(--bg-color);
+    opacity: 0.9;
+    border-radius: 10px;
+    margin: 0 2.4rem ;
+}
+
+.signIn-google {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.signIn-google:hover {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.signIn_container .register {
+    position: relative;
+    width: 45rem;
+    height: 13rem;
+    transition: .5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signIn_container .register .pink-background-rectangle {
+    position: absolute;
+    width: 45rem;
+    height: 10rem;
+    background-color: rgba(251,226,228, 0.9);
+    z-index: -1;
+    border-radius: 10px;
+    transition: .5s ease;
+}
+
+.signIn_container .register .register-content{
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.signIn_container .register .register-content .signUp-btn{
+    margin: 1rem 8.5rem;
+}
