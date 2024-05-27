@@ -5,9 +5,10 @@ import com.team.model.Service;
 import com.team.model.ServiceImages;
 import com.team.repository.ServiceRepository;
 import com.team.repository.ServicesImagesRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -26,8 +27,7 @@ public class HomePageImagesController {
     }
 
     @GetMapping("")
-    @ResponseBody
-    public List<ServiceImageDTO> getAllImages() {
+    public ResponseEntity<List<ServiceImageDTO>> getAllImages() {
 
         List<ServiceImages> images = servicesImagesRepository.findAll();
         List<ServiceImageDTO> result = new ArrayList<>();
@@ -40,6 +40,6 @@ public class HomePageImagesController {
             }
         }
 
-        return result;
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
