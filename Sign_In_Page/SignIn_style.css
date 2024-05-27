@@ -28,7 +28,6 @@ html{
 }
 
 body {
-    /* background: linear-gradient(to bottom, #EBE0EB, #ffffff); */
     color: var(--text-color);
     overflow:hidden;
 }
@@ -59,10 +58,10 @@ body {
 .signIn-img::before {
     content: '';
     position: absolute;
-    top: -10px;
+    top: -5rem;
     left: -10px;
     right: -10px;
-    bottom: -10px;
+    bottom: -5rem;
     background: url('./img/SignInPage.jpg') no-repeat center center / cover;
     filter: blur(15px);
     z-index: -1;
