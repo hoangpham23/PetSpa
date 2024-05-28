@@ -44,7 +44,7 @@ public class ForgotPasswordController {
     public ResponseEntity<String> verifyMail(@RequestBody Map<String, String> data) {
         String email = data.get("email");
         Customers customers = customerRepository.findByEmail(email);
-        if (customers == null){
+        if (customers == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This account does not exist");
         }
         int otp = otpGenerator();

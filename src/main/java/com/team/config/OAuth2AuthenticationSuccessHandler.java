@@ -3,11 +3,10 @@ package com.team.config;
 
 
 import com.team.service.AccountService;
+import com.team.service.CustomerService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -20,12 +19,12 @@ import java.util.Map;
 public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
 
-    private final HttpSession httpSession;
     private final AccountService accountService;
+    private final CustomerService customerService;
 
-    public OAuth2AuthenticationSuccessHandler(HttpSession httpSession, AccountService accountService) {
-        this.httpSession = httpSession;
+    public OAuth2AuthenticationSuccessHandler(AccountService accountService, CustomerService customerService) {
         this.accountService = accountService;
+        this.customerService = customerService;
     }
 
     @Override
@@ -37,16 +36,21 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
 
             // Retrieve email and name from OAuth2 user attributes
             String email = (String) attributes.get("email");
+
             // check email that exist or not
             // if exist response back to sign-in and say already exist email.
             if (accountService.checkEmail(email)){
-                response.setStatus(HttpServletResponse.SC_CONFLICT);
-                response.setContentType("application/json");
-                response.getWriter().write("{\"error\": \"Email already exists\"}");
-                response.getWriter().flush();
-                response.sendRedirect("http://localhost:3000/sign-in2");
+                response.sendRedirect("http://localhost:3000/sign-in2?error=email_exists");
                 return;
             }
+
+            // create a customer account with email and password is null
+            accountService.createAccount(email, null);
+            Integer customerID = accountService.findAccountID(email, null).getAccountID();
+
+            // create a customer only with customerID and email
+            customerService.createCustomer(customerID, null, null, email);
+
             // Redirect to sign-up page after successful OAuth2 authentication
             response.sendRedirect("http://localhost:3000/home-page");
         } else {
