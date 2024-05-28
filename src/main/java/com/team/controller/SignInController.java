@@ -11,7 +11,7 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("/sign-in")
+@RequestMapping("")
 public class SignInController {
 
     private AccountService accountService;
@@ -20,7 +20,7 @@ public class SignInController {
         this.accountService = accountService;
     }
 
-    @PostMapping("")
+    @PostMapping("/sign-in")
     public ResponseEntity<?> login(@RequestBody Map<String, String> accountData, HttpServletRequest request) {
         String email = accountData.get("email");
         String password = accountData.get("password");
@@ -31,5 +31,17 @@ public class SignInController {
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
     }
+
+//    @GetMapping("")
+//    public ResponseEntity<?> signInGoogle() {
+//        String email = (String) httpSession.getAttribute("EMAIL");
+//        System.out.println("email " + email);
+//        return ResponseEntity.ok(email);
+//    }
+
+//    @GetMapping("/login-google")
+//    public ResponseEntity<?> loginGoogle() {
+//
+//    }
 
 }

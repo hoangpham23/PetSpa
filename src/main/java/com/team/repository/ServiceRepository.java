@@ -1,7 +1,14 @@
 package com.team.repository;
 
-import com.team.model.Service;
+import com.team.model.Services;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.stereotype.Repository;
+import java.util.List;
 
-public interface ServiceRepository extends ListCrudRepository<Service, Integer> {
+
+@Repository
+public interface ServiceRepository extends ListCrudRepository<Services, Integer> {
+    @Query("SELECT s FROM Services s WHERE s.serviceName LIKE CONCAT(:serviceName, '%')")
+    List<Services> findFirstByServiceName(String serviceName);
 }

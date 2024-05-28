@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/sign-up")
 public class SignUpController {
@@ -22,12 +24,14 @@ public class SignUpController {
 
 
     @PostMapping("")
-    public ResponseEntity<?> signUp(
-            @RequestParam String customerName,
-            @RequestParam String password,
-            @RequestParam String phoneNumber,
-            @RequestParam String email)
-    {
+    public ResponseEntity<?> signUp(@RequestBody Map<String, String> data) {
+
+        System.out.println("data " + data);
+        String customerName = data.get("customerName");
+        String password = data.get("password");
+        String email = data.get("email");
+        String phoneNumber = data.get("phone");
+
         if (accountService.checkEmail(email)){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email is already in use");
         }
