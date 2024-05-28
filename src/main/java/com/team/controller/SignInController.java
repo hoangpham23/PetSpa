@@ -32,16 +32,4 @@ public class SignInController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
     }
 
-//    @GetMapping("")
-//    public ResponseEntity<?> signInGoogle() {
-//        String email = (String) httpSession.getAttribute("EMAIL");
-//        System.out.println("email " + email);
-//        return ResponseEntity.ok(email);
-//    }
-
-//    @GetMapping("/login-google")
-//    public ResponseEntity<?> loginGoogle() {
-//
-//    }
-
 }
