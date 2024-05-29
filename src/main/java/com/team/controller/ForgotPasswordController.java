@@ -6,6 +6,8 @@ import com.team.model.Customers;
 import com.team.repository.AccountRepository;
 import com.team.repository.CustomerRepository;
 import com.team.service.EmailService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,8 @@ import java.util.Random;
 @RestController
 @RequestMapping("/forgotpassword")
 public class ForgotPasswordController {
+
+    private final Logger logger = LoggerFactory.getLogger(ForgotPasswordController.class);
 
     private final CustomerRepository customerRepository;
     private final EmailService emailService;
@@ -28,31 +32,38 @@ public class ForgotPasswordController {
 
     @PostMapping("")
     public ResponseEntity<String> verifyMail(@RequestBody Map<String, String> customerEmail) {
-        String email = customerEmail.get("email");
-        Customers customers = customerRepository.findByEmail(email);
-        if (customers == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This account does not exist");
+        try {
+            String email = customerEmail.get("email");
+            Customers customers = customerRepository.findByEmail(email);
+            if (customers == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This account does not exist");
+            }
+
+            Accounts accounts = accountRepository.findById(customers.getCustomerID()).get();
+            if (accounts == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This account does not exist");
+            }
+            // create otp from otp generator
+            int otp = otpGenerator();
+            accounts.setOtp(String.valueOf(otp)); // Ensure OTP is stored as a String
+            accountRepository.save(accounts);
+
+            // compose email information
+            MailBody mailBody = MailBody.builder()
+                    .to(email)
+                    .text("This is the OTP for your Forgot Password request: " + otp)
+                    .subject("OTP for Forgot Password request")
+                    .build();
+
+            // send mail
+            emailService.sendSimpleMessage(mailBody);
+            return ResponseEntity.status(HttpStatus.OK).body("OTP has been sent to your email");
+        }catch (Exception e) {
+            logger.error(e.getMessage());
         }
 
-        Accounts accounts = accountRepository.findById(customers.getCustomerID()).get();
-        if (accounts == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This account does not exist");
-        }
-        // create otp from otp generator
-        int otp = otpGenerator();
-        accounts.setOtp(String.valueOf(otp)); // Ensure OTP is stored as a String
-        accountRepository.save(accounts);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This account does not exist");
 
-        // compose email information
-        MailBody mailBody = MailBody.builder()
-                .to(email)
-                .text("This is the OTP for your Forgot Password request: " + otp)
-                .subject("OTP for Forgot Password request")
-                .build();
-
-        // send mail
-        emailService.sendSimpleMessage(mailBody);
-        return ResponseEntity.status(HttpStatus.OK).body("OTP has been sent to your email");
     }
 
     @PutMapping("/verify-otp")
