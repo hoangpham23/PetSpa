@@ -30,7 +30,7 @@ public class SignUpController {
         String customerName = data.get("customerName");
         String password = data.get("password");
         String email = data.get("email");
-        String phoneNumber = data.get("phone");
+        String phoneNumber = data.get("phoneNumber");
 
         if (accountService.checkEmail(email)){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email is already in use");
