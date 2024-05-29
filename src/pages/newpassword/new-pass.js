@@ -38,7 +38,7 @@ function NewPass() {
         }
       );
       if (response.status === 200) {
-        setMsg("Sucessfully sign up");
+        setMsg("Sucessfully update password");
         setTimeout(() => {
           navigate("/sign-in");
         }, 3000);

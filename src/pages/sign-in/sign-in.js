@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import signInPageImg from "../../assets/img/SignInPage2.jpg";
 import emailIconImg from "../../assets/img/email_icon.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { Helmet } from "react-helmet";
 import style from "./SignIn_style.module.css";
+import queryString from "query-string";
 
 // import SignIn from "./signIn";
 
@@ -16,9 +17,20 @@ function SignIn() {
   });
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
   function handleInput(event) {
     setAccount({ ...account, [event.target.name]: event.target.value });
   }
+
+  useEffect(() => {
+    const queryParams = queryString.parse(location.search);
+    if (queryParams.error === 'email_exists') {
+      // Access data from the query parameters and set it to mess state
+      setMsg("Email is already exist");
+    }
+  }, [location]);
+
+
   async function handleSubmit(event) {
     event.preventDefault();
     console.log(account);
@@ -38,7 +50,7 @@ function SignIn() {
     } catch (error) {
       console.error("Error during sign-in:", error);
       if (error.response && error.response.status === 401) {
-        setMsg("Invalid account or wrong password");
+        setMsg("Invalid email or password");
       }
     }
   }
@@ -120,7 +132,7 @@ function SignIn() {
                       <h4>-----------OR-----------</h4>
                       <div className={style.signIn_Google_container}>
                         <img src={emailIconImg} alt="" />
-                        <a href="#" className={style.signIn_google}>
+                        <a href="http://localhost:8090/oauth2/authorization/google" className={style.signIn_google}>
                           Sign In With Your Google Account
                         </a>
                       </div>
