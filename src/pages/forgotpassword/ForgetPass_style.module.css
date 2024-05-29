@@ -1,0 +1,118 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  border: none;
+  outline: none;
+  scroll-behavior: smooth;
+  font-family: "Poppins", sans-serif;
+}
+
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333;
+  --btn-color: #c2e1e6;
+  --purple-div-color: #ebe0eb;
+  --footer-color: rgba(255, 46, 255, 0.11);
+  --pink-div-color: rgba(251, 226, 228, 1);
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --icon-color: #c2bcbc;
+}
+
+html {
+  font-size: 62.5%;
+  color: var(--text-color);
+}
+
+.newPass_container {
+  background: url("../../assets/img/background1.jpg") no-repeat center center/
+    cover;
+  color: var(--text-color);
+  overflow: hidden;
+}
+.pink_background_rectangle {
+  z-index: 900;
+}
+.newPass_form {
+  z-index: 999;
+}
+
+.newPass_container {
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.newPass_container .newPass_form {
+  width: 43rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.newPass_container .pink_background_rectangle {
+  position: absolute;
+  width: 45rem;
+  height: 25rem;
+  background-color: var(--pink-div-color);
+  border-radius: 30px;
+  transition: 0.5s ease;
+}
+
+.newPass_container .newPass_form h1 {
+  padding: 1.2rem;
+}
+
+.newPass_container .newPass_form .input_box {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background-color: var(--pink-div-color);
+  margin-left: 2rem;
+  padding-right: 2rem;
+}
+
+.newPass_container .newPass_form .input_box p {
+  font-size: 1.2rem;
+  margin-top: 3rem;
+}
+
+.newPass_container .newPass_form .input_box input {
+  width: 50%;
+  padding: 1rem;
+  font-size: 1.2rem;
+  color: var(--text-color);
+  background: var(--bg-color);
+  border-radius: 20px;
+  margin: 2rem 0;
+  box-shadow: 0 0.1rem 0.5rem var(--shadow-color);
+}
+
+.newPass_container .newPass_form form .input_box input {
+  width: 60%;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1.4rem;
+  background: var(--btn-color);
+  border-radius: 60px;
+  box-shadow: 0 0.2rem 0.5rem var(--shadow-color);
+  font-size: 1.6rem;
+  color: var(--text-color);
+  letter-spacing: 0.1rem;
+  font-weight: 600;
+  border: 0.2rem solid transparent;
+  transition: 0.5s ease;
+  margin-top: 1.5rem;
+  margin-left: 1rem;
+}
+
+.btn:hover {
+  background: transparent;
+  color: #0b5864;
+  border-color: #0b5864;
+}
