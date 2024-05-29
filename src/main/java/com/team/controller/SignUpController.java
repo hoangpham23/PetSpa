@@ -35,10 +35,11 @@ public class SignUpController {
         if (accountService.checkEmail(email)){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email is already in use");
         }
-        accountService.createAccount(email, password);
-        int customerId = accountService.findAccountID(email, password).getAccountID();
 
-        Customers customers = customerService.createCustomer(customerId, customerName, phoneNumber, email);
+//        accountService.createAccount(email, password);
+//        Integer customerId = accountService.findAccountID(email, password).getAccountID();
+
+        Customers customers = customerService.createCustomer(customerName, phoneNumber, email, password);
         return ResponseEntity.status(HttpStatus.CREATED).body(customers);
     }
 

@@ -40,16 +40,16 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
             // check email that exist or not
             // if exist response back to sign-in and say already exist email.
             if (accountService.checkEmail(email)){
-                response.sendRedirect("http://localhost:3000/sign-in2?error=email_exists");
+                response.sendRedirect("http://localhost:3000/sign-in?error=email_exists");
                 return;
             }
 
             // create a customer account with email and password is null
-            accountService.createAccount(email, null);
-            Integer customerID = accountService.findAccountID(email, null).getAccountID();
+//            accountService.createAccount(email, null);
+//            Integer customerID = accountService.findAccountID(email, null).getAccountID();
 
             // create a customer only with customerID and email
-            customerService.createCustomer(customerID, null, null, email);
+            customerService.createCustomer(null, null, email, null);
 
             // Redirect to sign-up page after successful OAuth2 authentication
             response.sendRedirect("http://localhost:3000/home-page");

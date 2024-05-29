@@ -26,12 +26,12 @@ public class AccountService {
         return accountRepository.existsAccountByEmail(email);
     }
 
-    public void createAccount(String email, String password) {
+    public Accounts createAccount(String email, String password) {
         Accounts accounts = new Accounts();
         accounts.setEmail(email);
         accounts.setPassword(password);
         accounts.setRole("CUS");
-        accountRepository.save(accounts);
+        return accountRepository.save(accounts);
     }
     public Accounts findById(int id){
         return accountRepository.findById(id);

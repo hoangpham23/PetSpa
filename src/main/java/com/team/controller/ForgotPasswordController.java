@@ -34,7 +34,7 @@ public class ForgotPasswordController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This account does not exist");
         }
 
-        Accounts accounts = accountRepository.findById(customers.getCustomerID());
+        Accounts accounts = accountRepository.findById(customers.getCustomerID()).get();
         if (accounts == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This account does not exist");
         }
@@ -66,7 +66,7 @@ public class ForgotPasswordController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This account does not exist");
         }
 
-        Accounts accounts = accountRepository.findById(customers.getCustomerID());
+        Accounts accounts = accountRepository.findById(customers.getCustomerID()).get();
         if (accounts == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This account does not exist");
         }
