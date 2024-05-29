@@ -40,7 +40,7 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
             // check email that exist or not
             // if exist response back to sign-in and say already exist email.
             if (accountService.checkEmail(email)){
-                response.sendRedirect("http://localhost:3000/sign-in2?error=email_exists");
+                response.sendRedirect("http://localhost:3000/sign-in?error=email_exists");
                 return;
             }
 
