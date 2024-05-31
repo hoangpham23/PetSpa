@@ -33,7 +33,7 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
         if (authentication instanceof OAuth2AuthenticationToken) {
             OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
             Map<String, Object> attributes = oauthToken.getPrincipal().getAttributes();
-
+            String accessToken = (String) attributes.get("access_token");
             // Retrieve email and name from OAuth2 user attributes
             String email = (String) attributes.get("email");
 
