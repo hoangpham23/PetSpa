@@ -1,6 +1,5 @@
 package com.team.controller;
 
-import com.team.dto.MailBody;
 import com.team.model.Accounts;
 import com.team.model.Customers;
 import com.team.repository.AccountRepository;
@@ -40,30 +39,21 @@ public class ForgotPasswordController {
             }
 
             Accounts accounts = accountRepository.findById(customers.getCustomerID()).get();
-            if (accounts == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This account does not exist");
-            }
+
             // create otp from otp generator
             int otp = otpGenerator();
             accounts.setOtp(String.valueOf(otp)); // Ensure OTP is stored as a String
             accountRepository.save(accounts);
+            String text = "This is the OTP for your Forgot Password request: " + otp;
+            String subject = "OTP for Forgot Password request";
 
-            // compose email information
-            MailBody mailBody = MailBody.builder()
-                    .to(email)
-                    .text("This is the OTP for your Forgot Password request: " + otp)
-                    .subject("OTP for Forgot Password request")
-                    .build();
-
-            // send mail
-            emailService.sendSimpleMessage(mailBody);
+            emailService.sendEmail(email, text, subject);
             return ResponseEntity.status(HttpStatus.OK).body("OTP has been sent to your email");
         }catch (Exception e) {
             logger.error(e.getMessage());
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This account does not exist");
-
     }
 
     @PutMapping("/verify-otp")
@@ -78,9 +68,7 @@ public class ForgotPasswordController {
         }
 
         Accounts accounts = accountRepository.findById(customers.getCustomerID()).get();
-        if (accounts == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This account does not exist");
-        }
+
         if (!accounts.getOtp().equals(String.valueOf(otp))) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid OTP");
         }

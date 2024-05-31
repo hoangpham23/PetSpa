@@ -4,6 +4,7 @@ import com.team.model.Accounts;
 import com.team.model.Customers;
 import com.team.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CustomerService {
@@ -16,8 +17,9 @@ public class CustomerService {
         this.accountService = accountService;
     }
 
-
+    @Transactional
     public Customers createCustomer(String customerName, String phoneNumber, String email, String password) {
+        // create an account first then create a customer
         Accounts accounts = accountService.createAccount(email, password);
         Customers customers = new Customers();
         customers.setCustomerName(customerName);

@@ -13,13 +13,6 @@ import org.hibernate.annotations.Nationalized;
 @AllArgsConstructor
 @Table(name = "ACCOUNTS")
 public class Accounts {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Integer accountID;
-//    private String email;
-//    private String password;
-//    private String role;
-//    private String otp;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
