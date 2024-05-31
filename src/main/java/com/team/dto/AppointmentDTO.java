@@ -6,12 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppointmentDTO {
 
-    private Instant appointmentTime;
+    private LocalDateTime appointmentTime;
     private Integer appointmentCount;
 }

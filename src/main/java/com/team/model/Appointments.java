@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -30,7 +32,7 @@ public class Appointments {
     private Employees employeesID;
 
     @Column(name = "AppointmentTime")
-    private Instant appointmentTime;
+    private LocalDateTime appointmentTime;
 
     @Column(name = "DepositAmount")
     private Double depositAmount;
