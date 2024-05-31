@@ -20,11 +20,13 @@ public class SecurityConfig {
                 })
                 // change the default page login with google
                 .oauth2Login(oauth ->
-                        oauth.loginPage("http://localhost:3000/sign-in2")
+                        oauth.loginPage("http://localhost:3000/sign-in")
                                 .successHandler(oAuth2AuthenticationSuccessHandler)
                                 // successful login with google redirect to home-page
                 )
                 .csrf(csrf -> csrf.disable())
                 .build();
     }
+
+
 }

@@ -24,4 +24,19 @@ public class EmailService {
 
         javaMailSender.send(message);
     }
+
+    public void sendEmail(String email, String text, String subject) {
+        MailBody mailBody = MailBody.builder()
+                    .to(email)
+                    .text(text)
+                    .subject(subject)
+                    .build();
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(mailBody.to());
+        message.setFrom("pawfection391@gmail.com");
+        message.setSubject(mailBody.subject());
+        message.setText(mailBody.text());
+
+        javaMailSender.send(message);
+    }
 }

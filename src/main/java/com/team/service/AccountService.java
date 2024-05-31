@@ -3,6 +3,7 @@ package com.team.service;
 import com.team.model.Accounts;
 import com.team.repository.AccountRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AccountService {
@@ -15,15 +16,15 @@ public class AccountService {
 
 
     public Accounts checkLogin(String email, String password) {
-        return accountRepository.findAccountByEmailAndPassword(email, password);
-    }
-
-    public Accounts findAccountID(String email, String password) {
-        return accountRepository.findAccountByEmailAndPassword(email,password);
+        return accountRepository.findAccountsByEmailAndPassword(email, password);
     }
 
     public boolean checkEmail(String email) {
         return accountRepository.existsAccountByEmail(email);
+    }
+
+    public boolean checkAccount(String email, String password){
+        return accountRepository.existsAccountByEmailAndPassword(email, password);
     }
 
     public Accounts createAccount(String email, String password) {
@@ -32,8 +33,5 @@ public class AccountService {
         accounts.setPassword(password);
         accounts.setRole("CUS");
         return accountRepository.save(accounts);
-    }
-    public Accounts findById(int id){
-        return accountRepository.findById(id);
     }
 }
