@@ -44,7 +44,7 @@ public class ServiceImagesService {
             List<ServiceImages> images = servicesImagesRepository.findByServiceID(service.getServiceID());
             // If images are found, construct the ServiceImageDTO
             if (!images.isEmpty()) {
-                ServiceImages image = images.get(0); // Assuming one image per service for simplicity
+                ServiceImages image = images.getFirst(); // Assuming one image per service for simplicity
                 ServicePageDTO servicePageDTO = new ServicePageDTO(image.getImageID(), image.getServiceID(), image.getImageURL(), service.getServiceName(), service.getDescription());
                 return Optional.of(servicePageDTO);
             }
