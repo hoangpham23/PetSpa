@@ -1,6 +1,7 @@
 package com.team.service;
 
 import com.team.dto.ServiceImageDTO;
+import com.team.dto.ServicePageDTO;
 import com.team.model.ServiceImages;
 import com.team.model.Services;
 import com.team.repository.ServiceRepository;
@@ -34,5 +35,20 @@ public class ServiceImagesService {
             }
         }
         return result;
+    }
+
+    public Optional<ServicePageDTO> getServiceDetailsByName(String serviceName) {
+        Optional<Services> serviceOpt = serviceRepository.findByServiceName(serviceName);
+        if (serviceOpt.isPresent()) {
+            Services service = serviceOpt.get();
+            List<ServiceImages> images = servicesImagesRepository.findByServiceID(service.getServiceID());
+            // If images are found, construct the ServiceImageDTO
+            if (!images.isEmpty()) {
+                ServiceImages image = images.get(0); // Assuming one image per service for simplicity
+                ServicePageDTO servicePageDTO = new ServicePageDTO(image.getImageID(), image.getServiceID(), image.getImageURL(), service.getServiceName(), service.getDescription());
+                return Optional.of(servicePageDTO);
+            }
+        }
+        return Optional.empty();
     }
 }
