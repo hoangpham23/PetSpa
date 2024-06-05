@@ -40,12 +40,12 @@ public class ServiceImagesService {
     public Optional<ServicePageDTO> getServiceDetailsByName(String serviceName) {
         Optional<Services> serviceOpt = serviceRepository.findByServiceName(serviceName);
         if (serviceOpt.isPresent()) {
-            Services service = serviceOpt.get();
-            List<ServiceImages> images = servicesImagesRepository.findByServiceID(service.getServiceID());
+            Services services = serviceOpt.get();
+            List<ServiceImages> images = servicesImagesRepository.findByServiceID(services.getId());
             // If images are found, construct the ServiceImageDTO
             if (!images.isEmpty()) {
                 ServiceImages image = images.getFirst(); // Assuming one image per service for simplicity
-                ServicePageDTO servicePageDTO = new ServicePageDTO(image.getImageID(), image.getServiceID(), image.getImageURL(), service.getServiceName(), service.getDescription());
+                ServicePageDTO servicePageDTO = new ServicePageDTO(image.getImageID(), image.getServiceID(), image.getImageURL(), services.getServiceName(), services.getDescription());
                 return Optional.of(servicePageDTO);
             }
         }

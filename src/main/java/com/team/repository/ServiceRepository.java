@@ -10,8 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface ServiceRepository extends ListCrudRepository<Services, Integer> {
-    @Query("SELECT s FROM Services s WHERE s.serviceName LIKE CONCAT(:serviceName, '%')")
-    List<Services> findFirstByServiceName(String serviceName);
-
     Optional<Services> findByServiceName(String serviceName);
 }

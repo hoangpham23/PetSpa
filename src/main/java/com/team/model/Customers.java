@@ -13,12 +13,6 @@ import org.hibernate.annotations.Nationalized;
 @AllArgsConstructor
 @Table(name = "CUSTOMERS")
 public class Customers {
-//    @Id
-//    private int customerID;
-//    private String customerName;
-//    private String email;
-//    private String phoneNumber;
-//    private int numberOfPets;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
