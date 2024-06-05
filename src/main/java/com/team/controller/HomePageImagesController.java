@@ -43,7 +43,7 @@ public class HomePageImagesController {
             if (serviceDetails.isPresent()) {
                 return new ResponseEntity<>(serviceDetails.get(), HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
             logger.error("Error in getting service details for name: " + serviceName, e);

@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CustomerRepository extends ListCrudRepository<Customers, Integer> {
     Customers findByEmail(String email);
-    boolean existsAccountByPhoneNumber(String phoneNumber);
 }

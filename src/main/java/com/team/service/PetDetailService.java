@@ -7,8 +7,6 @@ import com.team.repository.PetDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class PetDetailService {
 
@@ -44,8 +42,4 @@ public class PetDetailService {
         CustomerRepository.save(customer);
     }
 
-    public List<Pets> getPetsByCustomerId(Integer customerId) {
-        Customers customer = findCustomerById(customerId);
-        return petDetailRepository.findByCustomerID(customer);
-    }
 }

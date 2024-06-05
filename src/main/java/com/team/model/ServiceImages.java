@@ -13,15 +13,23 @@ import lombok.NoArgsConstructor;
 @Table(name = "IMAGES")
 public class ServiceImages {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ImageID", nullable = false)
-    private Integer ImageID;
+    private Integer imageID;
+    private Integer serviceID;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ServiceID")
-    private Services serviceID;
-
-    @Size(max = 255)
-    @Column(name = "ImageURL")
     private String imageURL;
 }
+
+//public class ServiceImages {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "ImageID", nullable = false)
+//    private Integer ImageID;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "ServiceID")
+//    private Services serviceID;
+//
+//    @Size(max = 255)
+//    @Column(name = "ImageURL")
+//    private String imageURL;
+//}

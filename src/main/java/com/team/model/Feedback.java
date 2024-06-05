@@ -19,6 +19,9 @@ public class Feedback {
     @JoinColumn(name = "ServiceID")
     private Services serviceID;
 
+    @Column(name = "EmployeeID")
+    private Integer employeeID;
+
     @Size(max = 100)
     @Column(name = "GuestName", length = 100)
     private String guestName;
@@ -30,9 +33,5 @@ public class Feedback {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CustomerID")
     private Customers customerID;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "EmployeeID")
-    private Employees employeeID;
 
 }
