@@ -1,0 +1,37 @@
+package com.team.model;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Entity
+@Table(name = "FEEDBACKS")
+public class Feedback {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "FeedbackID", nullable = false)
+    private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ServiceID")
+    private Services serviceID;
+
+    @Column(name = "EmployeeID")
+    private Integer employeeID;
+
+    @Size(max = 100)
+    @Column(name = "GuestName", length = 100)
+    private String guestName;
+
+    @Lob
+    @Column(name = "FeedbackContent")
+    private String feedbackContent;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CustomerID")
+    private Customers customerID;
+
+}

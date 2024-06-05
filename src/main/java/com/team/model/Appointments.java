@@ -25,7 +25,7 @@ public class Appointments {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ServiceID")
-    private Service serviceID;
+    private Services serviceID;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "EmployeeID")
