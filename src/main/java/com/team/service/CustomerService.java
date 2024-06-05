@@ -1,5 +1,6 @@
 package com.team.service;
 
+import com.team.dto.CustomerDTO;
 import com.team.model.Accounts;
 import com.team.model.Customers;
 import com.team.repository.CustomerRepository;
@@ -18,7 +19,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public Customers createCustomer(String customerName, String phoneNumber, String email, String password) {
+    public CustomerDTO createCustomer(String customerName, String phoneNumber, String email, String password) {
         // create an account first then create a customer
         Accounts accounts = accountService.createAccount(email, password);
         Customers customers = new Customers();
@@ -26,7 +27,18 @@ public class CustomerService {
         customers.setPhoneNumber(phoneNumber);
         customers.setEmail(email);
         customers.setAccounts(accounts);
-        return customerRepository.save(customers);
+        customers.setNumberOfPets(0);
+        return convertToCustomerDTO(customerRepository.save(customers));
+    }
+
+    private CustomerDTO convertToCustomerDTO(Customers customers) {
+        CustomerDTO dto = new CustomerDTO();
+        dto.setCustomerID(customers.getCustomerID());
+        dto.setCustomerName(customers.getCustomerName());
+        dto.setPhoneNumber(customers.getPhoneNumber());
+        dto.setEmail(customers.getEmail());
+        dto.setNumberOfPets(customers.getNumberOfPets());
+        return dto;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.team.controller;
 
+import com.team.dto.AccountDTO;
 import com.team.model.Accounts;
 import com.team.service.AccountService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +29,10 @@ public class SignInController {
         try {
             String email = accountData.get("email");
             String password = accountData.get("password");
-            Accounts accounts = accountService.checkLogin(email, password);
+            // log the information out in terminal
+            AccountDTO accounts = accountService.checkLogin(email, password); // using jpa
+//            Accounts accounts = accountService.checkAccountV4(email, password); // using jdbc write sql
+
             if (accounts != null) {
                 return ResponseEntity.ok().body(accounts);
             }
