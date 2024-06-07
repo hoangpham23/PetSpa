@@ -8,7 +8,7 @@ import Tittle from "./tittle";
 import axios from "axios";
 import Introduce from "./introduce";
 import Service from "./service";
-function HomePageForGuest() {
+function HomePage() {
   const [items, setItems] = useState([]);
   const dataArray = [];
   async function getData() {
@@ -17,11 +17,6 @@ function HomePageForGuest() {
       const responseData = response.data; // Lưu dữ liệu từ API vào biến tạm
       setItems(responseData); // Cập nhật state với dữ liệu từ API
       localStorage.setItem("dataArray", JSON.stringify(responseData)); // Lưu dữ liệu vào localStorage sau khi đã cập nhật items
-      // In ra dữ liệu để kiểm tra
-      // const response = await axios.get("http://localhost:8090/home-page");
-      // setItems(JSON.stringify(response.data)); // Cập nhật state với dữ liệu từ API
-      // console.log(items); // In ra dữ liệu để kiểm tra
-      // localStorage.setItem("dataArray", JSON.stringify(items));
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -33,8 +28,6 @@ function HomePageForGuest() {
   return (
     <>
       <Helmet>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Home Page</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -65,4 +58,4 @@ function HomePageForGuest() {
     </>
   );
 }
-export default HomePageForGuest;
+export default HomePage;

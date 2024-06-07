@@ -24,12 +24,11 @@ function SignIn() {
 
   useEffect(() => {
     const queryParams = queryString.parse(location.search);
-    if (queryParams.error === 'email_exists') {
+    if (queryParams.error === "email_exists") {
       // Access data from the query parameters and set it to mess state
       setMsg("Email is already exist");
     }
   }, [location]);
-
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -41,6 +40,7 @@ function SignIn() {
       });
       console.log(response.data);
       if (response.status === 200) {
+        localStorage.setItem("account", response.data);
         if (response.data.role === "CUS") {
           localStorage.setItem("role", response.data.role);
           navigate("/home-page");
@@ -132,7 +132,10 @@ function SignIn() {
                       <h4>-----------OR-----------</h4>
                       <div className={style.signIn_Google_container}>
                         <img src={emailIconImg} alt="" />
-                        <a href="http://localhost:8090/oauth2/authorization/google" className={style.signIn_google}>
+                        <a
+                          href="http://localhost:8090/oauth2/authorization/google"
+                          className={style.signIn_google}
+                        >
                           Sign In With Your Google Account
                         </a>
                       </div>

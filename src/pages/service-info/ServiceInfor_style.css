@@ -1,0 +1,248 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  border: none;
+  outline: none;
+  scroll-behavior: smooth;
+  font-family: "Poppins", sans-serif;
+} */
+
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333;
+  --header-color: #c2e1e6;
+  --footer-color: rgba(255, 46, 255, 0.11);
+  --pink-div-color: rgba(251, 226, 228, 1);
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --icon-color: #c2bcbc;
+}
+
+/* html {
+  font-size: 62.5%;
+  color: var(--text-color);
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+} */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: transparent;
+  align-items: center;
+  z-index: 100;
+  transition: 0.5s;
+  justify-content: space-between;
+}
+
+.header .header-blue-background-rectangle {
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  background-color: var(--header-color);
+  z-index: -1;
+  border-radius: 0 0 120px 0;
+  transition: 0.5s ease;
+}
+
+.header .header-pink-background-rectangle {
+  position: absolute;
+  width: 45rem;
+  height: 40px;
+  background-color: var(--pink-div-color);
+  z-index: -1;
+  border-radius: 0 0 120px 0;
+  transition: 0.5s ease;
+}
+
+.header .navbar-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem 2.5rem 0rem 1.4rem;
+}
+
+.header .navbar-header .navbar {
+  display: flex;
+  align-items: center;
+}
+
+.header .navbar-header .navbar a {
+  font-size: 1.2rem;
+  color: var(--text-color);
+  font-weight: 500;
+  padding-right: 1.5rem;
+}
+
+.header .navbar-header p {
+  margin-top: 0.6rem;
+}
+
+.sectionContainer {
+  padding: 5rem 7% 2rem;
+}
+
+.service-div .service-img {
+  position: relative;
+  width: 28rem;
+  height: 28rem;
+  background-color: var(--header-color);
+  z-index: -1;
+  border-radius: 20px;
+  transition: 0.5s ease;
+  flex: 1;
+}
+
+.service-div .service-img img {
+  position: relative;
+  width: 25rem;
+  border-radius: 20px;
+  margin-top: 1rem;
+  margin-left: 1.5rem;
+}
+
+.service-display {
+  display: flex;
+  margin-right: 56rem;
+  margin-bottom: 2rem;
+}
+
+.service-price {
+  background: var(--pink-div-color);
+  box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
+  border-top-left-radius: 15.03px;
+  border-top-right-radius: 67.63px;
+  border-bottom-right-radius: 67.63px;
+  border-bottom-left-radius: 15.03px;
+  padding: 10px 20px;
+  font-size: 1.6rem;
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+  width: 20rem;
+  height: 8rem;
+  position: relative;
+  margin-top: 20rem;
+}
+
+.service-div h1 {
+  font-size: 3.6rem;
+}
+
+.service-div p {
+  font-size: 1.6rem;
+  font-weight: 1.6rem;
+  margin-top: 0.6rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1.4rem;
+  background: var(--header-color);
+  border-radius: 60px;
+  box-shadow: 0 0.2rem 0.5rem var(--shadow-color);
+  font-size: 1.6rem;
+  color: var(--text-color);
+  letter-spacing: 0.1rem;
+  font-weight: 600;
+  border: 0.2rem solid transparent;
+  transition: 0.5s ease;
+  margin-top: 1.5rem;
+}
+
+.btn:hover {
+  background: transparent;
+  color: #0b5864;
+  border-color: #0b5864;
+}
+
+.service-div .book {
+  display: flex;
+  justify-content: right;
+}
+
+.feedback-div .feedback-display {
+  display: flex;
+  margin: 10rem 14rem;
+}
+
+.feedback-div .feedback-display {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 6rem;
+  text-align: center;
+}
+
+.feedback-display .service-img {
+  position: absolute;
+  width: 19rem;
+  height: 22rem;
+  background-color: var(--header-color);
+  z-index: -1;
+  border-radius: 20px;
+  transition: 0.5s ease;
+  flex: 1;
+  margin-left: -7rem;
+}
+
+.feedback-display .service-container .service-img img {
+  position: relative;
+  width: 17rem;
+  border-radius: 20px;
+  margin-top: 1rem;
+}
+
+.feedback-display .service-container p {
+  text-align: center;
+  margin-top: 19rem;
+}
+
+.feedback-div {
+  display: none;
+  position: absolute;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+}
+
+.service-container:hover .feedback-div {
+  display: block;
+}
+
+.footer {
+  margin: 1.8rem 0 0 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.footer h1 {
+  padding-top: 2.5rem;
+  font-weight: 800;
+  font-size: 4rem;
+  cursor: default;
+}
+
+.footer .footer-content {
+  font-size: 1.2rem;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.footer .footer-background-rectangle {
+  position: absolute;
+  width: 100%;
+  height: 100px;
+  background-color: var(--footer-color);
+  z-index: -1;
+  transition: 0.5s ease;
+  min-width: 35px;
+  opacity: 80%;
+}

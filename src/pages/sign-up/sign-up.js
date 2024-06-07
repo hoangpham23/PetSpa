@@ -39,13 +39,17 @@ function SignUp() {
         phoneNumber: info.phoneNumber,
         email: info.email,
       });
-
-      if (response.status === 201) {
-        setMess("SUCCESSFULLY SIGN UP");
-        setTimeout(() => {
-          navigate("/sign-in");
-        }, 3000);
+      if (response.status === 200) {
+        navigate("/sign-up/verify-otp");
+        // http://localhost:8090/sign-up/verify-otp
       }
+
+      // if (response.status === 201) {
+      //   setMess("SUCCESSFULLY SIGN UP");
+      //   setTimeout(() => {
+      //     navigate("/sign-in");
+      //   }, 3000);
+      // }
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -133,7 +137,7 @@ function SignUp() {
               <div>
                 <input
                   type="submit"
-                  value="SIGN UP"
+                  value="Continue"
                   className={style.btn}
                   onClick={handleSubmit}
                 />

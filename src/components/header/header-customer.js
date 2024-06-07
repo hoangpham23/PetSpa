@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import "../../pages/home-page/HomeCus_style.css";
 function HeaderForCus() {
   return (

@@ -215,6 +215,9 @@ html {
   display: flex;
   justify-content: center;
   flex: 1;
+
+  cursor: pointer; /* Đảm bảo con trỏ thay đổi khi di chuyển qua hình ảnh */
+  pointer-events: auto; /* Đảm bảo nhận sự kiện chuột */
 }
 
 .service .service-container .service-img img {

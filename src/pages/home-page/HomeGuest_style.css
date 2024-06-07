@@ -265,11 +265,13 @@ html {
   width: 19rem;
   height: 22rem;
   background-color: var(--header-color);
-  z-index: -1;
+  z-index: 1;
   border-radius: 20px;
   transition: 0.5s ease;
   flex: 1;
   margin-left: -7rem;
+  cursor: pointer; /* Đảm bảo con trỏ thay đổi khi di chuyển qua hình ảnh */
+  pointer-events: auto; /* Đảm bảo nhận sự kiện chuột */
 }
 
 .service .service-container .service-img img {
@@ -277,7 +279,24 @@ html {
   width: 17rem;
   border-radius: 20px;
   margin-top: 1rem;
+  cursor: pointer; /* Đảm bảo con trỏ thay đổi khi di chuyển qua hình ảnh */
+  pointer-events: auto; /* Đảm bảo nhận sự kiện chuột */
 }
+.service_name {
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  margin-top: 19rem;
+  font-size: 1.4rem;
+  z-index: 2; /* Ensure service name appears above the block */
+}
+
+/* .service .service-container .service-img {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  cursor: pointer;
+  pointer-events: auto; 
+} */
 
 .service .service-container p {
   text-align: center;

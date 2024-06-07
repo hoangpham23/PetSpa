@@ -1,0 +1,21 @@
+.boxInfo {
+  padding-top: 6rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rem;
+}
+
+.backGround {
+  padding: 8rem;
+}
+.boxInfo .timeInfo {
+  margin-top: auto;
+  width: 400px;
+  height: 300px;
+  background: #efefef;
+  border-radius: 10px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+.boxInfo .timeInfo h2 {
+  margin-bottom: 10rem;
+}
