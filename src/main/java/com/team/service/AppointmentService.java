@@ -35,7 +35,7 @@ public class AppointmentService {
     // this function return not available slots of the next 3 days. Don't include the day when the customer in the website
     public List<AppointmentDTO> getAllAppointments(LocalDateTime timeSendRequest) {
         try {
-            timeSendRequest = LocalDateTime.parse("2024-06-05 09:00:00", formatter);
+//            timeSendRequest = LocalDateTime.parse("2024-06-05 09:00:00", formatter);
             // set a range to take the list appointment
             LocalDateTime min = timeSendRequest.plusDays(1);
             LocalDateTime max = timeSendRequest.plusDays(4);
@@ -102,7 +102,7 @@ public class AppointmentService {
         try {
             // find the last employee is assigned to the last appointment
             List<Object[]> data = appointmentRepository.findLastEmployeeID(formatterDate.format(request));
-            int employeeID = (Integer) data.get(0)[0];
+            int employeeID = (Integer) data.getFirst()[0];
 
             // employeeId, appointmentTime in 1 shift order by employeeId asc
             List<Integer> listData = appointmentRepository.findAllEmployeeInOneShift(request);
