@@ -5,26 +5,17 @@ import com.team.model.Accounts;
 import com.team.repository.AccountRepository;
 import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcOperations;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 @Service
 public class AccountService {
 
-    private final JdbcClient jdbcClient;
     private AccountRepository accountRepository ;
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
 
-    public AccountService(AccountRepository accountRepository, JdbcClient jdbcClient) {
+    @Autowired
+    public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
-        this.jdbcClient = jdbcClient;
     }
 
 
