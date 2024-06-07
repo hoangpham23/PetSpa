@@ -16,7 +16,7 @@ import java.util.Map;
 public class SignInController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private AccountService accountService;
+    private final AccountService accountService;
 
     public SignInController(AccountService accountService) {
         this.accountService = accountService;
