@@ -31,6 +31,9 @@ public class AccountService {
     public AccountDTO checkLogin(String email, String password) {
 
         Accounts accounts = accountRepository.findAccountsByEmailAndPassword(email, password);
+        if (accounts == null) {
+            return null;
+        }
         return convertToDTO(accounts);
     }
 

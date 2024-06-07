@@ -25,13 +25,16 @@ public class SignInController {
     }
 
     @PostMapping("/sign-in")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> accountData, HttpServletRequest request) {
+    public ResponseEntity<?> login(@RequestBody Map<String, String> accountData) {
         try {
             String email = accountData.get("email");
             String password = accountData.get("password");
-            // log the information out in terminal
-            AccountDTO accounts = accountService.checkLogin(email, password); // using jpa
-//            Accounts accounts = accountService.checkAccountV4(email, password); // using jdbc write sql
+
+            // using jpa to prevent SQL injection
+            AccountDTO accounts = accountService.checkLogin(email, password);
+
+            // using jdbc to test SQL map and see how SQL injection work
+//            Accounts accounts = accountService.checkAccountV4(email, password);
 
             if (accounts != null) {
                 return ResponseEntity.ok().body(accounts);
