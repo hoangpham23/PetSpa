@@ -2,7 +2,6 @@ package com.team.repository;
 
 
 import com.team.model.Appointments;
-import com.team.model.Employees;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,11 +21,7 @@ public interface AppointmentRepository extends JpaRepository<Appointments, Integ
     String SQL_findAllEmployeeInOneShift = "select EmployeeID from APPOINTMENTS where AppointmentTime = :appointmentTime order by employeeID";
     String SQL_findLastEmployeeID = "select top 1 EmployeeID, AppointmentTime from APPOINTMENTS order by AppointmentID desc";
 
-    /**
-     * @param appointmentTime base on this param to convert into a date type like this format 'yyyy-MM-dd'
-     * find the last employeeId in a specific day from the request
-     * @return
-     */
+
     @Query(value = SQL_findLastEmployeeIDInADay, nativeQuery = true)
     Optional<Integer> findLastEmployeeIDInADay(@Param("appointmentTime") String appointmentTime);
 
