@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -15,32 +16,34 @@ import java.util.*;
 public class AppointmentService {
 
     private final static int AVAILABLE_SLOT = 4;
-    private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    private final static DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private final static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final static DateTimeFormatter FORMATTER_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private final AppointmentRepository appointmentRepository;
     private final EmployeeRepository employeeRepository;
     private final CustomerRepository customerRepository;
     private final PetRepository petRepository;
     private final ServiceRepository serviceRepository;
+    private final EmployeeScheduleRepository employeeScheduleRepository;
 
-    public AppointmentService(AppointmentRepository appointmentRepository, EmployeeRepository employeeRepository, CustomerRepository customerRepository, PetRepository petRepository, ServiceRepository serviceRepository) {
+    public AppointmentService(AppointmentRepository appointmentRepository, EmployeeRepository employeeRepository, CustomerRepository customerRepository, PetRepository petRepository, ServiceRepository serviceRepository, EmployeeScheduleRepository employeeScheduleRepository) {
         this.appointmentRepository = appointmentRepository;
         this.employeeRepository = employeeRepository;
         this.customerRepository = customerRepository;
         this.petRepository = petRepository;
         this.serviceRepository = serviceRepository;
+        this.employeeScheduleRepository = employeeScheduleRepository;
     }
 
     // this function return not available slots of the next 3 days. Don't include the day when the customer in the website
     public List<AppointmentDTO> getAllAppointments(LocalDateTime timeSendRequest) {
         try {
-//            timeSendRequest = LocalDateTime.parse("2024-06-05 09:00:00", formatter);
+            // timeSendRequest = LocalDateTime.parse("2024-06-05 09:00:00", formatter);
             // set a range to take the list appointment
             LocalDateTime min = timeSendRequest.plusDays(1);
             LocalDateTime max = timeSendRequest.plusDays(4);
-            String after = min.format(formatter);
-            String before = max.format(formatterDate);
+            String after = min.format(FORMATTER);
+            String before = max.format(FORMATTER_DATE);
 
             List<Object[]> listAppointments = appointmentRepository.findAppointmentsAfterBefore(after, before);
 
@@ -71,7 +74,7 @@ public class AppointmentService {
             Integer serviceID =Integer.parseInt(data.get("serviceID"));
             Integer petID = Integer.parseInt(data.get("petID"));
             String time  = data.get("appointmentTime").replace(".000", "");
-            LocalDateTime appointmentTime = LocalDateTime.parse(time, formatter);
+            LocalDateTime appointmentTime = LocalDateTime.parse(time, FORMATTER);
 
             // receive data from the database
             Integer employeeID = findLastEmployee(appointmentTime);
@@ -91,7 +94,18 @@ public class AppointmentService {
             appointments.setPets(pets);
             appointments.setServices(services);
 
-            return appointmentRepository.save(appointments);
+            Appointments savedAppointments = appointmentRepository.save(appointments);
+            EmployeeSchedule employeeSchedule = new EmployeeSchedule();
+            employeeSchedule.setEmployeeID(employees);
+            employeeSchedule.setAppointmentID(savedAppointments);
+            employeeSchedule.setWorkDate(savedAppointments.getAppointmentTime().toLocalDateTime().toLocalDate());
+            LocalTime startTime = savedAppointments.getAppointmentTime().toLocalDateTime().toLocalTime();
+            LocalTime endTime = savedAppointments.getAppointmentTime().toLocalDateTime().toLocalTime().plusHours(1);
+            employeeSchedule.setStartTime(startTime);
+            employeeSchedule.setEndTime(endTime);
+            employeeScheduleRepository.save(employeeSchedule);
+
+            return savedAppointments;
         } catch (Exception e) {
             log.error("create appointment function: {}", e.getMessage());
             return null;
@@ -100,11 +114,11 @@ public class AppointmentService {
 
     private Integer findLastEmployee(LocalDateTime request) {
         try {
-            // find the last employee is assigned to the last appointment
-            List<Object[]> data = appointmentRepository.findLastEmployeeID(formatterDate.format(request));
-            int employeeID = (Integer) data.getFirst()[0];
+            // find the last employee is assigned to the last appointment in a day
+            Optional<Integer> data = appointmentRepository.findLastEmployeeIDInADay(FORMATTER_DATE.format(request));
+            int employeeID = data.orElseGet(() -> appointmentRepository.findLastEmployeeID().get());
 
-            // employeeId, appointmentTime in 1 shift order by employeeId asc
+            // find all the employee are assign the that shift
             List<Integer> listData = appointmentRepository.findAllEmployeeInOneShift(request);
 
             if (listData.size() == AVAILABLE_SLOT) {
