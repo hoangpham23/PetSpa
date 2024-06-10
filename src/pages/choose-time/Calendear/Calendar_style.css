@@ -1,24 +1,10 @@
 /* Import Google font - Poppins */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
-/* * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-} */
-/* body {
-  display: flex;
-  align-items: center;
-  padding: 0 10px;
-  justify-content: center;
-  min-height: 100vh;
-  background: #9b59b6;
-} */
 .wrapper {
   width: 400px;
-  background: #efefef;
+  background: #fff;
   border-radius: 10px;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
 }
 .wrapper header {
   display: flex;
@@ -66,7 +52,7 @@ header .current-date {
 .calendar li {
   color: #333;
   width: calc(100% / 7);
-  font-size: 1.3rem;
+  font-size: 1.07rem;
 }
 .calendar .weeks li {
   font-weight: 500;
@@ -78,10 +64,10 @@ header .current-date {
   position: relative;
   margin-top: 30px;
 }
-.days li .inactive {
+.days li.inactive {
   color: #aaa;
 }
-.days li .active {
+.days li.active {
   color: #fff;
 }
 .days li::before {

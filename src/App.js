@@ -14,6 +14,8 @@ import Calendar from "./pages/choose-time/Calendear/Calendar.js";
 import ChooseTime from "./pages/choose-time/choose-time.js";
 import VerifyOtpSignUp from "./pages/sign-up/verifyOtpSignUp.js";
 import ServiceInfo from "./pages/service-info/ServiceInfo.js";
+import CustomerInfo from "./pages/customer-info/Customer-info.js";
+import ChoosePet from "./pages/choose-pet/ChoosePet.js";
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
           path="/service-info/:serviceName"
           element={<ServiceInfo />}
         ></Route>
+        <Route path="/customer-info" element={<CustomerInfo />}></Route>
+        <Route path="/choose-pet" element={<ChoosePet />}></Route>
       </Routes>
     </Router>
   );

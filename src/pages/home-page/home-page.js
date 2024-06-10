@@ -11,8 +11,11 @@ import Service from "./service";
 function HomePage() {
   const [items, setItems] = useState([]);
   const dataArray = [];
+  let account = "";
   async function getData() {
     try {
+      account = localStorage.getItem("account");
+      console.log(account.role);
       const response = await axios.get("http://localhost:8090/home-page");
       const responseData = response.data; // Lưu dữ liệu từ API vào biến tạm
       setItems(responseData); // Cập nhật state với dữ liệu từ API
@@ -25,6 +28,7 @@ function HomePage() {
   useEffect(() => {
     getData();
   }, []); //
+
   return (
     <>
       <Helmet>

@@ -11,9 +11,15 @@ import queryString from "query-string";
 
 function SignIn() {
   localStorage.setItem("role", "");
+  localStorage.setItem("account", "");
+  localStorage.setItem("resetPasswordEmail", "");
   const [account, setAccount] = useState({
+    customerID: "",
+    //customerName: ""
     email: "",
     password: "",
+    role: "",
+    //numberOfPets: ""
   });
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
@@ -30,6 +36,18 @@ function SignIn() {
     }
   }, [location]);
 
+  useEffect(() => {
+    // if (account.customerID && account.numberOfPets && account.customerName ) {
+    if (account.customerID) {
+      console.log("Account updated:", account);
+      localStorage.setItem("account", JSON.stringify(account));
+      if (account.role === "CUS") {
+        localStorage.setItem("role", account.role);
+        navigate("/home-page");
+      }
+    }
+  }, [account, navigate]);
+
   async function handleSubmit(event) {
     event.preventDefault();
     console.log(account);
@@ -40,13 +58,19 @@ function SignIn() {
       });
       console.log(response.data);
       if (response.status === 200) {
-        localStorage.setItem("account", response.data);
-        if (response.data.role === "CUS") {
-          localStorage.setItem("role", response.data.role);
+        setAccount({ ...account, customerID: response.data.accountID }); // set ID khách hàng
+        // setAccount({ ...account, numberOfPets: response.data.numberOfPets }); // set số lượng thú
+        // setAccount({ ...account, customerName: response.data.customerName });// set tên khách hàng
+        console.log(response.data.accountID);
+        setAccount({ ...account, role: response.data.role });
+
+        //localStorage.setItem("account", JSON.stringify(account));
+        //localStorage.setItem("account", account);
+        if (account.role === "CUS") {
+          localStorage.setItem("role", account.role);
           navigate("/home-page");
         }
       }
-      console.log(response);
     } catch (error) {
       console.error("Error during sign-in:", error);
       if (error.response && error.response.status === 401) {
@@ -60,9 +84,6 @@ function SignIn() {
   return (
     <>
       <Helmet>
-        <meta charset="UTF-8 " />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Sign In Page</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link

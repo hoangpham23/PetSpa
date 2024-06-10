@@ -5,25 +5,30 @@ import { Helmet } from "react-helmet";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useService } from "./ServiceContext";
+// từ trang này nhấn vô phải xem xét số lượng thú của khác hàng, >=1, chuyển sang trang choose Pet, <=1 qua trang insert info cho pet
 function ServiceInfo() {
   let { serviceName } = useParams();
+  const { serviceData, setServiceData } = useService() || {}; // đầy đủ thông tin dữ liệu
   async function getData() {
     try {
       console.log(serviceName);
       const response = await axios.get(
         `http://localhost:8090/home-page/${serviceName}`
-      );
-      const responseData = response.data; // Lưu dữ liệu từ API vào biến tạm
-
-      localStorage.setItem("dataArray", JSON.stringify(responseData)); // Lưu dữ liệu vào localStorage sau khi đã cập nhật items
+      ); // lấy dữ liệu rồi nha
+      const responseData = response.data;
+      console.log(responseData);
+      if (response.status === 200) {
+        setServiceData(responseData);
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   }
-
   useEffect(() => {
     getData();
   }, []);
+  // làm handle submit cho nút make appointment
   return (
     <>
       <HeaderForCus />
