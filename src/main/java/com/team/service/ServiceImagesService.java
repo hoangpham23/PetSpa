@@ -56,7 +56,7 @@ public Optional<ServicePageDTO> getServiceDetailsByName(String serviceName) {
 
         if (!images.isEmpty()) {
             ServiceImages image = images.get(0); // get the first image
-            ServicePageDTO servicePageDTO = new ServicePageDTO(image.getImageID(), service.getId(), image.getImageURL(), service.getServiceName(), service.getDescription(), feedbackContents);
+            ServicePageDTO servicePageDTO = new ServicePageDTO(image.getImageID(), service.getId(), image.getImageURL(), service.getServiceName(), service.getPrice(), service.getDescription(), feedbackContents);
             return Optional.of(servicePageDTO);
         }
     }
