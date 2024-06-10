@@ -15,6 +15,7 @@ public class ServicePageDTO{
     private Integer serviceId;
     private String imageURL;
     private String serviceName;
+    private Double price;
     private String description;
     private List<String> feedbackContent;
 }
