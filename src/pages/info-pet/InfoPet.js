@@ -1,21 +1,30 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function InfoPet() {
+  const [customerID, setCustomerID] = useState("");
+  // make sure that having customerID
+  useEffect(() => {
+    const customer = JSON.parse(localStorage.getItem("account"));
+    if (customer) {
+      setCustomerID(customer.customerID);
+    }
+  }, []);
   const [petInfo, setPetInfo] = useState({
     petName: "",
     weight: "",
     age: "",
-    customerID: localStorage.getItem("account").customerID,
+    customerID: customerID,
   });
+  console.log(customerID);
+
   function handleInput(event) {
     setPetInfo({ ...petInfo, [event.target.name]: event.target.value });
   }
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
-  // chưa gửi dữ liệu đi
-  // customerID lưu trong localStorage
+
   async function handleSubmit(event) {
     event.preventDefault();
     if (petInfo.petName === "" || petInfo.age === "" || petInfo.weight === "") {
@@ -23,7 +32,13 @@ function InfoPet() {
       return;
     }
     try {
-      const response = axios.post("http://localhost:8090/insert-pet-info");
+      const response = axios.post("http://localhost:8090/insert-pet-info", {
+        petName: petInfo.petName,
+        weight: petInfo.weight,
+        age: petInfo.age,
+        customerID: petInfo.customerID,
+      });
+
       if (response.status === 200) {
         setMsg("Sucessfully add pet");
         setTimeout(() => {
@@ -33,7 +48,7 @@ function InfoPet() {
     } catch (error) {
       console.error("Error during sign-in:", error);
       if (error.response && error.response.status === 409) {
-        setMsg("Fail to add");
+        setMsg("Fail to add, please try again ! ");
       }
     }
   }

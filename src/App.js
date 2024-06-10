@@ -16,6 +16,7 @@ import VerifyOtpSignUp from "./pages/sign-up/verifyOtpSignUp.js";
 import ServiceInfo from "./pages/service-info/ServiceInfo.js";
 import CustomerInfo from "./pages/customer-info/Customer-info.js";
 import ChoosePet from "./pages/choose-pet/ChoosePet.js";
+import InfoPet from "./pages/info-pet/InfoPet.js";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         ></Route>
         <Route path="/customer-info" element={<CustomerInfo />}></Route>
         <Route path="/choose-pet" element={<ChoosePet />}></Route>
+        <Route path="/info-pet" element={<InfoPet />}></Route>
       </Routes>
     </Router>
   );

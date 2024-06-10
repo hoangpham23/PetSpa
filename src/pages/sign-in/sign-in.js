@@ -15,11 +15,11 @@ function SignIn() {
   localStorage.setItem("resetPasswordEmail", "");
   const [account, setAccount] = useState({
     customerID: "",
-    //customerName: ""
+    //customerName: "",
     email: "",
     password: "",
     role: "",
-    //numberOfPets: ""
+    //numberOfPets: "",
   });
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
@@ -36,38 +36,38 @@ function SignIn() {
     }
   }, [location]);
 
-  useEffect(() => {
-    // if (account.customerID && account.numberOfPets && account.customerName ) {
-    if (account.customerID) {
-      console.log("Account updated:", account);
-      localStorage.setItem("account", JSON.stringify(account));
-      if (account.role === "CUS") {
-        localStorage.setItem("role", account.role);
-        navigate("/home-page");
-      }
-    }
-  }, [account, navigate]);
+  // useEffect(() => {
+  //   // if (account.customerID && account.numberOfPets && account.customerName ) {
+  //   if (account.customerID) {
+  //     console.log("Account updated:", account);
+  //     localStorage.setItem("account", JSON.stringify(account));
+  //     if (account.role === "CUS") {
+  //       localStorage.setItem("role", account.role);
+  //       navigate("/home-page");
+  //     }
+  //   }
+  // }, [account, navigate]);
 
+  //
   async function handleSubmit(event) {
     event.preventDefault();
-    console.log(account);
     try {
       const response = await axios.post("http://localhost:8090/sign-in", {
         email: account.email,
         password: account.password,
       });
-      console.log(response.data);
-      if (response.status === 200) {
-        setAccount({ ...account, customerID: response.data.accountID }); // set ID khách hàng
-        // setAccount({ ...account, numberOfPets: response.data.numberOfPets }); // set số lượng thú
-        // setAccount({ ...account, customerName: response.data.customerName });// set tên khách hàng
-        console.log(response.data.accountID);
-        setAccount({ ...account, role: response.data.role });
 
-        //localStorage.setItem("account", JSON.stringify(account));
-        //localStorage.setItem("account", account);
-        if (account.role === "CUS") {
-          localStorage.setItem("role", account.role);
+      if (response.status === 200) {
+        const updatedAccount = {
+          ...account,
+          customerID: response.data.accountID,
+          role: response.data.role,
+        };
+        setAccount(updatedAccount);
+        localStorage.setItem("account", JSON.stringify(updatedAccount));
+        localStorage.setItem("role", response.data.role);
+
+        if (response.data.role === "CUS") {
           navigate("/home-page");
         }
       }
