@@ -4,6 +4,7 @@ function CustomerInfo() {
   return (
     <>
       <HeaderForCus />
+      <h1>Hello</h1>
     </>
   );
 }
