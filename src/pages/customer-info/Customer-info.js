@@ -5,11 +5,9 @@ function CustomerInfo() {
   return (
     <>
       <HeaderForCus />
-<<<<<<< HEAD
-      
-=======
->>>>>>> 92930f950676c674a73c7d6eb7fbf3436a6c9c05
+      HEAD  
       <h2>xinchao</h2>
+      <h3>Xin chao 3</h3>
     </>
   );
 }
