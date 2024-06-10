@@ -6,7 +6,9 @@ function CustomerInfo() {
   return (
     <>
       <HeaderForCus />
+      HEAD  
       <h2>xinchao</h2>
+      <h3>Xin chao 3</h3>
     </>
   );
 }
