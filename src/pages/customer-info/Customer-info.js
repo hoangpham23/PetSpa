@@ -4,6 +4,8 @@ function CustomerInfo() {
   return (
     <>
       <HeaderForCus />
+
+      <h2>xinchao</h2>
     </>
   );
 }
