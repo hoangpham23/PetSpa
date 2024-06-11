@@ -60,6 +60,23 @@ function ServiceInfo() {
           <div className={style.book}>
             <input type="submit" value="BOOK" className="btn" />
           </div>
+          <div className={style.service_display}>
+            <div className={style.service_img}>
+              <img src={service1} alt="" />
+            </div>
+            <div className={style.service_price}></div>
+          </div>
+          <div className={style.service_content}>
+            <h1>INFORMATION</h1>
+            <p>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam
+              nesciunt voluptate ut praesentium fugiat quaerat, ab quam dolorum
+              vitae odit expedita recusandae.
+            </p>
+          </div>
+          <div className={style.book}>
+            <input type="submit" value="BOOK" className={style.btn} />
+          </div>
         </div>
 
         <div className={style.feedback_div}>

@@ -1,8 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import React from "react";
-import ReactDOM from "react-dom";
+
+import HeaderForCus from "../../components/header/header-customer";
+import style from "./InfoPet_style.module.css";
+import { Helmet } from "react-helmet";
+import { useParams } from "react-router-dom";
 
 function InfoPet() {
   console.log("Rendering InfoPet component");
@@ -36,7 +39,7 @@ function InfoPet() {
     }
     try {
       const response = axios.post("http://localhost:8090/insert-pet-info", {
-        petName: petInfo.petName,
+        name: petInfo.petName,
         weight: petInfo.weight,
         age: petInfo.age,
         customerID: petInfo.customerID,
@@ -56,7 +59,49 @@ function InfoPet() {
     }
   }
 
-  return <></>;
+  return (
+    <div>
+      <HeaderForCus></HeaderForCus>
+      <section>
+        <div className={style.welcome_div}>
+          <div className={style.welcome_content}>
+            <p>Insert Information for new pet!</p>
+          </div>
+          <div className={style.welcome_form}>
+            <form action="#">
+              <div className={style.input_box}>
+                <p>Name of your pet:</p>{" "}
+                <input
+                  type="text"
+                  placeholder="ENTER YOUR PET'S NAME HERE"
+                  name="name"
+                />
+              </div>
+              <div className={style.input_box}>
+                <p>Weight (kg):</p>{" "}
+                <input
+                  type="number"
+                  placeholder="ENTER YOUR PET'S WEIGHT HERE"
+                  name="weight"
+                />
+              </div>
+              <div className={style.input_box}>
+                <p>Age :</p>{" "}
+                <input
+                  type="number"
+                  placeholder="ENTER YOUR PET'S WEIGHT HERE"
+                  name="age"
+                />
+              </div>
+              <div className={style.add}>
+                <input type="submit" value="ADD" className="btn" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
 }
 
 export default InfoPet;

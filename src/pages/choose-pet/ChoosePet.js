@@ -53,7 +53,10 @@ function ChoosePet() {
             <p>WEIGHT (KG): </p>
           </div>
         </div>
-        <input type="submit" value="ADD PET" className={style.btn} />
+
+        <div className={style.add}>
+          <input type="submit" value="ADD PET" className={style.btn} />
+        </div>
       </section>
     </div>
   );
