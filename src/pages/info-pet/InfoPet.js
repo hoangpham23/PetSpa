@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 
 function InfoPet() {
   const [customerID, setCustomerID] = useState("");
+  const [newNumofPets, setNewNumberOfPets] = useState("");
   // make sure that having customerID
   useEffect(() => {
     const customer = JSON.parse(localStorage.getItem("account"));
@@ -58,6 +59,10 @@ function InfoPet() {
       if (response.status === 201) {
         console.log("Sucessfully");
         setMsg("Sucessfully add pet");
+        // set lại số lượng pet trong local
+        const account = JSON.parse(localStorage.getItem("account"));
+        account.numberOfPets = parseInt(account.numberOfPets) + 1;
+        localStorage.setItem("account", JSON.stringify(account));
         setTimeout(() => {
           navigate("/choose-pet");
         }, 2000);

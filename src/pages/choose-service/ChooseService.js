@@ -9,6 +9,44 @@ import service1 from "../../assets/img/service1.jpg";
 // import service3 from "../../assets/img/service3.jpg";
 
 function ChooseService() {
+  const [services, setServices] = useState([]);
+  const [selectedServices, setSelectedServices] = useState([]);
+  useEffect(() => {
+    getData();
+  }, []);
+  async function getData() {
+    const response = await axios.get(
+      "http://localhost:8090/appointment/service"
+    );
+    setServices(response.data);
+    console.log(response.data);
+  }
+  const handleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+    if (checked) {
+      setSelectedServices([...selectedServices, name]);
+    } else {
+      setSelectedServices(
+        selectedServices.filter((service) => service !== name)
+      );
+    }
+  }; // lưu vô localStorage
+  function handleSubmit() {
+    localStorage.setItem("cart", JSON.stringify(selectedServices));
+    console.log(selectedServices);
+    console.log("cart ne", localStorage.getItem("cart"));
+  }
+  function handleDisplay(serviceName) {}
+
+  document.querySelectorAll(".service_img img").forEach((img) => {
+    img.addEventListener("click", function () {
+      const checkbox = this.closest(".service_container").querySelector(
+        'input[type="checkbox"]'
+      );
+      checkbox.checked = !checkbox.checked;
+    });
+  });
+
   return (
     <>
       <Helmet>
@@ -25,44 +63,21 @@ function ChooseService() {
 
       <section className={style.service} id="service">
         <div className={style.service_checklist}>
-          <div className={style.service_container}>
-            <input
-              type="checkbox"
-              id="service1"
-              name="service1"
-              className={style.custom_checkbox}
-            />
-            <label htmlFor="service1" className={style.custom_label}>
-              <span class={style.tickbox}></span>
-              <span className={style.Service}>SERVICE 1</span>
-            </label>
-          </div>
-
-          <div className={style.service_container}>
-            <input
-              type="checkbox"
-              id="service2"
-              name="service2"
-              className={style.custom_checkbox}
-            />
-            <label htmlFor="service2" className={style.custom_label}>
-              <span class={style.tickbox}></span>
-              <span className={style.Service}>SERVICE 2</span>
-            </label>
-          </div>
-
-          <div className={style.service_container}>
-            <input
-              type="checkbox"
-              id="service3"
-              name="service3"
-              className={style.custom_checkbox}
-            />
-            <label htmlFor="service3" className={style.custom_label}>
-              <span class={style.tickbox}></span>
-              <span className={style.Service}>SERVICE 3</span>
-            </label>
-          </div>
+          {services.map((service, index) => (
+            <div className={style.service_container} key={index}>
+              <input
+                type="checkbox"
+                id={`service${index}`}
+                name={service.serviceName}
+                className={style.custom_checkbox}
+                onChange={handleCheckboxChange}
+              />
+              <label htmlFor={`service${index}`} className={style.custom_label}>
+                <span className={style.tickbox}></span>
+                <span className={style.Service}>{service.serviceName}</span>
+              </label>
+            </div>
+          ))}
         </div>
         <div className={style.service_display}>
           <div className={style.service_img}>
@@ -72,7 +87,7 @@ function ChooseService() {
         </div>
       </section>
       <div className={style.next}>
-        <button type="submit" className={style.btn}>
+        <button type="submit" className={style.btn} onClick={handleSubmit}>
           NEXT STEP
           <i className="bx bx-chevron-right"></i>
         </button>

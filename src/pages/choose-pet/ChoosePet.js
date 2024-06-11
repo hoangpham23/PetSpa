@@ -44,7 +44,12 @@ function ChoosePet() {
     <div>
       <HeaderForCus />
       <section>
-        <div className={style.PetInfo_container}>
+        <div
+          className={style.PetInfo_container}
+          onClick={() => {
+            navigate("/appointment/service");
+          }}
+        >
           <h1>CHOOSE PET FOR SERVICES</h1>
           {petData.map((pet, index) => (
             <div key={index} className={style.PetInfo_box}>

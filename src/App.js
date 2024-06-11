@@ -19,7 +19,6 @@ import ChoosePet from "./pages/choose-pet/ChoosePet.js";
 import InfoPet from "./pages/info-pet/InfoPet.js";
 import ChooseService from "./pages/choose-service/ChooseService.js";
 
-
 function App() {
   return (
     <Router>

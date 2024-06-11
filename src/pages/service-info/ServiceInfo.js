@@ -1,11 +1,10 @@
 import HeaderForCus from "../../components/header/header-customer";
 import style from "./ServiceInfor_style.module.css";
-import "./ServiceInfo_script";
 import { Helmet } from "react-helmet";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { useService } from "./ServiceContext";
+
 import service1 from "../../assets/img/service1.jpg";
 // từ trang này nhấn vô phải xem xét số lượng thú của khác hàng, >=1, chuyển sang trang choose Pet, <=1 qua trang insert info cho pet
 function ServiceInfo() {
@@ -136,18 +135,24 @@ function ServiceInfo() {
           <h1>OUR FEEDBACKS</h1>
 
           <div className={style.feedback_display}>
-            {serviceData.feedbackContent.map((service, index) => (
-              <div key={index} className={style.service_container}>
-                <div className={style.ava_img}>
-                  {/* <img src={service1} alt="" /> */}
+            {/* {console.log(serviceData.feedbackContent.length)} */}
+            {serviceData.feedbackContent &&
+              serviceData.feedbackContent.length > 0 && (
+                <div className={style.feedback_display}>
+                  {serviceData.feedbackContent.map((service, index) => (
+                    <div key={index} className={style.service_container}>
+                      <div className={style.ava_img}>
+                        {/* <img src={service1} alt="" /> */}
+                      </div>
+                      <i className="gg-quote"></i>
+                      <div className={style.feedback_content}>
+                        <p>{service.feedbackContent}</p>
+                      </div>
+                      <p>{service.customerName}</p>
+                    </div>
+                  ))}
                 </div>
-                <i className="gg-quote"></i>
-                <div className={style.feedback_content}>
-                  <p>{service.feedback}</p>
-                </div>
-                <p>{service.customerName}</p>
-              </div>
-            ))}
+              )}
 
             {/* <div className={style.service_container}>
               <div className={style.ava_img}>
