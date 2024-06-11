@@ -27,6 +27,7 @@ function ChoosePet() {
       customerID: customerID,
     });
     if (response === 200) {
+      console.log(response.data);
       // lưu thông tin mấy con pet ở đây
       // sau đó in ra
     }

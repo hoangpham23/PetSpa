@@ -8,22 +8,27 @@ import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
 
 function InfoPet() {
-  console.log("Rendering InfoPet component");
   const [customerID, setCustomerID] = useState("");
   // make sure that having customerID
   useEffect(() => {
     const customer = JSON.parse(localStorage.getItem("account"));
     if (customer) {
       setCustomerID(customer.customerID);
+      setPetInfo({
+        petName: "",
+        weight: "",
+        age: "",
+        customerID: customer.customerID,
+      });
     }
   }, []);
+
   const [petInfo, setPetInfo] = useState({
     petName: "",
     weight: "",
     age: "",
     customerID: customerID,
   });
-  console.log(customerID);
 
   function handleInput(event) {
     setPetInfo({ ...petInfo, [event.target.name]: event.target.value });
@@ -38,14 +43,20 @@ function InfoPet() {
       return;
     }
     try {
-      const response = axios.post("http://localhost:8090/insert-pet-info", {
-        name: petInfo.petName,
-        weight: petInfo.weight,
-        age: petInfo.age,
-        customerID: petInfo.customerID,
-      });
+      const response = await axios.post(
+        "http://localhost:8090/insert-pet-info",
+        {
+          petName: petInfo.petName,
+          weight: petInfo.weight,
+          age: petInfo.age,
+          customerID: petInfo.customerID,
+        }
+      );
+      console.log(petInfo);
+      console.log(response.status);
 
-      if (response.status === 200) {
+      if (response.status === 201) {
+        console.log("Sucessfully");
         setMsg("Sucessfully add pet");
         setTimeout(() => {
           navigate("/choose-pet");
@@ -54,7 +65,7 @@ function InfoPet() {
     } catch (error) {
       console.error("Error during sign-in:", error);
       if (error.response && error.response.status === 409) {
-        setMsg("Fail to add, please try again ! ");
+        setMsg("This pet is already exist ");
       }
     }
   }
@@ -74,7 +85,8 @@ function InfoPet() {
                 <input
                   type="text"
                   placeholder="ENTER YOUR PET'S NAME HERE"
-                  name="name"
+                  name="petName"
+                  onChange={handleInput}
                 />
               </div>
               <div className={style.input_box}>
@@ -83,6 +95,7 @@ function InfoPet() {
                   type="number"
                   placeholder="ENTER YOUR PET'S WEIGHT HERE"
                   name="weight"
+                  onChange={handleInput}
                 />
               </div>
               <div className={style.input_box}>
@@ -91,10 +104,17 @@ function InfoPet() {
                   type="number"
                   placeholder="ENTER YOUR PET'S WEIGHT HERE"
                   name="age"
+                  onChange={handleInput}
                 />
               </div>
+              <div className={style.welcome_content}>{msg}</div>
               <div className={style.add}>
-                <input type="submit" value="ADD" className="btn" />
+                <input
+                  type="submit"
+                  value="ADD"
+                  className="btn"
+                  onClick={handleSubmit}
+                />
               </div>
             </form>
           </div>
