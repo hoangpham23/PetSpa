@@ -50,6 +50,10 @@ public class CustomerService {
         dto.setNumberOfPets(customers.getNumberOfPets());
         return dto;
     }
+    public boolean checkPhoneNumber(String phoneNumber) {
+        return customerRepository.existsAccountByPhoneNumber(phoneNumber);
+    }
+
 
     public EditAccountDTO editCustomer(Integer customerID, String customerName, String email, String phoneNumber) {
         Customers customers = customerRepository.findById(customerID).get();
