@@ -15,6 +15,7 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http, OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> {
+//                    auth.requestMatchers("/payment").hasRole("CUS");
                     auth.anyRequest().permitAll(); // Allow access to these URLs without authentication
 //                    auth.anyRequest().authenticated(); // All other requests require authentication
                 })
