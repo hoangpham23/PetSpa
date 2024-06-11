@@ -1,5 +1,6 @@
 package com.team.service;
 
+import com.team.dto.CustomerDTO;
 import com.team.dto.EditAccountDTO;
 import com.team.model.Accounts;
 import com.team.model.Customers;
@@ -7,6 +8,8 @@ import com.team.repository.AccountRepository;
 import com.team.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -21,8 +24,16 @@ public class CustomerService {
         this.accountRepository = accountRepository;
     }
 
+    public CustomerDTO getCustomerByAccountID(int accountID, String role){
+        Optional<Customers> customers = customerRepository.findById(accountID);
+        if(customers.isPresent()){
+            return convertToCustomerDTO(customers.get(), role);
+        }
+        return null;
+    }
+
     @Transactional
-    public Customers createCustomer(String customerName, String phoneNumber, String email, String password) {
+    public CustomerDTO createCustomer(String customerName, String phoneNumber, String email, String password) {
         // create an account first then create a customer
         Accounts accounts = accountService.createAccount(email, password);
         Customers customers = new Customers();
@@ -30,7 +41,19 @@ public class CustomerService {
         customers.setPhoneNumber(phoneNumber);
         customers.setEmail(email);
         customers.setAccounts(accounts);
-        return customerRepository.save(customers);
+        customers.setNumberOfPets(0);
+        return convertToCustomerDTO(customerRepository.save(customers), accounts.getRole());
+    }
+
+    private CustomerDTO convertToCustomerDTO(Customers customers, String role) {
+        CustomerDTO dto = new CustomerDTO();
+        dto.setCustomerID(customers.getCustomerID());
+        dto.setCustomerName(customers.getCustomerName());
+        dto.setPhoneNumber(customers.getPhoneNumber());
+        dto.setEmail(customers.getEmail());
+        dto.setNumberOfPets(customers.getNumberOfPets());
+        dto.setRole(role);
+        return dto;
     }
     public boolean checkPhoneNumber(String phoneNumber) {
         return customerRepository.existsAccountByPhoneNumber(phoneNumber);

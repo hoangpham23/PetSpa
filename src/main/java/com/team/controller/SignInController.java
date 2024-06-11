@@ -1,8 +1,9 @@
 package com.team.controller;
 
-import com.team.model.Accounts;
+import com.team.dto.AccountDTO;
+import com.team.dto.CustomerDTO;
 import com.team.service.AccountService;
-import jakarta.servlet.http.HttpServletRequest;
+import com.team.service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,20 +18,26 @@ import java.util.Map;
 public class SignInController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private AccountService accountService;
+    private final AccountService accountService;
+    private final CustomerService customerService;
 
-    public SignInController(AccountService accountService) {
+    public SignInController(AccountService accountService,  CustomerService customerService) {
         this.accountService = accountService;
+        this.customerService = customerService;
     }
 
     @PostMapping("/sign-in")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> accountData, HttpServletRequest request) {
+    public ResponseEntity<?> login(@RequestBody Map<String, String> accountData) {
         try {
             String email = accountData.get("email");
             String password = accountData.get("password");
-            Accounts accounts = accountService.checkLogin(email, password);
-            if (accounts != null) {
-                return ResponseEntity.ok().body(accounts);
+
+            // using jpa to prevent SQL injection
+            AccountDTO accounts = accountService.checkLogin(email, password);
+            CustomerDTO customerDTO = customerService.getCustomerByAccountID(accounts.getAccountID(), accounts.getRole());
+
+            if (customerDTO != null) {
+                return ResponseEntity.ok().body(customerDTO);
             }
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
         } catch (Exception e) {

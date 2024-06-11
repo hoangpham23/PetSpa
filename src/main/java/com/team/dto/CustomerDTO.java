@@ -5,10 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class EditAccountDTO {
+@AllArgsConstructor
+public class CustomerDTO {
+    private Integer customerID;
+    private String customerName;
     private String email;
     private String phoneNumber;
-    private String customerName;
+    private Integer numberOfPets;
+    private String role;
 }

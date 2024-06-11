@@ -1,9 +1,7 @@
 package com.team.controller;
 
 
-import com.team.model.Accounts;
-import com.team.model.Customers;
-import com.team.repository.AccountRepository;
+import com.team.dto.CustomerDTO;
 import com.team.service.AccountService;
 import com.team.service.CustomerService;
 import com.team.service.EmailService;
@@ -20,17 +18,15 @@ import java.util.*;
 public class SignUpController {
 
     private final Logger logger = LoggerFactory.getLogger(SignUpController.class);
-    private final AccountRepository accountRepository;
-    private CustomerService customerService;
-    private AccountService accountService;
-    private EmailService emailService;
-    private Map<String, Object> tempData = new HashMap<>();
+    private final CustomerService customerService;
+    private final AccountService accountService;
+    private final EmailService emailService;
+    private final Map<String, Object> tempData = new HashMap<>();
 
-    public SignUpController(EmailService emailService, CustomerService customerService, AccountService accountService, AccountRepository accountRepository) {
+    public SignUpController(EmailService emailService, CustomerService customerService, AccountService accountService) {
         this.customerService = customerService;
         this.accountService = accountService;
         this.emailService = emailService;
-        this.accountRepository = accountRepository;
     }
 
 
@@ -70,7 +66,8 @@ public class SignUpController {
             String customerName = (String) tempData.get("customerName");
             String phoneNumber = (String) tempData.get("phoneNumber");
             String password = (String) tempData.get("password");
-            Customers customers = customerService.createCustomer(customerName, phoneNumber, email, password);
+
+            CustomerDTO customers = customerService.createCustomer(customerName, phoneNumber, email, password);
             return ResponseEntity.status(HttpStatus.CREATED).body(customers);
         }catch (Exception e){
             logger.error(e.getMessage());

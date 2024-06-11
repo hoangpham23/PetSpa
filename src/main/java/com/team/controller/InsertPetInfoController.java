@@ -16,7 +16,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/insert-pet-info")
 public class InsertPetInfoController {
-    private PetDetailService petDetailService;
+    private final PetDetailService petDetailService;
 
     public InsertPetInfoController(PetDetailService petDetailService) {
         this.petDetailService = petDetailService;
@@ -27,7 +27,7 @@ public class InsertPetInfoController {
 
         String petName = data.get("petName");
         float weight = Float.parseFloat(data.get("weight"));
-        Integer age = Integer.parseInt(data.get("age"));
+        int age = Integer.parseInt(data.get("age"));
         Integer customerID = Integer.parseInt(data.get("customerID"));
 
         Customers customer = petDetailService.findCustomerById(customerID);

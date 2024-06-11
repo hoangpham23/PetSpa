@@ -4,9 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Data
 @NoArgsConstructor
@@ -21,18 +19,18 @@ public class Appointments {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CustomerID")
-    private Customers customerID;
+    private Customers customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ServiceID")
-    private Services serviceID;
+    private Services services;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "EmployeeID")
-    private Employees employeesID;
+    private Employees employees;
 
     @Column(name = "AppointmentTime")
-    private LocalDateTime appointmentTime;
+    private Timestamp appointmentTime;
 
     @Column(name = "DepositAmount")
     private Double depositAmount;
@@ -51,6 +49,6 @@ public class Appointments {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PetID")
-    private Pets petsID;
+    private Pets pets;
 
 }
