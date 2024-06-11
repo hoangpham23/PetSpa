@@ -19,32 +19,8 @@ function ServiceInfo() {
     serviceName: "",
     price: "",
     description: "",
-    feedbackContent: [],
+    feedbacks: [],
   });
-  // async function getData() {
-  //   try {
-  //     console.log(serviceName);
-  //     const response = await axios.get(
-  //       `http://localhost:8090/home-page/${serviceName}`
-  //     ); // lấy dữ liệu rồi nha
-  //     const responseData = response.data;
-  //     console.log(responseData);
-  //     if (response.status === 200) {
-  //       setServiceData(responseData);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // }
-  //   {
-  //     "imageId": 1,
-  //     "serviceId": 1,
-  //     "imageURL": "https://i.pinimg.com/originals/0d/b6/d3/0db6d3c3ec828193c359423533e02958.jpg",
-  //     "serviceName": "Bath",
-  //     "price": 500.0,
-  //     "description": "Pet taking bath",
-  //     "feedbackContent": []
-  // }
   async function getData() {
     try {
       console.log(serviceName);
@@ -64,21 +40,14 @@ function ServiceInfo() {
   useEffect(() => {
     getData();
   }, []);
-  useEffect(() => {
-    console.log("numofPets", numberOfPets);
-  }, [numberOfPets]);
+
   useEffect(() => {
     // Lấy dữ liệu từ localStorage
     const account = JSON.parse(localStorage.getItem("account"));
-
-    // Kiểm tra xem dữ liệu có tồn tại không
     if (account) {
-      // Chuyển đổi chuỗi JSON thành đối tượng JavaScript
       console.log(account);
 
-      // Lấy giá trị của numberOfPets từ đối tượng account
       const numberOfPets = account.numberOfPets;
-
       console.log("Number of pets:", numberOfPets);
       setNumberOfPets(numberOfPets);
     } else {
@@ -135,14 +104,15 @@ function ServiceInfo() {
           <h1>OUR FEEDBACKS</h1>
 
           <div className={style.feedback_display}>
-            {/* {console.log(serviceData.feedbackContent.length)} */}
+            {/*            
+            {console.log(serviceData.feedbackContent)}
             {serviceData.feedbackContent &&
               serviceData.feedbackContent.length > 0 && (
                 <div className={style.feedback_display}>
                   {serviceData.feedbackContent.map((service, index) => (
                     <div key={index} className={style.service_container}>
                       <div className={style.ava_img}>
-                        {/* <img src={service1} alt="" /> */}
+                      
                       </div>
                       <i className="gg-quote"></i>
                       <div className={style.feedback_content}>
@@ -152,12 +122,56 @@ function ServiceInfo() {
                     </div>
                   ))}
                 </div>
-              )}
+              )} */}
+
+            {serviceData.feedbacks && serviceData.feedbacks.length > 0 ? (
+              serviceData.feedbacks.map((feedback, index) => (
+                <div key={index} className={style.service_container}>
+                  <div className={style.ava_img}>
+                    <img src={service1} alt="Avatar" />
+                  </div>
+                  <i className="gg-quote"></i>
+                  <div className={style.feedback_content}>
+                    <p>{feedback.feedbackContent}</p>
+                  </div>
+                  <p>{feedback.customerName}</p>
+                </div>
+              ))
+            ) : (
+              <p>No feedback available.</p>
+            )}
 
             {/* <div className={style.service_container}>
               <div className={style.ava_img}>
-                {/* <img src={service1} alt="" /> */}
-            {/* <i className="gg-profile"></i>
+                <img src={service1} alt="" />
+              </div>
+              <i className="gg-quote"></i>
+              <div className={style.feedback_content}>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Molestias, commodi quaerat optio quisquam tempora corporis
+                  veniam facere, maiores fugiat minus animi architecto.
+                </p>
+              </div>
+              <p>[Customer Name]</p>
+            </div>
+            <div className={style.service_container}>
+              <div className={style.ava_img}>
+                <img src={service1} alt="" />
+              </div>
+              <i className="gg-quote"></i>
+              <div className={style.feedback_content}>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Molestias, commodi quaerat optio quisquam tempora corporis
+                  veniam facere, maiores fugiat minus animi architecto.
+                </p>
+              </div>
+              <p>[Customer Name]</p>
+            </div>
+            <div className={style.service_container}>
+              <div className={style.ava_img}>
+                <img src={service1} alt="" />
               </div>
               <i className="gg-quote"></i>
               <div className={style.feedback_content}>
@@ -169,48 +183,6 @@ function ServiceInfo() {
               </div>
               <p>[Customer Name]</p>
             </div> */}
-            <div className={style.service_container}>
-              <div className={style.ava_img}>
-                <img src={service1} alt="" />
-              </div>
-              <i className="gg-quote"></i>
-              <div className={style.feedback_content}>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Molestias, commodi quaerat optio quisquam tempora corporis
-                  veniam facere, maiores fugiat minus animi architecto.
-                </p>
-              </div>
-              <p>[Customer Name]</p>
-            </div>
-            <div className={style.service_container}>
-              <div className={style.ava_img}>
-                <img src={service1} alt="" />
-              </div>
-              <i className="gg-quote"></i>
-              <div className={style.feedback_content}>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Molestias, commodi quaerat optio quisquam tempora corporis
-                  veniam facere, maiores fugiat minus animi architecto.
-                </p>
-              </div>
-              <p>[Customer Name]</p>
-            </div>
-            <div className={style.service_container}>
-              <div className={style.ava_img}>
-                <img src={service1} alt="" />
-              </div>
-              <i className="gg-quote"></i>
-              <div className={style.feedback_content}>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Molestias, commodi quaerat optio quisquam tempora corporis
-                  veniam facere, maiores fugiat minus animi architecto.
-                </p>
-              </div>
-              <p>[Customer Name]</p>
-            </div>
           </div>
         </div>
       </section>

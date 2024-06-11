@@ -23,8 +23,13 @@ function ChooseService() {
   }
   const handleCheckboxChange = (event) => {
     const { name, checked } = event.target;
+    const service = services.find((service) => service.serviceName === name);
+
     if (checked) {
-      setSelectedServices([...selectedServices, name]);
+      setSelectedServices([
+        ...selectedServices,
+        { name: service.serviceName, price: service.price },
+      ]);
     } else {
       setSelectedServices(
         selectedServices.filter((service) => service !== name)
