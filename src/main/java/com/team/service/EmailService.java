@@ -15,15 +15,6 @@ public class EmailService {
         this.javaMailSender = javaMailSender;
     }
 
-    public void sendSimpleMessage(MailBody mailBody) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(mailBody.to());
-        message.setFrom("pawfection391@gmail.com");
-        message.setSubject(mailBody.subject());
-        message.setText(mailBody.text());
-
-        javaMailSender.send(message);
-    }
 
     public void sendEmail(String email, String text, String subject) {
         MailBody mailBody = MailBody.builder()

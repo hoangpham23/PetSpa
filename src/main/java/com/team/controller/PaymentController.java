@@ -24,7 +24,7 @@ public class PaymentController {
     }
 
     @GetMapping("")
-    public ResponseEntity<?> payment(HttpServletRequest request) throws ServletException {
+    public ResponseEntity<?> payment(HttpServletRequest request) {
         try {
             String paymentURL = paymentService.paymentURL(request);
             if (paymentURL == null) {
