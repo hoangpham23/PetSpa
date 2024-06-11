@@ -29,9 +29,8 @@ public class EditAcountController {
         String email = data.get("email");
         String customerName = data.get("customerName");
         String phoneNumber = data.get("phoneNumber");
-        Integer numberOfPets = Integer.parseInt(data.get("numberOfPets"));
 
-        EditAccountDTO newInfor = customerService.editCustomer(customerID, customerName, email, phoneNumber, numberOfPets);
+        EditAccountDTO newInfor = customerService.editCustomer(customerID, customerName, email, phoneNumber);
 
         return ResponseEntity.status(HttpStatus.OK).body(newInfor);
     }
