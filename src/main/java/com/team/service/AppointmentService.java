@@ -1,10 +1,12 @@
 package com.team.service;
 
 import com.team.dto.AppointmentDTO;
+import com.team.dto.AppointmentRequestDTO;
 import com.team.model.*;
 import com.team.repository.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -50,7 +52,7 @@ public class AppointmentService {
             // convert into appointmentDTO type
             List<AppointmentDTO> result = new ArrayList<>();
             for (Object row[] : listAppointments) {
-                LocalDateTime appointmentTime = ((Timestamp) row[0]).toLocalDateTime();
+                String appointmentTime = ((Timestamp) row[0]).toString().replace(".0", "");
                 Integer count = (Integer) row[1];
                 // return unavailable appointment
                 if (count == AVAILABLE_SLOT) {
@@ -66,35 +68,41 @@ public class AppointmentService {
 
     }
 
-    // customerID, serviceID, appointmentTime, TotalMoney, PetId
-    public Appointments createAppointment(Map<String, String> data) {
-        try {
-            // receive data from the request
-            Integer customerID = Integer.parseInt(data.get("customerID"));
-            Integer serviceID =Integer.parseInt(data.get("serviceID"));
-            Integer petID = Integer.parseInt(data.get("petID"));
-            String time  = data.get("appointmentTime").replace(".000", "");
-            LocalDateTime appointmentTime = LocalDateTime.parse(time, FORMATTER);
+    public void createAppointment(AppointmentRequestDTO data) {
+        Integer customerID = data.getCustomerID();
+        List<Integer> listServicesID = data.getServiceIds();
+        Integer petID = data.getPetID();
+        List<String> listAppointmentTime = data.getAppointmentTimes();
+        double totalMoney = data.getDepositAmount();
+        int count = listServicesID.size();
+        int index = 0;
 
+        while (count != 0) {
             // receive data from the database
+            String time = listAppointmentTime.get(index).replace(".000", "");
+            LocalDateTime appointmentTime = LocalDateTime.parse(time, FORMATTER);
             Integer employeeID = findLastEmployee(appointmentTime);
             if (employeeID == null) {
-                return null;
+                return;
             }
             Customers customers = customerRepository.findById(customerID).get();
             Pets pets = petRepository.findById(petID).get();
-            Services services = serviceRepository.findById(serviceID).get();
+            Services services = serviceRepository.findById(listServicesID.get(index)).get();
             Employees employees = employeeRepository.findById(employeeID).get();
 
             // set data into a new appointment
             Appointments appointments = new Appointments();
-            appointments.setAppointmentTime(Timestamp.valueOf(appointmentTime));
+            appointments.setAppointmentTime(Timestamp.valueOf(listAppointmentTime.get(index)));
             appointments.setEmployees(employees);
             appointments.setCustomer(customers);
             appointments.setPets(pets);
             appointments.setServices(services);
-
+            appointments.setDepositAmount(totalMoney);
+            appointments.setPaymentStatus("Pending");
+            appointments.setStatus("Scheduled");
             Appointments savedAppointments = appointmentRepository.save(appointments);
+
+            // set data into employee schedule table
             EmployeeSchedule employeeSchedule = new EmployeeSchedule();
             employeeSchedule.setEmployeeID(employees);
             employeeSchedule.setAppointmentID(savedAppointments);
@@ -105,10 +113,8 @@ public class AppointmentService {
             employeeSchedule.setEndTime(endTime);
             employeeScheduleRepository.save(employeeSchedule);
 
-            return savedAppointments;
-        } catch (Exception e) {
-            log.error("create appointment function: {}", e.getMessage());
-            return null;
+            count--;
+            index++;
         }
     }
 
@@ -136,7 +142,7 @@ public class AppointmentService {
         }
     }
 
-    private int getNextEmployeeID(int employeeID){
+    private int getNextEmployeeID(int employeeID) {
         Employees employees = employeeRepository.findById(employeeID).get();
         List<Employees> employeesList = employeeRepository.findAll();
         int index = employeesList.indexOf(employees);

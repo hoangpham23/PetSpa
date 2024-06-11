@@ -2,6 +2,7 @@ package com.team.controller;
 
 
 import com.team.dto.AppointmentDTO;
+import com.team.dto.AppointmentRequestDTO;
 import com.team.model.Appointments;
 import com.team.dto.ServiceDTO;
 import com.team.service.AppointmentService;
@@ -58,20 +59,16 @@ public class AppointmentController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error at server site");
     }
 
-    @PostMapping("book")
-    public ResponseEntity<?> createAppointment(@RequestBody Map<String, String> data) {
-        try {
-            Appointments appointment = appointmentService.createAppointment(data);
-            if (appointment == null) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Full slots");
-            }
 
+    @PostMapping("book")
+    public ResponseEntity<?> createAppointment(@RequestBody AppointmentRequestDTO appointmentRequest) {
+        try {
+            appointmentService.createAppointment(appointmentRequest);
             return ResponseEntity.status(HttpStatus.CREATED).body("Create an appointment successfully");
         } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
 
 }
