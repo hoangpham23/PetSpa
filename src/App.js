@@ -18,6 +18,7 @@ import CustomerInfo from "./pages/customer-info/Customer-info.js";
 import ChoosePet from "./pages/choose-pet/ChoosePet.js";
 import InfoPet from "./pages/info-pet/InfoPet.js";
 
+
 function App() {
   return (
     <Router>
