@@ -47,6 +47,7 @@ public class CustomerService {
 
     private CustomerDTO convertToCustomerDTO(Customers customers) {
         CustomerDTO dto = new CustomerDTO();
+        dto.setCustomerID(customers.getCustomerID());
         dto.setCustomerName(customers.getCustomerName());
         dto.setPhoneNumber(customers.getPhoneNumber());
         dto.setEmail(customers.getEmail());
