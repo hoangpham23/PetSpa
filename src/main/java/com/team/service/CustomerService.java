@@ -32,6 +32,10 @@ public class CustomerService {
         customers.setAccounts(accounts);
         return customerRepository.save(customers);
     }
+    public boolean checkPhoneNumber(String phoneNumber) {
+        return customerRepository.existsAccountByPhoneNumber(phoneNumber);
+    }
+
 
     public EditAccountDTO editCustomer(Integer customerID, String customerName, String email, String phoneNumber) {
         Customers customers = customerRepository.findById(customerID).get();
