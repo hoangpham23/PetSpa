@@ -33,21 +33,19 @@ public class CustomerService {
         return customerRepository.save(customers);
     }
 
-    public EditAccountDTO editCustomer(Integer customerID, String customerName, String email, String phoneNumber, Integer numberOfPets) {
+    public EditAccountDTO editCustomer(Integer customerID, String customerName, String email, String phoneNumber) {
         Customers customers = customerRepository.findById(customerID).get();
         Accounts accounts = accountRepository.findById(customerID).get();
         customers.setCustomerName(customerName);
         customers.setEmail(email);
         accounts.setEmail(email);
         customers.setPhoneNumber(phoneNumber);
-        customers.setNumberOfPets(numberOfPets);
         customerRepository.save(customers);
         accountRepository.save(accounts);
         EditAccountDTO dto = new EditAccountDTO();
         dto.setCustomerName(customers.getCustomerName());
         dto.setEmail(customers.getEmail());
         dto.setPhoneNumber(customers.getPhoneNumber());
-        dto.setNumberOfPets(customers.getNumberOfPets());
 
         return dto;
     }
