@@ -1,5 +1,6 @@
 package com.team.service;
 
+import com.team.dto.CustomerDTO;
 import com.team.dto.EditAccountDTO;
 import com.team.model.Accounts;
 import com.team.model.Customers;
@@ -7,6 +8,8 @@ import com.team.repository.AccountRepository;
 import com.team.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 public class CustomerService {

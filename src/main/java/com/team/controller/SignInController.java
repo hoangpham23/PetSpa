@@ -2,8 +2,6 @@ package com.team.controller;
 
 import com.team.dto.AccountDTO;
 import com.team.dto.CustomerDTO;
-import com.team.model.Customers;
-import com.team.repository.CustomerRepository;
 import com.team.service.AccountService;
 import com.team.service.CustomerService;
 import org.springframework.http.HttpStatus;
@@ -13,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
-import java.util.Optional;
 
 
 @RestController
@@ -22,12 +19,10 @@ public class SignInController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final AccountService accountService;
-    private final CustomerRepository customerRepository;
     private final CustomerService customerService;
 
-    public SignInController(AccountService accountService, CustomerRepository customerRepository, CustomerService customerService) {
+    public SignInController(AccountService accountService,  CustomerService customerService) {
         this.accountService = accountService;
-        this.customerRepository = customerRepository;
         this.customerService = customerService;
     }
 
