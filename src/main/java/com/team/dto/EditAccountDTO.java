@@ -11,5 +11,4 @@ public class EditAccountDTO {
     private String email;
     private String phoneNumber;
     private String customerName;
-    private Integer NumberOfPets;
 }
