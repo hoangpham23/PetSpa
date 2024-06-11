@@ -1,6 +1,10 @@
 import React from "react";
 import "../../pages/home-page/HomeGuest_style.css";
 function HeaderForGuest() {
+  window.onscroll = () => {
+    let header = document.querySelector(".header");
+    header.classList.toggle("sticky", window.scrollY > 100);
+  };
   return (
     <header className="header">
       <div className="navbar-header">

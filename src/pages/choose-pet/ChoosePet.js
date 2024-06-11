@@ -6,6 +6,32 @@ import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
 
 function ChoosePet() {
+  const [customerID, setCustomerID] = useState("");
+  const [isCustomerIDSent, setIsCustomerIDSent] = useState(false);
+  // chắc chắn phải có customerID
+  useEffect(() => {
+    const customer = JSON.parse(localStorage.getItem("account"));
+    if (customer) {
+      setCustomerID(customer.customerID);
+    }
+  }, []);
+  useEffect(() => {
+    // Gọi handleData chỉ khi customerID đã được gửi đi
+    if (customerID && !isCustomerIDSent) {
+      handleData(customerID);
+      setIsCustomerIDSent(true); // Cập nhật trạng thái đã gửi customerID
+    }
+  }, [customerID, isCustomerIDSent]);
+  async function handleData() {
+    const response = await axios.get("http://localhost:8090/choose-pet", {
+      customerID: customerID,
+    });
+    if (response === 200) {
+      console.log(response.data);
+      // lưu thông tin mấy con pet ở đây
+      // sau đó in ra
+    }
+  }
   return (
     <div>
       <HeaderForCus />
@@ -28,6 +54,7 @@ function ChoosePet() {
             <p>WEIGHT (KG): </p>
           </div>
         </div>
+
         <div className={style.add}>
           <input type="submit" value="ADD PET" className={style.btn} />
         </div>

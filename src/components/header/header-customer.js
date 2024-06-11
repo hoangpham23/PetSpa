@@ -1,6 +1,13 @@
 import React, { useEffect } from "react";
 // import "../../pages/home-page/HomeCus_style.css";
 function HeaderForCus() {
+  useEffect(() => {
+    window.onscroll = () => {
+      let header = document.querySelector(".header");
+      header.classList.toggle("sticky", window.scrollY > 100);
+    };
+  });
+
   return (
     <header className="header">
       <div className="navbar-header">
