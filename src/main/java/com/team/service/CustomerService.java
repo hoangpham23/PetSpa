@@ -7,6 +7,8 @@ import com.team.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class CustomerService {
 
@@ -16,6 +18,14 @@ public class CustomerService {
     public CustomerService(CustomerRepository customerRepository, AccountService accountService){
         this.customerRepository = customerRepository;
         this.accountService = accountService;
+    }
+
+    public CustomerDTO getCustomerByAccountID(int accountID){
+        Optional<Customers> customers = customerRepository.findById(accountID);
+        if(customers.isPresent()){
+            return convertToCustomerDTO(customers.get());
+        }
+        return null;
     }
 
     @Transactional
@@ -33,7 +43,6 @@ public class CustomerService {
 
     private CustomerDTO convertToCustomerDTO(Customers customers) {
         CustomerDTO dto = new CustomerDTO();
-        dto.setCustomerID(customers.getCustomerID());
         dto.setCustomerName(customers.getCustomerName());
         dto.setPhoneNumber(customers.getPhoneNumber());
         dto.setEmail(customers.getEmail());
