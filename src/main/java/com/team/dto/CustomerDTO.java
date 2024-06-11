@@ -13,4 +13,5 @@ public class CustomerDTO {
     private String email;
     private String phoneNumber;
     private Integer numberOfPets;
+    private String role;
 }

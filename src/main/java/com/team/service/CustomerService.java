@@ -24,10 +24,10 @@ public class CustomerService {
         this.accountRepository = accountRepository;
     }
 
-    public CustomerDTO getCustomerByAccountID(int accountID){
+    public CustomerDTO getCustomerByAccountID(int accountID, String role){
         Optional<Customers> customers = customerRepository.findById(accountID);
         if(customers.isPresent()){
-            return convertToCustomerDTO(customers.get());
+            return convertToCustomerDTO(customers.get(), role);
         }
         return null;
     }
@@ -42,16 +42,17 @@ public class CustomerService {
         customers.setEmail(email);
         customers.setAccounts(accounts);
         customers.setNumberOfPets(0);
-        return convertToCustomerDTO(customerRepository.save(customers));
+        return convertToCustomerDTO(customerRepository.save(customers), accounts.getRole());
     }
 
-    private CustomerDTO convertToCustomerDTO(Customers customers) {
+    private CustomerDTO convertToCustomerDTO(Customers customers, String role) {
         CustomerDTO dto = new CustomerDTO();
         dto.setCustomerID(customers.getCustomerID());
         dto.setCustomerName(customers.getCustomerName());
         dto.setPhoneNumber(customers.getPhoneNumber());
         dto.setEmail(customers.getEmail());
         dto.setNumberOfPets(customers.getNumberOfPets());
+        dto.setRole(role);
         return dto;
     }
     public boolean checkPhoneNumber(String phoneNumber) {

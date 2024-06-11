@@ -34,7 +34,7 @@ public class SignInController {
 
             // using jpa to prevent SQL injection
             AccountDTO accounts = accountService.checkLogin(email, password);
-            CustomerDTO customerDTO = customerService.getCustomerByAccountID(accounts.getAccountID());
+            CustomerDTO customerDTO = customerService.getCustomerByAccountID(accounts.getAccountID(), accounts.getRole());
 
             if (customerDTO != null) {
                 return ResponseEntity.ok().body(customerDTO);
