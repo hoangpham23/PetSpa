@@ -1,53 +1,84 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import React from "react";
+import HeaderForCus from "../../components/header/header-customer";
+import style from "./ChooseService_style.module.css";
+import { Helmet } from "react-helmet";
+import service1 from "../../assets/img/service1.jpg";
+// import service2 from "../../assets/img/service2.jpg";
+// import service3 from "../../assets/img/service3.jpg";
 
 function ChooseService() {
-  const [services, setServices] = useState([]);
-  const [selectedServices, setSelectedServices] = useState([]);
-  const [msg, setMsg] = useState("");
+  return (
+    <>
+      <Helmet>
+        <link
+          href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+          rel="stylesheet"
+        />
+      </Helmet>
+      <HeaderForCus />
 
-  async function getData() {
-    try {
-      const response = await axios.get(
-        "http://localhost:8090/appointment/service"
-      );
-      console.log(response.data);
-      if (response.status === 200) {
-        setServices(response.data);
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 400) {
-        setMsg("ERROR HAS BEEN OCCUR !!");
-      }
-    }
-  }
-  // lấy danh sách dữ liệu từ server
-  useEffect(() => {
-    getData();
-  }, []);
-  // làm hàm khi nhấn vào tên sẽ hiển thị thông tin cảu service, default là hình ảnh, descrip của dịch vụ đầu tiên
-  //---------------------------- send data ---------------------------------------
-  // hàm này cần check trạng thái của check box và vần có thuộc ticnsh name
-  function handleCheckBoxChange(event) {
-    const { name, checked } = event.target;
-    if (checked) {
-      setSelectedServices([...selectedServices, name]);
-    } else {
-      setSelectedServices(
-        selectedServices.filter((service) => service.name !== name) // mỗi phần tử trong mảng là service
-      );
-    }
-  }
-  // chỉ lưu data vào localStorage chứ k gửi param đi
-  function handleSubmit(event) {
-    event.preventDefault();
-    try {
-      localStorage.setItem("selectedServices", selectedServices);
-    } catch (error) {
-      console.log("Erorr in ChooseService rfc");
-    }
-  }
-  return <div></div>;
+      <div className={style.Ask}>
+        <h1>DO YOU WANT TO ADD OTHER SERVICES?</h1>
+      </div>
+
+      <section className={style.service} id="service">
+        <div className={style.service_checklist}>
+          <div className={style.service_container}>
+            <input
+              type="checkbox"
+              id="service1"
+              name="service1"
+              className={style.custom_checkbox}
+            />
+            <label htmlFor="service1" className={style.custom_label}>
+              <span class={style.tickbox}></span>
+              <span className={style.Service}>SERVICE 1</span>
+            </label>
+          </div>
+
+          <div className={style.service_container}>
+            <input
+              type="checkbox"
+              id="service2"
+              name="service2"
+              className={style.custom_checkbox}
+            />
+            <label htmlFor="service2" className={style.custom_label}>
+              <span class={style.tickbox}></span>
+              <span className={style.Service}>SERVICE 2</span>
+            </label>
+          </div>
+
+          <div className={style.service_container}>
+            <input
+              type="checkbox"
+              id="service3"
+              name="service3"
+              className={style.custom_checkbox}
+            />
+            <label htmlFor="service3" className={style.custom_label}>
+              <span class={style.tickbox}></span>
+              <span className={style.Service}>SERVICE 3</span>
+            </label>
+          </div>
+        </div>
+        <div className={style.service_display}>
+          <div className={style.service_img}>
+            <img src={service1} alt="Displayed Service" />
+          </div>
+          <div className={style.service_price}></div>
+        </div>
+      </section>
+      <div className={style.next}>
+        <button type="submit" className={style.btn}>
+          NEXT STEP
+          <i className="bx bx-chevron-right"></i>
+        </button>
+      </div>
+    </>
+  );
 }
 
 export default ChooseService;
