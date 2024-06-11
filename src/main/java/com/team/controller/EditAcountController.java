@@ -1,9 +1,6 @@
 package com.team.controller;
 
 import com.team.dto.EditAccountDTO;
-import com.team.dto.PetDTO;
-import com.team.model.Customers;
-import com.team.repository.CustomerRepository;
 import com.team.service.AccountService;
 import com.team.service.CustomerService;
 import org.springframework.http.HttpStatus;
