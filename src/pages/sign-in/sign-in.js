@@ -15,11 +15,12 @@ function SignIn() {
   localStorage.setItem("resetPasswordEmail", "");
   const [account, setAccount] = useState({
     customerID: "",
-    //customerName: "",
+    customerName: "",
     email: "",
     password: "",
     role: "",
-    //numberOfPets: "",
+    numberOfPets: "",
+    phoneNumber: "",
   });
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
@@ -36,19 +37,6 @@ function SignIn() {
     }
   }, [location]);
 
-  // useEffect(() => {
-  //   // if (account.customerID && account.numberOfPets && account.customerName ) {
-  //   if (account.customerID) {
-  //     console.log("Account updated:", account);
-  //     localStorage.setItem("account", JSON.stringify(account));
-  //     if (account.role === "CUS") {
-  //       localStorage.setItem("role", account.role);
-  //       navigate("/home-page");
-  //     }
-  //   }
-  // }, [account, navigate]);
-
-  //
   async function handleSubmit(event) {
     event.preventDefault();
     try {
@@ -56,13 +44,17 @@ function SignIn() {
         email: account.email,
         password: account.password,
       });
-
+      console.log(account);
       if (response.status === 200) {
         const updatedAccount = {
           ...account,
-          customerID: response.data.accountID,
+          customerID: response.data.customerID,
           role: response.data.role,
+          customerName: response.data.customerName,
+          numberOfPets: response.data.numberOfPets,
+          phoneNumber: response.data.phoneNumber,
         };
+        console.log(updatedAccount);
         setAccount(updatedAccount);
         localStorage.setItem("account", JSON.stringify(updatedAccount));
         localStorage.setItem("role", response.data.role);

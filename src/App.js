@@ -17,6 +17,7 @@ import ServiceInfo from "./pages/service-info/ServiceInfo.js";
 import CustomerInfo from "./pages/customer-info/Customer-info.js";
 import ChoosePet from "./pages/choose-pet/ChoosePet.js";
 import InfoPet from "./pages/info-pet/InfoPet.js";
+import ChooseService from "./pages/choose-service/ChooseService.js";
 
 function App() {
   return (
@@ -30,13 +31,11 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />}></Route>
         <Route path="/forgot-password/verify-otp" element={<NewPass />}></Route>
         <Route path="/choose-time" element={<ChooseTime />}></Route>
-        <Route
-          path="/service-info/:serviceName"
-          element={<ServiceInfo />}
-        ></Route>
+        <Route path="/home-page/:serviceName" element={<ServiceInfo />}></Route>
         <Route path="/customer-info" element={<CustomerInfo />}></Route>
         <Route path="/choose-pet" element={<ChoosePet />}></Route>
         <Route path="/info-pet" element={<InfoPet />}></Route>
+        <Route path="/appointment/service" element={<ChooseService />}></Route>
       </Routes>
     </Router>
   );

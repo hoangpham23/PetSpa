@@ -1,8 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import React from "react";
+import ReactDOM from "react-dom";
 
 function InfoPet() {
+  console.log("Rendering InfoPet component");
   const [customerID, setCustomerID] = useState("");
   // make sure that having customerID
   useEffect(() => {
@@ -53,7 +56,7 @@ function InfoPet() {
     }
   }
 
-  return <div></div>;
+  return <></>;
 }
 
 export default InfoPet;
