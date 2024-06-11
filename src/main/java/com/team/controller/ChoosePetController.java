@@ -21,7 +21,18 @@ public class ChoosePetController {
         this.petDetailService = petDetailService;
     }
 
-@GetMapping("")
+//@GetMapping("")
+//public ResponseEntity<?> getPetsByCustomerId(@RequestBody Map<String, Integer> request) {
+//    Integer customerID = request.get("customerID");
+//    List<Pets> pets = petDetailService.getPetsByCustomerId(customerID);
+//
+//    if (pets == null || pets.isEmpty()) {
+//        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("This account does not have any pets.");
+//    }
+//
+//    return new ResponseEntity<>(pets, HttpStatus.OK);
+//}
+@PostMapping("")
 public ResponseEntity<?> getPetsByCustomerId(@RequestBody Map<String, Integer> request) {
     Integer customerID = request.get("customerID");
     List<Pets> pets = petDetailService.getPetsByCustomerId(customerID);
