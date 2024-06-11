@@ -2,8 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import HeaderForCus from "../../components/header/header-customer";
 import style from "./ChoosePet_style.module.css";
-import { Helmet } from 'react-helmet';
-import { useParams } from 'react-router-dom';
+import { Helmet } from "react-helmet";
+import { useParams } from "react-router-dom";
 
 function ChoosePet() {
   return (
@@ -29,8 +29,8 @@ function ChoosePet() {
           </div>
         </div>
         <div className={style.add}>
-                <input type="submit" value="ADD PET" className={style.btn}/>
-            </div>
+          <input type="submit" value="ADD PET" className={style.btn} />
+        </div>
       </section>
     </div>
   );

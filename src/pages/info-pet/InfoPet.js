@@ -1,6 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HeaderForCus from "../../components/header/header-customer";
+import style from "./InfoPet_style.module.css";
+import { Helmet } from "react-helmet";
+import { useParams } from "react-router-dom";
 
 function InfoPet() {
   const [customerID, setCustomerID] = useState("");
@@ -53,9 +57,36 @@ function InfoPet() {
     }
   }
 
-  return <div>
-    
-  </div>;
+  return (
+    <div>
+      <HeaderForCus></HeaderForCus>
+      <section>
+        <div className={style.welcome_div}>
+          <div className={style.welcome_content}>
+            <p>Insert Information for new pet!</p>
+          </div>
+          <div className={style.welcome_form}>
+            <form action="#">
+              <div className={style.input_box}>
+                <p>Name of your pet:</p>{" "}
+                <input type="text" placeholder="ENTER YOUR PET'S NAME HERE" />
+              </div>
+              <div className={style.input_box}>
+                <p>Weight (kg):</p>{" "}
+                <input
+                  type="number"
+                  placeholder="ENTER YOUR PET'S WEIGHT HERE"
+                />
+              </div>
+              <div className={style.add}>
+                <input type="submit" value="ADD" className="btn" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
 }
 
 export default InfoPet;
