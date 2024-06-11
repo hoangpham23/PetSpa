@@ -3,17 +3,15 @@ import { useEffect, useState } from "react";
 import HeaderForCus from "../../components/header/header-customer";
 import style from "./ChoosePet_style.module.css";
 import { Helmet } from "react-helmet";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function ChoosePet() {
   const [customerID, setCustomerID] = useState("");
   const [isCustomerIDSent, setIsCustomerIDSent] = useState(false);
   const [petData, setPetData] = useState([]);
+  const [msg, setMsg] = useState("");
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   console.log(petData);
-  // }, [petData]);
-  // chắc chắn phải có customerID
   useEffect(() => {
     const customer = JSON.parse(localStorage.getItem("account"));
     if (customer) {
@@ -55,25 +53,17 @@ function ChoosePet() {
               <p>WEIGHT (KG): {pet.weight}</p>
             </div>
           ))}
-          {/* <div className={style.PetInfo_box}>
-            <p>PET 1</p>
-            <p>NAME: </p>
-            <p>WEIGHT (KG): </p>
-          </div>
-          <div className={style.PetInfo_box}>
-            <p>PET 2</p>
-            <p>NAME: </p>
-            <p>WEIGHT (KG): </p>
-          </div>
-          <div className={style.PetInfo_box}>
-            <p>PET 3</p>
-            <p>NAME: </p>
-            <p>WEIGHT (KG): </p>
-          </div> */}
         </div>
 
         <div className={style.add}>
-          <input type="submit" value="ADD PET" className={style.btn} />
+          <input
+            type="submit"
+            value="ADD PET"
+            className={style.btn}
+            onClick={() => {
+              navigate("/info-pet");
+            }}
+          />
         </div>
       </section>
     </div>

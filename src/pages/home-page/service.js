@@ -10,7 +10,7 @@ function Service() {
   }
   function handleNavigate(item) {
     console.log(`${item.serviceName}`);
-    navigate(`/service-info/${item.serviceName}`);
+    navigate(`/home-page/${item.serviceName}`);
   }
   return (
     <div>

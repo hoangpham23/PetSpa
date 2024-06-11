@@ -25,7 +25,40 @@ html {
   font-size: 62.5%;
   color: var(--text-color);
 }
+.gg-profile,
+.gg-profile::after,
+.gg-profile::before {
+  display: block;
+  box-sizing: border-box;
+  border: 2px solid;
+  border-radius: 100px;
+}
 
+.gg-profile {
+  overflow: hidden;
+  transform: scale(var(--ggs, 1));
+  width: 22px;
+  height: 22px;
+  position: relative;
+}
+
+.gg-profile::after,
+.gg-profile::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 8px;
+  height: 8px;
+}
+
+.gg-profile::after {
+  border-radius: 200px;
+  top: 11px;
+  left: 0px;
+  width: 18px;
+  height: 18px;
+}
 /* body {
   background: var(--bg-color);
   color: var(--text-color);
@@ -169,7 +202,7 @@ html {
   margin-right: 4rem;
 }
 
-.feedback_div h1{
+.feedback_div h1 {
   font-size: 3.6rem;
   display: flex;
   justify-content: center;
@@ -198,14 +231,14 @@ html {
   flex: 1;
 }
 
-.feedback_display .service_container i{
+.feedback_display .service_container i {
   display: flex;
   text-align: center;
   font-size: 10rem;
   color: rgb(253, 211, 215);
 }
 
-.feedback_display .service_container{
+.feedback_display .service_container {
   margin-left: 5%;
 }
 
