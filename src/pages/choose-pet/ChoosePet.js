@@ -8,28 +8,38 @@ import { useParams } from "react-router-dom";
 function ChoosePet() {
   const [customerID, setCustomerID] = useState("");
   const [isCustomerIDSent, setIsCustomerIDSent] = useState(false);
+  const [petData, setPetData] = useState([]);
+
+  // useEffect(() => {
+  //   console.log(petData);
+  // }, [petData]);
   // chắc chắn phải có customerID
   useEffect(() => {
     const customer = JSON.parse(localStorage.getItem("account"));
     if (customer) {
       setCustomerID(customer.customerID);
+      //setIsCustomerIDSent(true);
     }
   }, []);
   useEffect(() => {
     // Gọi handleData chỉ khi customerID đã được gửi đi
     if (customerID && !isCustomerIDSent) {
-      handleData(customerID);
-      setIsCustomerIDSent(true); // Cập nhật trạng thái đã gửi customerID
+      handleData();
+      // Cập nhật trạng thái đã gửi customerID
     }
-  }, [customerID, isCustomerIDSent]);
+  }, [customerID]);
   async function handleData() {
-    const response = await axios.get("http://localhost:8090/choose-pet", {
+    console.log(customerID);
+    const response = await axios.post("http://localhost:8090/choose-pet", {
       customerID: customerID,
     });
-    if (response === 200) {
-      console.log(response.data);
-      // lưu thông tin mấy con pet ở đây
-      // sau đó in ra
+    console.log(response.status);
+    console.log(customerID);
+    if (response.status === 200) {
+      setIsCustomerIDSent(true);
+      console.log("data", response.data);
+      setPetData(response.data);
+      console.log(petData);
     }
   }
   return (
@@ -38,7 +48,14 @@ function ChoosePet() {
       <section>
         <div className={style.PetInfo_container}>
           <h1>CHOOSE PET FOR SERVICES</h1>
-          <div className={style.PetInfo_box}>
+          {petData.map((pet, index) => (
+            <div key={index} className={style.PetInfo_box}>
+              <p>PET {index + 1}</p>
+              <p>NAME: {pet.petName}</p>
+              <p>WEIGHT (KG): {pet.weight}</p>
+            </div>
+          ))}
+          {/* <div className={style.PetInfo_box}>
             <p>PET 1</p>
             <p>NAME: </p>
             <p>WEIGHT (KG): </p>
@@ -52,7 +69,7 @@ function ChoosePet() {
             <p>PET 3</p>
             <p>NAME: </p>
             <p>WEIGHT (KG): </p>
-          </div>
+          </div> */}
         </div>
 
         <div className={style.add}>
