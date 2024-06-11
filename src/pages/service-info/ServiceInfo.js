@@ -46,7 +46,7 @@ function ServiceInfo() {
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam nesciunt voluptate ut praesentium fugiat quaerat, ab quam dolorum vitae odit expedita recusandae.</p>
             </div>
             <div className={style.book}>
-                <input type="submit" value="BOOK" className="btn"/>
+                <input type="submit" value="BOOK" className={style.btn}/>
             </div>
         </div>
   

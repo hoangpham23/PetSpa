@@ -41,15 +41,16 @@
     font-weight: 600;
     border: 0.2rem solid transparent;
     transition: 0.5s ease;
-}
-
+  }
+  
   .btn:hover {
     background: transparent;
     color: #0b5864;
     border-color: #0b5864;
   }
-
-  .PetInfo_box .btn {
+  
+ .add {
     display: flex;
-    margin-left: 50rem;
-}
+    justify-content: center;
+  }
+  

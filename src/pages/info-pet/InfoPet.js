@@ -53,7 +53,9 @@ function InfoPet() {
     }
   }
 
-  return <div></div>;
+  return <div>
+    
+  </div>;
 }
 
 export default InfoPet;
