@@ -148,3 +148,7 @@ h2 {
 .green {
   background-color: #c8f7c5;
 }
+.isSelecting {
+  background-color: #c8f7c5; /* Màu nền của ô là màu vàng */
+  color: black; /* Màu chữ của ô là đen */
+}

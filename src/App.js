@@ -18,6 +18,7 @@ import CustomerInfo from "./pages/customer-info/Customer-info.js";
 import ChoosePet from "./pages/choose-pet/ChoosePet.js";
 import InfoPet from "./pages/info-pet/InfoPet.js";
 import ChooseService from "./pages/choose-service/ChooseService.js";
+import ChooseTime2 from "./pages/choose-time/ChooseTime.js";
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
         <Route path="/home-page" element={<HomePage />}></Route>
         <Route path="/forgot-password" element={<ForgotPassword />}></Route>
         <Route path="/forgot-password/verify-otp" element={<NewPass />}></Route>
-        <Route path="/choose-time" element={<ChooseTime />}></Route>
+        <Route path="/choose-time" element={<ChooseTime2 />}></Route>
         <Route path="/home-page/:serviceName" element={<ServiceInfo />}></Route>
         <Route path="/customer-info" element={<CustomerInfo />}></Route>
         <Route path="/choose-pet" element={<ChoosePet />}></Route>

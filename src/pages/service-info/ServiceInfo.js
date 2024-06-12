@@ -126,8 +126,8 @@ function ServiceInfo() {
 
             {serviceData.feedbacks && serviceData.feedbacks.length > 0 ? (
               serviceData.feedbacks.map((feedback, index) => (
-                <div key={index} className={style.service_container}>
-                  <div className={style.ava_img}>
+                <div className={style.service_container}>
+                  <div className={style.ava_img} key={index}>
                     <img src={service1} alt="Avatar" />
                   </div>
                   <i className="gg-quote"></i>

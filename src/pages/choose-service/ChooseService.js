@@ -32,7 +32,7 @@ function ChooseService() {
       ]);
     } else {
       setSelectedServices(
-        selectedServices.filter((service) => service !== name)
+        selectedServices.filter((service) => service.name !== name)
       );
     }
   }; // lưu vô localStorage
