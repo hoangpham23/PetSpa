@@ -21,7 +21,7 @@ public class SignInController {
     private final AccountService accountService;
     private final CustomerService customerService;
 
-    public SignInController(AccountService accountService,  CustomerService customerService) {
+    public SignInController(AccountService accountService, CustomerService customerService) {
         this.accountService = accountService;
         this.customerService = customerService;
     }
@@ -34,12 +34,11 @@ public class SignInController {
 
             // using jpa to prevent SQL injection
             AccountDTO accounts = accountService.checkLogin(email, password);
-            CustomerDTO customerDTO = customerService.getCustomerByAccountID(accounts.getAccountID(), accounts.getRole());
-
-            if (customerDTO != null) {
-                return ResponseEntity.ok().body(customerDTO);
+            if (accounts == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
             }
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+            CustomerDTO customerDTO = customerService.getCustomerByAccountID(accounts.getAccountID(), accounts.getRole());
+            return ResponseEntity.ok().body(customerDTO);
         } catch (Exception e) {
             logger.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error at server site");

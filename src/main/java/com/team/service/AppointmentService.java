@@ -42,9 +42,16 @@ public class AppointmentService {
         try {
             // timeSendRequest = LocalDateTime.parse("2024-06-05 09:00:00", formatter);
             // set a range to take the list appointment
+            LocalTime time = timeSendRequest.toLocalTime();
+            LocalTime lastShift = LocalTime.parse("17:00:00");
             LocalDateTime min = timeSendRequest.plusDays(1);
             LocalDateTime max = timeSendRequest.plusDays(4);
             String after = min.format(FORMATTER);
+            if (time.isAfter(lastShift)) {
+                max = timeSendRequest.plusDays(5);
+            }
+            System.out.println("min: " + min );
+            System.out.println("max: " + max);
             String before = max.format(FORMATTER_DATE);
 
             List<Object[]> listAppointments = appointmentRepository.findAppointmentsAfterBefore(after, before);
@@ -68,7 +75,7 @@ public class AppointmentService {
 
     }
 
-    public void createAppointment(AppointmentRequestDTO data) {
+    public boolean createAppointment(AppointmentRequestDTO data) {
         Integer customerID = data.getCustomerID();
         List<Integer> listServicesID = data.getServiceIds();
         Integer petID = data.getPetID();
@@ -82,8 +89,9 @@ public class AppointmentService {
             String time = listAppointmentTime.get(index).replace(".000", "");
             LocalDateTime appointmentTime = LocalDateTime.parse(time, FORMATTER);
             Integer employeeID = findLastEmployee(appointmentTime);
+            // null only the slot is full
             if (employeeID == null) {
-                return;
+                return false;
             }
             Customers customers = customerRepository.findById(customerID).get();
             Pets pets = petRepository.findById(petID).get();
@@ -116,6 +124,7 @@ public class AppointmentService {
             count--;
             index++;
         }
+        return true;
     }
 
     private Integer findLastEmployee(LocalDateTime request) {
