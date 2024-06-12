@@ -19,7 +19,7 @@ public class Accounts {
     @Column(name = "AccountID", nullable = false)
     private Integer accountID;
 
-    @Nationalized
+//    @Nationalized
     @Column(name = "Email", length = 100)
     private String email;
 

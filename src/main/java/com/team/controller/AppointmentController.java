@@ -33,7 +33,7 @@ public class AppointmentController {
         try {
             List<ServiceDTO> listService = functionService.getServices();
             if (listService.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body("There is no service");
             }
             return ResponseEntity.ok(listService);
         } catch (Exception e) {
@@ -62,8 +62,11 @@ public class AppointmentController {
     @PostMapping("book")
     public ResponseEntity<?> createAppointment(@RequestBody AppointmentRequestDTO appointmentRequest) {
         try {
-            appointmentService.createAppointment(appointmentRequest);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Create an appointment successfully");
+            boolean check = appointmentService.createAppointment(appointmentRequest);
+            if (!check) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to create appointment.");
+            }
+            return ResponseEntity.status(HttpStatus.CREATED).body("Appointment created successfully.");
         } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
