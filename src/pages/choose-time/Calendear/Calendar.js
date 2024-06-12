@@ -3,7 +3,7 @@ import "./Calendar_style.css";
 import { useEffect } from "react";
 
 function Calendar() {
-   //there is 3 things need to be solved, the day in the current month : Mon or Tues or Wed,...
+  //there is 3 things need to be solved, the day in the current month : Mon or Tues or Wed,...
   //Previous month
   //Current month
   //Next month
