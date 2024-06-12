@@ -1,5 +1,6 @@
 package com.team.service;
 
+import com.team.dto.ChooseServiceDTO;
 import com.team.dto.FeedbackDTO;
 import com.team.dto.ServiceImageDTO;
 import com.team.dto.ServicePageDTO;
@@ -39,6 +40,19 @@ public class ServiceImagesService {
             if (serviceOpt.isPresent()) {
                 Services services = serviceOpt.get();
                 result.add(new ServiceImageDTO(image.getImageID(), services.getId(), image.getImageURL(), services.getServiceName()));
+            }
+        }
+        return result;
+    }
+    public List<ChooseServiceDTO> chooseServicePage() {
+        List<ServiceImages> images = servicesImagesRepository.findAll();
+        List<ChooseServiceDTO> result = new ArrayList<>();
+
+        for (ServiceImages image : images) {
+            Optional<Services> serviceOpt = Optional.ofNullable(image.getServiceID());
+            if (serviceOpt.isPresent()) {
+                Services services = serviceOpt.get();
+                result.add(new ChooseServiceDTO(services.getId(),services.getServiceName(),image.getImageURL(), services.getPrice()));
             }
         }
         return result;
