@@ -20,7 +20,6 @@ function ChooseTime2() {
     appointmentTimes: JSON.parse(
       localStorage.getItem("appointmentTimes") || "[]"
     ),
-
     petId: JSON.parse(localStorage.getItem("petID")),
     depositAmount: JSON.parse(localStorage.getItem("depositAmount")),
   });

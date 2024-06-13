@@ -108,7 +108,7 @@ function ChooseTimeBox() {
   const numOfServices = cartsystem.length;
   const [msg, setMsg] = useState("");
   useEffect(() => {
-    localStorage.setItem("appointmentTimes", selectedTimes);
+    localStorage.setItem("appointmentTimes", JSON.stringify(selectedTimes));
   }, [selectedTimes]);
   useEffect(() => {
     console.log(numOfServices);
