@@ -6,6 +6,7 @@ import style from "./ChooseService_style.module.css";
 import { Helmet } from "react-helmet";
 import service1 from "../../assets/img/service1.jpg";
 import { useNavigate } from "react-router-dom";
+import Footer from "../../components/footer/footer";
 // import service2 from "../../assets/img/service2.jpg";
 // import service3 from "../../assets/img/service3.jpg";
 
@@ -150,6 +151,7 @@ function ChooseService() {
           <i className="bx bx-chevron-right"></i>
         </button>
       </div>
+      <Footer />
     </>
   );
 }

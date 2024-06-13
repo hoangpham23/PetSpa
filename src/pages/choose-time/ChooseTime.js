@@ -5,6 +5,7 @@ import style from "./ChooseTime_style.module.css";
 import axios from "axios";
 import ChooseTimeBox from "./ChooseTimeBox/ChooseTimeBox";
 import Cart from "./CartService/Cart";
+import Footer from "../../components/footer/footer";
 function ChooseTime2() {
   const { addDays, format } = require("date-fns");
   const today = new Date();
@@ -14,7 +15,7 @@ function ChooseTime2() {
   const [appointments, setAppointments] = useState([]);
   const [isFullSlot, setIsFullSlot] = useState([]);
   const [customerID, setCustomerID] = useState("");
-  const [senData, setSendData] = useState({
+  const [sendData, setSendData] = useState({
     customerID: "",
     serviceIds: JSON.parse(localStorage.getItem("serviceIds")),
     appointmentTimes: JSON.parse(
@@ -66,15 +67,18 @@ function ChooseTime2() {
   }
   async function handleSubmit() {
     try {
-      console.log(senData);
+      console.log(sendData);
+
       const response = await axios.post(
         "http://localhost:8090/appointment/book",
         {
-          customerID: senData.cusomerID,
-          serviceIds: senData.serviceIds,
-          appointmentTimes: senData.appointmentTimes,
-          petId: senData.petId,
-          depositAmount: senData.depositAmount,
+          customerID: sendData.cusomerID,
+          serviceIds: sendData.serviceIds,
+          appointmentTimes: JSON.parse(
+            localStorage.getItem("appointmentTimes")
+          ),
+          petId: sendData.petId,
+          depositAmount: sendData.depositAmount,
         }
       );
       console.log(response.status);
@@ -137,6 +141,7 @@ function ChooseTime2() {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     </>
   );
