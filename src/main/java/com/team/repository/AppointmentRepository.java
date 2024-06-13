@@ -14,13 +14,11 @@ import java.util.Optional;
 
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointments, Integer> {
-//    String SQL_countAppointmentTime = "SELECT AppointmentTime, COUNT(*) AS AppointmentCount FROM APPOINTMENTS GROUP BY AppointmentTime";
     String SQL_findAppointmentsAfterBefore  = "SELECT AppointmentTime, COUNT(*) AS AppointmentCount FROM PET_SPA.dbo.APPOINTMENTS WHERE AppointmentTime > :afterTime AND AppointmentTime < :beforeTime GROUP BY AppointmentTime ORDER BY AppointmentTime";
     String SQL_findLastEmployeeIDInADay = "SELECT TOP 1 EmployeeID FROM APPOINTMENTS WHERE CAST(AppointmentTime AS DATE) = :appointmentTime ORDER BY AppointmentID desc ";
-//    String SQL_allShiftsInADay = "SELECT EmployeeID, COUNT(*) AS count FROM APPOINTMENTS WHERE AppointmentTime > :startTime and AppointmentTime < :endTime GROUP BY EmployeeID ORDER BY EmployeeID";
     String SQL_findAllEmployeeInOneShift = "select EmployeeID from APPOINTMENTS where AppointmentTime = :appointmentTime order by employeeID";
     String SQL_findLastEmployeeID = "select top 1 EmployeeID, AppointmentTime from APPOINTMENTS order by AppointmentID desc";
-
+    String SQL_findCustomerIDAndPaymentStatus = "SELECT * FROM APPOINTMENTS WHERE CustomerID = :customerID AND PaymentStatus = :paymentStatus";
 
     @Query(value = SQL_findLastEmployeeIDInADay, nativeQuery = true)
     Optional<Integer> findLastEmployeeIDInADay(@Param("appointmentTime") String appointmentTime);
@@ -34,6 +32,7 @@ public interface AppointmentRepository extends JpaRepository<Appointments, Integ
     @Query(value = SQL_findAllEmployeeInOneShift , nativeQuery = true)
     List<Integer> findAllEmployeeInOneShift(@Param("appointmentTime") LocalDateTime appointmentTime);
 
-//    @Query(value = "SELECT AppointmentTime, COUNT(*) AS AppointmentCount FROM PET_SPA.dbo.APPOINTMENTS WHERE AppointmentTime > :afterTime AND AppointmentTime < :beforeTime GROUP BY AppointmentTime ORDER BY AppointmentTime", nativeQuery = true)
-//    List<Object[]> findAppointmentsAfterBefore(@Param("afterTime") String afterTime, @Param("beforeTime") String beforeTime);
+    @Query(value = SQL_findCustomerIDAndPaymentStatus, nativeQuery = true)
+    List<Appointments> SQL_findCustomerIDAndPaymentStatus(@Param("customerID") int customerID, @Param("paymentStatus") String paymentStatus);
+
 }
