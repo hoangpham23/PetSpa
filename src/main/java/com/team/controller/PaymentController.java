@@ -1,6 +1,7 @@
 package com.team.controller;
 
-import com.team.config.PaymentConfig;
+import com.team.config.VNPayConfig;
+import com.team.service.MomoService;
 import com.team.service.PaymentService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,8 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 @Slf4j
@@ -20,11 +24,13 @@ import java.util.*;
 public class PaymentController {
 
     private final PaymentService paymentService;
-    private final PaymentConfig paymentConfig;
+    private final VNPayConfig VNPayConfig;
+    private final MomoService momoService;
 
-    public PaymentController(PaymentService paymentService, PaymentConfig paymentConfig) {
+    public PaymentController(PaymentService paymentService, VNPayConfig VNPayConfig, MomoService momoService) {
         this.paymentService = paymentService;
-        this.paymentConfig = paymentConfig;
+        this.VNPayConfig = VNPayConfig;
+        this.momoService = momoService;
     }
 
     @GetMapping("")
@@ -65,10 +71,21 @@ public class PaymentController {
             fields.remove("vnp_SecureHash");
         }
 
+        int customerID = Integer.parseInt(request.getParameter("customerID"));
+        String paymentStatus = "Pending";
+        double amount = Double.parseDouble(request.getParameter("vnp_Amount"));
+        String paymentTime = request.getParameter("vnp_PayDate");
+
+        boolean check = paymentService.changePaymentStatus(customerID, paymentStatus);
         fields.remove("customerID");
-        String signValue = paymentConfig.hashAllFields(fields);
+
+        String signValue = VNPayConfig.hashAllFields(fields);
         if (signValue.equals(vnp_SecureHash)) {
             if ("00".equals(request.getParameter("vnp_ResponseCode"))) {
+                if (check){
+                    paymentService.savePaymentHistory(customerID, amount, paymentTime);
+                    log.info("Change paymentStatus successful");
+                }
                 return "Successful";
 //                response.sendRedirect("http://localhost:3000/payment?status=successful");
             } else {
@@ -81,6 +98,22 @@ public class PaymentController {
 //            response.sendRedirect("http://localhost:3000/payment?status=failed");
         }
 
+    }
+
+    @GetMapping("/successful")
+    public String successful(){
+        return "Successful";
+    }
+
+    @GetMapping("/ipUrl")
+    public String ipUrl(){
+        return "ipUrl";
+    }
+
+    @GetMapping("/momo/{service}")
+    public String momo(@RequestParam("amount") String amount ) throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
+        String response = momoService.createPayment(amount);
+        return response;
     }
 
 
