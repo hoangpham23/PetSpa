@@ -80,7 +80,7 @@ h2 {
   padding-top: 6rem;
   display: flex;
   /* flex-wrap: nowrap; */
-  gap: 1rem;
+  gap: 1.2rem;
 }
 
 .timeInfo {
@@ -151,4 +151,34 @@ h2 {
 .isSelecting {
   background-color: #c8f7c5; /* Màu nền của ô là màu vàng */
   color: black; /* Màu chữ của ô là đen */
+}
+.nextStepButton {
+  padding: 15px 30px;
+  font-size: 1.2em;
+  color: #fff;
+  background-color: #d1945a;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  width: calc(100% - 20px); /* Đảm bảo nút dài hơn */
+  margin: 0 auto; /* Canh giữa */
+  display: block;
+}
+
+.nextStepButton:hover {
+  background-color: #b77b46;
+}
+
+.cartContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.2em;
+}
+
+.cart {
+  margin-top: 10px;
 }

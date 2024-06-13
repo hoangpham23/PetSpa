@@ -5,19 +5,42 @@ import HeaderForCus from "../../components/header/header-customer";
 import style from "./ChooseService_style.module.css";
 import { Helmet } from "react-helmet";
 import service1 from "../../assets/img/service1.jpg";
+import { useNavigate } from "react-router-dom";
 // import service2 from "../../assets/img/service2.jpg";
 // import service3 from "../../assets/img/service3.jpg";
 
 function ChooseService() {
   const [services, setServices] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
+  const navigate = useNavigate();
+  const [displayService, setDisplayService] = useState({
+    name: "",
+    price: "",
+    imageURL: "",
+  });
+
+  // lưu các id dịch vụ đã chọn  selectedServices lên localStorage
+  // useEffect(() => {
+  //   services.map((service) => {
+  //     setDisplayService([
+  //       ...service,
+  //       { name: service.serviceName, price: service.price },
+  //     ]);
+  //     return;
+  // },[]);
+  useEffect(() => {
+    let idService = [];
+    selectedServices.map((service) => {
+      idService.push(service.serviceID);
+    });
+    localStorage.setItem("serviceIds", JSON.stringify(idService));
+  }, [selectedServices]);
   useEffect(() => {
     getData();
   }, []);
+
   async function getData() {
-    const response = await axios.get(
-      "http://localhost:8090/appointment/service"
-    );
+    const response = await axios.get(" http://localhost:8090/choose-service");
     setServices(response.data);
     console.log(response.data);
   }
@@ -28,7 +51,12 @@ function ChooseService() {
     if (checked) {
       setSelectedServices([
         ...selectedServices,
-        { name: service.serviceName, price: service.price },
+        {
+          serviceID: service.serviceID,
+          name: service.serviceName,
+          price: service.price,
+          imageURL: service.imageURl,
+        },
       ]);
     } else {
       setSelectedServices(
@@ -40,8 +68,28 @@ function ChooseService() {
     localStorage.setItem("cart", JSON.stringify(selectedServices));
     console.log(selectedServices);
     console.log("cart ne", localStorage.getItem("cart"));
+    navigate("/choose-time");
   }
-  function handleDisplay(serviceName) {}
+  useEffect(() => {
+    if (services.length > 0) {
+      setDisplayService({
+        name: services?.at(0)?.serviceName,
+        price: services?.at(0)?.price,
+      });
+    }
+  }, [services]);
+
+  useEffect(() => {
+    console.log(displayService);
+  }, [displayService]);
+  function handleDisplay(index) {
+    const selectedService = services.at(index);
+    setDisplayService({
+      name: selectedService.serviceName,
+      price: selectedService.price,
+      imgURL: selectedService.imageURl,
+    });
+  }
 
   document.querySelectorAll(".service_img img").forEach((img) => {
     img.addEventListener("click", function () {
@@ -79,16 +127,21 @@ function ChooseService() {
               />
               <label htmlFor={`service${index}`} className={style.custom_label}>
                 <span className={style.tickbox}></span>
-                <span className={style.Service}>{service.serviceName}</span>
+                <span
+                  className={style.Service}
+                  onClick={() => handleDisplay(index)}
+                >
+                  {service.serviceName}
+                </span>
               </label>
             </div>
           ))}
         </div>
         <div className={style.service_display}>
           <div className={style.service_img}>
-            <img src={service1} alt="Displayed Service" />
+            <img src={displayService.imageURL} alt="Displayed Service" />
           </div>
-          <div className={style.service_price}></div>
+          <div className={style.service_price}>{displayService.price}$</div>
         </div>
       </section>
       <div className={style.next}>

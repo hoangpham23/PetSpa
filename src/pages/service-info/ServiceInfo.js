@@ -46,7 +46,6 @@ function ServiceInfo() {
     const account = JSON.parse(localStorage.getItem("account"));
     if (account) {
       console.log(account);
-
       const numberOfPets = account.numberOfPets;
       console.log("Number of pets:", numberOfPets);
       setNumberOfPets(numberOfPets);

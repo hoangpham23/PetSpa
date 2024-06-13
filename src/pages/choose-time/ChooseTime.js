@@ -4,6 +4,7 @@ import Calendar from "./Calendear/Calendar";
 import style from "./ChooseTime_style.module.css";
 import axios from "axios";
 import ChooseTimeBox from "./ChooseTimeBox/ChooseTimeBox";
+import Cart from "./CartService/Cart";
 function ChooseTime2() {
   const { addDays, format } = require("date-fns");
   const today = new Date();
@@ -12,6 +13,28 @@ function ChooseTime2() {
   const endDay = format(addDays(startDay, 3), "yyyy-MM-dd");
   const [appointments, setAppointments] = useState([]);
   const [isFullSlot, setIsFullSlot] = useState([]);
+  const [customerID, setCustomerID] = useState("");
+  const [senData, setSendData] = useState({
+    customerID: "",
+    serviceIds: JSON.parse(localStorage.getItem("serviceIds")),
+    appointmentTimes: JSON.parse(
+      localStorage.getItem("appointmentTimes") || "[]"
+    ),
+
+    petId: JSON.parse(localStorage.getItem("petID")),
+    depositAmount: JSON.parse(localStorage.getItem("depositAmount")),
+  });
+  useEffect(() => {
+    const account = JSON.parse(localStorage.getItem("account"));
+    setCustomerID(account.customerID);
+  }, []);
+  useEffect(() => {
+    setSendData((prevData) => ({
+      ...prevData,
+      customerID: customerID,
+    }));
+  }, [customerID]);
+
   function getHours() {
     const hours = [];
     for (let i = 8; i <= 17; i++) {
@@ -38,6 +61,24 @@ function ChooseTime2() {
         });
       }
       setAppointments(generateAppointments);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async function handleSubmit() {
+    try {
+      console.log(senData);
+      const response = await axios.post(
+        "http://localhost:8090/appointment/book",
+        {
+          customerID: senData.cusomerID,
+          serviceIds: senData.serviceIds,
+          appointmentTimes: senData.appointmentTimes,
+          petId: senData.petId,
+          depositAmount: senData.depositAmount,
+        }
+      );
+      console.log(response.status);
     } catch (error) {
       console.log(error);
     }
@@ -90,6 +131,12 @@ function ChooseTime2() {
         <div className={style.boxInfo}>
           <Calendar />
           <ChooseTimeBox />
+          <div className={style.cartContainer} onClick={handleSubmit}>
+            <div className={style.nextStepButton}>NEXT STEP &gt;</div>
+            <div className={style.cart}>
+              <Cart />
+            </div>
+          </div>
         </div>
       </div>
     </>

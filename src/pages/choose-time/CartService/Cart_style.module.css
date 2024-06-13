@@ -1,0 +1,60 @@
+.cart_container {
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  margin: 20px 0;
+  background-color: transparent;
+}
+
+.cart_title {
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.cart_title h2 {
+  font-size: 1.2em;
+  color: #333;
+  margin: 0;
+  font-family: "Arial", sans-serif;
+}
+
+.cart_items {
+  margin-bottom: 20px;
+}
+
+.cart_items ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  font-family: "Arial", sans-serif;
+}
+
+.cart_item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-family: "Arial", sans-serif;
+  color: #555;
+  font-size: 1em;
+}
+
+.item_name {
+  font-size: 1em;
+  color: #555;
+  flex: 1;
+}
+
+.total_bill {
+  text-align: left;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+  font-family: "Arial", sans-serif;
+}
+
+.total_amount {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #007bff;
+  font-family: "Arial", sans-serif;
+}

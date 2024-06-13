@@ -11,7 +11,7 @@ function ChoosePet() {
   const [petData, setPetData] = useState([]);
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
-
+  //localStorage.setItem("appointmentTimes",);
   useEffect(() => {
     const customer = JSON.parse(localStorage.getItem("account"));
     if (customer) {
@@ -40,6 +40,10 @@ function ChoosePet() {
       console.log(petData);
     }
   }
+  function handleSubmit(petID) {
+    localStorage.setItem("petID", petID);
+    navigate("/appointment/service");
+  }
   return (
     <div>
       <HeaderForCus />
@@ -52,7 +56,11 @@ function ChoosePet() {
         >
           <h1>CHOOSE PET FOR SERVICES</h1>
           {petData.map((pet, index) => (
-            <div key={index} className={style.PetInfo_box}>
+            <div
+              key={index}
+              className={style.PetInfo_box}
+              onClick={() => handleSubmit(pet.id)}
+            >
               <p>PET {index + 1}</p>
               <p>NAME: {pet.petName}</p>
               <p>WEIGHT (KG): {pet.weight}</p>
