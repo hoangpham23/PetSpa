@@ -1,23 +1,39 @@
 package com.team.service;
 
-import com.team.config.PaymentConfig;
+import com.team.config.VNPayConfig;
+import com.team.model.Appointments;
+import com.team.model.Customers;
+import com.team.model.PaymentHistory;
+import com.team.repository.AppointmentRepository;
+import com.team.repository.CustomerRepository;
+import com.team.repository.PaymentHistoryRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 @Service
 public class PaymentService {
 
+    private final static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final VNPayConfig VNPayConfig;
+    private final AppointmentRepository appointmentRepository;
+    private final CustomerRepository customerRepository;
+    private final PaymentHistoryRepository paymentHistoryRepository;
 
-    private final PaymentConfig paymentConfig;
-
-    public PaymentService(PaymentConfig paymentConfig) {
-        this.paymentConfig = paymentConfig;
+    public PaymentService(VNPayConfig VNPayConfig, AppointmentRepository appointmentRepository, CustomerRepository customerRepository, PaymentHistoryRepository paymentHistoryRepository) {
+        this.VNPayConfig = VNPayConfig;
+        this.appointmentRepository = appointmentRepository;
+        this.customerRepository = customerRepository;
+        this.paymentHistoryRepository = paymentHistoryRepository;
     }
 
     public String paymentURL(HttpServletRequest req) throws UnsupportedEncodingException {
@@ -26,9 +42,9 @@ public class PaymentService {
         String vnp_Command = "pay";
         String orderType = "other";
         long amount = Integer.parseInt(req.getParameter("totalAmount")) * 100L;
-        String vnp_TxnRef = paymentConfig.getRandomNumber(8);
-        String vnp_IpAddr = paymentConfig.getIpAddress(req);
-        String vnp_TmnCode = paymentConfig.getVnp_TmnCode();
+        String vnp_TxnRef = VNPayConfig.getRandomNumber(8);
+        String vnp_IpAddr = VNPayConfig.getIpAddress(req);
+        String vnp_TmnCode = VNPayConfig.getVnp_TmnCode();
 
         Map<String, String> vnp_Params = new HashMap<>();
         vnp_Params.put("vnp_Version", vnp_Version);
@@ -51,7 +67,7 @@ public class PaymentService {
         }
 //        vnp_Params.put("vnp_Locale", "vn");
 //        vnp_Params.put("vnp_Locale", "en"); // thiet lap ngon ngu
-        vnp_Params.put("vnp_ReturnUrl", paymentConfig.getVnp_ReturnUrl() + "?customerID=" + req.getParameter("customerID"));
+        vnp_Params.put("vnp_ReturnUrl", VNPayConfig.getVnp_ReturnUrl() + "?customerID=" + req.getParameter("customerID"));
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 
         Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
@@ -87,12 +103,57 @@ public class PaymentService {
             }
         }
         String queryUrl = query.toString();
-        String vnp_SecureHash = paymentConfig.hmacSHA512(paymentConfig.getSecretKey(), hashData.toString());
+        String vnp_SecureHash = VNPayConfig.hmacSHA512(VNPayConfig.getSecretKey(), hashData.toString());
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
-        String paymentUrl = paymentConfig.getVnp_PayUrl() + "?" + queryUrl;
+        String paymentUrl = VNPayConfig.getVnp_PayUrl() + "?" + queryUrl;
 
 
         return paymentUrl;
     }
 
+    public boolean changePaymentStatus(int customerID, String paymentStatus){
+        List<Appointments> list = appointmentRepository.SQL_findCustomerIDAndPaymentStatus(customerID, paymentStatus);
+        int count = 0; // check that with customerId change all the paymentStatus into Paid
+        for (Appointments appointments : list){
+            if (paymentStatus.equalsIgnoreCase(appointments.getPaymentStatus())){
+                appointments.setPaymentStatus("Paid");
+                appointmentRepository.save(appointments);
+                count++;
+            }
+            if (count == list.size()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void savePaymentHistory(int customerID, double totalAmount, String requestTime){
+        Customers customers = customerRepository.findById(customerID).get();
+        String paymentMethod = "VN_PAY";
+        String paymentTime = parseAndFormatDateTime(requestTime);
+        System.out.println("paymentTime: " + paymentTime);
+        PaymentHistory paymentHistory = new PaymentHistory();
+        paymentHistory.setCustomers(customers);
+        paymentHistory.setTotalAmount(totalAmount);
+        paymentHistory.setPaymentMethod(paymentMethod);
+        paymentHistory.setPaymentTime(Timestamp.valueOf(paymentTime));
+        paymentHistoryRepository.save(paymentHistory);
+    }
+
+    private String parseAndFormatDateTime(String input) {
+        // Define the input and output date formats
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        try {
+            // Parse the input string to a LocalDateTime object
+            LocalDateTime dateTime = LocalDateTime.parse(input, inputFormatter);
+
+            // Format the LocalDateTime object to the desired output format
+            return dateTime.format(outputFormatter);
+        } catch (DateTimeParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
