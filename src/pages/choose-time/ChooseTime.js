@@ -6,6 +6,7 @@ import axios from "axios";
 import ChooseTimeBox from "./ChooseTimeBox/ChooseTimeBox";
 import Cart from "./CartService/Cart";
 import Footer from "../../components/footer/footer";
+import moment from "moment";
 function ChooseTime2() {
   const { addDays, format } = require("date-fns");
   const today = new Date();
@@ -18,15 +19,19 @@ function ChooseTime2() {
   const [sendData, setSendData] = useState({
     customerID: "",
     serviceIds: JSON.parse(localStorage.getItem("serviceIds")),
-    appointmentTimes: JSON.parse(
-      localStorage.getItem("appointmentTimes") || "[]"
-    ),
+    // appointmentTimes: JSON.parse(
+    //   localStorage.getItem("appointmentTimes") || "[]"
+    // ),
+    appointmentTimes: [],
     petId: JSON.parse(localStorage.getItem("petID")),
     depositAmount: JSON.parse(localStorage.getItem("depositAmount")),
   });
   useEffect(() => {
-    const account = JSON.parse(localStorage.getItem("account"));
-    setCustomerID(account.customerID);
+    const accountData = localStorage.getItem("account");
+    if (accountData) {
+      const account = JSON.parse(accountData);
+      setCustomerID(account.customerID);
+    }
   }, []);
   useEffect(() => {
     setSendData((prevData) => ({
@@ -65,23 +70,54 @@ function ChooseTime2() {
       console.log(error);
     }
   }
+
+  useEffect(() => {
+    console.log("dataSend", sendData);
+  }, [sendData]);
   async function handleSubmit() {
     try {
-      console.log(sendData);
+      const appointmentTimes = JSON.parse(
+        localStorage.getItem("appointmentTimes")
+      );
 
+      console.log("apT", JSON.parse(localStorage.getItem("appointmentTimes")));
+      //Chuyển đổi các chuỗi ngày giờ thành định dạng mong muốn
+      const formattedAppointmentTimes = await appointmentTimes.map((time) =>
+        moment(time.time).format("YYYY-MM-DD HH:mm:ss.SSS")
+      );
+
+      console.log("format be", formattedAppointmentTimes);
+
+      setSendData((prevData) => ({
+        ...prevData,
+        appointmentTimes: formattedAppointmentTimes,
+      }));
+      console.log("dataSendSubmit", sendData);
+      // const response = await axios.post(
+      //   "http://localhost:8090/appointment/book",
+      //   {
+      //     customerID: sendData.customerID,
+      //     serviceIds: sendData.serviceIds,
+      //     //appointmentTimes: sendData.appointmentTimes,
+      //     appointmentTimes: formattedAppointmentTimes,
+      //     petId: sendData.petId,
+      //     depositAmount: sendData.depositAmount,
+      //   }
+      // );
       const response = await axios.post(
         "http://localhost:8090/appointment/book",
         {
-          customerID: sendData.cusomerID,
+          customerID: sendData.customerID,
           serviceIds: sendData.serviceIds,
-          appointmentTimes: JSON.parse(
-            localStorage.getItem("appointmentTimes")
-          ),
+          //appointmentTimes: sendData.appointmentTimes,
+          appointmentTimes: formattedAppointmentTimes,
           petId: sendData.petId,
           depositAmount: sendData.depositAmount,
         }
       );
+      console.log(response);
       console.log(response.status);
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
