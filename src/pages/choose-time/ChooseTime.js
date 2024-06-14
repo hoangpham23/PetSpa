@@ -80,41 +80,30 @@ function ChooseTime2() {
         localStorage.getItem("appointmentTimes")
       );
 
-      console.log("apT", JSON.parse(localStorage.getItem("appointmentTimes")));
       //Chuyển đổi các chuỗi ngày giờ thành định dạng mong muốn
       const formattedAppointmentTimes = await appointmentTimes.map((time) =>
         moment(time.time).format("YYYY-MM-DD HH:mm:ss.SSS")
       );
 
-      console.log("format be", formattedAppointmentTimes);
+      console.log("format apt", formattedAppointmentTimes);
 
       setSendData((prevData) => ({
         ...prevData,
         appointmentTimes: formattedAppointmentTimes,
       }));
-      console.log("dataSendSubmit", sendData);
-      // const response = await axios.post(
-      //   "http://localhost:8090/appointment/book",
-      //   {
-      //     customerID: sendData.customerID,
-      //     serviceIds: sendData.serviceIds,
-      //     //appointmentTimes: sendData.appointmentTimes,
-      //     appointmentTimes: formattedAppointmentTimes,
-      //     petId: sendData.petId,
-      //     depositAmount: sendData.depositAmount,
-      //   }
-      // );
+
       const response = await axios.post(
         "http://localhost:8090/appointment/book",
         {
-          customerID: sendData.customerID,
+          customerID: customerID,
           serviceIds: sendData.serviceIds,
           //appointmentTimes: sendData.appointmentTimes,
           appointmentTimes: formattedAppointmentTimes,
-          petId: sendData.petId,
+          petID: sendData.petId,
           depositAmount: sendData.depositAmount,
         }
       );
+
       console.log(response);
       console.log(response.status);
       console.log(response.data);
