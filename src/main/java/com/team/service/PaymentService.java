@@ -1,12 +1,8 @@
 package com.team.service;
 
 import com.team.config.VNPayConfig;
-import com.team.model.Appointments;
-import com.team.model.Customers;
-import com.team.model.PaymentHistory;
-import com.team.repository.AppointmentRepository;
-import com.team.repository.CustomerRepository;
-import com.team.repository.PaymentHistoryRepository;
+import com.team.model.*;
+import com.team.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +13,6 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.*;
 
 @Service
@@ -28,12 +23,21 @@ public class PaymentService {
     private final AppointmentRepository appointmentRepository;
     private final CustomerRepository customerRepository;
     private final PaymentHistoryRepository paymentHistoryRepository;
+    private final ServiceRepository serviceRepository;
+    private final PaymentDetailRepository paymentDetailRepository;
+    private final List<Integer> listServiceIds = new ArrayList<>();
+    private final AccountRepository accountRepository;
+    private final EmailService emailService;
 
-    public PaymentService(VNPayConfig VNPayConfig, AppointmentRepository appointmentRepository, CustomerRepository customerRepository, PaymentHistoryRepository paymentHistoryRepository) {
+    public PaymentService(VNPayConfig VNPayConfig, AppointmentRepository appointmentRepository, CustomerRepository customerRepository, PaymentHistoryRepository paymentHistoryRepository, ServiceRepository serviceRepository, PaymentDetailRepository paymentDetailRepository, AccountRepository accountRepository, EmailService emailService) {
         this.VNPayConfig = VNPayConfig;
         this.appointmentRepository = appointmentRepository;
         this.customerRepository = customerRepository;
         this.paymentHistoryRepository = paymentHistoryRepository;
+        this.serviceRepository = serviceRepository;
+        this.paymentDetailRepository = paymentDetailRepository;
+        this.accountRepository = accountRepository;
+        this.emailService = emailService;
     }
 
     public String paymentURL(Map<String, String> data, HttpServletRequest req) throws UnsupportedEncodingException {
@@ -190,23 +194,24 @@ public class PaymentService {
         return paymentUrl;
     }
 
-    public boolean changePaymentStatus(int customerID, String paymentStatus){
+    public boolean changePaymentStatus(int customerID, String paymentStatus) {
         List<Appointments> list = appointmentRepository.SQL_findCustomerIDAndPaymentStatus(customerID, "Pending");
         int count = 0; // check that with customerId change all the paymentStatus into Paid
-        for (Appointments appointments : list){
-            if (("Pending").equalsIgnoreCase(appointments.getPaymentStatus())){
+        for (Appointments appointments : list) {
+            if (("Pending").equalsIgnoreCase(appointments.getPaymentStatus())) {
+                listServiceIds.add(appointments.getServices().getId());
                 appointments.setPaymentStatus(paymentStatus);
                 appointmentRepository.save(appointments);
                 count++;
             }
-            if (count == list.size()){
+            if (count == list.size()) {
                 return true;
             }
         }
         return false;
     }
 
-    public void savePaymentHistory(int customerID, double totalAmount, String paymentMethod){
+    public void savePaymentHistory(int customerID, double totalAmount, String paymentMethod) {
         Customers customers = customerRepository.findById(customerID).get();
         String paymentTime = LocalDateTime.now().format(FORMATTER);
         PaymentHistory paymentHistory = new PaymentHistory();
@@ -214,23 +219,24 @@ public class PaymentService {
         paymentHistory.setTotalAmount(totalAmount);
         paymentHistory.setPaymentMethod(paymentMethod);
         paymentHistory.setPaymentTime(Timestamp.valueOf(paymentTime));
-        paymentHistoryRepository.save(paymentHistory);
-    }
-
-    private String parseAndFormatDateTime(String input) {
-        // Define the input and output date formats
-        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        try {
-            // Parse the input string to a LocalDateTime object
-            LocalDateTime dateTime = LocalDateTime.parse(input, inputFormatter);
-
-            // Format the LocalDateTime object to the desired output format
-            return dateTime.format(outputFormatter);
-        } catch (DateTimeParseException e) {
-            e.printStackTrace();
-            return null;
+        PaymentHistory savePayment = paymentHistoryRepository.save(paymentHistory);
+        for (Integer serviceID : listServiceIds) {
+            PaymentDetail paymentDetail = new PaymentDetail();
+            Services services = serviceRepository.findById(serviceID).get();
+            paymentDetail.setCustomers(customers);
+            paymentDetail.setServices(services);
+            paymentDetail.setPaymentHistoryID(savePayment);
+            paymentDetailRepository.save(paymentDetail);
         }
     }
+
+    public void sendEmail(int customerID){
+        Accounts accounts = accountRepository.findById(customerID).get();
+        String email = accounts.getEmail();
+        String text = "Thank you for using our services";
+        String subject = "Booking Reservation";
+        emailService.sendEmail(email, text, subject);
+    }
+
+
 }

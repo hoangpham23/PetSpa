@@ -9,6 +9,7 @@ import com.team.service.PaypalService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 import java.util.*;
 
 import org.springframework.web.servlet.view.RedirectView;
@@ -29,7 +29,7 @@ public class PaymentController {
 
     private final String PAYMENT_SUCCESS = "http://localhost:3000/payment?status=successful";
     private final String PAYMENT_CANCELED = "http://localhost:3000/payment?status=canceled";
-    private final String PAYMENT_FAILED = "http://localhost:3000/payment?status=canceled";
+    private final String PAYMENT_FAILED = "http://localhost:3000/payment?status=failed";
     private final PaymentService paymentService;
     private final VNPayConfig VNPayConfig;
     private final PaypalService paypalService;
@@ -43,25 +43,23 @@ public class PaymentController {
 
     // this function receive the information from front end
     // base on the method will use the function that have that method
-//    @PostMapping("/payment/info")
-//    public ResponseEntity<Payment> paymentInfo(@RequestBody Map<String, String> data, HttpServletRequest request) {
-//        try {
-//            String method = data.get("method");
-//            if (("VN_PAY").equalsIgnoreCase(method)) {
-//                payment(data, request);
-//            } else if (("PAYPAL").equalsIgnoreCase(method)) {
-//
-//            }
-//
-//        } catch (Exception e) {
-//            log.error(e.getMessage());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
+    @PostMapping("")
+    public void paymentInfo(@RequestBody Map<String, String> data, HttpServletRequest request) {
+        try {
+            String method = data.get("method");
+            if (("VN_PAY").equalsIgnoreCase(method)) {
+                createVNPay(data, request);
+            } else if (("PAYPAL").equalsIgnoreCase(method)) {
+                createPaypal(data);
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+    }
 
     // this version return vnpay url
-    @PostMapping("")
-    public ResponseEntity<?> payment(@RequestBody Map<String, String> dataRequest, HttpServletRequest request) {
+//    @PostMapping("/vn-pay")
+    public ResponseEntity<?> createVNPay(@RequestBody Map<String, String> dataRequest, HttpServletRequest request) {
         try {
             String paymentURL = paymentService.paymentURL(dataRequest, request);
             if (paymentURL == null) {
@@ -76,12 +74,12 @@ public class PaymentController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
+    // change this into post mapping
     // this version redirect to vn_pay page
-    @GetMapping("/vn_pay")
-    public ResponseEntity<?> createVNPay(@RequestBody Map<String, String> dataRequest, HttpServletRequest request) {
+//    @GetMapping("/vn_pay")
+    public ResponseEntity<?> createVNPay( HttpServletRequest request) {
         try {
-            String paymentURL = paymentService.paymentURL(dataRequest ,request);
+            String paymentURL = paymentService.paymentURL(request);
             if (paymentURL == null) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
@@ -129,6 +127,7 @@ public class PaymentController {
                 boolean check = paymentService.changePaymentStatus(customerID, paymentStatus);
                 if (check) {
                     paymentService.savePaymentHistory(customerID, amount, paymentMethod);
+                    paymentService.sendEmail(customerID);
                     log.info("Change paymentStatus successful");
                 }
                 return "Successful";
@@ -147,11 +146,28 @@ public class PaymentController {
 
     }
 
+
+    // change this into post
     // create paypal payment and redirect to paypal site
     @GetMapping("/paypal")
     public RedirectView createPaypal(HttpServletRequest request) {
         try {
             Payment payment = paypalService.createPayment(request);
+            for (Links links : payment.getLinks()) {
+                if (links.getRel().equals("approval_url")) {
+                    return new RedirectView(links.getHref());
+                }
+            }
+        } catch (PayPalRESTException e) {
+            log.error("Error occurred:: ", e);
+        }
+        return new RedirectView("/payment/error");
+    }
+
+    @PostMapping("/paypal")
+    public RedirectView createPaypal(@RequestBody Map<String, String> data) {
+        try {
+            Payment payment = paypalService.createPayment(data);
             for (Links links : payment.getLinks()) {
                 if (links.getRel().equals("approval_url")) {
                     return new RedirectView(links.getHref());
@@ -182,6 +198,7 @@ public class PaymentController {
                 boolean check = paymentService.changePaymentStatus(id, paymentStatus);
                 if (check) {
                     paymentService.savePaymentHistory(id, totalAmount, paymentMethod);
+                    paymentService.sendEmail(id);
                     return "paymentSuccess";
                 }
             }
@@ -210,6 +227,5 @@ public class PaymentController {
     public String paymentError() {
         return "paymentError";
     }
-
 
 }
