@@ -19,9 +19,6 @@ function ChooseTime2() {
   const [sendData, setSendData] = useState({
     customerID: "",
     serviceIds: JSON.parse(localStorage.getItem("serviceIds")),
-    // appointmentTimes: JSON.parse(
-    //   localStorage.getItem("appointmentTimes") || "[]"
-    // ),
     appointmentTimes: [],
     petId: JSON.parse(localStorage.getItem("petID")),
     depositAmount: JSON.parse(localStorage.getItem("depositAmount")),
@@ -79,14 +76,10 @@ function ChooseTime2() {
       const appointmentTimes = JSON.parse(
         localStorage.getItem("appointmentTimes")
       );
-
       //Chuyển đổi các chuỗi ngày giờ thành định dạng mong muốn
       const formattedAppointmentTimes = await appointmentTimes.map((time) =>
         moment(time.time).format("YYYY-MM-DD HH:mm:ss.SSS")
       );
-
-      console.log("format apt", formattedAppointmentTimes);
-
       setSendData((prevData) => ({
         ...prevData,
         appointmentTimes: formattedAppointmentTimes,

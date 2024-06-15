@@ -47,9 +47,9 @@ function ChoosePet() {
   }
   return (
     <>
-      <div>
+      <div className={style.wrapper}>
         <HeaderForCus />
-        <section>
+        <main className={style.mainContent}>
           <div
             className={style.PetInfo_container}
             onClick={() => {
@@ -80,9 +80,9 @@ function ChoosePet() {
               }}
             />
           </div>
-        </section>
+        </main>
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 }
