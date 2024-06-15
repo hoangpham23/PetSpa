@@ -4,6 +4,8 @@ import com.team.dto.AppointmentDTO;
 import com.team.dto.AppointmentRequestDTO;
 import com.team.model.*;
 import com.team.repository.*;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,9 @@ import java.util.*;
 @Service
 public class AppointmentService {
 
-    private final static int AVAILABLE_SLOT = 4;
+    @Setter
+    @Getter
+    private int AVAILABLE_SLOT = 4;
     private final static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final static DateTimeFormatter FORMATTER_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -36,6 +40,7 @@ public class AppointmentService {
         this.serviceRepository = serviceRepository;
         this.employeeScheduleRepository = employeeScheduleRepository;
     }
+
 
     // this function return not available slots of the next 3 days. Don't include the day when the customer in the website
     public List<AppointmentDTO> getAllAppointments(LocalDateTime timeSendRequest) {
