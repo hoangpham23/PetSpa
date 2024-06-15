@@ -1,9 +1,6 @@
 package com.team.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.Nationalized;
@@ -42,5 +39,10 @@ public class Employees {
     @Nationalized
     @Column(name = "Gender", length = 10)
     private String gender;
+
+
+    @Size(max = 10)
+    @Column(name = "Status", length = 10)
+    private String status;
 
 }
