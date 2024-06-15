@@ -36,11 +36,11 @@ public class AccountService {
     }
 
 
-    public Accounts createAccount(String email, String password) {
+    public Accounts createAccount(String email, String password, String role) {
         Accounts accounts = new Accounts();
         accounts.setEmail(email);
         accounts.setPassword(password);
-        accounts.setRole("CUS");
+        accounts.setRole(role);
         return accountRepository.save(accounts);
     }
 
