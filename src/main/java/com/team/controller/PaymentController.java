@@ -44,34 +44,37 @@ public class PaymentController {
     // this function receive the information from front end
     // base on the method will use the function that have that method
     @PostMapping("")
-    public void paymentInfo(@RequestBody Map<String, String> data, HttpServletRequest request) {
+    public ResponseEntity<?> paymentInfo(@RequestBody Map<String, String> data, HttpServletRequest request) {
         try {
-            String method = data.get("method");
-            if (("VN_PAY").equalsIgnoreCase(method)) {
-                createVNPay(data, request);
-            } else if (("PAYPAL").equalsIgnoreCase(method)) {
-                createPaypal(data);
+            Map<String, String> dataResponse = new HashMap<>();
+            String urlVNPay = createVNPay(data, request);
+            String urlPaypal = createPaypal(data);
+            if (urlVNPay == null){
+                dataResponse.put("urlVNPAY", "error");
             }
+            dataResponse.put("urlVNPAY", urlVNPay);
+            dataResponse.put("urlPaypal", urlPaypal);
+
+            return ResponseEntity.ok(dataResponse);
         } catch (Exception e) {
             log.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
         }
     }
 
     // this version return vnpay url
 //    @PostMapping("/vn-pay")
-    public ResponseEntity<?> createVNPay(@RequestBody Map<String, String> dataRequest, HttpServletRequest request) {
+    public String createVNPay(@RequestBody Map<String, String> dataRequest, HttpServletRequest request) {
         try {
             String paymentURL = paymentService.paymentURL(dataRequest, request);
-            if (paymentURL == null) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-            }
+
             Map<String, String> data = new HashMap<>();
             data.put("paymentURL", paymentURL);
-            return ResponseEntity.ok(data);
+            return paymentURL;
 
         } catch (Exception e) {
             log.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return null;
         }
     }
     // change this into post mapping
@@ -95,7 +98,7 @@ public class PaymentController {
     // check the status after completed payment and response direct to the website
     // response after complete vn_pay payment include success or failed
     @GetMapping("/vn_pay/status")
-    public String status(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void status(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Map fields = new HashMap();
         for (Enumeration params = request.getParameterNames(); params.hasMoreElements(); ) {
             String fieldName = URLEncoder.encode((String) params.nextElement(), StandardCharsets.US_ASCII.toString());
@@ -129,19 +132,21 @@ public class PaymentController {
                     paymentService.savePaymentHistory(customerID, amount, paymentMethod);
                     paymentService.sendEmail(customerID);
                     log.info("Change paymentStatus successful");
+                    response.sendRedirect(PAYMENT_SUCCESS);
                 }
-                return "Successful";
+
             } else {
                 paymentStatus = "Canceled";
                 boolean check = paymentService.changePaymentStatus(customerID, paymentStatus);
                 if (check) {
                     paymentService.savePaymentHistory(customerID, amount, paymentMethod);
                 }
-                return "Canceled";
+                response.sendRedirect(PAYMENT_CANCELED);
             }
 
         } else {
-            return "Wrong Secure Hash";
+//            return "Wrong Secure Hash";
+            response.sendRedirect(PAYMENT_FAILED);
         }
 
     }
@@ -149,45 +154,45 @@ public class PaymentController {
 
     // change this into post
     // create paypal payment and redirect to paypal site
-    @GetMapping("/paypal")
-    public RedirectView createPaypal(HttpServletRequest request) {
-        try {
-            Payment payment = paypalService.createPayment(request);
-            for (Links links : payment.getLinks()) {
-                if (links.getRel().equals("approval_url")) {
-                    return new RedirectView(links.getHref());
-                }
-            }
-        } catch (PayPalRESTException e) {
-            log.error("Error occurred:: ", e);
-        }
-        return new RedirectView("/payment/error");
-    }
+//    @GetMapping("/paypal")
+//    public RedirectView createPaypal(HttpServletRequest request) {
+//        try {
+//            Payment payment = paypalService.createPayment(request);
+//            for (Links links : payment.getLinks()) {
+//                if (links.getRel().equals("approval_url")) {
+//                    System.out.println("link " + links.getHref());
+//                    return new RedirectView(links.getHref());
+//                }
+//            }
+//        } catch (PayPalRESTException e) {
+//            log.error("Error occurred:: ", e);
+//        }
+//        return new RedirectView("/payment/error");
+//    }
 
-    @PostMapping("/paypal")
-    public RedirectView createPaypal(@RequestBody Map<String, String> data) {
+    public String createPaypal(@RequestBody Map<String, String> data) {
         try {
             Payment payment = paypalService.createPayment(data);
             for (Links links : payment.getLinks()) {
                 if (links.getRel().equals("approval_url")) {
-                    return new RedirectView(links.getHref());
+                    return links.getHref();
                 }
             }
         } catch (PayPalRESTException e) {
             log.error("Error occurred:: ", e);
         }
-        return new RedirectView("/payment/error");
+        return "error";
     }
 
 
     // check the status and response back to the website in front end
     @GetMapping("/success")
-    public String paymentSuccess(
+    public void paymentSuccess(
             @RequestParam("paymentId") String paymentId,
             @RequestParam("PayerID") String payerId,
             @RequestParam("customerID") String customerID,
-            @RequestParam("amount") String amount
-    ) {
+            @RequestParam("amount") String amount, HttpServletResponse response
+    ) throws IOException {
         try {
             Payment payment = paypalService.executePayment(paymentId, payerId);
             String paymentStatus = "Paid";
@@ -199,33 +204,34 @@ public class PaymentController {
                 if (check) {
                     paymentService.savePaymentHistory(id, totalAmount, paymentMethod);
                     paymentService.sendEmail(id);
-                    return "paymentSuccess";
+
                 }
+                response.sendRedirect(PAYMENT_SUCCESS);
             }
 
-            return "paymentError";
+            response.sendRedirect(PAYMENT_FAILED);
         } catch (PayPalRESTException e) {
             log.error("Error occurred:: ", e);
-            return "paymentError";
+            response.sendRedirect(PAYMENT_FAILED);
         }
     }
 
 
     // if paypal payment is cancel return to this
     @GetMapping("/cancel")
-    public String paymentCancel(@RequestParam("customerID") String customerID ) {
+    public void paymentCancel(@RequestParam("customerID") String customerID , HttpServletResponse response) throws IOException {
         String paymentStatus = "Canceled";
         boolean check = paymentService.changePaymentStatus(Integer.parseInt(customerID), paymentStatus);
         if (!check){
             log.error("error at paymentCancel. Can't change the paymentStatus");
         }
-        return "paymentCancel";
+        response.sendRedirect(PAYMENT_CANCELED);
     }
 
     // if paypal payment is error return to this
     @GetMapping("/error")
-    public String paymentError() {
-        return "paymentError";
+    public void paymentError(HttpServletResponse response) throws IOException {
+        response.sendRedirect(PAYMENT_FAILED);
     }
 
 }
