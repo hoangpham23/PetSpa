@@ -19,10 +19,6 @@ public class Feedback {
     @JoinColumn(name = "ServiceID")
     private Services serviceID;
 
-    @Size(max = 100)
-    @Column(name = "GuestName", length = 100)
-    private String guestName;
-
     @Lob
     @Column(name = "FeedbackContent")
     private String feedbackContent;
