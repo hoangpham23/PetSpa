@@ -55,8 +55,6 @@ public class AppointmentService {
             if (time.isAfter(lastShift)) {
                 max = timeSendRequest.plusDays(5);
             }
-            System.out.println("min: " + min );
-            System.out.println("max: " + max);
             String before = max.format(FORMATTER_DATE);
 
             List<Object[]> listAppointments = appointmentRepository.findAppointmentsAfterBefore(after, before);
@@ -158,7 +156,7 @@ public class AppointmentService {
 
     private int getNextEmployeeID(int employeeID) {
         Employees employees = employeeRepository.findById(employeeID).get();
-        List<Employees> employeesList = employeeRepository.findAll();
+        List<Employees> employeesList = employeeRepository.findAllByStatus("ACTIVE");
         int index = employeesList.indexOf(employees);
         if (index == employeesList.size() - 1) {
             return employeesList.getFirst().getId();
