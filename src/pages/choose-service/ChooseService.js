@@ -41,7 +41,7 @@ function ChooseService() {
   }, []);
 
   async function getData() {
-    const response = await axios.get(" http://localhost:8090/choose-service");
+    const response = await axios.get("http://localhost:8090/choose-service");
     setServices(response.data);
     console.log(response.data);
   }

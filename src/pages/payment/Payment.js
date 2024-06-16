@@ -5,8 +5,13 @@ import VNPay from "../../assets/img/vnpay-seeklogo.svg";
 import "./Payment_style.css";
 import Cart from "../choose-time/CartService/Cart";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 function Payment() {
   const [customerID, setCustomerID] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const navigate = useNavigate();
+  const [msg, setMsg] = useState("");
   const [payment, setPayment] = useState({
     customerID: "",
     amount: "",
@@ -25,7 +30,31 @@ function Payment() {
       amount: localStorage.getItem("depositAmount"),
     }));
   }, []);
-  // làm hàm handle submit gửi dữ liệu về post "/payment"
+  function handleCheckboxChange(event) {
+    const { name, checked } = event.target;
+    if (checked) {
+      setPaymentMethod(name);
+    }
+  }
+  async function handleSubmit(event) {
+    event.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:8090/payment", {
+        customerID: customerID,
+        amount: payment.amount,
+        paymentMethod: paymentMethod,
+      });
+      const url = response.data;
+      const urlParams = new URLSearchParams(url);
+      const status = urlParams.get("status");
+      if (status === "successful") {
+        navigate("/successfully-payment");
+      } else {
+        setMsg("The payment has been canceled !!!");
+      }
+    } catch {}
+  }
+
   return (
     <>
       <HeaderForCus />
@@ -34,23 +63,31 @@ function Payment() {
           <div className="payment-options">
             <h2>Select Payment Method</h2>
             <label className="payment-option">
-              <input type="radio" name="payment" value="paypal" />
+              <input
+                type="radio"
+                name="PAYPAL"
+                value="paypal"
+                onClick={handleCheckboxChange}
+              />
               <img src={Paypal} alt="Paypal" />
             </label>
             <label className="payment-option">
-              <input type="radio" name="payment" value="vnpay" />
+              <input
+                type="radio"
+                name="VN_PAY"
+                value="vnpay"
+                onClick={handleCheckboxChange}
+              />
               <img src={VNPay} alt="VNPay" />
             </label>
           </div>
           <div className="checkout-summary">
-            {/* <h2>Checkout Summary</h2> */}
-            <Cart /> {/* Replace with dynamic total if needed */}
+            <Cart />
+            <p className="msg">{msg}</p>
           </div>
         </div>
       </div>
-      <div className="footer">
-        <Footer />
-      </div>
+      <Footer />
     </>
   );
 }
