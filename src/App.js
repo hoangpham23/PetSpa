@@ -20,6 +20,7 @@ import InfoPet from "./pages/info-pet/InfoPet.js";
 import ChooseService from "./pages/choose-service/ChooseService.js";
 import ChooseTime2 from "./pages/choose-time/ChooseTime.js";
 import Payment from "./pages/payment/Payment.js";
+import SuccessfullyPayment from "./pages/payment/SuccessfullyPayment.js";
 
 function App() {
   return (
@@ -38,7 +39,11 @@ function App() {
         <Route path="/choose-pet" element={<ChoosePet />}></Route>
         <Route path="/info-pet" element={<InfoPet />}></Route>
         <Route path="/appointment/service" element={<ChooseService />}></Route>
-        <Route path="/payment" element={<Payment />}></Route>
+        <Route path="/payment" element={<Payment />}></Route>\
+        <Route
+          path="/successfully-payment"
+          element={<SuccessfullyPayment />}
+        ></Route>
       </Routes>
     </Router>
   );

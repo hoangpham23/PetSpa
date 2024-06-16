@@ -16,6 +16,7 @@ function Payment() {
     customerID: "",
     amount: "",
     paymentMethod: "",
+    petID: "",
   });
   useEffect(() => {
     const accountData = localStorage.getItem("account");
@@ -28,6 +29,7 @@ function Payment() {
     setPayment((payment) => ({
       ...payment,
       amount: localStorage.getItem("depositAmount"),
+      petID: localStorage.getItem("petID"),
     }));
   }, []);
   function handleCheckboxChange(event) {
@@ -43,16 +45,21 @@ function Payment() {
         customerID: customerID,
         amount: payment.amount,
         paymentMethod: paymentMethod,
+        petID: payment.petID,
       });
       const url = response.data;
       const urlParams = new URLSearchParams(url);
       const status = urlParams.get("status");
       if (status === "successful") {
         navigate("/successfully-payment");
-      } else {
+      } else if (status === "canceled") {
         setMsg("The payment has been canceled !!!");
+      } else {
+        setMsg("System error !!!");
       }
-    } catch {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -84,6 +91,9 @@ function Payment() {
           <div className="checkout-summary">
             <Cart />
             <p className="msg">{msg}</p>
+            <button type="submit" onClick={handleSubmit}>
+              Submit
+            </button>
           </div>
         </div>
       </div>

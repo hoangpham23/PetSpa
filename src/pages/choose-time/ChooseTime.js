@@ -7,6 +7,7 @@ import ChooseTimeBox from "./ChooseTimeBox/ChooseTimeBox";
 import Cart from "./CartService/Cart";
 import Footer from "../../components/footer/footer";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 function ChooseTime2() {
   const { addDays, format } = require("date-fns");
   const today = new Date();
@@ -23,6 +24,7 @@ function ChooseTime2() {
     petId: JSON.parse(localStorage.getItem("petID")),
     depositAmount: JSON.parse(localStorage.getItem("depositAmount")),
   });
+  const navigate = useNavigate();
   useEffect(() => {
     const accountData = localStorage.getItem("account");
     if (accountData) {
@@ -97,9 +99,9 @@ function ChooseTime2() {
         }
       );
 
-      console.log(response);
-      console.log(response.status);
-      console.log(response.data);
+      if (response.status === 201) {
+        navigate("/payment");
+      }
     } catch (error) {
       console.log(error);
     }

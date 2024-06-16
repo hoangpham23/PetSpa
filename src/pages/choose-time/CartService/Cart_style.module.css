@@ -23,7 +23,7 @@
 }
 
 .cart_items ul {
-  list-style-type: none;
+  /* list-style-type: none; */
   padding: 0;
   margin: 0;
   /* font-family: "Arial", sans-serif; */
