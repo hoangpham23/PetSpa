@@ -16,10 +16,28 @@ function Payment() {
   const [msg, setMsg] = useState("");
   const [result, setResult] = useState([]);
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     handleSubmit();
   }, []);
+
+  async function handleSubmit() {
+    try {
+      const response = await axios.post("http://localhost:8090/payment", {
+        customerID: localStorage.getItem("customerID"),
+        amount: localStorage.getItem("depositAmount"),
+        petID: localStorage.getItem("petID"),
+      });
+      console.log(response.data);
+      setResult(response.data); // setResult với dữ liệu thực
+      setUrlPaypal(response.data.urlPaypal);
+      setUrlVN_PAY(response.data.urlVNPAY);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   useEffect(() => {
     console.log("paypal", urlPaypal);
     console.log("vnpay", urlVN_PAY);
@@ -32,21 +50,6 @@ function Payment() {
       window.location.href = urlPaypal;
     } else if (selectedMethod === "vnpay" && urlVN_PAY) {
       window.location.href = urlVN_PAY;
-    }
-  }
-  async function handleSubmit() {
-    try {
-      const response = await axios.post("http://localhost:8090/payment", {
-        customerID: localStorage.getItem("customerID"),
-        amount: localStorage.getItem("depositAmount"),
-        petID: localStorage.getItem("petID"),
-      });
-      console.log(response.data);
-      setResult(response.data); // setResult với dữ liệu thực
-      setUrlPaypal(response.data.urlPaypal);
-      setUrlVN_PAY(response.data.urlVNPAY);
-    } catch (error) {
-      console.log(error);
     }
   }
 
@@ -63,6 +66,7 @@ function Payment() {
                 name="Paypal"
                 value="paypal"
                 onChange={handlePaymentMethodChange}
+                disabled={isLoading}
               />
               <img src={Paypal} alt="Paypal" />
             </label>
@@ -72,6 +76,7 @@ function Payment() {
                 name="VNPAY"
                 value="vnpay"
                 onChange={handlePaymentMethodChange}
+                disabled={isLoading}
               />
               <img src={VNPay} alt="VNPay" />
             </label>
