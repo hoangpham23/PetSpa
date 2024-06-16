@@ -100,6 +100,7 @@ function ChooseTime2() {
       );
 
       if (response.status === 201) {
+        localStorage.setItem("customerID", customerID);
         navigate("/payment");
       }
     } catch (error) {

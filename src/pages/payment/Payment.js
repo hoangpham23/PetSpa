@@ -7,56 +7,44 @@ import Cart from "../choose-time/CartService/Cart";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 function Payment() {
   const [customerID, setCustomerID] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("");
+  const [urlPaypal, setUrlPaypal] = useState("");
+  const [urlVN_PAY, setUrlVN_PAY] = useState("");
   const navigate = useNavigate();
   const [msg, setMsg] = useState("");
-  const [payment, setPayment] = useState({
-    customerID: "",
-    amount: "",
-    paymentMethod: "",
-    petID: "",
-  });
+  const [result, setResult] = useState([]);
+  const [paymentMethod, setPaymentMethod] = useState("");
+
   useEffect(() => {
-    const accountData = localStorage.getItem("account");
-    if (accountData) {
-      const account = JSON.parse(accountData);
-      setCustomerID(account.customerID);
-    }
+    handleSubmit();
   }, []);
   useEffect(() => {
-    setPayment((payment) => ({
-      ...payment,
-      amount: localStorage.getItem("depositAmount"),
-      petID: localStorage.getItem("petID"),
-    }));
-  }, []);
-  function handleCheckboxChange(event) {
-    const { name, checked } = event.target;
-    if (checked) {
-      setPaymentMethod(name);
+    console.log("paypal", urlPaypal);
+    console.log("vnpay", urlVN_PAY);
+  }, [urlPaypal, urlVN_PAY]);
+  function handlePaymentMethodChange(event) {
+    const selectedMethod = event.target.value;
+    setPaymentMethod(selectedMethod);
+
+    if (selectedMethod === "paypal" && urlPaypal) {
+      window.location.href = urlPaypal;
+    } else if (selectedMethod === "vnpay" && urlVN_PAY) {
+      window.location.href = urlVN_PAY;
     }
   }
-  async function handleSubmit(event) {
-    event.preventDefault();
+  async function handleSubmit() {
     try {
       const response = await axios.post("http://localhost:8090/payment", {
-        customerID: customerID,
-        amount: payment.amount,
-        paymentMethod: paymentMethod,
-        petID: payment.petID,
+        customerID: localStorage.getItem("customerID"),
+        amount: localStorage.getItem("depositAmount"),
+        petID: localStorage.getItem("petID"),
       });
-      const url = response.data;
-      const urlParams = new URLSearchParams(url);
-      const status = urlParams.get("status");
-      if (status === "successful") {
-        navigate("/successfully-payment");
-      } else if (status === "canceled") {
-        setMsg("The payment has been canceled !!!");
-      } else {
-        setMsg("System error !!!");
-      }
+      console.log(response.data);
+      setResult(response.data); // setResult với dữ liệu thực
+      setUrlPaypal(response.data.urlPaypal);
+      setUrlVN_PAY(response.data.urlVNPAY);
     } catch (error) {
       console.log(error);
     }
@@ -72,18 +60,18 @@ function Payment() {
             <label className="payment-option">
               <input
                 type="radio"
-                name="PAYPAL"
+                name="Paypal"
                 value="paypal"
-                onClick={handleCheckboxChange}
+                onChange={handlePaymentMethodChange}
               />
               <img src={Paypal} alt="Paypal" />
             </label>
             <label className="payment-option">
               <input
                 type="radio"
-                name="VN_PAY"
+                name="VNPAY"
                 value="vnpay"
-                onClick={handleCheckboxChange}
+                onChange={handlePaymentMethodChange}
               />
               <img src={VNPay} alt="VNPay" />
             </label>
@@ -91,9 +79,6 @@ function Payment() {
           <div className="checkout-summary">
             <Cart />
             <p className="msg">{msg}</p>
-            <button type="submit" onClick={handleSubmit}>
-              Submit
-            </button>
           </div>
         </div>
       </div>
