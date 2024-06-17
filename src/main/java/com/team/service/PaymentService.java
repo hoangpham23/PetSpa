@@ -51,7 +51,7 @@ public class PaymentService {
         }
 //        vnp_Params.put("vnp_Locale", "vn");
 //        vnp_Params.put("vnp_Locale", "en"); // thiet lap ngon ngu
-        vnp_Params.put("vnp_ReturnUrl", paymentConfig.getVnp_ReturnUrl());
+        vnp_Params.put("vnp_ReturnUrl", paymentConfig.getVnp_ReturnUrl() + "?customerID=" + req.getParameter("customerID"));
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 
         Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
