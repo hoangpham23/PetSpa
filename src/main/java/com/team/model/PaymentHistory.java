@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 
 @Getter
@@ -32,7 +33,9 @@ public class PaymentHistory {
     @Column(name = "PaymentMethod", length = 50)
     private String paymentMethod;
 
-    @Column(name = "PaymentTime")
-    private Instant paymentTime;
+//    @Column(name = "PaymentTime")
+//    private Timestamp paymentTime;
+@Column(name = "PaymentTime")
+private Instant paymentTime;
 
 }
