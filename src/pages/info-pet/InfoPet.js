@@ -39,17 +39,26 @@ function InfoPet() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (petInfo.petName === "" || petInfo.age === "" || petInfo.weight === "") {
+    setPetInfo((petInfo) => ({
+      ...petInfo,
+      age: parseInt(petInfo.age, 10),
+      weight: parseInt(petInfo.weight, 10),
+    }));
+    const updatedAge = parseInt(petInfo.age, 10);
+    const updatedWeight = parseInt(petInfo.weight, 10);
+    if (petInfo.petName === "" || isNaN(updatedAge) || isNaN(updatedWeight)) {
       setMsg("Please fill in all fields. ");
+      console.log(typeof petInfo.weight);
+      console.log(typeof petInfo.age);
       return;
     }
     if (
-      typeof petInfo.age !== "number" ||
-      !Number.isInteger(petInfo.age) ||
-      petInfo.age < 0 ||
-      typeof petInfo.weight !== "number" ||
-      !Number.isInteger(petInfo.weight) ||
-      petInfo.weight < 0
+      typeof updatedAge !== "number" ||
+      !Number.isInteger(updatedAge) ||
+      updatedAge < 0 ||
+      typeof updatedWeight !== "number" ||
+      !Number.isInteger(updatedWeight) ||
+      updatedWeight < 0
     ) {
       setMsg("The age and weight of pet must be a number and greater than 0");
       return;

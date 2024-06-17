@@ -165,41 +165,58 @@ function ChooseTimeBox() {
   };
 
   return (
-    <div className={`${style.scheduleContainer} ${style.flexRow}`}>
-      {/* thêm component ở đâu */}
-      <h2 className={style.introduction}>CHOOSE TIME HERE</h2>
-      {appointmentsToday.length > 0 ? (
-        <div className={style.schedule}>
-          {appointmentsToday.map((appointment, index) => (
-            <div
-              key={index}
-              onClick={() => handleClick(appointment)}
-              className={`${style.timeSlot} ${
-                appointment.status ? style.red : style.blue
-              } ${
-                selectedTimes.some(
-                  (selected) => selected.time === appointment.time
-                )
-                  ? style.isSelecting
-                  : ""
-              }`}
-              style={{
-                border: selectedTimes.some(
-                  (selected) => selected.time === appointment.time
-                )
-                  ? "2px solid #000"
-                  : "none",
-              }}
-            >
-              {format(parseISO(appointment.time), "HH:mm")}
-            </div>
-          ))}
+    <>
+      {/* <div className={style.timeDisplay}>
+        <div className={style.timeContent}>
+          <p>Selecting</p>
+          <div className={style.colorDisplay1}></div>
         </div>
-      ) : (
-        <p>NO SLOT AVAILABLE</p>
-      )}
-      <h3>{msg}</h3>
-    </div>
+        <div className={style.timeContent}>
+          <p>Available</p>
+          <div className={style.colorDisplay2}></div>
+        </div>
+        <div className={style.timeContent}>
+          <p>Full slot</p>
+          <div className={style.colorDisplay3}></div>
+        </div>
+      </div> */}
+      <div className={`${style.scheduleContainer} ${style.flexRow}`}>
+        {/* thêm component ở đâu */}
+
+        <h2 className={style.introduction}>CHOOSE TIME HERE</h2>
+        {appointmentsToday.length > 0 ? (
+          <div className={style.schedule}>
+            {appointmentsToday.map((appointment, index) => (
+              <div
+                key={index}
+                onClick={() => handleClick(appointment)}
+                className={`${style.timeSlot} ${
+                  appointment.status ? style.red : style.blue
+                } ${
+                  selectedTimes.some(
+                    (selected) => selected.time === appointment.time
+                  )
+                    ? style.isSelecting
+                    : ""
+                }`}
+                style={{
+                  border: selectedTimes.some(
+                    (selected) => selected.time === appointment.time
+                  )
+                    ? "2px solid #000"
+                    : "none",
+                }}
+              >
+                {format(parseISO(appointment.time), "HH:mm")}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>NO SLOT AVAILABLE</p>
+        )}
+        <h3>{msg}</h3>
+      </div>
+    </>
   );
 }
 
