@@ -122,9 +122,9 @@ html {
   margin: 5rem 7% 2rem;
 }
 
-.service_div .service_img {
-  position: relative;
-  width: 28rem;
+.service_div .service_img1 {
+  position: absolute;
+  width: 30rem;
   height: 28rem;
   background-color: var(--header-color);
   z-index: -1;
@@ -133,7 +133,7 @@ html {
   flex: 1;
 }
 
-.service_div .service_img img {
+.service_div .service_img1 img {
   position: relative;
   width: 26rem;
   border-radius: 20px;
@@ -163,6 +163,8 @@ html {
   height: 8rem;
   position: relative;
   margin-top: 20rem;
+  margin-left: 30rem;
+  padding-top: 3rem;
 }
 
 .service_div h1 {
@@ -206,21 +208,22 @@ html {
   font-size: 3.6rem;
   display: flex;
   justify-content: center;
+  padding-top: 2rem;
 }
 
-.feedback_div .feedback_display {
+/* .feedback_div .feedback_display {
   display: flex;
   margin: 5rem;
-}
+} */
 
 .feedback_div .feedback_display {
   display: flex;
-  justify-content: space-around;
-  margin-top: 6rem;
+  justify-content: space-between;
+  margin: 6rem 5rem 0 5rem;
   text-align: center;
 }
 
-.feedback_display .ava_img {
+/* .feedback_display .ava_img {
   position: absolute;
   width: 23rem;
   height: 25rem;
@@ -229,17 +232,27 @@ html {
   border-radius: 10px;
   transition: 0.5s ease;
   flex: 1;
-}
+} */
 
 .feedback_display .service_container i {
+  color: hotpink;
+  z-index: 1;
+}
+
+.quote{
   display: flex;
-  text-align: center;
-  font-size: 10rem;
-  color: rgb(253, 211, 215);
+  justify-content: center;
+  padding: 1.2rem 0;
 }
 
 .feedback_display .service_container {
-  margin-left: 5%;
+  position: block;
+  margin: 0 8rem;
+  background-color: var(--header-color);
+  z-index: -1;
+  border-radius: 10px;
+  transition: 0.5s ease;
+  flex: 1;
 }
 
 .feedback_display .service_container .ava_img img {
@@ -250,21 +263,20 @@ html {
 }
 
 .feedback_display .service_container p {
-  position: relative;
+  /* position: block; */
   display: flex;
-  justify-content: center;
   text-align: center;
-  padding-top: 4rem;
-  padding-right: 9rem;
-  padding-left: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 3rem;
+  justify-content: center;
 }
 
 .feedback_div {
-  position: absolute;
-  background-color: white;
-  padding: 20px;
+  /* position: absolute; */
+  margin: 5rem 2rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  z-index: 999;
+  z-index: -1;
+  height: 40rem;
 }
 
 .service_container:hover .feedback_div {
