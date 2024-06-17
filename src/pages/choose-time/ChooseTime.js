@@ -14,6 +14,7 @@ function ChooseTime2() {
   // chỉ nhận lịch trong 3 ngày, tính từ thời điểm hiện tại
   const startDay = format(today, "yyyy-MM-dd");
   const endDay = format(addDays(startDay, 3), "yyyy-MM-dd");
+  console.log(endDay);
   const [appointments, setAppointments] = useState([]);
   const [isFullSlot, setIsFullSlot] = useState([]);
   const [customerID, setCustomerID] = useState("");
@@ -70,9 +71,9 @@ function ChooseTime2() {
     }
   }
 
-  useEffect(() => {
-    console.log("dataSend", sendData);
-  }, [sendData]);
+  // useEffect(() => {
+  //   console.log("dataSend", sendData);
+  // }, [sendData]);
   async function handleSubmit() {
     try {
       const appointmentTimes = JSON.parse(
@@ -112,10 +113,12 @@ function ChooseTime2() {
   }, []);
   useEffect(() => {
     console.log(appointments);
+    localStorage.setItem("appointments", JSON.stringify(appointments));
   }, [appointments]);
   useEffect(() => {
     console.log(isFullSlot);
-  });
+    setIsFullSlot(isFullSlot);
+  }, [isFullSlot]);
   useEffect(() => {
     async function getData() {
       const response = await axios.get(
@@ -123,10 +126,6 @@ function ChooseTime2() {
       );
       console.log(response.status);
       if (response.status === 200) {
-        // const appointmentTimes = await response.data.map((item) =>
-        //   format(item.appointmentTime, "yyyy-MM-dd HH:mm:ss.SS")
-        // );
-        //console.log("getDataa", response.data);
         setIsFullSlot(response.data);
         //console.log(typeof appointmentTimes[0]);
       }
