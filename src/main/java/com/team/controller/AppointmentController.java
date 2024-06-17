@@ -3,10 +3,7 @@ package com.team.controller;
 
 import com.team.dto.AppointmentDTO;
 import com.team.dto.AppointmentRequestDTO;
-import com.team.model.Appointments;
-import com.team.dto.ServiceDTO;
 import com.team.service.AppointmentService;
-import com.team.service.FunctionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,26 +18,11 @@ import java.util.List;
 public class AppointmentController {
 
     private final AppointmentService appointmentService;
-    private final FunctionService functionService;
 
-    public AppointmentController(AppointmentService appointmentService, FunctionService functionService) {
+    public AppointmentController(AppointmentService appointmentService) {
         this.appointmentService = appointmentService;
-        this.functionService = functionService;
     }
 
-    @GetMapping("service")
-    public ResponseEntity<?> getService() {
-        try {
-            List<ServiceDTO> listService = functionService.getServices();
-            if (listService.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).body("There is no service");
-            }
-            return ResponseEntity.ok(listService);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
 
     // return appointments are booked
     @GetMapping("time")
