@@ -40,7 +40,7 @@ public class PaymentController {
     // this function receive the information from front end
     // base on the method will use the function that have that method
     @PostMapping("")
-    public ResponseEntity<?> paymentInfo(@RequestBody Map<String, String> data, HttpServletRequest request) {
+    public ResponseEntity<?> paymentInfo(@RequestBody Map<String, Object> data, HttpServletRequest request) {
         try {
             Map<String, String> dataResponse = new HashMap<>();
             String urlVNPay = createVNPay(data, request);
@@ -60,7 +60,7 @@ public class PaymentController {
 
     // this version return vnpay url
 //    @PostMapping("/vn-pay")
-    public String createVNPay(@RequestBody Map<String, String> dataRequest, HttpServletRequest request) {
+    public String createVNPay(@RequestBody Map<String, Object> dataRequest, HttpServletRequest request) {
         try {
             String paymentURL = paymentService.paymentURL(dataRequest, request);
             return paymentURL;
@@ -129,7 +129,7 @@ public class PaymentController {
     }
 
 
-    public String createPaypal(@RequestBody Map<String, String> data) {
+    public String createPaypal(@RequestBody Map<String, Object> data) {
         try {
             Payment payment = paypalService.createPayment(data);
             for (Links links : payment.getLinks()) {

@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.SecureRandom;
 import java.util.Map;
 import java.util.Random;
 
@@ -22,6 +24,8 @@ public class ForgotPasswordController {
     private final CustomerRepository customerRepository;
     private final EmailService emailService;
     private final AccountRepository accountRepository;
+    private static final SecureRandom secureRandom = new SecureRandom();
+
 
     public ForgotPasswordController(CustomerRepository customerRepository, EmailService emailService, AccountRepository accountRepository) {
         this.customerRepository = customerRepository;
@@ -82,6 +86,10 @@ public class ForgotPasswordController {
         Random random = new Random();
         return random.nextInt(900000) + 100000; // Generate 6-digit OTP
     }
+
+//    public int otpGenerator() {
+//        return secureRandom.nextInt(900000) + 100000; // Generate 6-digit OTP
+//    }
 }
 
 
