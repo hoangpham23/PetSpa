@@ -15,8 +15,8 @@ import java.util.Map;
 public class PaypalService {
 
     private final APIContext apiContext;
-    private final String CANCEL_URL = "http://localhost:8090/payment/cancel";
-    private final String SUCCESS_URL = "http://localhost:8090/payment/success";
+    private static final String CANCEL_URL = "http://localhost:8090/payment/cancel";
+    private static final String SUCCESS_URL = "http://localhost:8090/payment/success";
 
     public PaypalService(APIContext apiContext) {
         this.apiContext = apiContext;
