@@ -5,27 +5,33 @@ import style from "./ChooseTime_style.module.css";
 import axios from "axios";
 import ChooseTimeBox from "./ChooseTimeBox/ChooseTimeBox";
 import Cart from "./CartService/Cart";
+import Footer from "../../components/footer/footer";
+import moment from "moment";
+import { useNavigate } from "react-router-dom";
 function ChooseTime2() {
   const { addDays, format } = require("date-fns");
   const today = new Date();
   // chỉ nhận lịch trong 3 ngày, tính từ thời điểm hiện tại
   const startDay = format(today, "yyyy-MM-dd");
   const endDay = format(addDays(startDay, 3), "yyyy-MM-dd");
+  console.log(endDay);
   const [appointments, setAppointments] = useState([]);
   const [isFullSlot, setIsFullSlot] = useState([]);
   const [customerID, setCustomerID] = useState("");
-  const [senData, setSendData] = useState({
+  const [sendData, setSendData] = useState({
     customerID: "",
     serviceIds: JSON.parse(localStorage.getItem("serviceIds")),
-    appointmentTimes: JSON.parse(
-      localStorage.getItem("appointmentTimes") || "[]"
-    ),
+    appointmentTimes: [],
     petId: JSON.parse(localStorage.getItem("petID")),
     depositAmount: JSON.parse(localStorage.getItem("depositAmount")),
   });
+  const navigate = useNavigate();
   useEffect(() => {
-    const account = JSON.parse(localStorage.getItem("account"));
-    setCustomerID(account.customerID);
+    const accountData = localStorage.getItem("account");
+    if (accountData) {
+      const account = JSON.parse(accountData);
+      setCustomerID(account.customerID);
+    }
   }, []);
   useEffect(() => {
     setSendData((prevData) => ({
@@ -64,20 +70,40 @@ function ChooseTime2() {
       console.log(error);
     }
   }
+
+  // useEffect(() => {
+  //   console.log("dataSend", sendData);
+  // }, [sendData]);
   async function handleSubmit() {
     try {
-      console.log(senData);
+      const appointmentTimes = JSON.parse(
+        localStorage.getItem("appointmentTimes")
+      );
+      //Chuyển đổi các chuỗi ngày giờ thành định dạng mong muốn
+      const formattedAppointmentTimes = await appointmentTimes.map((time) =>
+        moment(time.time).format("YYYY-MM-DD HH:mm:ss.SSS")
+      );
+      setSendData((prevData) => ({
+        ...prevData,
+        appointmentTimes: formattedAppointmentTimes,
+      }));
+
       const response = await axios.post(
         "http://localhost:8090/appointment/book",
         {
-          customerID: senData.cusomerID,
-          serviceIds: senData.serviceIds,
-          appointmentTimes: senData.appointmentTimes,
-          petId: senData.petId,
-          depositAmount: senData.depositAmount,
+          customerID: customerID,
+          serviceIds: sendData.serviceIds,
+          //appointmentTimes: sendData.appointmentTimes,
+          appointmentTimes: formattedAppointmentTimes,
+          petID: sendData.petId,
+          depositAmount: sendData.depositAmount,
         }
       );
-      console.log(response.status);
+
+      if (response.status === 201) {
+        localStorage.setItem("customerID", customerID);
+        navigate("/payment");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -87,10 +113,12 @@ function ChooseTime2() {
   }, []);
   useEffect(() => {
     console.log(appointments);
+    localStorage.setItem("appointments", JSON.stringify(appointments));
   }, [appointments]);
   useEffect(() => {
     console.log(isFullSlot);
-  });
+    setIsFullSlot(isFullSlot);
+  }, [isFullSlot]);
   useEffect(() => {
     async function getData() {
       const response = await axios.get(
@@ -98,10 +126,6 @@ function ChooseTime2() {
       );
       console.log(response.status);
       if (response.status === 200) {
-        // const appointmentTimes = await response.data.map((item) =>
-        //   format(item.appointmentTime, "yyyy-MM-dd HH:mm:ss.SS")
-        // );
-        //console.log("getDataa", response.data);
         setIsFullSlot(response.data);
         //console.log(typeof appointmentTimes[0]);
       }
@@ -137,6 +161,7 @@ function ChooseTime2() {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     </>
   );

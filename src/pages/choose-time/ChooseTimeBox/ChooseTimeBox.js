@@ -102,6 +102,7 @@ function ChooseTimeBox() {
     localStorage.getItem("selectedDate")
   );
   const appointments = JSON.parse(localStorage.getItem("appointments") || "[]");
+
   const [appointmentsToday, setAppointmentsToday] = useState([]);
   const [selectedTimes, setSelectedTimes] = useState([]);
   const cartsystem = JSON.parse(localStorage.getItem("cart"));
@@ -146,7 +147,9 @@ function ChooseTimeBox() {
     const isAlreadySelected = selectedTimes.some(
       (selected) => selected.time === appointment.time
     );
-
+    if (appointment.status === true) {
+      return;
+    }
     if (isAlreadySelected) {
       setSelectedTimes((prevSelectedTimes) =>
         prevSelectedTimes.filter(
@@ -159,16 +162,6 @@ function ChooseTimeBox() {
         appointment,
       ]);
     }
-  };
-
-  const handleDoubleClick = (appointment) => {
-    setSelectedTimes((prevSelectedTimes) =>
-      prevSelectedTimes.filter((time) => time !== appointment.time)
-    );
-    localStorage.setItem(
-      "selectedTimes",
-      JSON.stringify(selectedTimes.filter((time) => time !== appointment.time))
-    );
   };
 
   return (

@@ -87,9 +87,9 @@ h2 {
   margin-top: auto;
   width: 400px;
   height: 300px;
-  background: #efefef;
+  background: #ededed;
   border-radius: 10px;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
 }
 
 .timeInfo h2 {
@@ -113,11 +113,13 @@ h2 {
 }
 
 .introduction {
-  margin-bottom: 20px;
+  margin-bottom: 1.8rem;
   font-size: 1.5em;
   color: #333;
 }
-
+.scheduleContainer h3 {
+  margin-top: 1.8rem;
+}
 .schedule {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

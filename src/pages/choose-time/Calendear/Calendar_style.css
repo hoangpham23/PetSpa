@@ -87,3 +87,15 @@ header .current-date {
 .days li:not(.active):hover::before {
   background: #f2f2f2;
 }
+.days li.selected {
+  /* background-color: #9b59b6; Màu nền khi được chọn */
+  color: #fff; /* Màu chữ khi được chọn */
+}
+
+.days li.selected::before {
+  background: #9b59b6;
+}
+
+.days li.selected:hover::before {
+  background: #9b59b6;
+}

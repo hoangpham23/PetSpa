@@ -1,37 +1,4 @@
-// import { useState } from "react";
 
-// function Cart() {
-//   const cartsystem = localStorage.getItem("cart");
-//   const [cartItems, setCartItems] = useState(JSON.parse(cartsystem) || []);
-//   console.log("cart ne", cartItems);
-//   localStorage.setItem(
-//     "depositAmount",
-//     cartItems.reduce((total, item) => total + item.price, 0)
-//   );
-//   const depositAmount = cartItems.reduce(
-//     (total, item) => total + item.price,
-//     0
-//   );
-//   return (
-//     <>
-//       <div className="cart_container">
-//         <div className="cart_title">
-//           <h2>YOUR SELECTED SERVICES:</h2>
-//         </div>
-//         <div className="cart_items">
-//           <ul>
-//             {cartItems.map((item, index) => (
-//               <li key={index}>{item.name}</li>
-//             ))}
-//           </ul>
-//         </div>
-//         <div className="total_bill">
-//           <p>Total Bill: {depositAmount}</p>
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
 import React, { useState, useEffect } from "react";
 import style from "./Cart_style.module.css";
 

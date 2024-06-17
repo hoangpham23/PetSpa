@@ -4,6 +4,7 @@ import HeaderForCus from "../../components/header/header-customer";
 import style from "./ChoosePet_style.module.css";
 import { Helmet } from "react-helmet";
 import { useNavigate, useParams } from "react-router-dom";
+import Footer from "../../components/footer/footer";
 
 function ChoosePet() {
   const [customerID, setCustomerID] = useState("");
@@ -45,41 +46,44 @@ function ChoosePet() {
     navigate("/appointment/service");
   }
   return (
-    <div>
-      <HeaderForCus />
-      <section>
-        <div
-          className={style.PetInfo_container}
-          onClick={() => {
-            navigate("/appointment/service");
-          }}
-        >
-          <h1>CHOOSE PET FOR SERVICES</h1>
-          {petData.map((pet, index) => (
-            <div
-              key={index}
-              className={style.PetInfo_box}
-              onClick={() => handleSubmit(pet.id)}
-            >
-              <p>PET {index + 1}</p>
-              <p>NAME: {pet.petName}</p>
-              <p>WEIGHT (KG): {pet.weight}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className={style.add}>
-          <input
-            type="submit"
-            value="ADD PET"
-            className={style.btn}
+    <>
+      <div className={style.wrapper}>
+        <HeaderForCus />
+        <main className={style.mainContent}>
+          <div
+            className={style.PetInfo_container}
             onClick={() => {
-              navigate("/info-pet");
+              navigate("/appointment/service");
             }}
-          />
-        </div>
-      </section>
-    </div>
+          >
+            <h1>CHOOSE PET FOR SERVICES</h1>
+            {petData.map((pet, index) => (
+              <div
+                key={index}
+                className={style.PetInfo_box}
+                onClick={() => handleSubmit(pet.id)}
+              >
+                <p>PET {index + 1}</p>
+                <p>NAME: {pet.petName}</p>
+                <p>WEIGHT (KG): {pet.weight}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className={style.add}>
+            <input
+              type="submit"
+              value="ADD PET"
+              className={style.btn}
+              onClick={() => {
+                navigate("/info-pet");
+              }}
+            />
+          </div>
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 }
 

@@ -43,6 +43,17 @@ function InfoPet() {
       setMsg("Please fill in all fields. ");
       return;
     }
+    if (
+      typeof petInfo.age !== "number" ||
+      !Number.isInteger(petInfo.age) ||
+      petInfo.age < 0 ||
+      typeof petInfo.weight !== "number" ||
+      !Number.isInteger(petInfo.weight) ||
+      petInfo.weight < 0
+    ) {
+      setMsg("The age and weight of pet must be a number and greater than 0");
+      return;
+    }
     try {
       const response = await axios.post(
         "http://localhost:8090/insert-pet-info",

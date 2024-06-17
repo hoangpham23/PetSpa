@@ -12,10 +12,10 @@
 }
 
 .cart_title h2 {
-  font-size: 1.2em;
+  font-size: 1.5em;
   color: #333;
   margin: 0;
-  font-family: "Arial", sans-serif;
+  /* font-family: "Arial", sans-serif; */
 }
 
 .cart_items {
@@ -23,10 +23,11 @@
 }
 
 .cart_items ul {
-  list-style-type: none;
+  /* list-style-type: none; */
   padding: 0;
   margin: 0;
-  font-family: "Arial", sans-serif;
+  /* font-family: "Arial", sans-serif; */
+  font-size: 1.5rem;
 }
 
 .cart_item {
@@ -35,7 +36,6 @@
   margin-bottom: 10px;
   font-family: "Arial", sans-serif;
   color: #555;
-  font-size: 1em;
 }
 
 .item_name {
@@ -46,15 +46,15 @@
 
 .total_bill {
   text-align: left;
-  font-size: 1.2em;
+  font-size: 1.5em;
   font-weight: bold;
   color: #333;
-  font-family: "Arial", sans-serif;
+  /* font-family: "Arial", sans-serif; */
 }
 
 .total_amount {
   font-size: 1.2em;
   font-weight: bold;
   color: #007bff;
-  font-family: "Arial", sans-serif;
+  /* font-family: "Arial", sans-serif; */
 }
