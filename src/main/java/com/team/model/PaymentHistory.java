@@ -35,7 +35,7 @@ public class PaymentHistory {
 
 //    @Column(name = "PaymentTime")
 //    private Timestamp paymentTime;
-@Column(name = "PaymentTime")
-private Instant paymentTime;
+    @Column(name = "PaymentTime")
+    private Instant paymentTime;
 
 }
