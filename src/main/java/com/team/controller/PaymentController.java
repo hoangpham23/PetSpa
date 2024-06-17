@@ -7,15 +7,11 @@ import com.team.config.VNPayConfig;
 import com.team.service.PaymentService;
 import com.team.service.PaypalService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.net.URI;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -27,9 +23,9 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/payment")
 public class PaymentController {
 
-    private final String PAYMENT_SUCCESS = "http://localhost:3000/payment?status=successful";
-    private final String PAYMENT_CANCELED = "http://localhost:3000/payment?status=canceled";
-    private final String PAYMENT_FAILED = "http://localhost:3000/payment?status=failed";
+    private static final String PAYMENT_SUCCESS = "http://localhost:3000/payment?status=successful";
+    private static final String PAYMENT_CANCELED = "http://localhost:3000/payment?status=canceled";
+    private static final String PAYMENT_FAILED = "http://localhost:3000/payment?status=failed";
     private final PaymentService paymentService;
     private final VNPayConfig VNPayConfig;
     private final PaypalService paypalService;
@@ -49,7 +45,7 @@ public class PaymentController {
             Map<String, String> dataResponse = new HashMap<>();
             String urlVNPay = createVNPay(data, request);
             String urlPaypal = createPaypal(data);
-            if (urlVNPay == null){
+            if (urlVNPay == null) {
                 dataResponse.put("urlVNPAY", "error");
             }
             dataResponse.put("urlVNPAY", urlVNPay);
@@ -67,38 +63,19 @@ public class PaymentController {
     public String createVNPay(@RequestBody Map<String, String> dataRequest, HttpServletRequest request) {
         try {
             String paymentURL = paymentService.paymentURL(dataRequest, request);
-
-            Map<String, String> data = new HashMap<>();
-            data.put("paymentURL", paymentURL);
             return paymentURL;
-
         } catch (Exception e) {
             log.error(e.getMessage());
             return null;
         }
     }
-    // change this into post mapping
-    // this version redirect to vn_pay page
-//    @GetMapping("/vn_pay")
-    public ResponseEntity<?> createVNPay( HttpServletRequest request) {
-        try {
-            String paymentURL = paymentService.paymentURL(request);
-            if (paymentURL == null) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-            }
-            return ResponseEntity.status(HttpStatus.FOUND)
-                    .location(URI.create(paymentURL))
-                    .build();
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+
+
 
     // check the status after completed payment and response direct to the website
     // response after complete vn_pay payment include success or failed
     @GetMapping("/vn_pay/status")
-    public void status(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public RedirectView status(HttpServletRequest request) throws UnsupportedEncodingException {
         Map fields = new HashMap();
         for (Enumeration params = request.getParameterNames(); params.hasMoreElements(); ) {
             String fieldName = URLEncoder.encode((String) params.nextElement(), StandardCharsets.US_ASCII.toString());
@@ -125,6 +102,7 @@ public class PaymentController {
         fields.remove("customerID");
 
         String signValue = VNPayConfig.hashAllFields(fields);
+        String returnUrl = PAYMENT_FAILED;
         if (signValue.equals(vnp_SecureHash)) {
             if ("00".equals(request.getParameter("vnp_ResponseCode"))) {
                 boolean check = paymentService.changePaymentStatus(customerID, paymentStatus);
@@ -132,7 +110,7 @@ public class PaymentController {
                     paymentService.savePaymentHistory(customerID, amount, paymentMethod);
                     paymentService.sendEmail(customerID);
                     log.info("Change paymentStatus successful");
-                    response.sendRedirect(PAYMENT_SUCCESS);
+                    returnUrl = PAYMENT_SUCCESS;
                 }
 
             } else {
@@ -141,34 +119,15 @@ public class PaymentController {
                 if (check) {
                     paymentService.savePaymentHistory(customerID, amount, paymentMethod);
                 }
-                response.sendRedirect(PAYMENT_CANCELED);
+                returnUrl = PAYMENT_CANCELED;
             }
 
-        } else {
-//            return "Wrong Secure Hash";
-            response.sendRedirect(PAYMENT_FAILED);
         }
+
+        return new RedirectView(returnUrl);
 
     }
 
-
-    // change this into post
-    // create paypal payment and redirect to paypal site
-//    @GetMapping("/paypal")
-//    public RedirectView createPaypal(HttpServletRequest request) {
-//        try {
-//            Payment payment = paypalService.createPayment(request);
-//            for (Links links : payment.getLinks()) {
-//                if (links.getRel().equals("approval_url")) {
-//                    System.out.println("link " + links.getHref());
-//                    return new RedirectView(links.getHref());
-//                }
-//            }
-//        } catch (PayPalRESTException e) {
-//            log.error("Error occurred:: ", e);
-//        }
-//        return new RedirectView("/payment/error");
-//    }
 
     public String createPaypal(@RequestBody Map<String, String> data) {
         try {
@@ -187,12 +146,13 @@ public class PaymentController {
 
     // check the status and response back to the website in front end
     @GetMapping("/success")
-    public void paymentSuccess(
+    public RedirectView paymentSuccess(
             @RequestParam("paymentId") String paymentId,
             @RequestParam("PayerID") String payerId,
             @RequestParam("customerID") String customerID,
-            @RequestParam("amount") String amount, HttpServletResponse response
-    ) throws IOException {
+            @RequestParam("amount") String amount
+    ) {
+        String returnUrl = PAYMENT_FAILED;
         try {
             Payment payment = paypalService.executePayment(paymentId, payerId);
             String paymentStatus = "Paid";
@@ -204,34 +164,33 @@ public class PaymentController {
                 if (check) {
                     paymentService.savePaymentHistory(id, totalAmount, paymentMethod);
                     paymentService.sendEmail(id);
-
+                    returnUrl = PAYMENT_SUCCESS;
                 }
-                response.sendRedirect(PAYMENT_SUCCESS);
+
             }
 
-            response.sendRedirect(PAYMENT_FAILED);
         } catch (PayPalRESTException e) {
             log.error("Error occurred:: ", e);
-            response.sendRedirect(PAYMENT_FAILED);
         }
+        return new RedirectView(returnUrl);
     }
 
 
     // if paypal payment is cancel return to this
     @GetMapping("/cancel")
-    public void paymentCancel(@RequestParam("customerID") String customerID , HttpServletResponse response) throws IOException {
+    public RedirectView paymentCancel(@RequestParam("customerID") String customerID) {
         String paymentStatus = "Canceled";
         boolean check = paymentService.changePaymentStatus(Integer.parseInt(customerID), paymentStatus);
-        if (!check){
+        if (!check) {
             log.error("error at paymentCancel. Can't change the paymentStatus");
         }
-        response.sendRedirect(PAYMENT_CANCELED);
+        return new RedirectView(PAYMENT_CANCELED);
     }
 
     // if paypal payment is error return to this
     @GetMapping("/error")
-    public void paymentError(HttpServletResponse response) throws IOException {
-        response.sendRedirect(PAYMENT_FAILED);
+    public RedirectView paymentError() {
+        return new RedirectView(PAYMENT_FAILED);
     }
 
 }
