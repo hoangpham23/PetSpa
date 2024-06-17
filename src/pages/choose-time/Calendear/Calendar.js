@@ -72,14 +72,33 @@ function Calendar() {
       const allDays = daysTag.querySelectorAll("li");
       allDays.forEach((day) => {
         day.addEventListener("click", (e) => {
-          const selectedDay = e.target.innerText;
+          const selectedDay = e.currentTarget;
           if (!e.target.classList.contains("inactive")) {
-            const formattedDay = selectedDay.padStart(2, "0"); // Ensure day is two digits
+            const formattedDay = selectedDay.innerText.padStart(2, "0"); // Ensure day is two digits
             const formattedMonth = (currMonth + 1).toString().padStart(2, "0"); // Ensure month is two digits
             const selectedFullDate = `${currYear}-${formattedMonth}-${formattedDay}`;
-            setSelectedDate(selectedFullDate);
-            localStorage.setItem("selectedDate", selectedFullDate);
-            window.location.reload();
+
+            // // Xóa lớp .selected từ tất cả các ô ngày
+            // allDays.forEach((day) => {
+            //   day.classList.remove("selected");
+            // });
+
+            // // Thêm lớp .selected cho ô ngày được chọn
+            // selectedDay.classList.add("selected");
+            if (!selectedDay.classList.contains("inactive")) {
+              // Thêm hoặc loại bỏ lớp .selected cho ngày được chọn
+              allDays.forEach((day) => {
+                day.classList.remove("selected");
+              });
+              selectedDay.classList.add("selected");
+
+              setSelectedDate(selectedFullDate);
+              localStorage.setItem("selectedDate", selectedFullDate);
+              window.location.reload();
+            }
+            // setSelectedDate(selectedFullDate);
+            // localStorage.setItem("selectedDate", selectedFullDate);
+            // window.location.reload();
           }
         });
       });
