@@ -40,13 +40,13 @@ public class PaymentService {
         this.emailService = emailService;
     }
 
-    public String paymentURL(Map<String, String> data, HttpServletRequest req) throws UnsupportedEncodingException {
+    public String paymentURL(Map<String, Object> data, HttpServletRequest req) throws UnsupportedEncodingException {
 
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String orderType = "other";
 //        long amount = Integer.parseInt(req.getParameter("totalAmount")) * 100L;
-        long amount = Long.parseLong(data.get("amount")) * 100L;
+        long amount = Long.parseLong(data.get("amount").toString()) * 100L;
         String vnp_TxnRef = VNPayConfig.getRandomNumber(8);
         String vnp_IpAddr = VNPayConfig.getIpAddress(req);
         String vnp_TmnCode = VNPayConfig.getVnp_TmnCode();

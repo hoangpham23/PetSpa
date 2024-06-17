@@ -67,9 +67,10 @@ public class PaypalService {
         return payment.execute(apiContext, paymentExecution);
     }
 
-    public Payment createPayment(Map<String, String> data) throws PayPalRESTException {
-        Double total = Double.parseDouble(data.get("amount"));
-        String customerID = data.get("customerID");
+    public Payment createPayment(Map<String, Object> data) throws PayPalRESTException {
+        Double total = Double.parseDouble(data.get("amount").toString());
+        String customerID = data.get("customerID").toString();
+        List<Integer> listAppointmentID = (List<Integer>) data.get("appointmentIds");
         Amount amount = new Amount();
         amount.setCurrency("USD");
         amount.setTotal(String.format(Locale.forLanguageTag("USD"), "%.2f", total)); // 9.99$ - 9,99€
@@ -85,7 +86,12 @@ public class PaypalService {
         payer.setPaymentMethod("Paypal");
 
         Payment payment = new Payment();
-        String customUrl = "?customerID=" + customerID +"&amount=" + total;
+        StringBuilder customUrl = new StringBuilder("?customerID=" + customerID + "&amount=" + total);
+        if (listAppointmentID != null) {
+            for (Integer appointmentID : listAppointmentID) {
+                customUrl.append("&appointmentID=").append(appointmentID);
+            }
+        }
         payment.setIntent("sale");
         payment.setPayer(payer);
         payment.setTransactions(transactions);
