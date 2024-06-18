@@ -1,5 +1,5 @@
 .wrapperPayment {
-  background-color: #ffffff;
+  background-color: #f8f8f8;
 }
 
 .payment-container {
@@ -41,12 +41,12 @@
   padding: 10px;
   border: 2px solid #ddd;
   border-radius: 8px;
-  background-color: #f8f8f8;
+  background-color: #ffffff;
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .payment-option:hover {
-  background-color: #f0f0f0;
+  background-color: #979797;
 }
 
 .payment-option input[type="radio"] {
@@ -69,7 +69,7 @@
   padding: 20px;
   /* border: 2px solid #ddd; */
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   box-shadow: 0 0 0.8rem rgba(0, 0, 0, 0.2);
 }
 .checkout-summary h2 {

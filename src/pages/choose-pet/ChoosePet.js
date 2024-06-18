@@ -47,8 +47,8 @@ function ChoosePet() {
   }
   return (
     <>
+      <HeaderForCus />
       <div className={style.wrapper}>
-        <HeaderForCus />
         <main className={style.mainContent}>
           <div
             className={style.PetInfo_container}

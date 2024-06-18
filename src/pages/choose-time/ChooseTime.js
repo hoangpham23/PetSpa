@@ -13,6 +13,7 @@ function ChooseTime2() {
   const today = new Date();
   // chỉ nhận lịch trong 3 ngày, tính từ thời điểm hiện tại
   const startDay = format(today, "yyyy-MM-dd");
+
   const endDay = format(addDays(startDay, 3), "yyyy-MM-dd");
   console.log(endDay);
   const [appointments, setAppointments] = useState([]);
@@ -83,27 +84,28 @@ function ChooseTime2() {
       const formattedAppointmentTimes = await appointmentTimes.map((time) =>
         moment(time.time).format("YYYY-MM-DD HH:mm:ss.SSS")
       );
+      //localStorage.setItem("appointmentTimes", formattedAppointmentTimes);
       setSendData((prevData) => ({
         ...prevData,
         appointmentTimes: formattedAppointmentTimes,
       }));
 
-      const response = await axios.post(
-        "http://localhost:8090/appointment/book",
-        {
-          customerID: customerID,
-          serviceIds: sendData.serviceIds,
-          //appointmentTimes: sendData.appointmentTimes,
-          appointmentTimes: formattedAppointmentTimes,
-          petID: sendData.petId,
-          depositAmount: sendData.depositAmount,
-        }
-      );
+      // const response = await axios.post(
+      //   "http://localhost:8090/appointment/book",
+      //   {
+      //     customerID: customerID,
+      //     serviceIds: sendData.serviceIds,
+      //     //appointmentTimes: sendData.appointmentTimes,
+      //     appointmentTimes: formattedAppointmentTimes,
+      //     petID: sendData.petId,
+      //     depositAmount: sendData.depositAmount,
+      //   }
+      // );
 
-      if (response.status === 201) {
-        localStorage.setItem("customerID", customerID);
-        navigate("/payment");
-      }
+      // if (response.status === 201) {
+      //   localStorage.setItem("customerID", customerID);
+      //   navigate("/payment");
+      // }
     } catch (error) {
       console.log(error);
     }

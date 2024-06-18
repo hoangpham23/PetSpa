@@ -7,6 +7,7 @@ import Cart from "../choose-time/CartService/Cart";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import HeaderColor from "../../components/header/HeaderColor";
 
 function Payment() {
   const [customerID, setCustomerID] = useState("");
@@ -55,7 +56,7 @@ function Payment() {
 
   return (
     <>
-      <HeaderForCus />
+      <HeaderColor />
       <div className="wrapperPayment">
         <div className="payment-container">
           <div className="payment-options">
@@ -70,7 +71,7 @@ function Payment() {
               />
               <img src={Paypal} alt="Paypal" />
             </label>
-            <label className="payment-option">
+            {/* <label className="payment-option">
               <input
                 type="radio"
                 name="VNPAY"
@@ -79,7 +80,7 @@ function Payment() {
                 disabled={isLoading}
               />
               <img src={VNPay} alt="VNPay" />
-            </label>
+            </label> */}
           </div>
           <div className="checkout-summary">
             <Cart />

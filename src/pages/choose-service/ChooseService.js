@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet";
 import service1 from "../../assets/img/service1.jpg";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/footer/footer";
+import { addDays, format } from "date-fns";
 // import service2 from "../../assets/img/service2.jpg";
 // import service3 from "../../assets/img/service3.jpg";
 
@@ -19,7 +20,15 @@ function ChooseService() {
     price: "",
     imageURL: "",
   });
-
+  const today = new Date();
+  // chỉ nhận lịch trong 3 ngày, tính từ thời điểm hiện tại
+  const startDay = format(today, "yyyy-MM-dd");
+  localStorage.setItem(
+    "selectedDate",
+    format(addDays(startDay, 1), "yyyy-MM-dd")
+  );
+  localStorage.setItem("appointmentTimes", []);
+  localStorage.setItem("selectedTimes", []);
   // lưu các id dịch vụ đã chọn  selectedServices lên localStorage
   // useEffect(() => {
   //   services.map((service) => {
@@ -76,6 +85,7 @@ function ChooseService() {
       setDisplayService({
         name: services?.at(0)?.serviceName,
         price: services?.at(0)?.price,
+        imageURL: services?.at(0)?.imageURl,
       });
     }
   }, [services]);
@@ -86,9 +96,9 @@ function ChooseService() {
   function handleDisplay(index) {
     const selectedService = services.at(index);
     setDisplayService({
-      name: selectedService.serviceName,
-      price: selectedService.price,
-      imgURL: selectedService.imageURl,
+      name: services.at(index).serviceName,
+      price: services.at(index).price,
+      imgURL: services.at(index).imageURl,
     });
   }
 

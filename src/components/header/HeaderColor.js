@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 //import "../../pages/home-page/HomeCus_style.css";
 // import "../../home-page/HomeGuest_style.css";
-function HeaderForCus() {
+import "./HeaderColor_style.css";
+function HeaderColor() {
   useEffect(() => {
     window.onscroll = () => {
       let header = document.querySelector(".header");
@@ -11,6 +12,8 @@ function HeaderForCus() {
 
   return (
     <header className="header">
+      <div className="header-blue-backgroud-rectangle"></div>
+      <div className="header-pink-backgroud-rectangle"></div>
       <div className="navbar-header">
         <nav className="navbar">
           <a href="#">HOMEPAGE</a>
@@ -24,4 +27,4 @@ function HeaderForCus() {
     </header>
   );
 }
-export default HeaderForCus;
+export default HeaderColor;

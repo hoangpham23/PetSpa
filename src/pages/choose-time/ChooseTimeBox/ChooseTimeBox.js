@@ -96,6 +96,7 @@
 import { useEffect, useState } from "react";
 import style from "../ChooseTime_style.module.css";
 import { format, parseISO } from "date-fns";
+import moment from "moment";
 
 function ChooseTimeBox() {
   const [selectingDate, setSelectingDate] = useState(
@@ -104,12 +105,23 @@ function ChooseTimeBox() {
   const appointments = JSON.parse(localStorage.getItem("appointments") || "[]");
 
   const [appointmentsToday, setAppointmentsToday] = useState([]);
-  const [selectedTimes, setSelectedTimes] = useState([]);
+  const [selectedTimes, setSelectedTimes] = useState(
+    JSON.parse(localStorage.getItem("selectedTimes") || "[]")
+  );
   const cartsystem = JSON.parse(localStorage.getItem("cart"));
   const numOfServices = cartsystem.length;
   const [msg, setMsg] = useState("");
   useEffect(() => {
-    localStorage.setItem("appointmentTimes", JSON.stringify(selectedTimes));
+    async function formatAppointmentTimes() {
+      const formattedAppointmentTimes = selectedTimes.map((time) =>
+        moment(time.time).format("YYYY-MM-DD HH:mm:ss.SSS")
+      );
+      localStorage.setItem(
+        "appointmentTimes",
+        JSON.stringify(formattedAppointmentTimes)
+      );
+    }
+    formatAppointmentTimes();
   }, [selectedTimes]);
   useEffect(() => {
     console.log(numOfServices);
@@ -163,6 +175,9 @@ function ChooseTimeBox() {
       ]);
     }
   };
+  useEffect(() => {
+    localStorage.setItem("selectedTimes", JSON.stringify(selectedTimes));
+  }, [selectedTimes]);
 
   return (
     <>
