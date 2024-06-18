@@ -19,13 +19,6 @@ function ChooseTime2() {
   const [appointments, setAppointments] = useState([]);
   const [isFullSlot, setIsFullSlot] = useState([]);
   const [customerID, setCustomerID] = useState("");
-  const [sendData, setSendData] = useState({
-    customerID: "",
-    serviceIds: JSON.parse(localStorage.getItem("serviceIds")),
-    appointmentTimes: [],
-    petId: JSON.parse(localStorage.getItem("petID")),
-    depositAmount: JSON.parse(localStorage.getItem("depositAmount")),
-  });
   const navigate = useNavigate();
   useEffect(() => {
     const accountData = localStorage.getItem("account");
@@ -34,12 +27,6 @@ function ChooseTime2() {
       setCustomerID(account.customerID);
     }
   }, []);
-  useEffect(() => {
-    setSendData((prevData) => ({
-      ...prevData,
-      customerID: customerID,
-    }));
-  }, [customerID]);
 
   function getHours() {
     const hours = [];
@@ -72,40 +59,16 @@ function ChooseTime2() {
     }
   }
 
-  // useEffect(() => {
-  //   console.log("dataSend", sendData);
-  // }, [sendData]);
   async function handleSubmit() {
     try {
-      const appointmentTimes = JSON.parse(
-        localStorage.getItem("appointmentTimes")
+      const selectedTimes = JSON.parse(
+        localStorage.getItem("selectedTimes") || "[]"
       );
-      //Chuyển đổi các chuỗi ngày giờ thành định dạng mong muốn
-      const formattedAppointmentTimes = await appointmentTimes.map((time) =>
-        moment(time.time).format("YYYY-MM-DD HH:mm:ss.SSS")
-      );
-      //localStorage.setItem("appointmentTimes", formattedAppointmentTimes);
-      setSendData((prevData) => ({
-        ...prevData,
-        appointmentTimes: formattedAppointmentTimes,
-      }));
-
-      // const response = await axios.post(
-      //   "http://localhost:8090/appointment/book",
-      //   {
-      //     customerID: customerID,
-      //     serviceIds: sendData.serviceIds,
-      //     //appointmentTimes: sendData.appointmentTimes,
-      //     appointmentTimes: formattedAppointmentTimes,
-      //     petID: sendData.petId,
-      //     depositAmount: sendData.depositAmount,
-      //   }
-      // );
-
-      // if (response.status === 201) {
-      //   localStorage.setItem("customerID", customerID);
-      //   navigate("/payment");
-      // }
+      const cartsystem = JSON.parse(localStorage.getItem("cart"));
+      const numOfServices = cartsystem.length;
+      if (selectedTimes.length === numOfServices) {
+        navigate("/payment");
+      }
     } catch (error) {
       console.log(error);
     }

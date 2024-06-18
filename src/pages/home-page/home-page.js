@@ -14,12 +14,16 @@ function HomePage() {
   let account = "";
   async function getData() {
     try {
-      account = localStorage.getItem("account");
+      account = JSON.parse(localStorage.getItem("account"));
       console.log(account.role);
       const response = await axios.get("http://localhost:8090/home-page");
       const responseData = response.data; // Lưu dữ liệu từ API vào biến tạm
       setItems(responseData); // Cập nhật state với dữ liệu từ API
       localStorage.setItem("dataArray", JSON.stringify(responseData)); // Lưu dữ liệu vào localStorage sau khi đã cập nhật items
+      localStorage.setItem("customerID", account.customerID);
+      localStorage.setItem("petID", "");
+      localStorage.setItem("cart", "");
+      localStorage.setItem("serviceIds", "");
     } catch (error) {
       console.error("Error fetching data:", error);
     }

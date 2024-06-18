@@ -19,40 +19,43 @@ function Payment() {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    handleSubmit();
-  }, []);
+  // useEffect(() => {
+  //   handleSubmit();
+  // }, []);
 
   async function handleSubmit() {
     try {
       const response = await axios.post("http://localhost:8090/payment", {
         customerID: localStorage.getItem("customerID"),
+        serviceIds: JSON.parse(localStorage.getItem("serviceIds")),
+        appointmentTimes: JSON.parse(localStorage.getItem("appointmentTimes")),
         amount: localStorage.getItem("depositAmount"),
         petID: localStorage.getItem("petID"),
       });
       console.log(response.data);
-      setResult(response.data); // setResult với dữ liệu thực
+      setResult(response.data);
       setUrlPaypal(response.data.urlPaypal);
-      setUrlVN_PAY(response.data.urlVNPAY);
+      window.location.href = response.data.urlPaypal;
+      //setUrlVN_PAY(response.data.urlVNPAY);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
   }
-  useEffect(() => {
-    console.log("paypal", urlPaypal);
-    console.log("vnpay", urlVN_PAY);
-  }, [urlPaypal, urlVN_PAY]);
-  function handlePaymentMethodChange(event) {
-    const selectedMethod = event.target.value;
-    setPaymentMethod(selectedMethod);
+  // useEffect(() => {
+  //   console.log("paypal", urlPaypal);
+  //   console.log("vnpay", urlVN_PAY);
+  // }, [urlPaypal, urlVN_PAY]);
+  // function handlePaymentMethodChange(event) {
+  //   const selectedMethod = event.target.value;
+  //   setPaymentMethod(selectedMethod);
 
-    if (selectedMethod === "paypal" && urlPaypal) {
-      window.location.href = urlPaypal;
-    } else if (selectedMethod === "vnpay" && urlVN_PAY) {
-      window.location.href = urlVN_PAY;
-    }
-  }
+  //   if (selectedMethod === "paypal" && urlPaypal) {
+  //     window.location.href = urlPaypal;
+  //   } else if (selectedMethod === "vnpay" && urlVN_PAY) {
+  //     window.location.href = urlVN_PAY;
+  //   }
+  // }
 
   return (
     <>
@@ -66,8 +69,8 @@ function Payment() {
                 type="radio"
                 name="Paypal"
                 value="paypal"
-                onChange={handlePaymentMethodChange}
-                disabled={isLoading}
+                onClick={handleSubmit}
+                // disabled={isLoading}
               />
               <img src={Paypal} alt="Paypal" />
             </label>
