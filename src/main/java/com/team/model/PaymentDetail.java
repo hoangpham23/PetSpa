@@ -19,11 +19,11 @@ public class PaymentDetail {
     private Customers customers;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ServiceID")
-    private Services services;
+    @JoinColumn(name = "AppointmentID")
+    private Appointments appointments;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PaymentHistoryID")
-    private PaymentHistory paymentHistoryID;
+    private PaymentHistory paymentHistory;
 
 }

@@ -4,6 +4,7 @@ import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 import com.team.config.VNPayConfig;
+import com.team.dto.AppointmentRequestDTO;
 import com.team.service.PaymentService;
 import com.team.service.PaypalService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,15 +41,15 @@ public class PaymentController {
     // this function receive the information from front end
     // base on the method will use the function that have that method
     @PostMapping("")
-    public ResponseEntity<?> paymentInfo(@RequestBody Map<String, Object> data, HttpServletRequest request) {
+    public ResponseEntity<?> paymentInfo(@RequestBody AppointmentRequestDTO data, HttpServletRequest request) {
         try {
             Map<String, String> dataResponse = new HashMap<>();
-            String urlVNPay = createVNPay(data, request);
+//            String urlVNPay = createVNPay(data, request);
+//            if (urlVNPay == null) {
+//                dataResponse.put("urlVNPAY", "error");
+//            }
+//            dataResponse.put("urlVNPAY", urlVNPay);
             String urlPaypal = createPaypal(data);
-            if (urlVNPay == null) {
-                dataResponse.put("urlVNPAY", "error");
-            }
-            dataResponse.put("urlVNPAY", urlVNPay);
             dataResponse.put("urlPaypal", urlPaypal);
 
             return ResponseEntity.ok(dataResponse);
@@ -71,65 +72,64 @@ public class PaymentController {
     }
 
 
-
     // check the status after completed payment and response direct to the website
     // response after complete vn_pay payment include success or failed
-    @GetMapping("/vn_pay/status")
-    public RedirectView status(HttpServletRequest request) throws UnsupportedEncodingException {
-        Map fields = new HashMap();
-        for (Enumeration params = request.getParameterNames(); params.hasMoreElements(); ) {
-            String fieldName = URLEncoder.encode((String) params.nextElement(), StandardCharsets.US_ASCII.toString());
-            String fieldValue = URLEncoder.encode(request.getParameter(fieldName), StandardCharsets.US_ASCII.toString());
-            if ((fieldValue != null) && (fieldValue.length() > 0)) {
-                fields.put(fieldName, fieldValue);
-            }
-        }
+//    @GetMapping("/vn_pay/status")
+//    public RedirectView status(HttpServletRequest request) throws UnsupportedEncodingException {
+//        Map fields = new HashMap();
+//        for (Enumeration params = request.getParameterNames(); params.hasMoreElements(); ) {
+//            String fieldName = URLEncoder.encode((String) params.nextElement(), StandardCharsets.US_ASCII.toString());
+//            String fieldValue = URLEncoder.encode(request.getParameter(fieldName), StandardCharsets.US_ASCII.toString());
+//            if ((fieldValue != null) && (fieldValue.length() > 0)) {
+//                fields.put(fieldName, fieldValue);
+//            }
+//        }
+//
+//        String vnp_SecureHash = request.getParameter("vnp_SecureHash");
+//        if (fields.containsKey("vnp_SecureHashType")) {
+//            fields.remove("vnp_SecureHashType");
+//        }
+//        if (fields.containsKey("vnp_SecureHash")) {
+//            fields.remove("vnp_SecureHash");
+//        }
+//
+//        int customerID = Integer.parseInt(request.getParameter("customerID"));
+//        String paymentStatus = "Paid";
+//        String paymentMethod = "VN_PAY";
+//        double amount = Double.parseDouble(request.getParameter("vnp_Amount"));
+//        // String paymentTime = request.getParameter("vnp_PayDate");
+//
+//        fields.remove("customerID");
+//
+//        String signValue = VNPayConfig.hashAllFields(fields);
+//        String returnUrl = PAYMENT_FAILED;
+//        if (signValue.equals(vnp_SecureHash)) {
+//            if ("00".equals(request.getParameter("vnp_ResponseCode"))) {
+//                boolean check = paymentService.changePaymentStatus(customerID, paymentStatus);
+//                if (check) {
+//                    paymentService.savePaymentHistory(customerID, amount, paymentMethod);
+//                    paymentService.sendEmail(customerID);
+//                    log.info("Change paymentStatus successful");
+//                    returnUrl = PAYMENT_SUCCESS;
+//                }
+//
+//            } else {
+//                paymentStatus = "Canceled";
+//                boolean check = paymentService.changePaymentStatus(customerID, paymentStatus);
+//                if (check) {
+//                    paymentService.savePaymentHistory(customerID, amount, paymentMethod);
+//                }
+//                returnUrl = PAYMENT_CANCELED;
+//            }
+//
+//        }
+//
+//        return new RedirectView(returnUrl);
+//
+//    }
 
-        String vnp_SecureHash = request.getParameter("vnp_SecureHash");
-        if (fields.containsKey("vnp_SecureHashType")) {
-            fields.remove("vnp_SecureHashType");
-        }
-        if (fields.containsKey("vnp_SecureHash")) {
-            fields.remove("vnp_SecureHash");
-        }
 
-        int customerID = Integer.parseInt(request.getParameter("customerID"));
-        String paymentStatus = "Paid";
-        String paymentMethod = "VN_PAY";
-        double amount = Double.parseDouble(request.getParameter("vnp_Amount"));
-        // String paymentTime = request.getParameter("vnp_PayDate");
-
-        fields.remove("customerID");
-
-        String signValue = VNPayConfig.hashAllFields(fields);
-        String returnUrl = PAYMENT_FAILED;
-        if (signValue.equals(vnp_SecureHash)) {
-            if ("00".equals(request.getParameter("vnp_ResponseCode"))) {
-                boolean check = paymentService.changePaymentStatus(customerID, paymentStatus);
-                if (check) {
-                    paymentService.savePaymentHistory(customerID, amount, paymentMethod);
-                    paymentService.sendEmail(customerID);
-                    log.info("Change paymentStatus successful");
-                    returnUrl = PAYMENT_SUCCESS;
-                }
-
-            } else {
-                paymentStatus = "Canceled";
-                boolean check = paymentService.changePaymentStatus(customerID, paymentStatus);
-                if (check) {
-                    paymentService.savePaymentHistory(customerID, amount, paymentMethod);
-                }
-                returnUrl = PAYMENT_CANCELED;
-            }
-
-        }
-
-        return new RedirectView(returnUrl);
-
-    }
-
-
-    public String createPaypal(@RequestBody Map<String, Object> data) {
+    public String createPaypal(AppointmentRequestDTO data) {
         try {
             Payment payment = paypalService.createPayment(data);
             for (Links links : payment.getLinks()) {
@@ -150,7 +150,8 @@ public class PaymentController {
             @RequestParam("paymentId") String paymentId,
             @RequestParam("PayerID") String payerId,
             @RequestParam("customerID") String customerID,
-            @RequestParam("amount") String amount
+            @RequestParam("amount") String amount,
+            @RequestParam("appointmentID") String appointmentID
     ) {
         String returnUrl = PAYMENT_FAILED;
         try {
@@ -160,13 +161,10 @@ public class PaymentController {
             double totalAmount = Double.parseDouble(amount);
             if (payment.getState().equals("approved")) {
                 int id = Integer.parseInt(customerID);
-                boolean check = paymentService.changePaymentStatus(id, paymentStatus);
-                if (check) {
-                    paymentService.savePaymentHistory(id, totalAmount, paymentMethod);
-                    paymentService.sendEmail(id);
-                    returnUrl = PAYMENT_SUCCESS;
-                }
-
+                paymentService.changePaymentStatus(id, paymentStatus);
+                paymentService.savePaymentHistory(id, totalAmount, paymentMethod, appointmentID);
+                paymentService.sendEmail(id);
+                returnUrl = PAYMENT_SUCCESS;
             }
 
         } catch (PayPalRESTException e) {
@@ -180,10 +178,7 @@ public class PaymentController {
     @GetMapping("/cancel")
     public RedirectView paymentCancel(@RequestParam("customerID") String customerID) {
         String paymentStatus = "Canceled";
-        boolean check = paymentService.changePaymentStatus(Integer.parseInt(customerID), paymentStatus);
-        if (!check) {
-            log.error("error at paymentCancel. Can't change the paymentStatus");
-        }
+        paymentService.changePaymentStatus(Integer.parseInt(customerID), paymentStatus);
         return new RedirectView(PAYMENT_CANCELED);
     }
 

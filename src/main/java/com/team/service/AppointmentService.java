@@ -78,11 +78,12 @@ public class AppointmentService {
 
     }
 
-    public boolean createAppointment(AppointmentRequestDTO data) {
+    public List<Appointments> createAppointment(AppointmentRequestDTO data) {
         Integer customerID = data.getCustomerID();
         List<Integer> listServicesID = data.getServiceIds();
         Integer petID = data.getPetID();
         List<String> listAppointmentTime = data.getAppointmentTimes();
+        List<Appointments> result = new ArrayList<>();
         double totalMoney = data.getDepositAmount();
         int count = listServicesID.size();
         int index = 0;
@@ -93,9 +94,7 @@ public class AppointmentService {
             LocalDateTime appointmentTime = LocalDateTime.parse(time, FORMATTER);
             Integer employeeID = findLastEmployee(appointmentTime);
             // null only the slot is full
-            if (employeeID == null) {
-                return false;
-            }
+
             Customers customers = customerRepository.findById(customerID).get();
             Pets pets = petRepository.findById(petID).get();
             Services services = serviceRepository.findById(listServicesID.get(index)).get();
@@ -112,6 +111,7 @@ public class AppointmentService {
             appointments.setPaymentStatus("Pending");
             appointments.setStatus("Scheduled");
             Appointments savedAppointments = appointmentRepository.save(appointments);
+            result.add(savedAppointments);
 
             // set data into employee schedule table
             EmployeeSchedule employeeSchedule = new EmployeeSchedule();
@@ -127,7 +127,7 @@ public class AppointmentService {
             count--;
             index++;
         }
-        return true;
+        return result;
     }
 
     private Integer findLastEmployee(LocalDateTime request) {
@@ -139,9 +139,6 @@ public class AppointmentService {
             // find all the employee are assign the that shift
             List<Integer> listData = appointmentRepository.findAllEmployeeInOneShift(request);
 
-            if (listData.size() == AVAILABLE_SLOT) {
-                return null;
-            }
 
             do {
                 employeeID = getNextEmployeeID(employeeID);

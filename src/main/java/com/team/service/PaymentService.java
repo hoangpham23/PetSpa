@@ -194,24 +194,18 @@ public class PaymentService {
         return paymentUrl;
     }
 
-    public boolean changePaymentStatus(int customerID, String paymentStatus) {
+    public void changePaymentStatus(int customerID, String paymentStatus) {
         List<Appointments> list = appointmentRepository.SQL_findCustomerIDAndPaymentStatus(customerID, "Pending");
-        int count = 0; // check that with customerId change all the paymentStatus into Paid
         for (Appointments appointments : list) {
             if (("Pending").equalsIgnoreCase(appointments.getPaymentStatus())) {
-                listServiceIds.add(appointments.getServices().getId());
                 appointments.setPaymentStatus(paymentStatus);
                 appointmentRepository.save(appointments);
-                count++;
             }
-            if (count == list.size()) {
-                return true;
-            }
+
         }
-        return false;
     }
 
-    public void savePaymentHistory(int customerID, double totalAmount, String paymentMethod) {
+    public void savePaymentHistory(int customerID, double totalAmount, String paymentMethod, String appointmentID) {
         Customers customers = customerRepository.findById(customerID).get();
         String paymentTime = LocalDateTime.now().format(FORMATTER);
         PaymentHistory paymentHistory = new PaymentHistory();
@@ -220,12 +214,13 @@ public class PaymentService {
         paymentHistory.setPaymentMethod(paymentMethod);
         paymentHistory.setPaymentTime(Timestamp.valueOf(paymentTime));
         PaymentHistory savePayment = paymentHistoryRepository.save(paymentHistory);
-        for (Integer serviceID : listServiceIds) {
+        StringTokenizer tokenizer = new StringTokenizer(appointmentID, ",");
+        while (tokenizer.hasMoreTokens()) {
             PaymentDetail paymentDetail = new PaymentDetail();
-            Services services = serviceRepository.findById(serviceID).get();
             paymentDetail.setCustomers(customers);
-            paymentDetail.setServices(services);
-            paymentDetail.setPaymentHistoryID(savePayment);
+            Appointments appointments = appointmentRepository.findById(Integer.parseInt(tokenizer.nextToken())).get();
+            paymentDetail.setAppointments(appointments);
+            paymentDetail.setPaymentHistory(savePayment);
             paymentDetailRepository.save(paymentDetail);
         }
     }
