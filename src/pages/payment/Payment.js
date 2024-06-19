@@ -29,8 +29,8 @@ function Payment() {
         customerID: localStorage.getItem("customerID"),
         serviceIds: JSON.parse(localStorage.getItem("serviceIds")),
         appointmentTimes: JSON.parse(localStorage.getItem("appointmentTimes")),
-        amount: localStorage.getItem("depositAmount"),
         petID: localStorage.getItem("petID"),
+        depositAmount: localStorage.getItem("depositAmount"),
       });
       console.log(response.data);
       setResult(response.data);
