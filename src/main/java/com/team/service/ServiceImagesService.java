@@ -1,9 +1,6 @@
 package com.team.service;
 
-import com.team.dto.ChooseServiceDTO;
-import com.team.dto.FeedbackDTO;
-import com.team.dto.ServiceImageDTO;
-import com.team.dto.ServicePageDTO;
+import com.team.dto.*;
 import com.team.model.Customers;
 import com.team.model.Feedback;
 import com.team.model.ServiceImages;
@@ -13,11 +10,17 @@ import com.team.repository.FeedbackRepository;
 import com.team.repository.ServiceRepository;
 import com.team.repository.ServicesImagesRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 
 @Service
 public class ServiceImagesService {
@@ -81,6 +84,49 @@ public class ServiceImagesService {
             }
         }
         return Optional.empty();
+    }
+
+    private final String UPLOAD_DIR = "uploads/";
+
+    public Services addService(AddServiceDTO serviceDTO) throws Exception {
+        Services service = new Services();
+        service.setServiceName(serviceDTO.getServiceName());
+        service.setDescription(serviceDTO.getDescription());
+        service.setPrice(serviceDTO.getPrice());
+
+        Services savedService = serviceRepository.save(service);
+
+        // Save the image
+        MultipartFile image = serviceDTO.getImage();
+        if (image != null && !image.isEmpty()) {
+            String fileName = saveImage(image);
+            String fileUrl = generateFileUrl(fileName);
+            ServiceImages serviceImages = new ServiceImages();
+            serviceImages.setServiceID(savedService);
+            serviceImages.setImageURL(fileUrl);
+            servicesImagesRepository.save(serviceImages);
+        }
+
+        return savedService;
+    }
+
+    private String saveImage(MultipartFile imageFile) throws IOException {
+        String filename = imageFile.getOriginalFilename();
+        Path uploadPath = Paths.get(UPLOAD_DIR);
+
+        // Ensure the directory exists
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        Path filePath = uploadPath.resolve(filename);
+        Files.copy(imageFile.getInputStream(), filePath);
+
+        return filename;
+    }
+
+    private String generateFileUrl(String fileName) {
+        return "http://localhost:8090/" + UPLOAD_DIR + fileName;
     }
 }
 
