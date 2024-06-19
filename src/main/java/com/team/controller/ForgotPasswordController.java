@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.SecureRandom;
 import java.util.Map;
 import java.util.Random;
 
@@ -78,10 +80,12 @@ public class ForgotPasswordController {
         return ResponseEntity.status(HttpStatus.OK).body("Password has been reset successfully");
     }
 
+
     private int otpGenerator() {
         Random random = new Random();
         return random.nextInt(900000) + 100000; // Generate 6-digit OTP
     }
+
 }
 
 

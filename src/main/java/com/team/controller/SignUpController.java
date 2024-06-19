@@ -74,7 +74,6 @@ public class SignUpController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error at server site");
         }
     }
-
     private int otpGenerator() {
         Random random = new Random();
         return random.nextInt(900000) + 100000; // Generate 6-digit OTP
