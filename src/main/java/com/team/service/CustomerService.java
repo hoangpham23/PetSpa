@@ -35,7 +35,8 @@ public class CustomerService {
     @Transactional
     public CustomerDTO createCustomer(String customerName, String phoneNumber, String email, String password) {
         // create an account first then create a customer
-        Accounts accounts = accountService.createAccount(email, password);
+        String role = "CUS";
+        Accounts accounts = accountService.createAccount(email, password, role);
         Customers customers = new Customers();
         customers.setCustomerName(customerName);
         customers.setPhoneNumber(phoneNumber);

@@ -17,10 +17,10 @@ import java.util.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaymentConfig {
+public class VNPayConfig {
 
     private String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    private String vnp_ReturnUrl = "http://localhost:8090/payment/status"; // thông báo kết quả giao dịch khi Khách hàng kết thúc thanh toán
+    private String vnp_ReturnUrl = "http://localhost:8090/payment/vn_pay/status"; // thông báo kết quả giao dịch khi Khách hàng kết thúc thanh toán
     private String vnp_TmnCode = "DHAJPHG7";
     @Value("${VNP_SECRET_KEY}")
     private String secretKey ;
