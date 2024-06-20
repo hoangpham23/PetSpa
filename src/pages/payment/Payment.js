@@ -6,7 +6,7 @@ import "./Payment_style.css";
 import Cart from "../choose-time/CartService/Cart";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import HeaderColor from "../../components/header/HeaderColor";
 
 function Payment() {
@@ -16,12 +16,31 @@ function Payment() {
   const navigate = useNavigate();
   const [msg, setMsg] = useState("");
   const [result, setResult] = useState([]);
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
 
   // useEffect(() => {
   //   handleSubmit();
   // }, []);
+  const location = useLocation();
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const status = searchParams.get("status");
+
+    if (status === "successful") {
+      setMsg("SUCESSFULLY PAYMENT");
+      // Xử lý logic khi thanh toán thành công
+    } else if (status === "failed") {
+      setMsg("FAILD TO PAY");
+      // Xử lý logic khi thanh toán thất bại
+    } else if (status === "canceled") {
+      setMsg("Payment has been canceled");
+      // Xử lý logic khi hủy thanh toán
+    } else {
+      setMsg("");
+      console.log("Trạng thái không hợp lệ");
+      // Xử lý logic khi trạng thái không hợp lệ
+    }
+  }, [location.search]);
 
   async function handleSubmit() {
     try {
@@ -36,8 +55,6 @@ function Payment() {
       setResult(response.data);
       setUrlPaypal(response.data.urlPaypal);
       window.location.href = response.data.urlPaypal;
-      //setUrlVN_PAY(response.data.urlVNPAY);
-      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }

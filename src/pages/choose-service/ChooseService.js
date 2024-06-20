@@ -122,7 +122,7 @@ function ChooseService() {
       <HeaderForCus />
 
       <div className={style.Ask}>
-        <h1>DO YOU WANT TO ADD OTHER SERVICES?</h1>
+        <h1>CHOOSE SERVICES FOR YOUR PET </h1>
       </div>
 
       <section className={style.service} id="service">
