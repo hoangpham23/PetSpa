@@ -13,8 +13,9 @@ function Introduce() {
         <div className="introduce-content">
           <div className="content-container"></div>
           <p>
-            We’re passionate about Pet Groomers, Pet-Grooming Business, and
-            supporting Dog Grooming Businesses to grow.{" "}
+            Welcome to Paws & Relax Pet Spa! We pamper your pets with luxurious
+            massages, grooming, and nail care. Trust us to make your furry
+            friends feel and look their best!
           </p>
         </div>
       </section>
