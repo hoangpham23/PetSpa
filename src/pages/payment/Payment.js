@@ -59,20 +59,6 @@ function Payment() {
       console.log(error);
     }
   }
-  // useEffect(() => {
-  //   console.log("paypal", urlPaypal);
-  //   console.log("vnpay", urlVN_PAY);
-  // }, [urlPaypal, urlVN_PAY]);
-  // function handlePaymentMethodChange(event) {
-  //   const selectedMethod = event.target.value;
-  //   setPaymentMethod(selectedMethod);
-
-  //   if (selectedMethod === "paypal" && urlPaypal) {
-  //     window.location.href = urlPaypal;
-  //   } else if (selectedMethod === "vnpay" && urlVN_PAY) {
-  //     window.location.href = urlVN_PAY;
-  //   }
-  // }
 
   return (
     <>
@@ -91,16 +77,6 @@ function Payment() {
               />
               <img src={Paypal} alt="Paypal" />
             </label>
-            {/* <label className="payment-option">
-              <input
-                type="radio"
-                name="VNPAY"
-                value="vnpay"
-                onChange={handlePaymentMethodChange}
-                disabled={isLoading}
-              />
-              <img src={VNPay} alt="VNPay" />
-            </label> */}
           </div>
           <div className="checkout-summary">
             <Cart />
