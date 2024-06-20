@@ -22,6 +22,7 @@ import ChooseTime2 from "./pages/choose-time/ChooseTime.js";
 import Payment from "./pages/payment/Payment.js";
 import SuccessfullyPayment from "./pages/payment/SuccessfullyPayment.js";
 import DashBoard from "./admin/DashBoard/DashBoard.js";
+import PaymentHistory from "./pages/paymentHistory/PaymentHistory.js";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           path="/successfully-payment"
           element={<SuccessfullyPayment />}
         ></Route>
+        <Route path="/payment-history" element={<PaymentHistory />}></Route>
         <Route path="/dashboard" element={<DashBoard />}></Route>
       </Routes>
     </Router>
