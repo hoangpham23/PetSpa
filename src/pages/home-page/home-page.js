@@ -14,7 +14,14 @@ function HomePage() {
   let account = "";
   async function getData() {
     try {
-      account = JSON.parse(localStorage.getItem("account"));
+      const accountData = localStorage.getItem("account");
+      if (accountData) {
+        account = JSON.parse(accountData);
+      } else {
+        // Xử lý trường hợp Local Storage không có dữ liệu "account"
+        console.error("No account data found in Local Storage");
+        account = {}; // hoặc giá trị mặc định khác phù hợp với ứng dụng của bạn
+      }
       console.log(account.role);
       const response = await axios.get("http://localhost:8090/home-page");
       const responseData = response.data; // Lưu dữ liệu từ API vào biến tạm

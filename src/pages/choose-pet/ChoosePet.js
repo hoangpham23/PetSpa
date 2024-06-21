@@ -5,6 +5,7 @@ import style from "./ChoosePet_style.module.css";
 import { Helmet } from "react-helmet";
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../../components/footer/footer";
+import HeaderColor from "../../components/header/HeaderColor";
 
 function ChoosePet() {
   const [customerID, setCustomerID] = useState("");
@@ -47,7 +48,7 @@ function ChoosePet() {
   }
   return (
     <>
-      <HeaderForCus />
+      <HeaderColor />
       <div className={style.wrapper}>
         <main className={style.mainContent}>
           <div

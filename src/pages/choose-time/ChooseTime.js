@@ -8,6 +8,7 @@ import Cart from "./CartService/Cart";
 import Footer from "../../components/footer/footer";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import HeaderColor from "../../components/header/HeaderColor";
 function ChooseTime2() {
   const { addDays, format } = require("date-fns");
   const today = new Date();
@@ -114,7 +115,7 @@ function ChooseTime2() {
   return (
     <>
       <div className={style.backGround}>
-        <HeaderForCus />
+        <HeaderColor />
         <h1>Complete your appointment</h1>
         <div className={style.boxInfo}>
           <Calendar />

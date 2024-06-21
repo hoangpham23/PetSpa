@@ -8,6 +8,7 @@ import service1 from "../../assets/img/service1.jpg";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/footer/footer";
 import { addDays, format } from "date-fns";
+import HeaderColor from "../../components/header/HeaderColor";
 // import service2 from "../../assets/img/service2.jpg";
 // import service3 from "../../assets/img/service3.jpg";
 
@@ -119,7 +120,7 @@ function ChooseService() {
           rel="stylesheet"
         />
       </Helmet>
-      <HeaderForCus />
+      <HeaderColor />
 
       <div className={style.Ask}>
         <h1>CHOOSE SERVICES FOR YOUR PET </h1>

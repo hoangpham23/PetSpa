@@ -6,12 +6,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 import service1 from "../../assets/img/service1.jpg";
+import HeaderForGuest from "../../components/header/header-guest";
 // từ trang này nhấn vô phải xem xét số lượng thú của khác hàng, >=1, chuyển sang trang choose Pet, <=1 qua trang insert info cho pet
 function ServiceInfo() {
   let { serviceName } = useParams();
   const [numberOfPets, setNumberOfPets] = useState("");
   const navigate = useNavigate();
-  //const { serviceData, setServiceData } = useService() || {}; // đầy đủ thông tin dữ liệu
+
   const [serviceData, setServiceData] = useState({
     imageId: "",
     serviceId: "",
@@ -40,12 +41,13 @@ function ServiceInfo() {
   useEffect(() => {
     getData();
   }, []);
+  const accountData = localStorage.getItem("account");
 
   useEffect(() => {
     // Lấy dữ liệu từ localStorage
-    const account = JSON.parse(localStorage.getItem("account"));
-    if (account) {
-      console.log(account);
+
+    if (accountData) {
+      const account = JSON.parse(accountData);
       const numberOfPets = account.numberOfPets;
       console.log("Number of pets:", numberOfPets);
       setNumberOfPets(numberOfPets);
@@ -55,10 +57,12 @@ function ServiceInfo() {
   }, []);
   // làm handle submit cho nút make appointment
   function handleSubmit() {
-    if (numberOfPets > 0) {
+    if (numberOfPets > 0 && accountData !== null) {
       navigate("/choose-pet");
-    } else {
+    } else if (numberOfPets === 0 && accountData !== null) {
       navigate("/info-pet");
+    } else {
+      navigate("/sign-in");
     }
   }
   return (
@@ -74,7 +78,11 @@ function ServiceInfo() {
           rel="stylesheet"
         ></link>
       </Helmet>
-      <HeaderForCus />
+      {localStorage.getItem("role") === "CUS" ? (
+        <HeaderForCus />
+      ) : (
+        <HeaderForGuest />
+      )}
       <section>
         <div className={style.service_div}>
           <div className={style.service_display}>

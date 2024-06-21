@@ -6,6 +6,7 @@ import HeaderForCus from "../../components/header/header-customer";
 import style from "./InfoPet_style.module.css";
 import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
+import HeaderColor from "../../components/header/HeaderColor";
 
 function InfoPet() {
   const [customerID, setCustomerID] = useState("");
@@ -97,7 +98,7 @@ function InfoPet() {
 
   return (
     <div>
-      <HeaderForCus></HeaderForCus>
+      <HeaderColor />
       <section>
         <div className={style.welcome_div}>
           <div className={style.welcome_content}>
