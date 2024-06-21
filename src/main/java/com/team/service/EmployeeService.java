@@ -1,18 +1,19 @@
 package com.team.service;
 
 import com.team.dto.EmployeeDTO;
-import com.team.model.Accounts;
-import com.team.model.Employees;
+import com.team.dto.ScheduleDTO;
+import com.team.dto.WorkDateDTO;
+import com.team.model.*;
 import com.team.repository.AccountRepository;
+import com.team.repository.AppointmentRepository;
 import com.team.repository.EmployeeRepository;
-import jakarta.persistence.Id;
+import com.team.repository.EmployeeScheduleRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.TemporalAdjusters;
+import java.util.*;
 
 @Service
 public class EmployeeService {
@@ -21,11 +22,15 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final AccountRepository accountRepository;
     private final AccountService accountService;
+    private final EmployeeScheduleRepository employeeScheduleRepository;
+    private final AppointmentRepository appointmentRepository;
 
-    public EmployeeService(EmployeeRepository employeeRepository, AccountRepository accountRepository, AccountService accountService) {
+    public EmployeeService(EmployeeRepository employeeRepository, AccountRepository accountRepository, AccountService accountService, EmployeeScheduleRepository employeeScheduleRepository, AppointmentRepository appointmentRepository) {
         this.employeeRepository = employeeRepository;
         this.accountRepository = accountRepository;
         this.accountService = accountService;
+        this.employeeScheduleRepository = employeeScheduleRepository;
+        this.appointmentRepository = appointmentRepository;
     }
 
     public List<EmployeeDTO> showAllEmployees() {
@@ -58,7 +63,7 @@ public class EmployeeService {
         return null;
     }
 
-    public Employees createEmployee(Map<String, String> data){
+    public Employees createEmployee(Map<String, String> data) {
         String name = data.get("name");
         String phoneNumber = data.get("phoneNumber");
         String email = data.get("email");
@@ -67,7 +72,7 @@ public class EmployeeService {
         String defaultPassword = "1234";
         String role = "EM";
 
-        Accounts accounts = accountService.createAccount(email, defaultPassword, role );
+        Accounts accounts = accountService.createAccount(email, defaultPassword, role);
         Employees employees = new Employees();
         employees.setId(accounts.getAccountID());
         employees.setEmployeeName(name);
@@ -79,4 +84,64 @@ public class EmployeeService {
 
         return employeeRepository.save(employees);
     }
+
+    public List<WorkDateDTO> getSchedule(int employeeID, LocalDate requestTime) {
+        LocalDate startDate = requestTime.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        System.out.println("startDate: " + startDate);
+        // Compute the end date (Sunday of the current week)
+        LocalDate endDate = startDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+        System.out.println("EndDate:  " + endDate);
+        Employees employees = employeeRepository.findById(employeeID).get();
+        // retrieve schedule date for a week from Monday to Sunday
+        List<EmployeeSchedule> data = employeeScheduleRepository.findAllByEmployeesAndWorkDateBetweenOrderByWorkDateAscStartTimeAsc(employees, startDate, endDate);
+        if (data.isEmpty()) {
+            return null;
+        }
+        List<WorkDateDTO> result = new ArrayList<>();
+        List<ScheduleDTO> scheduleDTOList = new ArrayList<>();
+        LocalDate saveDate = null;
+
+        for (EmployeeSchedule schedule : data) {
+            LocalDate workDate = schedule.getWorkDate();
+            LocalTime startTime = schedule.getStartTime();
+            LocalTime endTime = schedule.getEndTime();
+            String customerName = schedule.getAppointments().getCustomer().getCustomerName();
+            String serviceName = schedule.getAppointments().getServices().getServiceName();
+
+            if (saveDate == null) {
+                saveDate = workDate;
+            }
+
+            if (!workDate.isEqual(saveDate)) {
+                result.add(new WorkDateDTO(saveDate, new ArrayList<>(scheduleDTOList)));
+                scheduleDTOList.clear();
+                saveDate = workDate;
+            }
+
+            scheduleDTOList.add(new ScheduleDTO(startTime, endTime, serviceName, customerName));
+        }
+
+        result.add(new WorkDateDTO(saveDate, new ArrayList<>(scheduleDTOList)));
+        return result;
+    }
+    
+    public void assignSchedule(String appointmentID){
+        StringTokenizer tokenizer = new StringTokenizer(appointmentID, ",");
+        while (tokenizer.hasMoreTokens()) {
+            Appointments appointment = appointmentRepository.findById(Integer.parseInt(tokenizer.toString())).get();
+            appointment.setStatus("Schedule");
+            Employees employees = appointment.getEmployees();
+            EmployeeSchedule employeeSchedule = new EmployeeSchedule();
+            employeeSchedule.setEmployees(employees);
+            employeeSchedule.setAppointments(appointment);
+            employeeSchedule.setWorkDate(appointment.getAppointmentTime().toLocalDateTime().toLocalDate());
+            LocalTime startTime = appointment.getAppointmentTime().toLocalDateTime().toLocalTime();
+            LocalTime endTime = appointment.getAppointmentTime().toLocalDateTime().toLocalTime().plusHours(1);
+            employeeSchedule.setStartTime(startTime);
+            employeeSchedule.setEndTime(endTime);
+            employeeScheduleRepository.save(employeeSchedule);
+            appointmentRepository.save(appointment);
+        }
+    }
+
 }
