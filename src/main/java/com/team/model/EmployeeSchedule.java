@@ -19,11 +19,11 @@ public class EmployeeSchedule {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "EmployeeID")
-    private Employees employeeID;
+    private Employees employees;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "AppointmentID")
-    private Appointments appointmentID;
+    private Appointments appointments;
 
     @Column(name = "WorkDate")
     private LocalDate workDate;
