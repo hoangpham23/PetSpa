@@ -37,7 +37,6 @@ public class PaymentHistoryService {
         }
         for (PaymentHistory ph : listPaymentHistory) {
             PaymentHistoryDTO dto = new PaymentHistoryDTO();
-            dto.setPaymentID(ph.getPaymentHistoryID());
             dto.setPaymentTime(ph.getPaymentTime().toString());
             dto.setAmount(ph.getTotalAmount());
             Map<String, Object> data = getServiceName(ph);
@@ -45,7 +44,6 @@ public class PaymentHistoryService {
             String petName = (String) data.get("petName");
             dto.setListService(listService);
             dto.setPetName(petName);
-            dto.setNumberOfPets(customerRepository.findById(customerID).get().getNumberOfPets());
             paymentHistoryDTOList.add(dto);
         }
 
