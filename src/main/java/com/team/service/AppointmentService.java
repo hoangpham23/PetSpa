@@ -30,15 +30,13 @@ public class AppointmentService {
     private final CustomerRepository customerRepository;
     private final PetRepository petRepository;
     private final ServiceRepository serviceRepository;
-    private final EmployeeScheduleRepository employeeScheduleRepository;
 
-    public AppointmentService(AppointmentRepository appointmentRepository, EmployeeRepository employeeRepository, CustomerRepository customerRepository, PetRepository petRepository, ServiceRepository serviceRepository, EmployeeScheduleRepository employeeScheduleRepository) {
+    public AppointmentService(AppointmentRepository appointmentRepository, EmployeeRepository employeeRepository, CustomerRepository customerRepository, PetRepository petRepository, ServiceRepository serviceRepository) {
         this.appointmentRepository = appointmentRepository;
         this.employeeRepository = employeeRepository;
         this.customerRepository = customerRepository;
         this.petRepository = petRepository;
         this.serviceRepository = serviceRepository;
-        this.employeeScheduleRepository = employeeScheduleRepository;
     }
 
 
@@ -109,20 +107,9 @@ public class AppointmentService {
             appointments.setServices(services);
             appointments.setDepositAmount(totalMoney);
             appointments.setPaymentStatus("Pending");
-            appointments.setStatus("Scheduled");
+            appointments.setStatus("Not assign");
             Appointments savedAppointments = appointmentRepository.save(appointments);
             result.add(savedAppointments);
-
-            // set data into employee schedule table
-            EmployeeSchedule employeeSchedule = new EmployeeSchedule();
-            employeeSchedule.setEmployeeID(employees);
-            employeeSchedule.setAppointmentID(savedAppointments);
-            employeeSchedule.setWorkDate(savedAppointments.getAppointmentTime().toLocalDateTime().toLocalDate());
-            LocalTime startTime = savedAppointments.getAppointmentTime().toLocalDateTime().toLocalTime();
-            LocalTime endTime = savedAppointments.getAppointmentTime().toLocalDateTime().toLocalTime().plusHours(1);
-            employeeSchedule.setStartTime(startTime);
-            employeeSchedule.setEndTime(endTime);
-            employeeScheduleRepository.save(employeeSchedule);
 
             count--;
             index++;
