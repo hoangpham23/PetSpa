@@ -37,6 +37,7 @@ function PaymentHistory() {
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#90ABAF",
+
       color: "white",
       fontSize: "1.5rem",
       fontFamily: "Poppins, sans-serif",
