@@ -25,7 +25,6 @@ public class PaymentHistoryController {
     public ResponseEntity<?> showPaymentHistory(@RequestBody Map<String, String> data) {
         try {
             int customerID = Integer.parseInt(data.get("customerID"));
-            System.out.println("customerID: " + customerID);
             List<PaymentHistoryDTO> listHistory = paymentHistoryService.getAllPaymentHistory(customerID);
             return new ResponseEntity<>(listHistory, HttpStatus.OK);
         }catch (RuntimeException e){

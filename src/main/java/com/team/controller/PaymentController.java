@@ -5,6 +5,7 @@ import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 import com.team.config.VNPayConfig;
 import com.team.dto.AppointmentRequestDTO;
+import com.team.service.EmployeeService;
 import com.team.service.PaymentService;
 import com.team.service.PaypalService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,9 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+
 import java.util.*;
 
 import org.springframework.web.servlet.view.RedirectView;
@@ -30,12 +29,14 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final VNPayConfig VNPayConfig;
     private final PaypalService paypalService;
+    private final EmployeeService employeeService;
 
 
-    public PaymentController(PaymentService paymentService, VNPayConfig VNPayConfig, PaypalService paypalService) {
+    public PaymentController(PaymentService paymentService, VNPayConfig VNPayConfig, PaypalService paypalService, EmployeeService employeeService) {
         this.paymentService = paymentService;
         this.VNPayConfig = VNPayConfig;
         this.paypalService = paypalService;
+        this.employeeService = employeeService;
     }
 
     // this function receive the information from front end
@@ -164,6 +165,7 @@ public class PaymentController {
                 paymentService.changePaymentStatus(id, paymentStatus);
                 paymentService.savePaymentHistory(id, totalAmount, paymentMethod, appointmentID);
                 paymentService.sendEmail(id);
+                employeeService.assignSchedule(appointmentID);
                 returnUrl = PAYMENT_SUCCESS;
             }
 

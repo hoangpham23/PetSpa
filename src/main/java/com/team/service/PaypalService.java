@@ -5,13 +5,11 @@ import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 import com.team.dto.AppointmentRequestDTO;
 import com.team.model.Appointments;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 @Service
 public class PaypalService {
@@ -59,10 +57,10 @@ public class PaypalService {
         payer.setPaymentMethod("Paypal");
 
         Payment payment = new Payment();
-//        StringBuilder customUrl = new StringBuilder("?customerID=" + customerID + "&amount=" + total);
-//        if (listAppointmentID != null) {
-//            for (Integer appointmentID : listAppointmentID) {
-//                customUrl.append("&appointmentID=").append(appointmentID);
+//        String customUrl = "?customerID=" + customerID + "&amount=" + total;
+//        if (listAppointments != null) {
+//            for (Appointments appointmentID : listAppointments) {
+//                customUrl += "&appointmentID=" + appointmentID.getAppointmentID();
 //            }
 //        }
 
