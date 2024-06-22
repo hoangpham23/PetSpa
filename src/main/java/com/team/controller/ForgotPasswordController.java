@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.SecureRandom;
 import java.util.Map;
-import java.util.Random;
 
 @RestController
 @RequestMapping("/forgotpassword")
@@ -80,10 +79,11 @@ public class ForgotPasswordController {
         return ResponseEntity.status(HttpStatus.OK).body("Password has been reset successfully");
     }
 
+    private final SecureRandom secureRandom = new SecureRandom();
+
 
     private int otpGenerator() {
-        Random random = new Random();
-        return random.nextInt(900000) + 100000; // Generate 6-digit OTP
+        return secureRandom.nextInt(900000) + 100000; // Tạo OTP 6 chữ số
     }
 
 }
