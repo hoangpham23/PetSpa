@@ -70,8 +70,8 @@ const AppBar = styled(MuiAppBar, {
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
-  backgroundColor: "#F5FFFA",
-  color: "black",
+  backgroundColor: "#7FA3B2",
+  color: "white",
 }));
 
 const Drawer = styled(MuiDrawer, {
@@ -139,10 +139,18 @@ export default function SideBar() {
         <List>
           {[
             "Dash Board",
-            "Manage customer's account",
-            "Manage staff's account",
+            "Manage customer account",
+            "Manage staff account",
           ].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
+            <ListItem
+              key={text}
+              disablePadding
+              sx={{
+                display: "block",
+                fontSize: "1.2rem",
+                marginRight: "0.5rem",
+              }}
+            >
               <ListItemButton
                 sx={{
                   minHeight: 48,

@@ -2,15 +2,99 @@ import { ThemeProvider, createTheme, styled } from "@mui/material";
 import SideBar from "../../components/side-bar/SideBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
+import DataRow from "./DataRow/DataRow";
+import BarChart2 from "./BarChart/BarChart2";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import { useEffect, useState } from "react";
+import axios from "axios";
+function getOffsetFromLocalStorage() {
+  // Lấy giá trị offset từ localStorage
+  const offset = localStorage.getItem("offset");
+  // Nếu không có giá trị trong localStorage, mặc định là 0
+  return offset ? parseInt(offset, 10) : 0;
+}
+
 function DashBoard() {
+  //  Prepare data to send
+
+  const offset = getOffsetFromLocalStorage();
+  // khi nhấn vào mũi tên thì nó sẽ cập nhật offset
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [report, setReport] = useState([]);
+  useEffect(() => {
+    console.log(offset);
+    console.log("s", startDate);
+    console.log(endDate);
+    console.log(report);
+  }, [offset, startDate, endDate, report]);
+  useEffect(() => {
+    async function init() {
+      const { startOfWeek, endOfWeek } = await getStartAndEndOfWeek(0);
+      await getData(startOfWeek, endOfWeek);
+    }
+    init();
+  }, []);
+  function getStartAndEndOfWeek(offset) {
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // get current day of the week (0-6), where 0 is Sunday and 6 is Saturday
+    const startOfWeek = new Date(today); // create a copy of today's date
+
+    // Calculate the start of the week (Monday)
+    startOfWeek.setDate(
+      today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1) - offset * 7 + 1
+    );
+    startOfWeek.setHours(0, 0, 0, 0); // Set to the start of the day
+
+    // Calculate the end of the week (Sunday)
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 5);
+    endOfWeek.setHours(23, 59, 59, 999); // Set to the end of the day
+
+    setStartDate(startOfWeek.toISOString().split("T")[0]);
+    setEndDate(endOfWeek.toISOString().split("T")[0]);
+    return {
+      startOfWeek: startOfWeek.toISOString().split("T")[0],
+      endOfWeek: endOfWeek.toISOString().split("T")[0],
+    };
+  }
+
+  async function handleClick(action) {
+    let offset = parseInt(localStorage.getItem("offset"), 10) || 0;
+    if (action === "Previous") {
+      offset += 1;
+    } else if (action === "Next") {
+      if (offset === 0) {
+        return;
+      }
+      offset -= 1;
+    }
+    localStorage.setItem("offset", offset.toString());
+
+    const { startOfWeek, endOfWeek } = await getStartAndEndOfWeek(offset);
+    setStartDate(startOfWeek);
+    setEndDate(endOfWeek);
+    getData(startOfWeek, endOfWeek);
+  }
+  async function getData(startOfWeek, endOfWeek) {
+    try {
+      const response = await axios.get(
+        `http://localhost:8090/weekly-revenue?startDate=${startOfWeek}&endDate=${endOfWeek}`
+      );
+      console.log(response.status);
+      if (response.status === 200) {
+        setReport(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const theme = createTheme({
     typography: {
-      fontFamily: "Roboto, sans-serif", // Thay đổi font chữ ở đây
+      fontFamily: "Poppins,sans-serif", // Thay đổi font chữ ở đây
       fontSize: 18, // Cỡ chữ mặc định
-      // Các thiết lập khác cho typography
     },
-    // Các thiết lập khác cho chủ đề
   });
   const DrawerHeader = styled("div")(({ theme }) => ({
     display: "flex",
@@ -21,32 +105,62 @@ function DashBoard() {
     ...theme.mixins.toolbar,
   }));
   return (
-    <>
-      <Box sx={{ display: "flex", fontSize: "2rem" }}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <SideBar />
-          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-            <DrawerHeader />
-            <Typography paragraph>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              Rhoncus dolor purus non enim praesent elementum facilisis leo vel.
-              Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-              gravida rutrum quisque non tellus. Convallis convallis tellus id
-              interdum velit laoreet id donec ultrices. Odio morbi quis commodo
-              odio aenean sed adipiscing. Amet nisl suscipit adipiscing bibendum
-              est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-              Metus vulputate eu scelerisque felis imperdiet proin fermentum
-              leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt
-              lobortis feugiat vivamus at augue. At augue eget arcu dictum
-              varius duis at consectetur lorem. Velit sed ullamcorper morbi
-              tincidunt. Lorem donec massa sapien faucibus et molestie ac.
-            </Typography>
+    <Box
+      sx={{
+        display: "flex",
+        fontSize: "2rem",
+        backgroundColor: "#f0f0f0",
+        minHeight: "100vh",
+      }}
+    >
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <SideBar />
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <DrawerHeader />
+          <Box sx={{ marginBottom: "6rem", marginTop: "5rem" }}>
+            <DataRow report={report} />
           </Box>
-        </ThemeProvider>
-      </Box>
-    </>
+          <Box sx={{ backgroundColor: "white", borderRadius: "2rem" }}>
+            <Box
+              sx={{
+                justifyContent: "center",
+                display: "flex",
+                paddingTop: "2rem",
+              }}
+            >
+              <p sx={{ fontSize: "1.6rem" }}>Pet Spa's weekly income</p>
+            </Box>
+
+            <Box
+              sx={{
+                backgroundColor: "white",
+                borderRadius: "2rem",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Box>
+                <ChevronLeftIcon
+                  name="Previous"
+                  onClick={() => handleClick("Previous")}
+                  sx={{ fontSize: "4rem" }}
+                />
+              </Box>
+              <BarChart2 report={report} />
+              <Box>
+                <ChevronRightIcon
+                  name="Next"
+                  onClick={() => handleClick("Next")}
+                  sx={{ fontSize: "4rem" }}
+                />
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      </ThemeProvider>
+    </Box>
   );
 }
 

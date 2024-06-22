@@ -65,6 +65,7 @@ function PaymentHistory() {
       <Box marginTop="12rem" marginLeft={"10rem"} fontSize={"1.8rem"}>
         <h1>PAYMENT HISTORY</h1>
       </Box>
+      <Box></Box>
       <Box
         display="flex"
         justifyContent="center"
