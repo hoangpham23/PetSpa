@@ -16,5 +16,6 @@ public class RevenueDTO {
     private Double totalRevenue;
     private Long orderCount;
     private Map<String, Long> serviceCount;
-    private Map<String, Long> customerPaymentCounts;
+    private Long customerCount;
+    private Map<String, Long> customerPaymentDetails;
 }
