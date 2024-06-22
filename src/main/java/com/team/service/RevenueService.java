@@ -10,7 +10,6 @@ import com.team.repository.PaymentHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -87,7 +86,7 @@ public class RevenueService {
                     Long customerCount = paymentsForDate.stream()
                             .map(ph -> ph.getCustomers().getCustomerID())
                             .count();
-                    
+
                     // Calculate customer payment counts for the specific date
                     Map<String, Long> customerPaymentDetails = paymentsForDate.stream()
                             .collect(Collectors.groupingBy(ph -> ph.getCustomers().getCustomerName(), Collectors.counting()));
