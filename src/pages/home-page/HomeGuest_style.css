@@ -30,12 +30,7 @@ html {
     background: var(--bg-color);
     color: var(--text-color);
 } */
-.service_name {
-  font-family: "Poppins", sans-serif;
-  text-align: center;
-  margin-top: 19rem;
-  font-size: 1.4rem;
-}
+
 .header {
   position: fixed;
   top: 0;
@@ -66,7 +61,7 @@ html {
 }
 
 .header .navbar-header .navbar a {
-  font-size: 1.2rem;
+  font-size: 2rem;
   color: var(--text-color);
   font-weight: 500;
   padding-right: 1.5rem;
@@ -86,7 +81,7 @@ html {
 
 .header .navbar-header p {
   margin-top: 0.6rem;
-  font-size: 1.2rem;
+  font-size: 2rem;
 }
 
 .dropdown {
@@ -133,8 +128,8 @@ html {
 }
 
 .tittle .tittle-name h1 {
-  font-size: 3em;
-  margin: 15rem 16rem;
+  font-size: 4rem;
+  margin: 15rem 10rem;
 }
 
 .tittle-decoration {
@@ -174,8 +169,11 @@ html {
 .introduce {
   display: flex;
   justify-content: space-around;
-  margin-top: -4rem;
+  margin-top: -5rem;
   text-align: center;
+  background-color: rgb(247, 245, 247);
+  z-index: -1;
+  padding: 5rem 0;
 }
 
 .introduce-img {
@@ -190,7 +188,7 @@ html {
   width: 27rem;
   height: 25rem;
   background-color: var(--pink-div-color);
-  z-index: -1;
+  z-index: 10;
   border-radius: 20px;
   transition: 0.5s ease;
   margin-left: 14rem;
@@ -205,13 +203,14 @@ html {
 .introduce .introduce-content {
   font-size: 2rem;
   text-align: right;
+  z-index: 10;
 }
 
 .introduce .introduce-content .content-container {
   position: absolute;
   width: 52%;
   height: 15rem;
-  background-color: rgba(224, 231, 254, 0.58);
+  background-color: var(--header-color);
   z-index: -1;
   border-radius: 20px;
   transition: 0.5s ease;
@@ -221,18 +220,21 @@ html {
 .introduce .introduce-content p {
   text-align: center;
   margin: 9rem;
+  z-index: 999;
 }
 .service {
-  /* display: flex; */
-  justify-content: center; /* Căn giữa theo chiều ngang */
-  align-items: center; /* Căn giữa theo chiều dọc */
-  /* Chiều cao tối thiểu là chiều cao của màn hình */
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(247, 245, 247);
+  z-index: -1;
+  margin-top: -5rem;
+  padding-bottom: 5rem;
 }
 
 .service .service-display {
   display: flex;
-  margin: 10rem 14rem;
-  margin-top: 5rem;
+  margin: 0 14rem;
+  margin-top: 20rem;
   align-items: center;
 }
 
@@ -242,7 +244,7 @@ html {
   background: var(--header-color);
   border-radius: 60px;
   box-shadow: 0 0.2rem 0.5rem var(--shadow-color);
-  font-size: 1.6rem;
+  font-size: 2rem;
   color: var(--text-color);
   letter-spacing: 0.1rem;
   font-weight: 600;
@@ -256,97 +258,61 @@ html {
   border-color: #0b5864;
 }
 
-.service .service-btn {
-  display: flex;
-  justify-content: right;
-  margin-right: 8rem;
-}
-
-.service .service-display {
+.service_display {
   display: flex;
   justify-content: space-around;
-  /* margin-top: 6rem; */
-  padding-top: 0rem;
-  padding-bottom: 15rem;
   text-align: center;
+  z-index: 1;
+  margin-top: 5rem;
 }
-.service-border {
+
+.service_display .service_container {
+  position: block;
+  margin: 4rem 6rem;
   background-color: var(--header-color);
-}
-.service-img {
-  background-color: var(--header-color);
-}
-.service .service-img {
-  position: absolute;
-  width: 19rem;
-  height: 22rem;
-  /* background-color: var(--header-color); */
   z-index: 1;
   border-radius: 20px;
   transition: 0.5s ease;
   flex: 1;
-  margin-left: -7rem;
-  cursor: pointer; /* Đảm bảo con trỏ thay đổi khi di chuyển qua hình ảnh */
-  pointer-events: auto; /* Đảm bảo nhận sự kiện chuột */
+}
+.service_display .service_container .service_img {
+  margin-top: 1rem;
 }
 
-.service .service-container .service-img img {
+.service_display .service_container .service_img img {
   position: relative;
-  width: 17rem;
-  border-radius: 20px;
-  margin-top: 1rem;
-  cursor: pointer; /* Đảm bảo con trỏ thay đổi khi di chuyển qua hình ảnh */
-  pointer-events: auto; /* Đảm bảo nhận sự kiện chuột */
+  width: 19rem;
+  height: 19rem;
+  border-radius: 10px;
+  z-index: 1;
 }
+
 .service_name {
   font-family: "Poppins", sans-serif;
   text-align: center;
-  margin-top: 19rem;
-  font-size: 1.4rem;
-  z-index: 2; /* Ensure service name appears above the block */
-  position: absolute;
-}
-
-/* .service .service-container .service-img {
-  display: flex;
-  justify-content: center;
-  flex: 1;
-  cursor: pointer;
-  pointer-events: auto; 
-} */
-
-.service .service-container p {
-  text-align: center;
-  margin-top: 19rem;
+  margin: 2rem 0;
+  font-size: 2rem;
 }
 
 .footer {
   margin: 10rem 0 0 0;
   display: flex;
   justify-content: space-around;
+  background-color: var(--footer-color);
+  height: 15rem;
 }
 
 .footer h1 {
-  padding-top: 3.5rem;
+  padding-top: 5rem;
   font-weight: 800;
   font-size: 4rem;
   cursor: default;
 }
 
 .footer .footer-content {
-  font-size: 1.2rem;
+  font-size: 2rem;
   gap: 1rem;
-  margin-top: 2.3rem;
-}
-
-.footer .footer-background-rectangle {
-  position: absolute;
-  width: 100%;
-  height: 120px;
-  background-color: var(--footer-color);
-  z-index: -1;
-  transition: 0.5s ease;
-  min-width: auto;
+  margin-top: 2rem;
 }
 
 /* Slider.css */

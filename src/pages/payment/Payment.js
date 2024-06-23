@@ -62,29 +62,31 @@ function Payment() {
 
   return (
     <>
-      <HeaderColor />
       <div className="wrapperPayment">
-        <div className="payment-container">
-          <div className="payment-options">
-            <h2>Select Payment Method</h2>
-            <label className="payment-option">
-              <input
-                type="radio"
-                name="Paypal"
-                value="paypal"
-                onClick={handleSubmit}
-                // disabled={isLoading}
-              />
-              <img src={Paypal} alt="Paypal" />
-            </label>
+        <main className="mainContent">
+          <HeaderColor />
+          <div className="payment-container">
+            <div className="payment-options">
+              <h2>Select Payment Method</h2>
+              <label className="payment-option">
+                <input
+                  type="radio"
+                  name="Paypal"
+                  value="paypal"
+                  onClick={handleSubmit}
+                  // disabled={isLoading}
+                />
+                <img src={Paypal} alt="Paypal" />
+              </label>
+            </div>
+            <div className="checkout-summary">
+              <Cart />
+              <p className="msg">{msg}</p>
+            </div>
           </div>
-          <div className="checkout-summary">
-            <Cart />
-            <p className="msg">{msg}</p>
-          </div>
-        </div>
+          <Footer />
+        </main>
       </div>
-      <Footer />
     </>
   );
 }

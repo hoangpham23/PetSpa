@@ -125,48 +125,54 @@ function ChooseService() {
         />
       </Helmet>
       <HeaderColor />
-
-      <div className={style.Ask}>
-        <h1>CHOOSE SERVICES FOR YOUR PET </h1>
-      </div>
-
-      <section className={style.service} id="service">
-        <div className={style.service_checklist}>
-          {services.map((service, index) => (
-            <div className={style.service_container} key={index}>
-              <input
-                type="checkbox"
-                id={`service${index}`}
-                name={service.serviceName}
-                className={style.custom_checkbox}
-                onChange={handleCheckboxChange}
-              />
-              <label htmlFor={`service${index}`} className={style.custom_label}>
-                <span className={style.tickbox}></span>
-                <span
-                  className={style.Service}
-                  onClick={() => handleDisplay(index)}
-                >
-                  {service.serviceName}
-                </span>
-              </label>
-            </div>
-          ))}
-        </div>
-        <div className={style.service_display}>
-          <div className={style.service_img}>
-            <img src={displayService.imageURL} alt="Displayed Service" />
+      <div className={style.wrapper}>
+        <main className={style.mainContent}>
+          <div className={style.Ask}>
+            <h1>CHOOSE SERVICES FOR YOUR PET </h1>
           </div>
-          <div className={style.service_price}>{displayService.price}$</div>
-        </div>
-      </section>
-      <div className={style.next}>
-        <button type="submit" className={style.btn} onClick={handleSubmit}>
-          NEXT STEP
-          <i className="bx bx-chevron-right"></i>
-        </button>
+
+          <section className={style.service} id="service">
+            <div className={style.service_checklist}>
+              {services.map((service, index) => (
+                <div className={style.service_container} key={index}>
+                  <input
+                    type="checkbox"
+                    id={`service${index}`}
+                    name={service.serviceName}
+                    className={style.custom_checkbox}
+                    onChange={handleCheckboxChange}
+                  />
+                  <label
+                    htmlFor={`service${index}`}
+                    className={style.custom_label}
+                  >
+                    <span className={style.tickbox}></span>
+                    <span
+                      className={style.Service}
+                      onClick={() => handleDisplay(index)}
+                    >
+                      {service.serviceName}
+                    </span>
+                  </label>
+                </div>
+              ))}
+            </div>
+            <div className={style.service_display}>
+              <div className={style.service_img}>
+                <img src={displayService.imageURL} alt="Displayed Service" />
+              </div>
+              <div className={style.service_price}>{displayService.price}$</div>
+            </div>
+          </section>
+          <div className={style.next}>
+            <button type="submit" className={style.btn} onClick={handleSubmit}>
+              NEXT STEP
+              <i className="bx bx-chevron-right"></i>
+            </button>
+          </div>
+        </main>
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 }

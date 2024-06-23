@@ -7,17 +7,17 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 96.8vh;
+  min-height: 100vh;
 }
 .mainContent {
   flex: 1;
 }
 .PetInfo_container {
-  margin: 4rem 5rem 3rem 5rem;
+  margin: 7rem 5rem 3rem 5rem;
 }
 
 .PetInfo_container h1 {
-  font-size: 3rem;
+  font-size: 4rem;
   text-align: center;
 }
 
@@ -29,7 +29,7 @@
 }
 
 .PetInfo_box p {
-  font-size: 1.4rem;
+  font-size: 2em;
   padding-bottom: 2px;
 }
 
@@ -43,7 +43,7 @@
   background: var(--header-color);
   border-radius: 60px;
   box-shadow: 0 0.2rem 0.5rem var(--shadow-color);
-  font-size: 1.6rem;
+  font-size: 2rem;
   color: var(--text-color);
   letter-spacing: 0.1rem;
   font-weight: 600;

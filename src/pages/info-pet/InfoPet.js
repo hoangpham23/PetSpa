@@ -102,7 +102,7 @@ function InfoPet() {
       <section>
         <div className={style.welcome_div}>
           <div className={style.welcome_content}>
-            <p>Insert Information for new pet!</p>
+            <h1>Insert Information for new pet!</h1>
           </div>
           <div className={style.welcome_form}>
             <form action="#">

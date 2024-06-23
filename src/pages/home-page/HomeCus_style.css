@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 
 * {
   margin: 0;
@@ -25,11 +25,6 @@ html {
   font-size: 62.5%;
   color: var(--text-color);
 }
-
-/* body {
-  background: var(--bg-color);
-  color: var(--text-color);
-} */
 
 .header {
   position: fixed;
@@ -161,7 +156,7 @@ html {
 }
 
 .introduce .introduce-content {
-  font-size: 2rem;
+  font-size: 1.2rem;
   text-align: right;
 }
 
@@ -192,7 +187,7 @@ html {
   background: var(--header-color);
   border-radius: 60px;
   box-shadow: 0 0.2rem 0.5rem var(--shadow-color);
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   color: var(--text-color);
   letter-spacing: 0.1rem;
   font-weight: 600;
@@ -216,9 +211,8 @@ html {
   display: flex;
   justify-content: center;
   flex: 1;
-
-  cursor: pointer; /* Đảm bảo con trỏ thay đổi khi di chuyển qua hình ảnh */
-  pointer-events: auto; /* Đảm bảo nhận sự kiện chuột */
+  cursor: pointer; 
+  pointer-events: auto; 
 }
 
 .service .service-container .service-img img {
@@ -228,7 +222,7 @@ html {
   margin-top: 1rem;
 }
 
-.service .service-container .service-border {
+.service .service-container {
   position: absolute;
   width: 16%;
   height: 50%;
@@ -236,7 +230,6 @@ html {
   z-index: -1;
   border-radius: 20px;
   transition: 0.5s ease;
-  margin-left: 7.5rem;
 }
 
 .footer {
@@ -248,7 +241,7 @@ html {
 .footer h1 {
   padding-top: 3.5rem;
   font-weight: 800;
-  font-size: 4rem;
+  font-size: 3rem;
   cursor: default;
 }
 
@@ -266,4 +259,4 @@ html {
   z-index: -1;
   transition: 0.5s ease;
   min-width: auto;
-}
+} */

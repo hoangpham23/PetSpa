@@ -21,19 +21,29 @@ function Service() {
           href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
           rel="stylesheet"
         />
+
+        {/* Swipper css */}
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+        />
       </Helmet>
 
       <section className="service">
-        <div className="service-display">
-          {dataArray.map((item, index) => (
-            <div className="service-container" key={index}>
-              <div className="service-border"></div>
-              <div className="service-img" onClick={() => handleNavigate(item)}>
-                <img src={item.imageURL} alt="" />
+        <div className="service_div">
+          <div className="service_display">
+            {dataArray.map((item, index) => (
+              <div className="service_container" key={index}>
+                <div
+                  className="service_img"
+                  onClick={() => handleNavigate(item)}
+                >
+                  <img src={item.imageURL} alt="" />
+                </div>
+                <div className="service_name">{item.serviceName}</div>
               </div>
-              <div className="service_name">{item.serviceName}</div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
     </>

@@ -137,7 +137,9 @@ function ServiceInfo() {
                   <div className={style.ava_img} key={index}>
                     <img src={service1} alt="Avatar" />
                   </div>
-                  <i className="gg-quote"></i>
+                  <div className={style.quote}>
+                    <i className="gg-quote"></i>
+                  </div>
                   <div className={style.feedback_content}>
                     <p>{feedback.feedbackContent}</p>
                   </div>
