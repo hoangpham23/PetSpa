@@ -8,7 +8,13 @@ function Calendar() {
   //Current month
   //Next month
   const [selectedDate, setSelectedDate] = useState(null);
+
   useEffect(() => {
+    const storedSelectedDate = localStorage.getItem("selectedDate");
+    if (storedSelectedDate) {
+      setSelectedDate(storedSelectedDate);
+    }
+
     const daysTag = document.querySelector(".days"),
       currentDate = document.querySelector(".current-date"),
       prevNextIcon = document.querySelectorAll(".icons span");
@@ -59,7 +65,11 @@ function Calendar() {
           currYear === new Date().getFullYear()
             ? "active"
             : "";
-        liTag += `<li class="${isToday}">${i}</li>`;
+        let isSelected =
+          selectedDate === `${currYear}-${currMonth + 1}-${i}`
+            ? "selected"
+            : "";
+        liTag += `<li class="${isToday} ${isSelected}" >${i}</li>`;
       }
 
       for (let i = lastDayofMonth; i < 6; i++) {
@@ -85,6 +95,12 @@ function Calendar() {
 
             // // Thêm lớp .selected cho ô ngày được chọn
             // selectedDay.classList.add("selected");
+            day.classList.remove("selected");
+
+            if (day.innerText === selectedDate) {
+              // Thêm lớp .selected cho ô ngày được chọn
+              day.classList.add("selected");
+            }
             if (!selectedDay.classList.contains("inactive")) {
               // Thêm hoặc loại bỏ lớp .selected cho ngày được chọn
               allDays.forEach((day) => {

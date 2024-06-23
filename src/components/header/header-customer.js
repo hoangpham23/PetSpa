@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 //import "../../pages/home-page/HomeCus_style.css";
 import "../../pages/home-page/HomeGuest_style.css";
+import { useNavigate } from "react-router-dom";
 function HeaderForCus() {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const dataArray = JSON.parse(localStorage.getItem("dataArray")) || [];
   useEffect(() => {
@@ -48,7 +50,7 @@ function HeaderForCus() {
           <a href="/payment-history">HISTORY PAYMENT</a>
           <a href="/sign-in">SIGN OUT</a>
         </nav>
-        <p>{name}</p>
+        <p onClick={() => navigate("/customer-info")}>{name}</p>
       </div>
     </header>
   );

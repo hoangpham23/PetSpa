@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import HeaderForCus from "../../components/header/header-customer";
 import Calendar from "./Calendear/Calendar";
+import CalendarV2 from "./Calendear/Calendar";
+
 import style from "./ChooseTime_style.module.css";
 import axios from "axios";
 import ChooseTimeBox from "./ChooseTimeBox/ChooseTimeBox";
@@ -9,6 +11,7 @@ import Footer from "../../components/footer/footer";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import HeaderColor from "../../components/header/HeaderColor";
+import DateCalendarValue from "./Calendear/CalendarV2";
 function ChooseTime2() {
   const { addDays, format } = require("date-fns");
   const today = new Date();
@@ -118,7 +121,8 @@ function ChooseTime2() {
         <HeaderColor />
         <h1>Complete your appointment</h1>
         <div className={style.boxInfo}>
-          <Calendar />
+          {/* <CalendarV2 /> */}
+          <DateCalendarValue />
           <ChooseTimeBox />
           <div className={style.cartContainer} onClick={handleSubmit}>
             <div className={style.nextStepButton}>NEXT STEP &gt;</div>
@@ -127,7 +131,7 @@ function ChooseTime2() {
             </div>
           </div>
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </>
   );

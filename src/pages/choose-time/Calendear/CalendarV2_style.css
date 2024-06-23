@@ -1,0 +1,45 @@
+.custom-calendar {
+  width: 500px; /* Độ rộng của cuốn lịch */
+  min-height: 600px; /* Độ cao của cuốn lịch */
+  font-size: 1.4rem; /* Kích thước chữ cho toàn bộ cuốn lịch */
+}
+
+.custom-calendar .MuiTypography-root {
+  font-size: 1.4rem; /* Kích thước chữ chung */
+}
+
+.custom-calendar .MuiPickersCalendarHeader-label {
+  font-size: 1.8rem; /* Kích thước chữ cho nhãn tháng */
+}
+.custom-calendar .MuiDayPicker-weekDayLabel {
+  font-size: 1em; /* Kích thước chữ cho nhãn ngày trong tuần */
+  padding: 10px; /* Khoảng cách giữa các nhãn ngày trong tuần */
+  text-align: center; /* Căn giữa văn bản */
+}
+.custom-calendar .MuiDayPicker-weekDayLabel {
+  font-size: 1.4rem; /* Kích thước chữ cho nhãn ngày trong tuần */
+  padding: 0 20px; /* Khoảng cách giữa các nhãn ngày trong tuần */
+  margin: 0px 10px;
+}
+.customer-calendar .MuiTypography-root .MuiDayCalendar-weekDayLabel {
+  margin: 0px 10px;
+}
+.MuiTypography-root .MuiTypography-caption .MuiDayCalendar-weekDayLabel {
+  margin: 0px 10px;
+}
+.custom-calendar .MuiPickersDay-root {
+  width: 50px; /* Kích thước của các ô ngày */
+  height: 50px; /* Kích thước của các ô ngày */
+  font-size: 1.4rem; /* Kích thước chữ cho các ngày */
+  margin: 5px; /* Khoảng cách giữa các ô ngày */
+}
+.custom-calendar
+  .MuiTypography-root
+  .MuiTypography-caption
+  .MuiDayCalendar-weekDayLabel {
+  padding: 10px;
+}
+
+.custom-calendar .MuiPickersCalendarHeader-root {
+  font-size: 1.8rem; /* Kích thước chữ cho tiêu đề cuốn lịch */
+}

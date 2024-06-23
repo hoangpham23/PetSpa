@@ -6,16 +6,23 @@ import moment from "moment";
 
 function ChooseTimeBox() {
   const [selectingDate, setSelectingDate] = useState(
-    localStorage.getItem("selectedDate")
+    localStorage.getItem("selectedDate") || ""
   );
+
+  // useEffect(() => {
+  //   const storedSelectedDate = localStorage.getItem("selectedDate");
+  //   if (storedSelectedDate) {
+  //     setSelectingDate(storedSelectedDate);
+  //   }
+  // }, [localStorage.getItem("selectedDate")]);
   const appointments = JSON.parse(localStorage.getItem("appointments") || "[]");
 
   const [appointmentsToday, setAppointmentsToday] = useState([]);
   const [selectedTimes, setSelectedTimes] = useState(
     JSON.parse(localStorage.getItem("selectedTimes") || "[]")
   );
-  const cartsystem = JSON.parse(localStorage.getItem("cart"));
-  const numOfServices = cartsystem.length;
+  const cartsystem = JSON.parse(localStorage.getItem("cart")) || "[]";
+  const numOfServices = cartsystem.length || "";
   const [msg, setMsg] = useState("");
 
   useEffect(() => {
@@ -61,6 +68,9 @@ function ChooseTimeBox() {
   useEffect(() => {
     console.log(selectedTimes);
   }, [selectedTimes]);
+  useEffect(() => {
+    console.log(selectingDate);
+  }, [selectingDate]);
 
   const handleClick = (appointment) => {
     const isAlreadySelected = selectedTimes.some(

@@ -6,8 +6,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import style from "./PaymentHistory_style.module.css";
-import { Box, Typography } from "@mui/material";
+
+import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { format } from "date-fns";
@@ -66,56 +66,61 @@ function PaymentHistory() {
         <h1>PAYMENT HISTORY</h1>
       </Box>
       <Box></Box>
-      <Box
-        display="flex"
-        justifyContent="center"
-        mt={5}
-        marginTop={"5rem"}
-        marginLeft={"9rem"}
-        marginRight={"9rem"}
-        marginBottom={"5rem"}
-        minHeight={"50vh"}
-      >
-        <TableContainer component={Paper}>
-          <Table
-            sx={{ minWidth: "10%", maxWidth: "100%" }}
-            aria-label="customized table"
-          >
-            <TableHead>
-              <TableRow>
-                <StyledTableCell>No. </StyledTableCell>
-                <StyledTableCell align="right">Payment Time</StyledTableCell>
-                <StyledTableCell align="right">List Service</StyledTableCell>
-                <StyledTableCell align="right">Pet Name</StyledTableCell>
-                <StyledTableCell align="right">Amount</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {paymentHistory.map((row, index) => (
-                <StyledTableRow key={index}>
-                  <StyledTableCell component="th" scope="row">
-                    {index + 1}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    <span style={{ marginRight: "10px" }}>
-                      {format(new Date(row.paymentTime), "dd/MM/yyyy")}
-                    </span>
-                    <span>{format(new Date(row.paymentTime), "HH:mm")}</span>
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {row.listService.map((service, index) => (
-                      <span key={index}>
-                        {service} {"\n"}
+      <Box minHeight={"56vh"}>
+        <Box
+          display="flex"
+          justifyContent="center"
+          mt={5}
+          marginTop={"5rem"}
+          marginLeft={"9rem"}
+          marginRight={"9rem"}
+          marginBottom={"5rem"}
+        >
+          <TableContainer component={Paper}>
+            <Table
+              sx={{ minWidth: "10%", maxWidth: "100%" }}
+              aria-label="customized table"
+            >
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell>No. </StyledTableCell>
+                  <StyledTableCell align="right">Payment Time</StyledTableCell>
+                  <StyledTableCell align="right">List Service</StyledTableCell>
+                  <StyledTableCell align="right">Pet Name</StyledTableCell>
+                  <StyledTableCell align="right">Amount</StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {paymentHistory.map((row, index) => (
+                  <StyledTableRow key={index}>
+                    <StyledTableCell component="th" scope="row">
+                      {index + 1}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      <span style={{ marginRight: "10px" }}>
+                        {format(new Date(row.paymentTime), "dd/MM/yyyy")}
                       </span>
-                    ))}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">{row.petName}</StyledTableCell>
-                  <StyledTableCell align="right">{row.amount}</StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                      <span>{format(new Date(row.paymentTime), "HH:mm")}</span>
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {row.listService.map((service, index) => (
+                        <span key={index}>
+                          {service} {"\n"}
+                        </span>
+                      ))}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {row.petName}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {row.amount}
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       </Box>
       <Box>
         <Footer />

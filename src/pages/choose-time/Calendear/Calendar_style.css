@@ -49,6 +49,15 @@ header .current-date {
 .calendar .days {
   margin-bottom: 20px;
 }
+.calendar .days li {
+  border-radius: 50%;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0;
+  margin: 0;
+}
 .calendar li {
   color: #333;
   width: calc(100% / 7);
@@ -63,12 +72,15 @@ header .current-date {
   cursor: pointer;
   position: relative;
   margin-top: 30px;
+  border-radius: 100%;
 }
 .days li.inactive {
   color: #aaa;
 }
 .days li.active {
-  color: #fff;
+  color: #333;
+  border: 1.2px solid black;
+  border-radius: 100%;
 }
 .days li::before {
   position: absolute;
@@ -82,14 +94,16 @@ header .current-date {
   transform: translate(-50%, -50%);
 }
 .days li.active::before {
-  background: #9b59b6;
+  /* background: #9b59b6; */
+  border: "1px solid black";
 }
 .days li:not(.active):hover::before {
   background: #f2f2f2;
+  border: "1px solid black";
 }
 .days li.selected {
-  /* background-color: #9b59b6; Màu nền khi được chọn */
-  color: #fff; /* Màu chữ khi được chọn */
+  background-color: #9b59b6;
+  color: #ffffff; /* Màu chữ khi được chọn */
 }
 
 .days li.selected::before {
