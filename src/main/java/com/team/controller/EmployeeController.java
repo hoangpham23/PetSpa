@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -22,12 +21,14 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @PostMapping("schedule")
-    public ResponseEntity<?> getEmployeeSchedule(@RequestBody Map<String, String> request) {
+    @GetMapping("schedule")
+    public ResponseEntity<?> getEmployeeSchedule(
+            @RequestParam int employeeID,
+            @RequestParam(required = false) LocalDate date
+
+    ) {
         try {
-            int employeeID = Integer.parseInt(request.get("employeeID"));
-            LocalDate time = LocalDate.parse(request.get("date"));
-            List<WorkDateDTO> schedule = employeeService.getSchedule(employeeID, time);
+            List<WorkDateDTO> schedule = employeeService.getSchedule(employeeID, date);
             if (schedule == null){
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There aren't any shifts");
             }

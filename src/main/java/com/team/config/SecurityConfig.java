@@ -3,7 +3,6 @@ package com.team.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -21,8 +20,18 @@ import javax.crypto.spec.SecretKeySpec;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final String[] PUBLIC_ENDPOINTS = {"/sign-in", "/sign-in/verify", "/sign-up"};
-    private final String[] ADMIN_ENDPOINTS = {"/admin/employees", "/admin/create-employee", "/admin/employees/"};
+    private final String[] PUBLIC_ENDPOINTS = {"/sign-in", "/sign-in/verify", "/sign-up",
+            "/home-page", "/sign-up/verify-otp", "/forgotpassword",
+            "/forgotpassword/verify-otp", "/home-page/{serviceName}"
+    };
+    private final String[] CUSTOMER_ENDPOINTS = {"/insert-pet-info", "/choose-pet",
+            "/choose-service", "/appointment/time", "/payment",
+            "/payment-history"
+    };
+
+    private final String[] EMPLOYEE_ENDPOINTS = {"/employee/schedule"};
+
+    private final String[] ADMIN_ENDPOINTS = {"/admin/employees", "/admin/create-employee", "/admin/employees/{id}"};
 
     @Value("${SIGNER_KEY}")
     private String signerKey;
@@ -48,8 +57,11 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler) throws Exception {
         httpSecurity.authorizeHttpRequests(request ->
-                request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
+                request
+                        .requestMatchers(CUSTOMER_ENDPOINTS).hasRole("CUS")
+                        .requestMatchers(EMPLOYEE_ENDPOINTS).hasRole("EM")
                         .requestMatchers(ADMIN_ENDPOINTS).hasRole("AD")
+                        .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                         .anyRequest().authenticated()
         );
         httpSecurity.oauth2ResourceServer(oauth2 ->

@@ -1,11 +1,12 @@
 package com.team.controller;
 
-import com.nimbusds.jose.JOSEException;
 import com.team.dto.AccountDTO;
 import com.team.dto.CustomerDTO;
+import com.team.dto.EmployeeResponseDTO;
 import com.team.dto.IntrospectRequest;
 import com.team.service.AccountService;
 import com.team.service.CustomerService;
+import com.team.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +24,12 @@ public class SignInController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final AccountService accountService;
     private final CustomerService customerService;
+    private final EmployeeService employeeService;
 
-    public SignInController(AccountService accountService, CustomerService customerService) {
+    public SignInController(AccountService accountService, CustomerService customerService, EmployeeService employeeService) {
         this.accountService = accountService;
         this.customerService = customerService;
+        this.employeeService = employeeService;
     }
 
     @PostMapping("")
@@ -45,6 +48,14 @@ public class SignInController {
                 return ResponseEntity.ok().body(customerDTO);
             }
 
+            if ("EM".equals(accounts.getRole())) {
+                EmployeeResponseDTO employeeResponseDTO = employeeService.getEmployee(accounts);
+                if (employeeResponseDTO != null){
+                    return ResponseEntity.ok().body(employeeResponseDTO);
+                }
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+            }
+
             if ("AD".equals(accounts.getRole())) {
                 return ResponseEntity.ok().body(accounts);
             }
@@ -56,6 +67,7 @@ public class SignInController {
 
     }
 
+    // check the token
     @PostMapping("/verify")
     public ResponseEntity<?> verify(@RequestBody IntrospectRequest request) {
         try {

@@ -64,8 +64,7 @@ public class PaymentController {
 //    @PostMapping("/vn-pay")
     public String createVNPay(@RequestBody Map<String, Object> dataRequest, HttpServletRequest request) {
         try {
-            String paymentURL = paymentService.paymentURL(dataRequest, request);
-            return paymentURL;
+            return paymentService.paymentURL(dataRequest, request);
         } catch (Exception e) {
             log.error(e.getMessage());
             return null;

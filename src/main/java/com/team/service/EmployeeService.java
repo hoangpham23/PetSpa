@@ -1,8 +1,6 @@
 package com.team.service;
 
-import com.team.dto.EmployeeDTO;
-import com.team.dto.ScheduleDTO;
-import com.team.dto.WorkDateDTO;
+import com.team.dto.*;
 import com.team.model.*;
 import com.team.repository.AccountRepository;
 import com.team.repository.AppointmentRepository;
@@ -52,7 +50,7 @@ public class EmployeeService {
         return result;
     }
 
-    public Employees deleteEmployee(Integer employeeID) throws Exception {
+    public Employees deleteEmployee(Integer employeeID)  {
         Optional<Employees> employeeOptional = employeeRepository.findById(employeeID);
         if (employeeOptional.isPresent()) {
             Employees employee = employeeOptional.get();
@@ -86,11 +84,12 @@ public class EmployeeService {
     }
 
     public List<WorkDateDTO> getSchedule(int employeeID, LocalDate requestTime) {
+        if (requestTime == null){
+            requestTime = LocalDate.now();
+        }
         LocalDate startDate = requestTime.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-        System.out.println("startDate: " + startDate);
         // Compute the end date (Sunday of the current week)
         LocalDate endDate = startDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
-        System.out.println("EndDate:  " + endDate);
         Employees employees = employeeRepository.findById(employeeID).get();
         // retrieve schedule date for a week from Monday to Sunday
         List<EmployeeSchedule> data = employeeScheduleRepository.findAllByEmployeesAndWorkDateBetweenOrderByWorkDateAscStartTimeAsc(employees, startDate, endDate);
@@ -143,5 +142,19 @@ public class EmployeeService {
             appointmentRepository.save(appointment);
         }
     }
+
+    public EmployeeResponseDTO getEmployee(AccountDTO accounts){
+        Employees employees = employeeRepository.findById(accounts.getAccountID()).get();
+        if ("ACTIVE".equals(employees.getStatus())){
+            EmployeeResponseDTO dto = new EmployeeResponseDTO();
+            dto.setEmployeeID(employees.getId());
+            dto.setEmployeeName(employees.getEmployeeName());
+            dto.setPhoneNumber(employees.getPhoneNumber());
+            dto.setToken(accounts.getToken());
+            return dto;
+        }
+        return null;
+    }
+
 
 }
