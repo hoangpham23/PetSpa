@@ -21,8 +21,9 @@ import MailIcon from "@mui/icons-material/Mail";
 import SpaceDashboardOutlinedIcon from "@mui/icons-material/SpaceDashboardOutlined";
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
 import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
+import EventNoteIcon from "@mui/icons-material/EventNote";
 
-const drawerWidth = 240;
+const drawerWidth = 260;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -194,7 +195,11 @@ export default function SideBar() {
                     justifyContent: "center",
                   }}
                 >
-                  <EditCalendarOutlinedIcon />
+                  {index === 0 ? (
+                    <EditCalendarOutlinedIcon />
+                  ) : (
+                    <EventNoteIcon />
+                  )}
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>

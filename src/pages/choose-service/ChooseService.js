@@ -58,7 +58,11 @@ function ChooseService() {
   const handleCheckboxChange = (event) => {
     const { name, checked } = event.target;
     const service = services.find((service) => service.serviceName === name);
-
+    setDisplayService({
+      name: service.serviceName,
+      price: service.price,
+      imageURL: service.imageURl,
+    });
     if (checked) {
       setSelectedServices([
         ...selectedServices,
@@ -92,7 +96,7 @@ function ChooseService() {
   }, [services]);
 
   useEffect(() => {
-    console.log(displayService);
+    console.log("selecting", displayService);
   }, [displayService]);
   function handleDisplay(index) {
     const selectedService = services.at(index);

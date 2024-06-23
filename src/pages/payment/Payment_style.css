@@ -46,7 +46,7 @@
 }
 
 .payment-option:hover {
-  background-color: #979797;
+  background-color: #f2f5fc;
 }
 
 .payment-option input[type="radio"] {

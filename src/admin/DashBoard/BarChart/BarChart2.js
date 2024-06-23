@@ -1,6 +1,7 @@
 import * as React from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { Box } from "@mui/material";
+//import { ResponsiveChartContainer } from "@mui/x-charts";
 
 export default function BarChart2({ report }) {
   const dates = report.map((entry) => entry.date);
