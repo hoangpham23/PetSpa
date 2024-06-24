@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -34,5 +35,13 @@ public interface AppointmentRepository extends JpaRepository<Appointments, Integ
 
     @Query(value = SQL_findCustomerIDAndPaymentStatus, nativeQuery = true)
     List<Appointments> SQL_findCustomerIDAndPaymentStatus(@Param("customerID") int customerID, @Param("paymentStatus") String paymentStatus);
+
+
+    @Query("SELECT a FROM Appointments a " +
+            "JOIN FETCH a.customer c " +
+            "JOIN FETCH a.services s " +
+            "JOIN FETCH a.pets p " +
+            "WHERE a.appointmentTime >= :startOfDay AND a.appointmentTime <= :endOfDay")
+    List<Appointments> findAppointmentsForDate(@Param("startOfDay") LocalDateTime startOfDay, @Param("endOfDay") LocalDateTime endOfDay);
 
 }
