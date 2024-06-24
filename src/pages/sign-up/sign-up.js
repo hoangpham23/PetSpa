@@ -83,70 +83,74 @@ function SignUp() {
         />
         <link rel="stylesheet" href="./SignUp_style.css" />
       </Helmet>
-      <div className={style.background}>
-        <div className={style.signUp_container}>
-          <div className={style.pink_background_rectangle}></div>
-          <div className={style.signUp_form}>
-            <h1>SIGN UP</h1>
-            <form action="#">
-              <div className={style.input_box}>
-                <p>User Name:</p>{" "}
-                <input
-                  type="text"
-                  placeholder="ENTER YOUR USER NAME HERE"
-                  name="customerName"
-                  onChange={handleInput}
-                />
+      <div className={style.wrapperSignup}>
+        <div className={style.background}>
+          <main className={style.mainContent}>
+            <div className={style.signUp_container}>
+              <div className={style.pink_background_rectangle}></div>
+              <div className={style.signUp_form}>
+                <h1>SIGN UP</h1>
+                <form action="#">
+                  <div className={style.input_box}>
+                    <p>User Name:</p>{" "}
+                    <input
+                      type="text"
+                      placeholder="ENTER YOUR USER NAME HERE"
+                      name="customerName"
+                      onChange={handleInput}
+                    />
+                  </div>
+                  <div className={style.input_box}>
+                    <p>Password:</p>{" "}
+                    <input
+                      type="password"
+                      placeholder="ENTER YOUR PASSWORD HERE"
+                      name="password"
+                      onChange={handleInput}
+                    />
+                  </div>
+                  <div className={style.input_box}>
+                    <p>Confirm Password:</p>{" "}
+                    <input
+                      type="password"
+                      placeholder="ENTER AGAIN YOUR PASSWORD HERE"
+                      ref={confirmPasswordRef}
+                      onChange={handleInput}
+                    />
+                  </div>
+                  <div className={style.input_box}>
+                    <p>Phone:</p>{" "}
+                    <input
+                      type="number"
+                      placeholder="ENTER YOUR PHONE NUMBER HERE"
+                      name="phoneNumber"
+                      onChange={handleInput}
+                    />
+                  </div>
+                  <div className={style.input_box}>
+                    <p>Email:</p>{" "}
+                    <input
+                      type="email"
+                      placeholder="ENTER YOUR EMAIL HERE"
+                      name="email"
+                      onChange={handleInput}
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="submit"
+                      value="Continue"
+                      className={style.btn}
+                      onClick={handleSubmit}
+                    />
+                  </div>
+                </form>{" "}
+                <br></br>
+                <h4>{mess}</h4>
+                <br></br>
               </div>
-              <div className={style.input_box}>
-                <p>Password:</p>{" "}
-                <input
-                  type="password"
-                  placeholder="ENTER YOUR PASSWORD HERE"
-                  name="password"
-                  onChange={handleInput}
-                />
-              </div>
-              <div className={style.input_box}>
-                <p>Confirm Password:</p>{" "}
-                <input
-                  type="password"
-                  placeholder="ENTER AGAIN YOUR PASSWORD HERE"
-                  ref={confirmPasswordRef}
-                  onChange={handleInput}
-                />
-              </div>
-              <div className={style.input_box}>
-                <p>Phone:</p>{" "}
-                <input
-                  type="number"
-                  placeholder="ENTER YOUR PHONE NUMBER HERE"
-                  name="phoneNumber"
-                  onChange={handleInput}
-                />
-              </div>
-              <div className={style.input_box}>
-                <p>Email:</p>{" "}
-                <input
-                  type="email"
-                  placeholder="ENTER YOUR EMAIL HERE"
-                  name="email"
-                  onChange={handleInput}
-                />
-              </div>
-              <div>
-                <input
-                  type="submit"
-                  value="Continue"
-                  className={style.btn}
-                  onClick={handleSubmit}
-                />
-              </div>
-            </form>{" "}
-            <br></br>
-            <h4>{mess}</h4>
-            <br></br>
-          </div>
+            </div>
+          </main>
         </div>
       </div>
     </>
