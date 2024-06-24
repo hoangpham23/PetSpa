@@ -31,4 +31,8 @@ public class Feedback {
     @JoinColumn(name = "EmployeeID")
     private Employees employeeID;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "AppointmentID")
+    private Appointments appointmentID;
+
 }
