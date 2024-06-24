@@ -27,7 +27,7 @@ public class FeedbackService {
 
     public List<CustomerFeedbackForEmployeeDTO> getFeedbackForEmployeeByAppointment(Integer appointmentID) {
         Optional<Appointments> appointmentOptional = appointmentRepository.findById(appointmentID);
-        if (!appointmentOptional.isPresent()) {
+        if (appointmentOptional.isEmpty()) {
             // Handle the case where the appointment is not found
             return List.of();
         }
@@ -37,7 +37,7 @@ public class FeedbackService {
         return feedbackList.stream()
                 .map(feedback -> {
                     List<ServiceImages> serviceImages = servicesImagesRepository.findByServiceID(feedback.getAppointmentID().getServices());
-                    String imageUrl = serviceImages.isEmpty() ? null : serviceImages.get(0).getImageURL();
+                    String imageUrl = serviceImages.isEmpty() ? null : serviceImages.getFirst().getImageURL();
                     return new CustomerFeedbackForEmployeeDTO(
                             feedback.getCustomerID().getCustomerName(),
                             feedback.getAppointmentID().getPets().getPetName(),
