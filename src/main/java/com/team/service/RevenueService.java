@@ -79,12 +79,12 @@ public class RevenueService {
                     Double totalRevenue = paymentsForDate.stream().mapToDouble(PaymentHistory::getTotalAmount).sum();
                     Long orderCount = (long) paymentsForDate.size();
 
-                    // Count the number of times each service has been ordered on the specific date
+                    // Count the number of times each service has been ordered on the specific dateIMAGES
                     Map<String, Long> serviceCount = paymentDetailsForDate.stream()
                             .collect(Collectors.groupingBy(pd -> pd.getAppointmentID().getServices().getServiceName(), Collectors.counting()));
 
                     Long customerCount = paymentsForDate.stream()
-                            .map(ph -> ph.getCustomers().getCustomerID())
+                            .map(ph -> ph.getCustomers().getCustomerID()).distinct()
                             .count();
 
                     // Calculate customer payment counts for the specific date

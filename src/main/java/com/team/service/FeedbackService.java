@@ -2,6 +2,7 @@ package com.team.service;
 
 import com.team.dto.CustomerFeedbackForEmployeeDTO;
 import com.team.model.Appointments;
+import com.team.model.Customers;
 import com.team.model.Feedback;
 import com.team.model.ServiceImages;
 import com.team.repository.AppointmentRepository;
@@ -47,5 +48,14 @@ public class FeedbackService {
                     );
                 })
                 .collect(Collectors.toList());
+    }
+
+    public Optional<Feedback> getFeedbackByCustomerAndStatus(Customers customer, String status) {
+        return feedbackRepository.findByCustomerIDAndStatus(customer, status);
+    }
+
+    public void updateFeedbackStatus(Feedback feedback, String status) {
+        feedback.setStatus(status);
+        feedbackRepository.save(feedback);
     }
 }

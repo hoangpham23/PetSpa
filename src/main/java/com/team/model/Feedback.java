@@ -34,4 +34,7 @@ public class Feedback {
     @JoinColumn(name = "AppointmentID")
     private Appointments appointmentID;
 
+    @Column(name = "Status")
+    private String status;
+
 }
