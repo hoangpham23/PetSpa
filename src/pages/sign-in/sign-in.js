@@ -26,7 +26,10 @@ function SignIn() {
   const navigate = useNavigate();
   const location = useLocation();
   function handleInput(event) {
-    setAccount({ ...account, [event.target.name]: event.target.value });
+    setAccount((account) => ({
+      ...account,
+      [event.target.name]: event.target.value,
+    }));
   }
 
   useEffect(() => {
@@ -56,6 +59,7 @@ function SignIn() {
         };
         console.log(updatedAccount);
         setAccount(updatedAccount);
+        localStorage.setItem("token", response.data.token);
         localStorage.setItem("account", JSON.stringify(updatedAccount));
         localStorage.setItem("role", response.data.role);
 

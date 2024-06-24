@@ -44,13 +44,24 @@ function Payment() {
 
   async function handleSubmit() {
     try {
-      const response = await axios.post("http://localhost:8090/payment", {
-        customerID: localStorage.getItem("customerID"),
-        serviceIds: JSON.parse(localStorage.getItem("serviceIds")),
-        appointmentTimes: JSON.parse(localStorage.getItem("appointmentTimes")),
-        petID: localStorage.getItem("petID"),
-        depositAmount: localStorage.getItem("depositAmount"),
-      });
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        "http://localhost:8090/payment",
+        {
+          customerID: localStorage.getItem("customerID"),
+          serviceIds: JSON.parse(localStorage.getItem("serviceIds")),
+          appointmentTimes: JSON.parse(
+            localStorage.getItem("appointmentTimes")
+          ),
+          petID: localStorage.getItem("petID"),
+          depositAmount: localStorage.getItem("depositAmount"),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       console.log(response.data);
       setResult(response.data);
       setUrlPaypal(response.data.urlPaypal);

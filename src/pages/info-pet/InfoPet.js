@@ -65,6 +65,7 @@ function InfoPet() {
       return;
     }
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:8090/insert-pet-info",
         {
@@ -72,6 +73,11 @@ function InfoPet() {
           weight: petInfo.weight,
           age: petInfo.age,
           customerID: petInfo.customerID,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       console.log(petInfo);

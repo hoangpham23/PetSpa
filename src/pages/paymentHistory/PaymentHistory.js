@@ -17,10 +17,17 @@ function PaymentHistory() {
   const [paymentHistory, setPaymentHistory] = useState([]);
   async function getData(event) {
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:8090/payment-history",
-        { customerID: localStorage.getItem("customerID") }
+        { customerID: localStorage.getItem("customerID") },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
+
       if (response.status === 200) {
         setPaymentHistory(response.data);
       }

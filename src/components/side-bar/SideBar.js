@@ -22,6 +22,7 @@ import SpaceDashboardOutlinedIcon from "@mui/icons-material/SpaceDashboardOutlin
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
 import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
 import EventNoteIcon from "@mui/icons-material/EventNote";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 260;
 
@@ -103,7 +104,22 @@ export default function SideBar() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
+  const items = [
+    { text: "Dash Board", path: "/dashboard" },
+    { text: "Manage customer account", path: "/manage-customer" },
+    { text: "Manage staff account", path: "/manage-staff" },
+  ];
+  const items2 = [
+    {
+      text: "Manage services",
+      path: "/manage-services",
+    },
+    {
+      text: "Manage appointment",
+      path: "/manage-appointment",
+    },
+  ];
+  const navigate = useNavigate();
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -138,13 +154,9 @@ export default function SideBar() {
         </DrawerHeader>
         <Divider />
         <List>
-          {[
-            "Dash Board",
-            "Manage customer account",
-            "Manage staff account",
-          ].map((text, index) => (
+          {items.map((item, index) => (
             <ListItem
-              key={text}
+              key={item.text}
               disablePadding
               sx={{
                 display: "block",
@@ -158,6 +170,7 @@ export default function SideBar() {
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                 }}
+                onClick={() => navigate(item.path)}
               >
                 <ListItemIcon
                   sx={{
@@ -172,20 +185,26 @@ export default function SideBar() {
                     <ManageAccountsOutlinedIcon />
                   )}
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText
+                  primary={item.text}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
         <Divider />
         <List>
-          {["Manage services", "Manage appointmnent"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
+          {items2.map((item, index) => (
+            <ListItem key={item.text} disablePadding sx={{ display: "block" }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
+                }}
+                onClick={() => {
+                  navigate(item.path);
                 }}
               >
                 <ListItemIcon
@@ -201,7 +220,10 @@ export default function SideBar() {
                     <EventNoteIcon />
                   )}
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText
+                  primary={item.text}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
               </ListItemButton>
             </ListItem>
           ))}

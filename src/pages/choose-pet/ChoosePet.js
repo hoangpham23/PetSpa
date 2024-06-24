@@ -29,10 +29,19 @@ function ChoosePet() {
     }
   }, [customerID]);
   async function handleData() {
+    const token = localStorage.getItem("token");
     console.log(customerID);
-    const response = await axios.post("http://localhost:8090/choose-pet", {
-      customerID: customerID,
-    });
+    const response = await axios.post(
+      "http://localhost:8090/choose-pet",
+      {
+        customerID: customerID,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     console.log(response.status);
     console.log(customerID);
     if (response.status === 200) {

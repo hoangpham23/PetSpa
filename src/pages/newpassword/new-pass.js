@@ -29,12 +29,18 @@ function NewPass() {
       return; // Prevent sending the request if passwords don't match
     }
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.put(
         "http://localhost:8090/forgotpassword/verify-otp",
         {
           email: newPass.email,
           password: newPass.password,
           otp: newPass.otp,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       if (response.status === 200) {

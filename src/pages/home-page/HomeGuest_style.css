@@ -171,7 +171,8 @@ html {
   justify-content: space-around;
   margin-top: -5rem;
   text-align: center;
-  background-color: rgb(247, 245, 247);
+  /* background-color: rgb(247, 245, 247); */
+  background-color: #f8f8f8;
   z-index: -1;
   padding: 5rem 0;
 }

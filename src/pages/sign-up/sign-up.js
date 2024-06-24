@@ -33,12 +33,21 @@ function SignUp() {
       return; // Prevent sending the request if passwords don't match
     }
     try {
-      const response = await axios.post("http://localhost:8090/sign-up", {
-        customerName: info.customerName,
-        password: info.password,
-        phoneNumber: info.phoneNumber,
-        email: info.email,
-      });
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        "http://localhost:8090/sign-up",
+        {
+          customerName: info.customerName,
+          password: info.password,
+          phoneNumber: info.phoneNumber,
+          email: info.email,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (response.status === 200) {
         navigate("/sign-up/verify-otp");
         // http://localhost:8090/sign-up/verify-otp
