@@ -1,9 +1,8 @@
-
 import React, { useState, useEffect } from "react";
 import style from "./Cart_style.module.css";
 
 function Cart() {
-  const cartsystem = localStorage.getItem("cart");
+  const cartsystem = localStorage.getItem("cart") || "[]";
   const [cartItems, setCartItems] = useState(JSON.parse(cartsystem) || []);
 
   useEffect(() => {

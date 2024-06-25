@@ -12,18 +12,25 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import HeaderColor from "../../components/header/HeaderColor";
 import DateCalendarValue from "./Calendear/CalendarV2";
+import UserAuth from "../../hooks/UserAuth";
 function ChooseTime2() {
+  UserAuth(["CUS"]);
+  const navigate = useNavigate();
   const { addDays, format } = require("date-fns");
   const today = new Date();
   // chỉ nhận lịch trong 3 ngày, tính từ thời điểm hiện tại
-  const startDay = format(today, "yyyy-MM-dd");
-
+  let startDay = format(today, "yyyy-MM-dd");
+  // const currentHour = today.getHours();
+  // if (currentHour > 17) {
+  //   const tomorrow = addDays(today, 1);
+  //   startDay = format(tomorrow, "yyyy-MM-dd");
+  // }
   const endDay = format(addDays(startDay, 3), "yyyy-MM-dd");
   console.log(endDay);
   const [appointments, setAppointments] = useState([]);
   const [isFullSlot, setIsFullSlot] = useState([]);
   const [customerID, setCustomerID] = useState("");
-  const navigate = useNavigate();
+
   useEffect(() => {
     const accountData = localStorage.getItem("account");
     if (accountData) {
@@ -89,9 +96,15 @@ function ChooseTime2() {
     setIsFullSlot(isFullSlot);
   }, [isFullSlot]);
   useEffect(() => {
+    const token = localStorage.getItem("token");
     async function getData() {
       const response = await axios.get(
-        "http://localhost:8090/appointment/time"
+        "http://localhost:8090/appointment/time",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       console.log(response.status);
       if (response.status === 200) {

@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet";
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../../components/footer/footer";
 import HeaderColor from "../../components/header/HeaderColor";
+import UserAuth from "../../hooks/UserAuth";
 
 function ChoosePet() {
   const [customerID, setCustomerID] = useState("");
@@ -13,7 +14,7 @@ function ChoosePet() {
   const [petData, setPetData] = useState([]);
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
-  //localStorage.setItem("appointmentTimes",);
+  UserAuth(["CUS"]);
   useEffect(() => {
     const customer = JSON.parse(localStorage.getItem("account"));
     if (customer) {

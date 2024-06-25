@@ -13,7 +13,9 @@ import axios from "axios";
 import { format } from "date-fns";
 import Footer from "../../components/footer/footer";
 import HeaderColor from "../../components/header/HeaderColor";
+import UserAuth from "../../hooks/UserAuth";
 function PaymentHistory() {
+  UserAuth(["CUS"]);
   const [paymentHistory, setPaymentHistory] = useState([]);
   async function getData(event) {
     try {
