@@ -62,17 +62,30 @@ public class AdminController {
     @PostMapping("/create-employee")
     public ResponseEntity<?> createEmployee(@RequestBody Map<String, String> data){
         try {
-            String email = data.get("email");
-            if (accountService.checkEmail(email)){
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exists!");
+
+            Map<String, String> msg = employeeService.createEmployee(data);
+            if (msg == null){
+                return ResponseEntity.status(HttpStatus.CREATED).body("Created successfully!");
+            }
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(msg);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> updateEmployee(@RequestBody EmployeeDTO employeeDTO){
+        try {
+            Map<String, String> errors = employeeService.updateEmployee(employeeDTO);
+            if (!errors.isEmpty()) {
+                return ResponseEntity
+                        .status(HttpStatus.BAD_REQUEST)
+                        .body(errors);
             }
 
-            Employees employees = employeeService.createEmployee(data);
-            if (employees == null){
-                return ResponseEntity.badRequest().body("Failed to create an employee");
-            }
-            return ResponseEntity.ok("Created successfully!");
-        } catch (Exception e) {
+            return ResponseEntity.ok().body("Employee updated successfully");
+        }catch (Exception e){
             log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

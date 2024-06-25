@@ -1,24 +1,45 @@
 package com.team.config;
 
+import com.nimbusds.jose.*;
+import com.nimbusds.jose.crypto.MACSigner;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.team.model.Accounts;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.crypto.spec.SecretKeySpec;
+import java.io.IOException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+import java.util.Date;
 
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    @Value("${SIGNER_KEY}")
+    private String SIGNER_KEY;
 
     private final String[] PUBLIC_ENDPOINTS = {"/sign-in", "/sign-in/verify", "/sign-up",
             "/home-page", "/sign-up/verify-otp", "/forgotpassword",
@@ -56,30 +77,46 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler) throws Exception {
-        httpSecurity.authorizeHttpRequests(request ->
-                request
-                        .requestMatchers(CUSTOMER_ENDPOINTS).hasRole("CUS")
-                        .requestMatchers(EMPLOYEE_ENDPOINTS).hasRole("EM")
-                        .requestMatchers(ADMIN_ENDPOINTS).hasRole("AD")
-                        .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
-                        .anyRequest().authenticated()
-        );
-        httpSecurity.oauth2ResourceServer(oauth2 ->
-                oauth2.jwt(jwtConfigurer ->
-                        jwtConfigurer.decoder(jwtDecoder())
-                                .jwtAuthenticationConverter(jwtAuthenticationConverter()))
-        );
         httpSecurity.oauth2Login(oauth2 ->
-                oauth2.loginPage("http://localhost:3000/sign-in")
-                        .successHandler(oAuth2AuthenticationSuccessHandler)
+                        oauth2.loginPage("http://localhost:3000/sign-in")
+                                .successHandler(oAuth2AuthenticationSuccessHandler)
+//                        .userInfoEndpoint(userInfoEndpoint ->
+//                                userInfoEndpoint.oidcUserService(this.oidcUserService())
+//                        )
+//                        .successHandler(this.authenticationSuccessHandler())
         );
-
-        httpSecurity.csrf(AbstractHttpConfigurer::disable); // allow other Cors connection
+        httpSecurity
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .authorizeHttpRequests(request ->
+                        request
+                                .requestMatchers(CUSTOMER_ENDPOINTS).hasRole("CUS")
+                                .requestMatchers(EMPLOYEE_ENDPOINTS).hasRole("EM")
+                                .requestMatchers(ADMIN_ENDPOINTS).hasRole("AD")
+                                .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
+                                .anyRequest().authenticated()
+                )
+                .oauth2ResourceServer(oauth2 ->
+                        oauth2.jwt(jwtConfigurer ->
+                                jwtConfigurer.decoder(jwtDecoder())
+                                        .jwtAuthenticationConverter(jwtAuthenticationConverter()))
+                )
+                .csrf(AbstractHttpConfigurer::disable); // allow other Cors connection
         return httpSecurity.build();
     }
 
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // or use Collections.singletonList() if you only have one origin
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
-    // decode json token
+    //     decode json token
     @Bean
     JwtDecoder jwtDecoder() {
         SecretKeySpec secretKeySpec = new SecretKeySpec(signerKey.getBytes(), "HS512");
@@ -89,8 +126,9 @@ public class SecurityConfig {
                 .build();
     }
 
-    // this function change the hasAuthority from SCOPE_ into ROLE_
-    // after change, can you hasRole instead of hasAuthority
+    //
+//     this function change the hasAuthority from SCOPE_ into ROLE_
+//     after change, can you hasRole instead of hasAuthority
     @Bean
     JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();

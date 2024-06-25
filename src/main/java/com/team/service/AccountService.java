@@ -87,7 +87,7 @@ public class AccountService {
         return verified && expireTime.after(new Date());
     }
 
-    private String generateToken(Accounts accounts){
+    public String generateToken(Accounts accounts){
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
                 .subject(accounts.getEmail())
