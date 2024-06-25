@@ -8,8 +8,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import HeaderColor from "../../components/header/HeaderColor";
+import UserAuth from "../../hooks/UserAuth";
 
 function Payment() {
+  UserAuth(["CUS"]);
   const [customerID, setCustomerID] = useState("");
   const [urlPaypal, setUrlPaypal] = useState("");
   const [urlVN_PAY, setUrlVN_PAY] = useState("");
@@ -21,13 +23,14 @@ function Payment() {
   //   handleSubmit();
   // }, []);
   const location = useLocation();
-
+  localStorage.setItem("isPaid", false);
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const status = searchParams.get("status");
 
     if (status === "successful") {
-      setMsg("SUCESSFULLY PAYMENT");
+      localStorage.setItem("isPaid", true);
+      navigate("/successfully-payment");
       // Xử lý logic khi thanh toán thành công
     } else if (status === "failed") {
       setMsg("FAILD TO PAY");

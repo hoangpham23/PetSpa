@@ -21,7 +21,7 @@ function ChooseTimeBox() {
   const [selectedTimes, setSelectedTimes] = useState(
     JSON.parse(localStorage.getItem("selectedTimes") || "[]")
   );
-  const cartsystem = JSON.parse(localStorage.getItem("cart")) || "[]";
+  const cartsystem = JSON.parse(localStorage.getItem("cart") || "[]");
   const numOfServices = cartsystem.length || "";
   const [msg, setMsg] = useState("");
 

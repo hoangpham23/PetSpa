@@ -4,8 +4,16 @@ import styles from "./SuccessPay_style.module.css";
 import HeaderColor from "../../components/header/HeaderColor";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function SuccessfullyPayment() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const isPaid = localStorage.getItem("isPaid") || "";
+    if (!isPaid) {
+      navigate("/payment");
+    }
+  }, []);
   return (
     <>
       <div className={styles.wrapperPayment}>

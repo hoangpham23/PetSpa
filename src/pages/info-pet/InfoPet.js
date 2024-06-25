@@ -7,8 +7,10 @@ import style from "./InfoPet_style.module.css";
 import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
 import HeaderColor from "../../components/header/HeaderColor";
+import UserAuth from "../../hooks/UserAuth";
 
 function InfoPet() {
+  UserAuth(["CUS"]);
   const [customerID, setCustomerID] = useState("");
   const [newNumofPets, setNewNumberOfPets] = useState("");
   // make sure that having customerID

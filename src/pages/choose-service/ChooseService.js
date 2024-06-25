@@ -9,10 +9,12 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../../components/footer/footer";
 import { addDays, format } from "date-fns";
 import HeaderColor from "../../components/header/HeaderColor";
+import UserAuth from "../../hooks/UserAuth";
 // import service2 from "../../assets/img/service2.jpg";
 // import service3 from "../../assets/img/service3.jpg";
 
 function ChooseService() {
+  UserAuth(["CUS"]);
   const [services, setServices] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
   const navigate = useNavigate();
@@ -51,7 +53,12 @@ function ChooseService() {
   }, []);
 
   async function getData() {
-    const response = await axios.get("http://localhost:8090/choose-service");
+    const token = localStorage.getItem("token");
+    const response = await axios.get("http://localhost:8090/choose-service", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     setServices(response.data);
     console.log(response.data);
   }

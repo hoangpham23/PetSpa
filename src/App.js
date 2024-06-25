@@ -23,6 +23,7 @@ import Payment from "./pages/payment/Payment.js";
 import SuccessfullyPayment from "./pages/payment/SuccessfullyPayment.js";
 import DashBoard from "./admin/DashBoard/DashBoard.js";
 import PaymentHistory from "./pages/paymentHistory/PaymentHistory.js";
+import NoAccessPermission from "./components/noAccessPermission/NoAccessPermission.js";
 
 function App() {
   return (
@@ -48,6 +49,10 @@ function App() {
         ></Route>
         <Route path="/payment-history" element={<PaymentHistory />}></Route>
         <Route path="/dashboard" element={<DashBoard />}></Route>
+        <Route
+          path="/no-access-permission"
+          element={<NoAccessPermission />}
+        ></Route>
       </Routes>
     </Router>
   );

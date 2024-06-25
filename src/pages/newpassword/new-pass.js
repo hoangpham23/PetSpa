@@ -58,10 +58,16 @@ function NewPass() {
   }
   async function handleSendOtp() {
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:8090/forgotpassword",
         {
           email: localStorage.getItem("resetPasswordEmail"),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       if (response.status === 200) {

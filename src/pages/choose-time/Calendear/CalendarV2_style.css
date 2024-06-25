@@ -3,6 +3,7 @@
   min-height: 600px; /* Độ cao của cuốn lịch */
   font-size: 2rem; /* Kích thước chữ cho toàn bộ cuốn lịch */
   margin-top: 0;
+  font-family: "Poppins, sans-serif";
 }
 
 .custom-calendar .MuiTypography-root {
@@ -16,6 +17,7 @@
   font-size: 2rem; /* Kích thước chữ cho nhãn ngày trong tuần */
   padding: 10px; /* Khoảng cách giữa các nhãn ngày trong tuần */
   text-align: center; /* Căn giữa văn bản */
+  font-family: "Poppins, sans-serif";
 }
 .custom-calendar .MuiDayPicker-weekDayLabel {
   font-size: 2rem; /* Kích thước chữ cho nhãn ngày trong tuần */

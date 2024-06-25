@@ -38,6 +38,7 @@ export default function DateCalendarValue() {
             onChange={handleDateChange} // Xử lý khi ngày thay đổi
             className="custom-calendar" // Áp dụng lớp CSS
             sx={{ overflow: "auto", width: "400px", lineHeight: 1 }}
+            views={["day"]}
           />
         </DemoItem>
       </DemoContainer>

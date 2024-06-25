@@ -34,9 +34,7 @@ function HeaderColor() {
         <nav className="navbar">
           <a href="/home-page">HOMEPAGE</a>
           <div className="dropdown">
-            <a href="#service" className="dropbtn">
-              SERVICES
-            </a>
+            <a className="dropbtn">SERVICES</a>
             <div className="dropdown-content">
               {dataArray.map((service, index) => (
                 <a
