@@ -6,6 +6,10 @@
 }
 .mainContent {
   flex: 1;
+  background-image: url('../../assets/img/cutebg.jpg');
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .payment-container {

@@ -25,7 +25,7 @@
 html {
   font-size: 62.5%;
   color: var(--text-color);
-}
+} */
 
 .wrapperSignup {
   display: flex;
@@ -40,12 +40,12 @@ html {
 .signIn_page {
   display: flex;
   min-height: 100vh;
-  padding: 10rem 0;
+  padding-top: 4rem;
   justify-content: space-around;
 }
 
 .signIn_container .signIn {
-  position: relative;
+  /* position: relative; */
   background-color: var(--purple-div-color);
   z-index: -1;
   border-radius: 10px;
@@ -77,17 +77,15 @@ html {
   left: -10px;
   right: -10px;
   bottom: -5rem;
-  background: url("../../assets/img/SignInPage.jpg") no-repeat center center
-    cover;
+  background: url("../../assets/img/SignInPage2.jpg");
   filter: blur(15px);
   z-index: -1;
   border-radius: 8px;
   clip-path: inset(10px);
   opacity: 80%;
-  max-width: 100dvh;
-  max-height: 100dvh;
+  min-height: 130dvh;
 }
-
+ 
 .signIn_page .signIn_container {
   padding-right: 6rem;
 }
@@ -211,7 +209,7 @@ html {
 }
 
 .signIn_container .register {
-  position: relative;
+  /* position: relative; */
   transition: 0.5s ease;
   display: flex;
   justify-content: center;
@@ -233,6 +231,8 @@ html {
   transition: 0.5s ease;
 }
 
+
+
 .signIn_container .register .register_content {
   text-align: center;
   margin-top: 2rem;
@@ -240,4 +240,4 @@ html {
 
 .signIn_container .register .register_content .signUp_btn {
   margin: 1rem 8.5rem;
-} */
+} 
