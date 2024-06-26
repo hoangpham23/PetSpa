@@ -34,7 +34,7 @@ function Service() {
       <section className={style.service}>
         <div className={style.service_div}>
           <Swiper
-            slidesPerView={3}
+            slidesPerView={2}
             spaceBetween={30}
             loop={true}
             pagination={{
