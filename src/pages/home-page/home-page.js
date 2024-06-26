@@ -9,11 +9,11 @@ import axios from "axios";
 import Introduce from "./introduce";
 import Service from "./service";
 import { useNavigate } from "react-router-dom";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation } from 'swiper/modules';
-import 'swiper/css'; // Core Swiper styles
-import 'swiper/css/pagination'; // Pagination module styles
-import 'swiper/css/navigation'; // Navigation module styles
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation } from "swiper/modules";
+import "swiper/css"; // Core Swiper styles
+import "swiper/css/pagination"; // Pagination module styles
+import "swiper/css/navigation"; // Navigation module styles
 function HomePage() {
   const [items, setItems] = useState([]);
   const dataArray = [];
@@ -56,12 +56,13 @@ function HomePage() {
       <Helmet>
         <title>Home Page</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link
           rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
