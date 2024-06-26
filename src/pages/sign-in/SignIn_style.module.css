@@ -121,7 +121,7 @@ html {
   font-size: 1.7rem;
   color: var(--text-color);
   background: var(--bg-color);
-  border-radius: 20px;
+  border-radius: 8px;
   margin: 0.7rem 0;
   box-shadow: 0 0.1rem 0.5rem var(--shadow-color);
   z-index: 20;

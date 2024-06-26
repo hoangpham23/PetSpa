@@ -41,6 +41,10 @@ html {
   flex: 1;
 }
 
+.setMess{
+  font-size: 2rem;
+}
+
 .signUp_form {
   z-index: 99999;
 }
@@ -79,7 +83,6 @@ html {
   background-color: var(--pink-div-color);
   margin-left: 2rem;
   padding-right: 2rem;
-  margin-bottom: 1.5rem;
 }
 
 .signUp_container .signUp_form .input_box p {
@@ -93,8 +96,8 @@ html {
   font-size: 1.7rem;
   color: var(--text-color);
   background: var(--bg-color);
-  border-radius: 20px;
-  margin: 0.7rem 0;
+  border-radius: 8px;
+  margin: 0.8rem 0;
   box-shadow: 0 0.1rem 0.5rem var(--shadow-color);
 }
 
