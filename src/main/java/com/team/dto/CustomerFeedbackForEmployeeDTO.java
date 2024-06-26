@@ -8,12 +8,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ServiceImageDTO {
-    private Integer imageId;
-    private Integer serviceId;
+public class CustomerFeedbackForEmployeeDTO {
+    private String customerName;
+    private String dogName;
+    private String feedback;
+    private String appointmentTime;
     private String imageURL;
-    private String serviceName;
 
 }
-
-

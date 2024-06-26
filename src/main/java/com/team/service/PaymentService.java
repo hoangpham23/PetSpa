@@ -223,8 +223,8 @@ public class PaymentService {
         for (Integer serviceID : listServiceIds) {
             PaymentDetail paymentDetail = new PaymentDetail();
             Services services = serviceRepository.findById(serviceID).get();
-            paymentDetail.setCustomers(customers);
-            paymentDetail.setServices(services);
+//            paymentDetail.setCustomers(customers);
+//            paymentDetail.setServices(services);
             paymentDetail.setPaymentHistoryID(savePayment);
             paymentDetailRepository.save(paymentDetail);
         }

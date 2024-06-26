@@ -16,5 +16,4 @@ public class AppointmentRequestDTO {
     private List<String> appointmentTimes;
     private Integer petID;
     private Double depositAmount;
-
 }

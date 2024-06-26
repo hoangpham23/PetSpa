@@ -6,6 +6,7 @@ import com.team.model.Accounts;
 import com.team.model.Customers;
 import com.team.repository.AccountRepository;
 import com.team.repository.CustomerRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,18 +65,34 @@ public class CustomerService {
     public EditAccountDTO editCustomer(Integer customerID, String customerName, String email, String phoneNumber) {
         Customers customers = customerRepository.findById(customerID).get();
         Accounts accounts = accountRepository.findById(customerID).get();
+        // Check for email conflicts
+        if (!customers.getEmail().equals(email) && accountService.checkEmail(email)) {
+            throw new IllegalArgumentException("Email is already in use");
+        }
+
+        // Check for phone number conflicts
+        if (!customers.getPhoneNumber().equals(phoneNumber) && checkPhoneNumber(phoneNumber)) {
+            throw new IllegalArgumentException("Phone number is already in use");
+        }
         customers.setCustomerName(customerName);
         customers.setEmail(email);
         accounts.setEmail(email);
         customers.setPhoneNumber(phoneNumber);
         customerRepository.save(customers);
         accountRepository.save(accounts);
+
         EditAccountDTO dto = new EditAccountDTO();
         dto.setCustomerName(customers.getCustomerName());
         dto.setEmail(customers.getEmail());
         dto.setPhoneNumber(customers.getPhoneNumber());
 
         return dto;
+    }
+    public Customers getLoggedInCustomer() {
+        // Retrieve the email of the currently authenticated user
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Accounts account = accountRepository.findByEmail(email);
+        return customerRepository.findByAccounts(account);
     }
 
 }

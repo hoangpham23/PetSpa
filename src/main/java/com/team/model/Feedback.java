@@ -1,7 +1,6 @@
 package com.team.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,5 +29,12 @@ public class Feedback {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "EmployeeID")
     private Employees employeeID;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "AppointmentID")
+    private Appointments appointmentID;
+
+    @Column(name = "Status")
+    private String status;
 
 }

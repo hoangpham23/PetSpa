@@ -2,6 +2,7 @@ package com.team.service;
 
 import com.team.dto.AppointmentDTO;
 import com.team.dto.AppointmentRequestDTO;
+import com.team.dto.ManageAppointmentDTO;
 import com.team.model.*;
 import com.team.repository.*;
 import lombok.Getter;
@@ -10,10 +11,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -165,5 +168,34 @@ public class AppointmentService {
         return employeesList.get(index + 1).getId();
     }
 
+
+    public List<ManageAppointmentDTO> getAppointmentsForDate(LocalDate date) {
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
+
+        List<Appointments> appointments = appointmentRepository.findAppointmentsForDate(startOfDay, endOfDay);
+
+        return appointments.stream().map(appointment -> {
+            ManageAppointmentDTO dto = new ManageAppointmentDTO();
+            dto.setAppointmentID(appointment.getAppointmentID());
+            dto.setServiceName(appointment.getServices().getServiceName());
+            dto.setCustomerName(appointment.getCustomer().getEmail());
+            dto.setPetName(appointment.getPets().getPetName());
+            dto.setStatus(appointment.getStatus());
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
+    public boolean updateAppointmentStatus(int appointmentID, String status) {
+        Optional<Appointments> appointmentOpt = appointmentRepository.findById(appointmentID);
+        if (appointmentOpt.isPresent()) {
+            Appointments appointment = appointmentOpt.get();
+            appointment.setStatus(status);
+            appointmentRepository.save(appointment);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }
