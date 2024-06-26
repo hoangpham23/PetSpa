@@ -24,6 +24,11 @@
   background-repeat: no-repeat;
 }
 
+.welcome_content{
+  font-size: 2rem;
+  padding-top: 1rem;
+}
+
 .welcome_div {
   margin: 10rem 10rem 0 10rem;
 }
@@ -33,7 +38,7 @@
   padding: 2rem 0;
   margin: 0 9rem;
   box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.3);
-
+  border-radius: 10px;
 }
 
 .welcome_div .welcome_form form {
@@ -101,5 +106,5 @@
 .add {
   display: flex;
   justify-content: center;
-  margin-top: 3rem;
+  margin-top: 1rem;
 }
