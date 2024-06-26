@@ -29,7 +29,6 @@ public class InsertPetInfoController {
         double weight = Double.parseDouble(data.get("weight"));
         int age = Integer.parseInt(data.get("age"));
         Integer customerID = Integer.parseInt(data.get("customerID"));
-
         Customers customer = petDetailService.findCustomerById(customerID);
 
         // Check if pet name already exists in the database for the customer

@@ -41,18 +41,6 @@ public class AppointmentController {
     }
 
 
-    @PostMapping("book")
-    public ResponseEntity<?> createAppointment(@RequestBody AppointmentRequestDTO appointmentRequest) {
-        try {
-            boolean check = appointmentService.createAppointment(appointmentRequest);
-            if (!check) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to create appointment.");
-            }
-            return ResponseEntity.status(HttpStatus.CREATED).body("Appointment created successfully.");
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+
 
 }

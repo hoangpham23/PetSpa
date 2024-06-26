@@ -3,13 +3,13 @@ package com.team.service;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
-import jakarta.servlet.http.HttpServletRequest;
+import com.team.dto.AppointmentRequestDTO;
+import com.team.model.Appointments;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 @Service
 public class PaypalService {
@@ -17,42 +17,13 @@ public class PaypalService {
     private final APIContext apiContext;
     private static final String CANCEL_URL = "http://localhost:8090/payment/cancel";
     private static final String SUCCESS_URL = "http://localhost:8090/payment/success";
+    private final AppointmentService appointmentService;
 
-    public PaypalService(APIContext apiContext) {
+    public PaypalService(APIContext apiContext, AppointmentService appointmentService) {
         this.apiContext = apiContext;
+        this.appointmentService = appointmentService;
     }
 
-    public Payment createPayment(HttpServletRequest request) throws PayPalRESTException {
-        Double total = Double.parseDouble(request.getParameter("amount"));
-        String customerID = request.getParameter("customerID");
-        Amount amount = new Amount();
-        amount.setCurrency("USD");
-        amount.setTotal(String.format(Locale.forLanguageTag("USD"), "%.2f", total)); // 9.99$ - 9,99€
-
-        Transaction transaction = new Transaction();
-//        transaction.setDescription(description);
-        transaction.setAmount(amount);
-
-        List<Transaction> transactions = new ArrayList<>();
-        transactions.add(transaction);
-
-        Payer payer = new Payer();
-        payer.setPaymentMethod("Paypal");
-
-        Payment payment = new Payment();
-        String customUrl = "?customerID=" + customerID +"&amount=" + total;
-        payment.setIntent("sale");
-        payment.setPayer(payer);
-        payment.setTransactions(transactions);
-
-        RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl(CANCEL_URL +"?customerID=" + customerID);
-        redirectUrls.setReturnUrl(SUCCESS_URL + customUrl);
-
-        payment.setRedirectUrls(redirectUrls);
-
-        return payment.create(apiContext);
-    }
 
     public Payment executePayment(
             String paymentId,
@@ -67,9 +38,10 @@ public class PaypalService {
         return payment.execute(apiContext, paymentExecution);
     }
 
-    public Payment createPayment(Map<String, String> data) throws PayPalRESTException {
-        Double total = Double.parseDouble(data.get("amount"));
-        String customerID = data.get("customerID");
+    public Payment createPayment(AppointmentRequestDTO data) throws PayPalRESTException {
+        double total = data.getDepositAmount();
+        int customerID = data.getCustomerID();
+        List<Appointments> listAppointments = appointmentService.createAppointment(data);
         Amount amount = new Amount();
         amount.setCurrency("USD");
         amount.setTotal(String.format(Locale.forLanguageTag("USD"), "%.2f", total)); // 9.99$ - 9,99€
@@ -85,7 +57,20 @@ public class PaypalService {
         payer.setPaymentMethod("Paypal");
 
         Payment payment = new Payment();
-        String customUrl = "?customerID=" + customerID +"&amount=" + total;
+//        String customUrl = "?customerID=" + customerID + "&amount=" + total;
+//        if (listAppointments != null) {
+//            for (Appointments appointmentID : listAppointments) {
+//                customUrl += "&appointmentID=" + appointmentID.getAppointmentID();
+//            }
+//        }
+
+        StringBuilder customUrl = new StringBuilder("?customerID=" + customerID + "&amount=" + total);
+        if (listAppointments != null) {
+            for (Appointments appointment : listAppointments) {
+                customUrl.append("&appointmentID=").append(appointment.getAppointmentID());
+            }
+        }
+
         payment.setIntent("sale");
         payment.setPayer(payer);
         payment.setTransactions(transactions);

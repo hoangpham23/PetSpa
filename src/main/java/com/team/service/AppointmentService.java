@@ -35,7 +35,7 @@ public class AppointmentService {
     private final ServiceRepository serviceRepository;
     private final EmployeeScheduleRepository employeeScheduleRepository;
 
-    public AppointmentService(AppointmentRepository appointmentRepository, EmployeeRepository employeeRepository, CustomerRepository customerRepository, PetRepository petRepository, ServiceRepository serviceRepository, EmployeeScheduleRepository employeeScheduleRepository) {
+    public AppointmentService(AppointmentRepository appointmentRepository, EmployeeRepository employeeRepository, CustomerRepository customerRepository, PetRepository petRepository, ServiceRepository serviceRepository) {
         this.appointmentRepository = appointmentRepository;
         this.employeeRepository = employeeRepository;
         this.customerRepository = customerRepository;
@@ -44,20 +44,14 @@ public class AppointmentService {
         this.employeeScheduleRepository = employeeScheduleRepository;
     }
 
-
     // this function return not available slots of the next 3 days. Don't include the day when the customer in the website
     public List<AppointmentDTO> getAllAppointments(LocalDateTime timeSendRequest) {
         try {
             // timeSendRequest = LocalDateTime.parse("2024-06-05 09:00:00", formatter);
             // set a range to take the list appointment
-            LocalTime time = timeSendRequest.toLocalTime();
-            LocalTime lastShift = LocalTime.parse("17:00:00");
-            LocalDateTime min = timeSendRequest.plusDays(1);
+            LocalDateTime min = timeSendRequest.plusHours(2);
             LocalDateTime max = timeSendRequest.plusDays(4);
             String after = min.format(FORMATTER);
-            if (time.isAfter(lastShift)) {
-                max = timeSendRequest.plusDays(5);
-            }
             String before = max.format(FORMATTER_DATE);
 
             List<Object[]> listAppointments = appointmentRepository.findAppointmentsAfterBefore(after, before);
@@ -81,11 +75,12 @@ public class AppointmentService {
 
     }
 
-    public boolean createAppointment(AppointmentRequestDTO data) {
+    public List<Appointments> createAppointment(AppointmentRequestDTO data) {
         Integer customerID = data.getCustomerID();
         List<Integer> listServicesID = data.getServiceIds();
         Integer petID = data.getPetID();
         List<String> listAppointmentTime = data.getAppointmentTimes();
+        List<Appointments> result = new ArrayList<>();
         double totalMoney = data.getDepositAmount();
         int count = listServicesID.size();
         int index = 0;
@@ -96,9 +91,7 @@ public class AppointmentService {
             LocalDateTime appointmentTime = LocalDateTime.parse(time, FORMATTER);
             Integer employeeID = findLastEmployee(appointmentTime);
             // null only the slot is full
-            if (employeeID == null) {
-                return false;
-            }
+
             Customers customers = customerRepository.findById(customerID).get();
             Pets pets = petRepository.findById(petID).get();
             Services services = serviceRepository.findById(listServicesID.get(index)).get();
@@ -113,24 +106,14 @@ public class AppointmentService {
             appointments.setServices(services);
             appointments.setDepositAmount(totalMoney);
             appointments.setPaymentStatus("Pending");
-            appointments.setStatus("Scheduled");
+            appointments.setStatus("Not assign");
             Appointments savedAppointments = appointmentRepository.save(appointments);
-
-            // set data into employee schedule table
-            EmployeeSchedule employeeSchedule = new EmployeeSchedule();
-            employeeSchedule.setEmployeeID(employees);
-            employeeSchedule.setAppointmentID(savedAppointments);
-            employeeSchedule.setWorkDate(savedAppointments.getAppointmentTime().toLocalDateTime().toLocalDate());
-            LocalTime startTime = savedAppointments.getAppointmentTime().toLocalDateTime().toLocalTime();
-            LocalTime endTime = savedAppointments.getAppointmentTime().toLocalDateTime().toLocalTime().plusHours(1);
-            employeeSchedule.setStartTime(startTime);
-            employeeSchedule.setEndTime(endTime);
-            employeeScheduleRepository.save(employeeSchedule);
+            result.add(savedAppointments);
 
             count--;
             index++;
         }
-        return true;
+        return result;
     }
 
     private Integer findLastEmployee(LocalDateTime request) {
@@ -142,9 +125,6 @@ public class AppointmentService {
             // find all the employee are assign the that shift
             List<Integer> listData = appointmentRepository.findAllEmployeeInOneShift(request);
 
-            if (listData.size() == AVAILABLE_SLOT) {
-                return null;
-            }
 
             do {
                 employeeID = getNextEmployeeID(employeeID);

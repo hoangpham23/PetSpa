@@ -1,29 +1,29 @@
 package com.team.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "PAYMENT_DETAIL")
 public class PaymentDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PaymentDetailID", nullable = false)
-    private Integer id;
+    private Integer paymentDetailID;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CustomerID")
-    private Customers customerID;
+    private Customers customers;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "AppointmentID")
-    private Appointments appointmentID;
+    private Appointments appointments;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PaymentHistoryID")
-    private PaymentHistory paymentHistoryID;
+    private PaymentHistory paymentHistory;
 
 }

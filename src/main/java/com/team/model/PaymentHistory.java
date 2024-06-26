@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.time.Instant;
+
 @Data
 @Entity
 @NoArgsConstructor

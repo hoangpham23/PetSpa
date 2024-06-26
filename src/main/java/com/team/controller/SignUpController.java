@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.security.SecureRandom;
 import java.util.*;
 
 @RestController
@@ -22,6 +23,8 @@ public class SignUpController {
     private final AccountService accountService;
     private final EmailService emailService;
     private final Map<String, Object> tempData = new HashMap<>();
+    private static final SecureRandom secureRandom = new SecureRandom();
+
 
     public SignUpController(EmailService emailService, CustomerService customerService, AccountService accountService) {
         this.customerService = customerService;
@@ -35,7 +38,7 @@ public class SignUpController {
         try {
             String email = data.get("email");
             int otp = otpGenerator();
-            if (accountService.checkEmail(email)){
+            if (accountService.checkEmail(email)) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("Email is already in use");
             }
 
@@ -48,7 +51,7 @@ public class SignUpController {
             tempData.putAll(data);
             tempData.put("sendOtp", otp);
             return ResponseEntity.ok("send verity otp");
-        }catch (Exception e) {
+        } catch (Exception e) {
             logger.error(e.getMessage());
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error at server site");
@@ -58,7 +61,7 @@ public class SignUpController {
     public ResponseEntity<?> verifyOtp(@RequestBody Map<String, String> data) {
         try {
             int otp = Integer.parseInt(data.get("otp"));
-            if (!tempData.get("sendOtp").equals(otp)){
+            if (!tempData.get("sendOtp").equals(otp)) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid OTP");
             }
             // create a customer
@@ -69,14 +72,15 @@ public class SignUpController {
 
             CustomerDTO customers = customerService.createCustomer(customerName, phoneNumber, email, password);
             return ResponseEntity.status(HttpStatus.CREATED).body(customers);
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error at server site");
         }
     }
-    private int otpGenerator() {
-        Random random = new Random();
-        return random.nextInt(900000) + 100000; // Generate 6-digit OTP
+
+    public int otpGenerator() {
+        return secureRandom.nextInt(900000) + 100000; // Generate 6-digit OTP
     }
+
 
 }
