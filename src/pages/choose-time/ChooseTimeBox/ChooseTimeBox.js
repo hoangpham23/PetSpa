@@ -25,6 +25,7 @@ function ChooseTimeBox() {
   const numOfServices = cartsystem.length || "";
   const [msg, setMsg] = useState("");
 
+
   useEffect(() => {
     async function formatAppointmentTimes() {
       const formattedAppointmentTimes = selectedTimes.map((time) =>

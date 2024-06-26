@@ -9,6 +9,12 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import HeaderColor from "../../components/header/HeaderColor";
 import UserAuth from "../../hooks/UserAuth";
+import Box from "@mui/material/Box";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import StepConnector from "@mui/material/StepConnector";
+import stepperStyle from "./Stepper_style.module.css";
 
 function Payment() {
   UserAuth(["CUS"]);
@@ -18,6 +24,8 @@ function Payment() {
   const navigate = useNavigate();
   const [msg, setMsg] = useState("");
   const [result, setResult] = useState([]);
+  const steps = ["", "", "",""];
+  const [activeStep, setActiveStep] = useState(3);
 
   // useEffect(() => {
   //   handleSubmit();
@@ -78,21 +86,31 @@ function Payment() {
     <>
       <div className="wrapperPayment">
         <main className="mainContent">
+        <Box sx={{ width: "100%", mt: 8 }}>
+            <Stepper
+              activeStep={activeStep}
+              alternativeLabel
+              sx={{ padding: "2rem", borderRadius: "10px" }}
+            >
+              {steps.map((label, index) => (
+                <Step key={label}>
+                  <StepLabel
+                    classes={{
+                      label: stepperStyle.stepLabel,
+                      iconContainer: stepperStyle.stepIconContainer,
+                    }}
+                    style={{
+                      transform: "scale(3)",
+                    }}
+                  >
+                    {label}
+                  </StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          </Box>
           <HeaderColor />
           <div className="payment-container">
-            {/* <div className="payment-options">
-              <h2>Select Payment Method</h2>
-              <label className="payment-option">
-                <input
-                  type="radio"
-                  name="Paypal"
-                  value="paypal"
-                  onClick={handleSubmit}
-                  // disabled={isLoading}
-                />
-                <img src={Paypal} alt="Paypal" />
-              </label>
-            </div> */}
             <div className="checkout-summary">
               <Cart />
               <div className="payment-option">
