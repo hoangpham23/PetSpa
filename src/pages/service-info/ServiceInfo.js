@@ -7,6 +7,8 @@ import axios from "axios";
 
 import service1 from "../../assets/img/service1.jpg";
 import HeaderForGuest from "../../components/header/header-guest";
+import HeaderColor from "../../components/header/HeaderColor";
+
 // từ trang này nhấn vô phải xem xét số lượng thú của khác hàng, >=1, chuyển sang trang choose Pet, <=1 qua trang insert info cho pet
 function ServiceInfo() {
   let { serviceName } = useParams();
@@ -85,8 +87,8 @@ function ServiceInfo() {
         ></link>
       </Helmet>
       {localStorage.getItem("role") === "CUS" ? (
-        <HeaderForCus />
-      ) : (
+      <HeaderColor />
+    ) : (
         <HeaderForGuest />
       )}
       <section>
@@ -103,14 +105,15 @@ function ServiceInfo() {
 
             <p>{serviceData.description}</p>
           </div>
-          <div className={style.book}>
-            <input
-              type="submit"
-              value="Make Appointment"
-              className={style.btn}
-              onClick={handleSubmit}
-            />
-          </div>
+        </div>
+
+        <div className={style.book}>
+          <input
+            type="submit"
+            value="Make Appointment"
+            className={style.btn}
+            onClick={handleSubmit}
+          />
         </div>
 
         <div className={style.feedback_div}>

@@ -115,7 +115,7 @@
   border-top-right-radius: 67.63px;
   border-bottom-right-radius: 67.63px;
   border-bottom-left-radius: 15.03px;
-  padding: 10px 20px;
+  padding: 24px;
   font-size: 2rem;
   color: #333;
   font-weight: bold;
@@ -161,5 +161,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 5rem;
+  margin: 5rem 0;
 }

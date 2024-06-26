@@ -98,8 +98,9 @@ function Payment() {
               <p className="msg">{msg}</p>
             </div>
           </div>
-          <Footer />
         </main>
+        <Footer />
+
       </div>
     </>
   );

@@ -154,7 +154,7 @@ html {
 .pink-background-rectangle {
   display: flex;
   width: 26rem;
-  height: 26rem;
+  height: 24.8rem;
   background: #fbe2e4;
   border-top-left-radius: 120px;
   z-index: 0;
@@ -202,7 +202,6 @@ html {
 }
 
 .introduce .introduce-content {
-  font-size: 2rem;
   text-align: right;
   z-index: 10;
 }
@@ -222,6 +221,7 @@ html {
   text-align: center;
   margin: 9rem;
   z-index: 999;
+  font-size: 2rem;
 }
 .service {
   justify-content: center;
@@ -265,11 +265,12 @@ html {
   text-align: center;
   z-index: 1;
   margin-top: 5rem;
+  margin: 2rem 4rem;
 }
 
 .service_display .service_container {
   position: block;
-  margin: 4rem 6rem;
+  margin: 4rem 8rem;
   background-color: var(--header-color);
   z-index: 1;
   border-radius: 20px;

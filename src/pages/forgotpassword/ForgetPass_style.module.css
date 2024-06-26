@@ -28,8 +28,7 @@ html {
 }
 
 .newPass_container {
-  background: url("../../assets/img/background1.jpg") no-repeat center center/
-    cover;
+  background: pink;
   color: var(--text-color);
   overflow: hidden;
 }
@@ -48,22 +47,22 @@ html {
 }
 
 .newPass_container .newPass_form {
-  width: 43rem;
-  margin: 2rem 0;
+  width: 55rem;
   text-align: center;
 }
 
 .newPass_container .pink_background_rectangle {
   position: absolute;
-  width: 45rem;
-  height: 25rem;
+  width: 55rem;
+  height: 35rem;
   background-color: var(--pink-div-color);
   border-radius: 30px;
   transition: 0.5s ease;
 }
 
 .newPass_container .newPass_form h1 {
-  padding: 1.2rem;
+  font-size: 4rem;
+  padding: 0 1.2rem 1.2rem 1.2rem;
 }
 
 .newPass_container .newPass_form .input_box {
@@ -71,19 +70,18 @@ html {
   justify-content: space-between;
   flex-wrap: wrap;
   background-color: var(--pink-div-color);
-  margin-left: 2rem;
-  padding-right: 2rem;
+  padding: 0 6.5rem;
 }
 
 .newPass_container .newPass_form .input_box p {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   margin-top: 3rem;
 }
 
 .newPass_container .newPass_form .input_box input {
   width: 50%;
   padding: 1rem;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   color: var(--text-color);
   background: var(--bg-color);
   border-radius: 20px;
@@ -93,6 +91,14 @@ html {
 
 .newPass_container .newPass_form form .input_box input {
   width: 60%;
+}
+
+.newPass_container .sendOTP{
+  padding-top: 3rem;
+}
+
+.button{
+  display: flex;
 }
 
 .btn {
@@ -116,6 +122,11 @@ html {
   color: #0b5864;
   border-color: #0b5864;
 }
-/* .backToPrevious {
+
+.material-symbols-outlined {
   position: absolute;
-} */
+}
+
+.backToPrevious{
+  margin-top:2rem;
+}

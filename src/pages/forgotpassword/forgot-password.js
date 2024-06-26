@@ -52,7 +52,7 @@ function ForgotPassword() {
               onChange={handleInput}
             />
           </div>
-          <div className={style.signUn_btn}>
+          <div className={style.sendOTP}>
             <input
               type="submit"
               value="SEND EMAIL OTP"

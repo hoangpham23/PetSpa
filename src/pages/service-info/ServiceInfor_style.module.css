@@ -62,6 +62,7 @@ html {
 
 .service_div {
   margin: 8rem 7% 2rem;
+  display: flex;
 }
 
 .service_div .service_img {
@@ -86,7 +87,7 @@ html {
 
 .service_display {
   display: flex;
-  margin-right: 56rem;
+  margin-right: 10rem;
   margin-bottom: 3rem;
 }
 
@@ -117,7 +118,7 @@ html {
 .service_div p {
   font-size: 2rem;
   /* font-weight: 1.6rem; */
-  margin-top: 0.6rem;
+  margin-top: 2rem;
 }
 
 .btn {
@@ -141,10 +142,9 @@ html {
   border-color: #0b5864;
 }
 
-.service_div .book {
+.book {
   display: flex;
-  justify-content: right;
-  margin-right: 4rem;
+  justify-content: center;
 }
 
 .feedback_div h1 {
@@ -212,6 +212,7 @@ html {
   padding-top: 1rem;
   padding-bottom: 3rem;
   justify-content: center;
+  font-size: 2rem;
 }
 
 .feedback_div {

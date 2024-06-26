@@ -1,5 +1,5 @@
 import axios from "axios";
-import style from "../forgotpassword/ForgetPass_style.module.css";
+import style from "./verifyOtp_style.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
@@ -43,7 +43,8 @@ function VerifyOtpSignUp() {
       <div className={style.newPass_container}>
         <div className={style.pink_background_rectangle}></div>
         <div className={style.newPass_form}>
-          <h1>Check your mail, we have sent otp </h1>
+          <h1>Check your mail!</h1>
+          <h1>We have sent otp</h1>
           <form action="#">
             <div className={style.input_box}>
               <p>OTP:</p>{" "}
@@ -53,31 +54,22 @@ function VerifyOtpSignUp() {
                 onChange={handleInput}
               />
             </div>
-            <div className={style.signUn_btn}>
-              <input
-                type="submit"
-                value="SIGN UP"
-                className="btn"
-                onClick={handleSubmit}
-              />
+            <div className={style.button_div}>
+              <div className={style.backToPrevious}>
+                <button className="btn" onClick={() => navigate("/sign-up")}>
+                  <span className="material-symbols-outlined">arrow_back</span>
+                </button>
+              </div>
+              <div className={style.signUn_btn}>
+                <input
+                  type="submit"
+                  value="SIGN UP"
+                  className="btn"
+                  onClick={handleSubmit}
+                />
+              </div>
             </div>
           </form>
-
-          {/* Khum bít làm sao cho 2 cái icon này chồng lên nhau hết huhu */}
-          <div className={style.backToPrevious}>
-            <input
-              type="submit"
-              value=""
-              className="btn"
-              onClick={navigate("/sign-up")}
-            />
-            <span
-              className="material-symbols-outlined"
-              onClick={navigate("/sign-up")}
-            >
-              arrow_back
-            </span>
-          </div>
         </div>
 
         {msg}
