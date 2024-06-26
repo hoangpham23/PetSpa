@@ -52,7 +52,8 @@ html {
 }
 .newPass_container .newPass_form .msg {
   margin-top: 0rem;
-  font-size: 1.5rem;
+  font-size: 2rem;
+  color: red;
   text-align: center;
 }
 
@@ -79,11 +80,11 @@ html {
 }
 
 .newPass_container .newPass_form .input_box p {
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin-top: 3rem;
 }
 .newPass_container .newPass_form .p {
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin-top: 0rem;
 }
 
