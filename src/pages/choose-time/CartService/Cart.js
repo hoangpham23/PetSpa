@@ -34,12 +34,10 @@ function Cart() {
         </ul>
       </div>
       <div className={style.total_bill}>
-        <p>
-          Total Bill:{" "}
+        <p>Total Bill:{" "} </p>
           <span className={style.total_amount}>
             ${depositAmount.toFixed(2)}
           </span>
-        </p>
       </div>
     </div>
   );
