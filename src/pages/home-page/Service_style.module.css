@@ -5,6 +5,9 @@
   z-index: -1;
   margin-top: -5rem;
   padding-bottom: 5rem;
+  margin-right: 2rem;
+  margin-left: 2rem;
+
 }
 
 .service_div {
@@ -12,8 +15,8 @@
   justify-content: center;
 }
 
-.mySwiper {
-  margin: 2rem 0;
+.swiper-wrapper{
+  margin: 2rem 5rem;
 }
 
 .service_container {

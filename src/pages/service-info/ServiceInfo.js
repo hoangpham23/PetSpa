@@ -4,6 +4,12 @@ import { Helmet } from "react-helmet";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Pagination, Navigation } from "swiper/modules";
+// import SwiperCore, { Pagination, Navigation } from 'swiper/core';
 
 import service1 from "../../assets/img/service1.jpg";
 import HeaderForGuest from "../../components/header/header-guest";
@@ -87,127 +93,100 @@ function ServiceInfo() {
         ></link>
       </Helmet>
       {localStorage.getItem("role") === "CUS" ? (
-      <HeaderColor />
-    ) : (
+        <HeaderColor />
+      ) : (
         <HeaderForGuest />
       )}
-            <div className={style.wrapper}>
-            <main className={style.mainContent}>
-      <section>
-        <div className={style.service_div}>
-          <div className={style.service_display}>
-            <div className={style.service_img}>
-              <img src={serviceData.imageURL} alt="" />
+      <div className={style.wrapper}>
+        <main className={style.mainContent}>
+          <section>
+            <div className={style.service_div}>
+              <div className={style.service_display}>
+                <div className={style.service_img}>
+                  <img src={serviceData.imageURL} alt="" />
+                </div>
+                <div className={style.service_price}>{serviceData.price}$</div>
+              </div>
+
+              <div className={style.service_content}>
+                <h1>INFORMATION</h1>
+
+                <p>{serviceData.description}</p>
+              </div>
             </div>
-            <div className={style.service_price}>{serviceData.price}$</div>
-          </div>
 
-          <div className={style.service_content}>
-            <h1>INFORMATION</h1>
+            <div className={style.book}>
+              <input
+                type="submit"
+                value="Make Appointment"
+                className={style.btn}
+                onClick={handleSubmit}
+              />
+            </div>
+            <section className={style.feedback_div}>
+              <h1>OUR FEEDBACKS</h1>
 
-            <p>{serviceData.description}</p>
-          </div>
-        </div>
+              <div className={style.feedback_display}>
+                <Swiper
+                  slidesPerView={2}
+                  spaceBetween={30}
+                  loop={true}
+                  pagination={{
+                    clickable: true,
+                  }}
+                  navigation={true}
+                  modules={[Pagination, Navigation]}
+                  className={style.mySwiper}
+                >
+                  {serviceData.feedbacks && serviceData.feedbacks.length > 0 ? (
+                    serviceData.feedbacks.map((feedback, index) => (
+                      <SwiperSlide key={index}>
+                        <div className={style.service_container}>
+                          <div className={style.ava_img}>
+                            <img src={service1} alt="Avatar" />
+                          </div>
+                          <div className={style.quote}>
+                            <i className="gg-quote"></i>
+                          </div>
+                          <div className={style.feedback_content}>
+                            <p>{feedback.feedbackContent}</p>
+                          </div>
+                          <p>{feedback.customerName}</p>
+                        </div>
+                      </SwiperSlide>
+                    ))
+                  ) : (
+                    <p>No feedback available.</p>
+                  )}
+                </Swiper>
+              </div>
+            </section>
+            {/* <div className={style.feedback_div}>
+              <h1>OUR FEEDBACKS</h1>
 
-        <div className={style.book}>
-          <input
-            type="submit"
-            value="Make Appointment"
-            className={style.btn}
-            onClick={handleSubmit}
-          />
-        </div>
-
-        <div className={style.feedback_div}>
-          <h1>OUR FEEDBACKS</h1>
-
-          <div className={style.feedback_display}>
-            {/*            
-            {console.log(serviceData.feedbackContent)}
-            {serviceData.feedbackContent &&
-              serviceData.feedbackContent.length > 0 && (
-                <div className={style.feedback_display}>
-                  {serviceData.feedbackContent.map((service, index) => (
-                    <div key={index} className={style.service_container}>
-                      <div className={style.ava_img}>
-                      
+              <div className={style.feedback_display}>
+                {serviceData.feedbacks && serviceData.feedbacks.length > 0 ? (
+                  serviceData.feedbacks.map((feedback, index) => (
+                    <div className={style.service_container}>
+                      <div className={style.ava_img} key={index}>
+                        <img src={service1} alt="Avatar" />
                       </div>
-                      <i className="gg-quote"></i>
+                      <div className={style.quote}>
+                        <i className="gg-quote"></i>
+                      </div>
                       <div className={style.feedback_content}>
-                        <p>{service.feedbackContent}</p>
+                        <p>{feedback.feedbackContent}</p>
                       </div>
-                      <p>{service.customerName}</p>
+                      <p>{feedback.customerName}</p>
                     </div>
-                  ))}
-                </div>
-              )} */}
-
-            {serviceData.feedbacks && serviceData.feedbacks.length > 0 ? (
-              serviceData.feedbacks.map((feedback, index) => (
-                <div className={style.service_container}>
-                  <div className={style.ava_img} key={index}>
-                    <img src={service1} alt="Avatar" />
-                  </div>
-                  <div className={style.quote}>
-                    <i className="gg-quote"></i>
-                  </div>
-                  <div className={style.feedback_content}>
-                    <p>{feedback.feedbackContent}</p>
-                  </div>
-                  <p>{feedback.customerName}</p>
-                </div>
-              ))
-            ) : (
-              <p>No feedback available.</p>
-            )}
-
-            {/* <div className={style.service_container}>
-              <div className={style.ava_img}>
-                <img src={service1} alt="" />
+                  ))
+                ) : (
+                  <p>No feedback available.</p>
+                )}
               </div>
-              <i className="gg-quote"></i>
-              <div className={style.feedback_content}>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Molestias, commodi quaerat optio quisquam tempora corporis
-                  veniam facere, maiores fugiat minus animi architecto.
-                </p>
-              </div>
-              <p>[Customer Name]</p>
-            </div>
-            <div className={style.service_container}>
-              <div className={style.ava_img}>
-                <img src={service1} alt="" />
-              </div>
-              <i className="gg-quote"></i>
-              <div className={style.feedback_content}>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Molestias, commodi quaerat optio quisquam tempora corporis
-                  veniam facere, maiores fugiat minus animi architecto.
-                </p>
-              </div>
-              <p>[Customer Name]</p>
-            </div>
-            <div className={style.service_container}>
-              <div className={style.ava_img}>
-                <img src={service1} alt="" />
-              </div>
-              <i className="gg-quote"></i>
-              <div className={style.feedback_content}>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Molestias, commodi quaerat optio quisquam tempora corporis
-                  veniam facere, maiores fugiat minus animi architecto.
-                </p>
-              </div>
-              <p>[Customer Name]</p>
             </div> */}
-          </div>
-        </div>
-      </section>
-      </main>
-        {/* <Footer /> */}
+          </section>
+        </main>
       </div>
     </>
   );

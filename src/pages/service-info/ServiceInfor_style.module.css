@@ -39,6 +39,24 @@ html {
   background-repeat: no-repeat;
 } 
 
+/* ====================SWIPER DES==================== */
+/* .swiper-button-next {
+  right: -10px;
+}
+
+.swiper-button-prev {
+  left: -10px;
+} */
+
+.swiper-pagination{
+  display: none;
+}
+
+.swiper-wrapper{
+  margin: 2rem 5rem;
+}
+
+/* ================================================== */
 .gg-profile,
 .gg-profile::after,
 .gg-profile::before {
@@ -168,29 +186,13 @@ html {
   padding-top: 2rem;
 }
 
-/* .feedback_div .feedback_display {
-  display: flex;
-  margin: 5rem;
-} */
-
 .feedback_div .feedback_display {
   display: flex;
   justify-content: space-between;
-  margin: 6rem 5rem 0 5rem;
+  margin: 3rem 4rem 2rem 4rem;
   text-align: center;
   z-index: 999;
 }
-
-/* .feedback_display .ava_img {
-  position: absolute;
-  width: 23rem;
-  height: 25rem;
-  background-color: var(--header-color);
-  z-index: -1;
-  border-radius: 10px;
-  transition: 0.5s ease;
-  flex: 1;
-} */
 
 .feedback_display .service_container i {
   color: hotpink;
@@ -203,21 +205,12 @@ html {
   padding: 1.2rem 0;
 }
 
-/* .feedback_display .service_container {
-  position: block;
-  margin: 0 8rem;
-  background-color: var(--header-color);
-  z-index: -1;
-  border-radius: 10px;
-  transition: 0.5s ease;
-  flex: 1; 
-}*/
-
 .feedback_display .service_container .ava_img img {
   position: relative;
-  width: 5rem;
+  width: 6rem;
   border-radius: 50%;
-  margin-top: -2rem;
+  margin-top: 2rem;
+  border: 2px solid var(--bg-color);
 }
 
 .feedback_display .service_container p {
@@ -233,52 +226,24 @@ html {
 .feedback_div {
   position: relative; 
   margin: 5rem 2rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 30px var(--shadow-color); 
   padding-bottom: 3rem;
   background-color: var(--bg-color); 
   z-index: 0; 
 }
 
 .feedback_display .service_container {
-  margin: 0 8rem;
+  margin: 0 6rem;
   position: relative; 
   background-color: var(--header-color);
   z-index: 1; 
   border-radius: 10px;
   transition: 0.5s ease;
   flex: 1;
+  min-height: 30rem;
+  margin-bottom: 3rem;
 }
 
 .service_container:hover .feedback_div {
   display: block;
-}
-
-.footer {
-  margin: 1.8rem 0 0 0;
-  display: flex;
-  justify-content: space-around;
-}
-
-.footer h1 {
-  padding-top: 2.5rem;
-  font-weight: 800;
-  font-size: 4rem;
-  cursor: default;
-}
-
-.footer .footer-content {
-  font-size: 2rem;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-.footer .footer-background-rectangle {
-  position: absolute;
-  width: 100%;
-  height: 100px;
-  background-color: var(--footer-color);
-  z-index: -1;
-  transition: 0.5s ease;
-  min-width: 35px;
-  opacity: 80%;
 }
