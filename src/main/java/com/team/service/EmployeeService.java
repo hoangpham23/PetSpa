@@ -145,7 +145,7 @@ public class EmployeeService {
     public void assignSchedule(String appointmentID) {
         StringTokenizer tokenizer = new StringTokenizer(appointmentID, ",");
         while (tokenizer.hasMoreTokens()) {
-            Appointments appointment = appointmentRepository.findById(Integer.parseInt(tokenizer.toString())).get();
+            Appointments appointment = appointmentRepository.findById(Integer.parseInt(tokenizer.nextToken())).get();
             appointment.setStatus("Schedule");
             Employees employees = appointment.getEmployees();
             EmployeeSchedule employeeSchedule = new EmployeeSchedule();
