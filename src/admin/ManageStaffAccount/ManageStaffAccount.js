@@ -13,12 +13,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
 import axios from "axios";
-function getOffsetFromLocalStorage() {
-  // Lấy giá trị offset từ localStorage
-  const offset = localStorage.getItem("offset");
-  // Nếu không có giá trị trong localStorage, mặc định là 0
-  return offset ? parseInt(offset, 10) : 0;
-}
 
 function ManageStaffAccount() {
   //  Prepare data to send
@@ -53,13 +47,25 @@ function ManageStaffAccount() {
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   }));
+  async function deleteEmployee(id) {
+    try {
+      const response = axios.delete(
+        `http://localhost:8090/admin/employees/${id}`
+      );
+      if (response && response.status === 200) {
+        getData();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <Box
       sx={{
         display: "flex",
         fontSize: "2rem",
         backgroundColor: "#f0f0f0",
-        minHeight: "100vh",
+        minHeight: "95vh",
         marginTop: "3rem",
       }}
     >
@@ -79,7 +85,7 @@ function ManageStaffAccount() {
           </h1>
           <DrawerHeader />
           <Box>
-            <CustomizedTables data={data} />
+            <CustomizedTables data={data} onDelete={deleteEmployee} />
           </Box>
         </Box>
       </ThemeProvider>
@@ -110,19 +116,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+function CustomizedTables({ data, deleteEmployee }) {
+  if (!Array.isArray(data)) {
+    return null; // Return null if data is not an array
+  }
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
-function CustomizedTables({ data }) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -214,6 +212,7 @@ function CustomizedTables({ data }) {
                         backgroundColor: "#inherit", // Màu nền khi hover
                       },
                     }}
+                    onClick={() => deleteEmployee(data.employeeID)}
                   />
                 </Box>
               </StyledTableCell>
