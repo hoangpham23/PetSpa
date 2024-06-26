@@ -1,12 +1,31 @@
+// import axios from "axios";
+// import { useEffect, useState } from "react";
+// import HeaderForCus from "../../components/header/header-customer";
+// import { Helmet } from "react-helmet";
+// import { useNavigate, useParams } from "react-router-dom";
+// import Footer from "../../components/footer/footer";
+// import HeaderColor from "../../components/header/HeaderColor";
+// import UserAuth from "../../hooks/UserAuth";
+// import Box from "@mui/material/Box";
+// import Stepper from "@mui/material/Stepper";
+// import Step from "@mui/material/Step";
+// import StepLabel from "@mui/material/StepLabel";
+// import StepConnector from "@mui/material/StepConnector";
+// import stepperStyle from "./Stepper_style.module.css";
+// import style from "./ChoosePet_style.module.css";
+
 import axios from "axios";
-import { useEffect, useState } from "react";
-import HeaderForCus from "../../components/header/header-customer";
-import style from "./ChoosePet_style.module.css";
-import { Helmet } from "react-helmet";
-import { useNavigate, useParams } from "react-router-dom";
-import Footer from "../../components/footer/footer";
-import HeaderColor from "../../components/header/HeaderColor";
 import UserAuth from "../../hooks/UserAuth";
+import HeaderColor from "../../components/header/HeaderColor";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Box from "@mui/material/Box";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import StepConnector from "@mui/material/StepConnector";
+import stepperStyle from "./Stepper_style.module.css";
+import style from "./ChoosePet_style.module.css";
 
 function ChoosePet() {
   const [customerID, setCustomerID] = useState("");
@@ -14,6 +33,9 @@ function ChoosePet() {
   const [petData, setPetData] = useState([]);
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
+  const steps = ["", "", "",""];
+  const [activeStep, setActiveStep] = useState(0);
+
   UserAuth(["CUS"]);
   useEffect(() => {
     const customer = JSON.parse(localStorage.getItem("account"));
@@ -61,6 +83,29 @@ function ChoosePet() {
       <HeaderColor />
       <div className={style.wrapper}>
         <main className={style.mainContent}>
+          <Box sx={{ width: "100%", mt: 8 }}>
+            <Stepper
+              activeStep={activeStep}
+              alternativeLabel
+              sx={{ padding: "2rem", borderRadius: "10px" }}
+            >
+              {steps.map((label, index) => (
+                <Step key={label}>
+                  <StepLabel
+                    classes={{
+                      label: stepperStyle.stepLabel,
+                      iconContainer: stepperStyle.stepIconContainer,
+                    }}
+                    style={{
+                      transform: "scale(3)",
+                    }}
+                  >
+                    {label}
+                  </StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          </Box>
           <div
             className={style.PetInfo_container}
             onClick={() => {

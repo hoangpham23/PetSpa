@@ -12,6 +12,12 @@ import HeaderColor from "../../components/header/HeaderColor";
 import UserAuth from "../../hooks/UserAuth";
 // import service2 from "../../assets/img/service2.jpg";
 // import service3 from "../../assets/img/service3.jpg";
+import Box from "@mui/material/Box";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import StepConnector from "@mui/material/StepConnector";
+import stepperStyle from "./Stepper_style.module.css";
 
 function ChooseService() {
   UserAuth(["CUS"]);
@@ -24,6 +30,8 @@ function ChooseService() {
     imageURL: "",
   });
   const today = new Date();
+  const steps = ["", "", "",""];
+  const [activeStep, setActiveStep] = useState(1);
   // chỉ nhận lịch trong 3 ngày, tính từ thời điểm hiện tại
   const startDay = format(today, "yyyy-MM-dd");
   localStorage.setItem(
@@ -134,6 +142,29 @@ function ChooseService() {
       <HeaderColor />
       <div className={style.wrapper}>
         <main className={style.mainContent}>
+        <Box sx={{ width: "100%", mt: 8 }}>
+            <Stepper
+              activeStep={activeStep}
+              alternativeLabel
+              sx={{ padding: "2rem", borderRadius: "10px" }}
+            >
+              {steps.map((label, index) => (
+                <Step key={label}>
+                  <StepLabel
+                    classes={{
+                      label: stepperStyle.stepLabel,
+                      iconContainer: stepperStyle.stepIconContainer,
+                    }}
+                    style={{
+                      transform: "scale(3)",
+                    }}
+                  >
+                    {label}
+                  </StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          </Box>
           <div className={style.Ask}>
             <h1>CHOOSE SERVICES FOR YOUR PET </h1>
           </div>

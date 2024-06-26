@@ -13,6 +13,12 @@ import { useNavigate } from "react-router-dom";
 import HeaderColor from "../../components/header/HeaderColor";
 import DateCalendarValue from "./Calendear/CalendarV2";
 import UserAuth from "../../hooks/UserAuth";
+import Box from "@mui/material/Box";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import StepConnector from "@mui/material/StepConnector";
+import stepperStyle from "./Stepper_style.module.css";
 function ChooseTime2() {
   UserAuth(["CUS"]);
   const navigate = useNavigate();
@@ -30,6 +36,8 @@ function ChooseTime2() {
   const [appointments, setAppointments] = useState([]);
   const [isFullSlot, setIsFullSlot] = useState([]);
   const [customerID, setCustomerID] = useState("");
+  const steps = ["", "", "",""];
+  const [activeStep, setActiveStep] = useState(2);
 
   useEffect(() => {
     const accountData = localStorage.getItem("account");
@@ -132,7 +140,29 @@ function ChooseTime2() {
     <>
       <div className={style.backGround}>
         <HeaderColor />
-        
+        <Box sx={{ width: "100%", mt: 0, mb: 2,}}>
+            <Stepper
+              activeStep={activeStep}
+              alternativeLabel
+              sx={{ padding: "2rem", borderRadius: "10px" }}
+            >
+              {steps.map((label, index) => (
+                <Step key={label}>
+                  <StepLabel
+                    classes={{
+                      label: stepperStyle.stepLabel,
+                      iconContainer: stepperStyle.stepIconContainer,
+                    }}
+                    style={{
+                      transform: "scale(3)",
+                    }}
+                  >
+                    {label}
+                  </StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          </Box>
         <h1>Complete your appointment</h1>
         <div className={style.boxInfo}>
           {/* <CalendarV2 /> */}

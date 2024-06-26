@@ -52,10 +52,16 @@
   /* font-family: "Arial", sans-serif; */
 }
 
-.total_amount {
+.total_bill {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 2rem;
   font-weight: bold;
-  color: #007bff;
-  /* margin-left: 19.2rem; */
-  /* font-family: "Arial", sans-serif; */
 }
+
+.total_amount {
+  font-size: 2rem;
+  color: #007bff;
+}
+
