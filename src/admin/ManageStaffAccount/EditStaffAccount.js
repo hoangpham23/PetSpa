@@ -3,8 +3,17 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { TextField } from "@mui/material";
-import styles from "./EditStaff_style.css";
+import {
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  Select,
+  TextField,
+} from "@mui/material";
+import styles from "./EditStaff_style.module.css";
 
 const style = {
   position: "absolute",
@@ -38,21 +47,19 @@ export default function EditStaffAccount({ open, employee, onClose }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={{ ...style, lineHeight: 3 }}>
-          <Typography
-            id="modal-modal-title"
-            variant="h3"
-            //component="h2"
-          >
+          <Typography id="modal-modal-title" variant="h3">
             Information of employee
           </Typography>
-          {/* <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography> */}
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+
+          {/* NAME BOX */}
+          <Box
+            sx={{ display: "flex", alignItems: "center" }}
+            className={styles.InfoItem}
+          >
             <Typography
               id="modal-modal-description"
-              //sx={{ mt: 2, marginRight: 2, fontSize: "1.6rem" }}
-              className={style.customTypography}
+              sx={{ mt: 2, marginRight: 2, fontSize: "1.6rem" }}
+              className={styles.customTypography}
             >
               Name
             </Typography>
@@ -62,24 +69,133 @@ export default function EditStaffAccount({ open, employee, onClose }) {
               label="Required"
               defaultValue={employee.employeeName}
               variant="filled"
-              className={style.customTextField}
+              className={styles.customTextField}
             />
           </Box>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          {/* PHONE NUMBER */}
+          <Box
+            sx={{ display: "flex", alignItems: "center" }}
+            className={styles.InfoItem}
+          >
             <Typography
               id="modal-modal-description"
-              sx={{ mt: 2, marginRight: 2 }}
+              sx={{ mt: 2, marginRight: 2, fontSize: "1.6rem" }}
+              className={styles.customTypography}
             >
-              Name
+              Phone Number
             </Typography>
             <TextField
               required
               id="filled-required"
               label="Required"
-              defaultValue={employee.employeeName}
+              defaultValue={employee.phoneNumber}
               variant="filled"
+              className={styles.customTextField}
             />
           </Box>
+          {/* EMAIL BOX */}
+          <Box
+            sx={{ display: "flex", alignItems: "center" }}
+            className={styles.InfoItem}
+          >
+            <Typography
+              id="modal-modal-description"
+              sx={{ mt: 2, marginRight: 2, fontSize: "1.6rem" }}
+              className={styles.customTypography}
+            >
+              Email
+            </Typography>
+            <TextField
+              required
+              id="filled-required"
+              label="Required"
+              defaultValue={employee.email}
+              variant="filled"
+              className={styles.customTextField}
+            />
+          </Box>
+          {/* password */}
+          <Box
+            sx={{ display: "flex", alignItems: "center" }}
+            className={styles.InfoItem}
+          >
+            <Typography
+              id="modal-modal-description"
+              sx={{ mt: 2, marginRight: 2, fontSize: "1.6rem" }}
+              className={styles.customTypography}
+            >
+              Password
+            </Typography>
+            <TextField
+              required
+              id="filled-required"
+              label="Required"
+              defaultValue={employee.password}
+              variant="filled"
+              className={styles.customTextField}
+            />
+          </Box>
+          {/* employeeCIN */}
+          <Box
+            sx={{ display: "flex", alignItems: "center" }}
+            className={styles.InfoItem}
+          >
+            <Typography
+              id="modal-modal-description"
+              sx={{ mt: 2, marginRight: 2, fontSize: "1.6rem" }}
+              className={styles.customTypography}
+            >
+              CIN
+            </Typography>
+            <TextField
+              required
+              id="filled-required"
+              label="Required"
+              defaultValue={employee.employeeCIN}
+              variant="filled"
+              className={styles.customTextField}
+            />
+          </Box>
+          {/* gender */}
+          <Box
+            sx={{ display: "flex", justifyContent: "space-between" }}
+            className={styles.InfoItem}
+          >
+            <Typography
+              id="modal-modal-description"
+              sx={{ mt: 2, marginRight: 2, fontSize: "1.6rem" }}
+              className={styles.customTypography}
+            >
+              Gender
+            </Typography>
+            <FormControl fullWidth sx={{ fontSize: "1.6rem" }}>
+              <InputLabel id="gender-label">Gender</InputLabel>
+              <Select
+                labelId="gender-label"
+                id="gender-select"
+                value={editEmployee.gender}
+                //onChange={handleGenderChange}
+                label="Gender"
+                sx={{
+                  fontSize: "1.6rem",
+
+                  width: "60%",
+                }}
+                className={styles.customTextField}
+              >
+                <MenuItem value="male" sx={{ fontSize: "1.6rem" }}>
+                  Male
+                </MenuItem>
+                <MenuItem value="female" sx={{ fontSize: "1.6rem" }}>
+                  Female
+                </MenuItem>
+                <MenuItem value="other" sx={{ fontSize: "1.6rem" }}>
+                  Other
+                </MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          <Button onClick={onClose}>UPDATE</Button>
         </Box>
       </Modal>
     </div>
