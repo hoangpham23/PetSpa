@@ -13,10 +13,13 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import EditStaffAccount from "./EditStaffAccount";
+import { useNavigate } from "react-router-dom";
 
 function ManageStaffAccount() {
   //  Prepare data to send
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
   async function getData() {
     try {
       const response = await axios.get(
@@ -49,11 +52,14 @@ function ManageStaffAccount() {
   }));
   async function deleteEmployee(id) {
     try {
-      const response = axios.delete(
+      console.log(id);
+      const response = await axios.delete(
         `http://localhost:8090/admin/employees/${id}`
       );
-      if (response && response.status === 200) {
+      console.log((await response).status);
+      if (response.status === 200) {
         getData();
+        //window.location.reload();
       }
     } catch (error) {
       console.log(error);
@@ -116,10 +122,24 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function CustomizedTables({ data, deleteEmployee }) {
+function CustomizedTables({ data, onDelete }) {
+  const navigate = useNavigate();
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+
   if (!Array.isArray(data)) {
     return null; // Return null if data is not an array
   }
+
+  const handleOpenEditModal = (employee) => {
+    setSelectedEmployee(employee);
+    setOpenEditModal(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setSelectedEmployee(null);
+    setOpenEditModal(false);
+  };
 
   return (
     <TableContainer component={Paper}>
@@ -132,6 +152,8 @@ function CustomizedTables({ data, deleteEmployee }) {
             <StyledTableCell align="right">UserName</StyledTableCell>
             <StyledTableCell align="right">Email</StyledTableCell>
             <StyledTableCell align="right">Password</StyledTableCell>
+            <StyledTableCell align="right">Phone Number</StyledTableCell>
+            <StyledTableCell align="right">Gender</StyledTableCell>
             <StyledTableCell align="center">Edit</StyledTableCell>
             <StyledTableCell align="center">Delete</StyledTableCell>
           </TableRow>
@@ -148,6 +170,10 @@ function CustomizedTables({ data, deleteEmployee }) {
               <StyledTableCell align="right">{data.email}</StyledTableCell>
               <StyledTableCell align="right">{data.password}</StyledTableCell>
               <StyledTableCell align="right">
+                {data.phoneNumber}
+              </StyledTableCell>
+              <StyledTableCell align="right">{data.gender}</StyledTableCell>
+              <StyledTableCell align="right">
                 <Box
                   sx={{
                     backgroundColor: "#F6E1CC",
@@ -167,6 +193,7 @@ function CustomizedTables({ data, deleteEmployee }) {
                       },
                     },
                   }}
+                  onClick={() => handleOpenEditModal(data)}
                 >
                   <input
                     type="submit"
@@ -178,6 +205,7 @@ function CustomizedTables({ data, deleteEmployee }) {
                         backgroundColor: "#inherit", // Màu nền khi hover
                       },
                     }}
+                    onClick={() => handleOpenEditModal(data)}
                   />
                 </Box>
               </StyledTableCell>
@@ -201,6 +229,7 @@ function CustomizedTables({ data, deleteEmployee }) {
                       },
                     },
                   }}
+                  onClick={() => onDelete(data.employeeID)}
                 >
                   <input
                     type="submit"
@@ -212,7 +241,7 @@ function CustomizedTables({ data, deleteEmployee }) {
                         backgroundColor: "#inherit", // Màu nền khi hover
                       },
                     }}
-                    onClick={() => deleteEmployee(data.employeeID)}
+                    onClick={() => onDelete(data.employeeID)}
                   />
                 </Box>
               </StyledTableCell>
@@ -220,6 +249,14 @@ function CustomizedTables({ data, deleteEmployee }) {
           ))}
         </TableBody>
       </Table>
+      {/* Render EditStaffAccount modal */}
+      {openEditModal && (
+        <EditStaffAccount
+          open={true}
+          employee={selectedEmployee}
+          onClose={handleCloseEditModal}
+        />
+      )}
     </TableContainer>
   );
 }
