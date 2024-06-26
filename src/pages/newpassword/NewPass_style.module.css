@@ -36,18 +36,19 @@ html {
   align-items: center;
   display: flex;
   background-color: pink;
+  min-height: 100vh;
 }
 
 .newPass_container .newPass_form {
-  width: 60rem;
+  width: 100rem;
   margin: 2rem 0;
   text-align: center;
-  width: 65rem;
-  height: 40rem;
+  height: 50rem;
   background-color: var(--pink-div-color);
   border-radius: 30px;
   transition: 0.5s ease;
   margin: 8rem 30rem;
+  padding: 5rem;
 }
 
 .newPass_container .newPass_form h1 {
