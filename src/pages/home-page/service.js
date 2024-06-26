@@ -1,17 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 import style from "./Service_style.module.css";
-import { Pagination, Navigation } from 'swiper/modules';
+import { Pagination, Navigation } from "swiper/modules";
 
 function Service() {
   const navigate = useNavigate();
   const dataArray = JSON.parse(localStorage.getItem("dataArray")) || [];
-  
+
   function handleNavigate(item) {
     navigate(`/home-page/${item.serviceName}`);
   }
@@ -47,7 +47,10 @@ function Service() {
             {dataArray.map((item, index) => (
               <SwiperSlide key={index}>
                 <div className={style.service_container}>
-                  <div className={style.service_img} onClick={() => handleNavigate(item)}>
+                  <div
+                    className={style.service_img}
+                    onClick={() => handleNavigate(item)}
+                  >
                     <img src={item.imageURL} alt="" />
                   </div>
                   <div className={style.service_name}>{item.serviceName}</div>

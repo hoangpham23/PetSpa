@@ -24,6 +24,7 @@ import SuccessfullyPayment from "./pages/payment/SuccessfullyPayment.js";
 import DashBoard from "./admin/DashBoard/DashBoard.js";
 import PaymentHistory from "./pages/paymentHistory/PaymentHistory.js";
 import NoAccessPermission from "./components/noAccessPermission/NoAccessPermission.js";
+import ManageStaffAccount from "./admin/ManageStaffAccount/ManageStaffAccount.js";
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
           path="/no-access-permission"
           element={<NoAccessPermission />}
         ></Route>
+        <Route path="/manage-staff" element={<ManageStaffAccount />}></Route>
       </Routes>
     </Router>
   );

@@ -9,8 +9,10 @@ import { useNavigate } from "react-router-dom";
 function SuccessfullyPayment() {
   const navigate = useNavigate();
   useEffect(() => {
-    const isPaid = localStorage.getItem("isPaid") || "";
-    if (!isPaid) {
+    //const isPaid = localStorage.getItem("isPaid") || false;
+    const isPaid = localStorage.getItem("isPaid") === "true" || false;
+    console.log(isPaid);
+    if (isPaid === false) {
       navigate("/payment");
     }
   }, []);

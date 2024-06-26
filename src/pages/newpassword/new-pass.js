@@ -114,6 +114,7 @@ function NewPass() {
               name="otp"
             />
           </div>
+          <h2>{msg}</h2>
           <br></br>
           <div className={style.signUn_btn}>
             <input
@@ -134,7 +135,6 @@ function NewPass() {
           </div>
         </form>
         <br></br>
-        <h2>{msg}</h2>
       </div>
     </div>
   );

@@ -52,6 +52,8 @@ function ForgotPassword() {
               onChange={handleInput}
             />
           </div>
+          <p className={style.msg}>{msg}</p>
+
           <div className={style.sendOTP}>
             <input
               type="submit"
