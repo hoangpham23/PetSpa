@@ -107,53 +107,57 @@ function InfoPet() {
   return (
     <div>
       <HeaderColor />
-      <section>
-        <div className={style.welcome_div}>
-          <div className={style.welcome_content}>
-            <h1>Insert Information for new pet!</h1>
-          </div>
-          <div className={style.welcome_form}>
-            <form action="#">
-              <div className={style.input_box}>
-                <p>Name of your pet:</p>{" "}
-                <input
-                  type="text"
-                  placeholder="ENTER YOUR PET'S NAME HERE"
-                  name="petName"
-                  onChange={handleInput}
-                />
+      <div className={style.wrapper}>
+        <main className={style.mainContent}>
+          <section>
+            <div className={style.welcome_div}>
+              <div className={style.welcome_form}>
+                <div className={style.welcome_content}>
+                  <h1>Insert Information for new pet!</h1>
+                </div>
+                <form action="#">
+                  <div className={style.input_box}>
+                    <p>Name of your pet:</p>{" "}
+                    <input
+                      type="text"
+                      placeholder="ENTER YOUR PET'S NAME HERE"
+                      name="petName"
+                      onChange={handleInput}
+                    />
+                  </div>
+                  <div className={style.input_box}>
+                    <p>Weight (kg):</p>{" "}
+                    <input
+                      type="number"
+                      placeholder="ENTER YOUR PET'S WEIGHT HERE"
+                      name="weight"
+                      onChange={handleInput}
+                    />
+                  </div>
+                  <div className={style.input_box}>
+                    <p>Age :</p>{" "}
+                    <input
+                      type="number"
+                      placeholder="ENTER YOUR PET'S WEIGHT HERE"
+                      name="age"
+                      onChange={handleInput}
+                    />
+                  </div>
+                  <div className={style.welcome_content}>{msg}</div>
+                  <div className={style.add}>
+                    <input
+                      type="submit"
+                      value="ADD"
+                      className="btn"
+                      onClick={handleSubmit}
+                    />
+                  </div>
+                </form>
               </div>
-              <div className={style.input_box}>
-                <p>Weight (kg):</p>{" "}
-                <input
-                  type="number"
-                  placeholder="ENTER YOUR PET'S WEIGHT HERE"
-                  name="weight"
-                  onChange={handleInput}
-                />
-              </div>
-              <div className={style.input_box}>
-                <p>Age :</p>{" "}
-                <input
-                  type="number"
-                  placeholder="ENTER YOUR PET'S WEIGHT HERE"
-                  name="age"
-                  onChange={handleInput}
-                />
-              </div>
-              <div className={style.welcome_content}>{msg}</div>
-              <div className={style.add}>
-                <input
-                  type="submit"
-                  value="ADD"
-                  className="btn"
-                  onClick={handleSubmit}
-                />
-              </div>
-            </form>
-          </div>
-        </div>
-      </section>
+            </div>
+          </section>
+        </main>
+      </div>
     </div>
   );
 }
