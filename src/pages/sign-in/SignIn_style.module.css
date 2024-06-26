@@ -27,6 +27,12 @@ html {
   color: var(--text-color);
 } */
 
+.msg{
+  font-size: 1.6rem;
+  color: red;
+  padding: 0.6rem 0;
+}
+
 .wrapperSignup {
   display: flex;
   flex-direction: column;

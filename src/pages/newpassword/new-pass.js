@@ -84,7 +84,6 @@ function NewPass() {
 
   return (
     <div className={style.newPass_container}>
-      <div className={style.pink_background_rectangle}></div>
       <div className={style.newPass_form}>
         <h1>FORGET PASSWORD?</h1>
         <form action="#">
