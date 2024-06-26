@@ -26,7 +26,7 @@ public class InsertPetInfoController {
     public ResponseEntity<?> insertPetInfo(@RequestBody Map<String, String> data) {
 
         String petName = data.get("petName");
-        float weight = Float.parseFloat(data.get("weight"));
+        double weight = Double.parseDouble(data.get("weight"));
         int age = Integer.parseInt(data.get("age"));
         Integer customerID = Integer.parseInt(data.get("customerID"));
 
