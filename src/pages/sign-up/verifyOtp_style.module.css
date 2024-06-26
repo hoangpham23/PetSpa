@@ -71,14 +71,14 @@
 }
 
 .newPass_container .newPass_form .input_box p {
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin-top: 3rem;
 }
 
 .newPass_container .newPass_form .input_box input {
   width: 50%;
   padding: 1rem;
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: var(--text-color);
   background: var(--bg-color);
   border-radius: 20px;

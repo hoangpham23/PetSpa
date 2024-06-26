@@ -132,6 +132,7 @@ function ChooseTime2() {
     <>
       <div className={style.backGround}>
         <HeaderColor />
+        
         <h1>Complete your appointment</h1>
         <div className={style.boxInfo}>
           {/* <CalendarV2 /> */}
