@@ -66,7 +66,17 @@ function ManageStaffAccount() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <SideBar />
+
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <h1
+            style={{
+              marginTop: "6rem",
+              marginBottom: "-2rem",
+              textAlign: "left",
+            }}
+          >
+            Staff's account{" "}
+          </h1>
           <DrawerHeader />
           <Box>
             <CustomizedTables data={data} />
