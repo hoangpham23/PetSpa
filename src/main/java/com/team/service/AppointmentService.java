@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -45,16 +44,22 @@ public class AppointmentService {
         try {
             // timeSendRequest = LocalDateTime.parse("2024-06-05 09:00:00", formatter);
             // set a range to take the list appointment
-            LocalTime time = timeSendRequest.toLocalTime();
-            LocalTime lastShift = LocalTime.parse("17:00:00");
-            LocalDateTime min = timeSendRequest.plusDays(1);
+//            LocalTime time = timeSendRequest.toLocalTime();
+//            LocalTime lastShift = LocalTime.parse("17:00:00");
+//            LocalDateTime min = timeSendRequest.plusDays(1);
+//            LocalDateTime max = timeSendRequest.plusDays(4);
+//            String after = min.format(FORMATTER);
+//            if (time.isAfter(lastShift)) {
+//                max = timeSendRequest.plusDays(5);
+//            }
+//            String before = max.format(FORMATTER_DATE);
+
+            LocalDateTime min = timeSendRequest.plusHours(2);
             LocalDateTime max = timeSendRequest.plusDays(4);
             String after = min.format(FORMATTER);
-            if (time.isAfter(lastShift)) {
-                max = timeSendRequest.plusDays(5);
-            }
             String before = max.format(FORMATTER_DATE);
-
+            System.out.println("after: " + after);
+            System.out.println("before: " + before);
             List<Object[]> listAppointments = appointmentRepository.findAppointmentsAfterBefore(after, before);
 
             // convert into appointmentDTO type
