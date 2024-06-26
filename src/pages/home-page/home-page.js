@@ -8,6 +8,12 @@ import Tittle from "./tittle";
 import axios from "axios";
 import Introduce from "./introduce";
 import Service from "./service";
+import { useNavigate } from "react-router-dom";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Navigation } from 'swiper/modules';
+import 'swiper/css'; // Core Swiper styles
+import 'swiper/css/pagination'; // Pagination module styles
+import 'swiper/css/navigation'; // Navigation module styles
 function HomePage() {
   const [items, setItems] = useState([]);
   const dataArray = [];
