@@ -149,8 +149,19 @@ html {
 
 .service_div p {
   font-size: 2rem;
-  /* font-weight: 1.6rem; */
   margin-top: 2rem;
+}
+
+.service_content{
+  flex: 1;
+}
+
+.service_content p {
+  font-size: 2rem;
+  margin: 2rem;
+  height: 22dvh;
+  justify-content: center;
+  text-align: center;
 }
 
 .btn {
@@ -177,6 +188,7 @@ html {
 .book {
   display: flex;
   justify-content: center;
+  align-self: flex-end;
 }
 
 .feedback_div h1 {
@@ -247,3 +259,5 @@ html {
 .service_container:hover .feedback_div {
   display: block;
 }
+
+

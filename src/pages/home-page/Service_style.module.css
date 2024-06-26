@@ -17,7 +17,7 @@
 }
 
 .service_container {
-  margin: 3rem 5rem;
+  margin: 3rem  6.5rem;
   background-color: var(--header-color);
   border-radius: 20px;
   transition: 0.5s ease;
@@ -32,8 +32,8 @@
 }
 
 .service_img img {
-  width: 25rem;
-  height: 25rem;
+  width: 23rem;
+  height: 23rem;
   border-radius: 10px;
 }
 
