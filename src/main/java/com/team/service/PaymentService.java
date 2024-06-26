@@ -23,18 +23,15 @@ public class PaymentService {
     private final AppointmentRepository appointmentRepository;
     private final CustomerRepository customerRepository;
     private final PaymentHistoryRepository paymentHistoryRepository;
-    private final ServiceRepository serviceRepository;
     private final PaymentDetailRepository paymentDetailRepository;
-    private final List<Integer> listServiceIds = new ArrayList<>();
     private final AccountRepository accountRepository;
     private final EmailService emailService;
 
-    public PaymentService(VNPayConfig VNPayConfig, AppointmentRepository appointmentRepository, CustomerRepository customerRepository, PaymentHistoryRepository paymentHistoryRepository, ServiceRepository serviceRepository, PaymentDetailRepository paymentDetailRepository, AccountRepository accountRepository, EmailService emailService) {
+    public PaymentService(VNPayConfig VNPayConfig, AppointmentRepository appointmentRepository, CustomerRepository customerRepository, PaymentHistoryRepository paymentHistoryRepository, PaymentDetailRepository paymentDetailRepository, AccountRepository accountRepository, EmailService emailService) {
         this.VNPayConfig = VNPayConfig;
         this.appointmentRepository = appointmentRepository;
         this.customerRepository = customerRepository;
         this.paymentHistoryRepository = paymentHistoryRepository;
-        this.serviceRepository = serviceRepository;
         this.paymentDetailRepository = paymentDetailRepository;
         this.accountRepository = accountRepository;
         this.emailService = emailService;
@@ -220,7 +217,7 @@ public class PaymentService {
             paymentDetail.setCustomers(customers);
             Appointments appointments = appointmentRepository.findById(Integer.parseInt(tokenizer.nextToken())).get();
             paymentDetail.setAppointments(appointments);
-            paymentDetail.setPaymentHistory(savePayment);
+            paymentDetail.setPaymentHistoryID(savePayment);
             paymentDetailRepository.save(paymentDetail);
         }
     }

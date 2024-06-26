@@ -1,38 +1,24 @@
 package com.team.config;
 
-import com.nimbusds.jose.*;
-import com.nimbusds.jose.crypto.MACSigner;
-import com.nimbusds.jwt.JWTClaimsSet;
-import com.team.model.Accounts;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.crypto.spec.SecretKeySpec;
-import java.io.IOException;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
-import java.util.Date;
 
 
 @Configuration
@@ -57,33 +43,11 @@ public class SecurityConfig {
     @Value("${SIGNER_KEY}")
     private String signerKey;
 
-//    @Bean
-//    SecurityFilterChain securityFilterChain(HttpSecurity http, OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler) throws Exception {
-//        return http
-//                .authorizeHttpRequests(auth -> {
-////                    auth.requestMatchers("/payment").hasRole("CUS");
-//                    auth.anyRequest().permitAll(); // Allow access to these URLs without authentication
-////                    auth.anyRequest().authenticated(); // All other requests require authentication
-//                })
-//                // change the default page login with google
-//                .oauth2Login(oauth ->
-//                        oauth.loginPage("http://localhost:3000/sign-in")
-//                                .successHandler(oAuth2AuthenticationSuccessHandler)
-//                                // successful login with google redirect to home-page
-//                )
-//                .csrf(csrf -> csrf.disable())
-//                .build();
-//    }
-
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler) throws Exception {
         httpSecurity.oauth2Login(oauth2 ->
                         oauth2.loginPage("http://localhost:3000/sign-in")
                                 .successHandler(oAuth2AuthenticationSuccessHandler)
-//                        .userInfoEndpoint(userInfoEndpoint ->
-//                                userInfoEndpoint.oidcUserService(this.oidcUserService())
-//                        )
-//                        .successHandler(this.authenticationSuccessHandler())
         );
         httpSecurity
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))

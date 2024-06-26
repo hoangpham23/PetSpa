@@ -24,6 +24,6 @@ public class PaymentDetail {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PaymentHistoryID")
-    private PaymentHistory paymentHistory;
+    private PaymentHistory paymentHistoryID;
 
 }

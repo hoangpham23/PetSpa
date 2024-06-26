@@ -7,7 +7,7 @@ import com.team.model.PaymentHistory;
 import com.team.repository.AppointmentRepository;
 import com.team.repository.PaymentDetailRepository;
 import com.team.repository.PaymentHistoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,15 +16,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class RevenueService {
-    @Autowired
-    private PaymentHistoryRepository paymentHistoryRepository;
 
-    @Autowired
-    private AppointmentRepository appointmentRepository;
-
-    @Autowired
-    private PaymentDetailRepository paymentDetailRepository;
+    private final PaymentHistoryRepository paymentHistoryRepository;
+    private final AppointmentRepository appointmentRepository;
+    private final PaymentDetailRepository paymentDetailRepository;
 
     public List<RevenueDTO> getRevenue(LocalDate startDate, LocalDate endDate) {
         List<PaymentHistory> paymentHistories = paymentHistoryRepository.findAll();
@@ -83,7 +80,7 @@ public class RevenueService {
 
                     // Count the number of times each service has been ordered on the specific dateIMAGES
                     Map<String, Long> serviceCount = paymentDetailsForDate.stream()
-                            .collect(Collectors.groupingBy(pd -> pd.getAppointmentID().getServices().getServiceName(), Collectors.counting()));
+                            .collect(Collectors.groupingBy(pd -> pd.getAppointments().getServices().getServiceName(), Collectors.counting()));
 
                     Long customerCount = paymentsForDate.stream()
                             .map(ph -> ph.getCustomers().getCustomerID()).distinct()

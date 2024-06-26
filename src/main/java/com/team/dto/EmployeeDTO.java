@@ -1,6 +1,5 @@
 package com.team.dto;
 
-import com.team.model.Employees;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

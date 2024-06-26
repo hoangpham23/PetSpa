@@ -2,7 +2,6 @@ package com.team.config;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.team.dto.AccountDTO;
 import com.team.dto.CustomerDTO;
 import com.team.service.AccountService;
@@ -36,76 +35,6 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
         this.accountService = accountService;
         this.customerService = customerService;
     }
-
-//    @Override
-//    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-//                                        Authentication authentication) {
-//        try {
-//            if (authentication instanceof OAuth2AuthenticationToken oauthToken) {
-//                Map<String, Object> attributes = oauthToken.getPrincipal().getAttributes();
-//                String email = (String) attributes.get("email");
-//                String password = (String) attributes.get("sub");
-//                String name = (String) attributes.get("name");
-//
-//                AccountDTO accountDTO = accountService.checkLogin(email, password);
-//                if (accountDTO != null) {
-//                    CustomerDTO customerDTO = customerService.getCustomerByAccountID(accountDTO.getAccountID(), accountDTO.getRole(), accountDTO.getToken());
-//                    // Set individual cookies for non-sensitive data
-//                    setCustomerCookies(response, customerDTO);
-//
-//                    response.sendRedirect("http://localhost:3000/home-page");
-//                    return;
-//                }
-//
-//                // customer can't login with Google that used for sign up
-//                if (accountService.checkEmail(email)) {
-//                    response.sendRedirect("http://localhost:3000/sign-in?error=email_exists");
-//                    return;
-//                }
-//
-//                // create an account with attributes from Google account
-//                customerService.createCustomer(name, null, email, password);
-//                // After creating the customer, retrieve their details
-//                accountDTO = accountService.checkLogin(email, password); // This should now succeed
-//                if (accountDTO != null) {
-//                    CustomerDTO customerDTO = customerService.getCustomerByAccountID(accountDTO.getAccountID(), accountDTO.getRole(), accountDTO.getToken());
-//                    setCustomerCookies(response, customerDTO);
-//                }
-//
-//                response.sendRedirect("http://localhost:3000/home-page?role=CUS");
-//            } else {
-//                super.onAuthenticationSuccess(request, response, authentication);
-//            }
-//        } catch (Exception e) {
-//            logger.error(e.getMessage());
-//        }
-//    }
-//    private void setCustomerCookies(HttpServletResponse response, CustomerDTO customerDTO) {
-//        addSecureCookie(response, "customerID", customerDTO.getCustomerID() + "");
-//        addSecureCookie(response, "customerName", customerDTO.getCustomerName());
-//        addSecureCookie(response, "email", customerDTO.getEmail());
-//        addSecureCookie(response, "phoneNumber", customerDTO.getPhoneNumber() == null ? "null" : customerDTO.getPhoneNumber());
-//        addSecureCookie(response, "role", customerDTO.getRole());
-//        addSecureCookie(response, "numberOfPets", String.valueOf(customerDTO.getNumberOfPets()));
-//        System.out.println("token: " + customerDTO.getToken());
-//        addSecureCookie(response, "token", customerDTO.getToken());
-//    }
-//
-//
-//    private void addSecureCookie(HttpServletResponse response, String name, String value) {
-//        try {
-//            String encodedValue = URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
-//            Cookie cookie = new Cookie(name, encodedValue);
-//            cookie.setHttpOnly(false); // let's js can read it
-//            cookie.setSecure(true); // Use only in HTTPS
-//            cookie.setMaxAge(3600);
-//            cookie.setPath("/");
-//            response.addCookie(cookie);
-//        } catch (UnsupportedEncodingException e) {
-//            // Log the error
-//            logger.error("Error encoding cookie value", e);
-//        }
-//    }
 
 
     @Override

@@ -2,7 +2,6 @@ package com.team.controller;
 
 import com.team.dto.EmployeeDTO;
 import com.team.model.Employees;
-import com.team.service.AccountService;
 import com.team.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,11 +18,9 @@ import java.util.Map;
 public class AdminController {
 
     private final EmployeeService employeeService;
-    private final AccountService accountService;
 
-    public AdminController(EmployeeService employeeService, AccountService accountService) {
+    public AdminController(EmployeeService employeeService) {
         this.employeeService = employeeService;
-        this.accountService = accountService;
     }
 
     @GetMapping("/employees")

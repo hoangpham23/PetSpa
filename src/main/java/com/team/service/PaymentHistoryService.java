@@ -52,7 +52,7 @@ public class PaymentHistoryService {
 
     private Map<String, Object> getServiceName(PaymentHistory paymentHistory){
         List<String> listService = new ArrayList<>();
-        List<PaymentDetail> listDetail = paymentDetailRepository.findAllByPaymentHistory(paymentHistory);
+        List<PaymentDetail> listDetail = paymentDetailRepository.findAllByPaymentHistoryID(paymentHistory);
         String petName = listDetail.getFirst().getAppointments().getPets().getPetName();
         for (PaymentDetail pd : listDetail) {
             String serviceName = pd.getAppointments().getServices().getServiceName();

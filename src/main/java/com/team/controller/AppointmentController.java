@@ -2,7 +2,6 @@ package com.team.controller;
 
 
 import com.team.dto.AppointmentDTO;
-import com.team.dto.AppointmentRequestDTO;
 import com.team.service.AppointmentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
