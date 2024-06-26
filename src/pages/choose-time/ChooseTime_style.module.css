@@ -111,6 +111,9 @@ h2 {
   width: 350px;
   height: 350px;
 }
+.scheduleContainer h3 {
+  font-size: 1.5rem;
+}
 
 .introduction {
   margin-bottom: 1.8rem;

@@ -101,7 +101,7 @@ function ChooseTimeBox() {
       <div className={`${style.scheduleContainer} ${style.flexRow}`}>
         {/* thêm component ở đây*/}
 
-        <h2 className={style.introduction}>CHOOSE TIME HERE</h2>
+        {/* <h2 className={style.introduction}>CHOOSE TIME HERE</h2> */}
         {appointmentsToday.length > 0 ? (
           <div className={style.schedule}>
             {appointmentsToday.map((appointment, index) => (
