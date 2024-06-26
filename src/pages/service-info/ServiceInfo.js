@@ -112,17 +112,17 @@ function ServiceInfo() {
                 <h1>INFORMATION</h1>
 
                 <p>{serviceData.description}</p>
+                <div className={style.book}>
+                  <input
+                    type="submit"
+                    value="Make Appointment"
+                    className={style.btn}
+                    onClick={handleSubmit}
+                  />
+                </div>
               </div>
             </div>
 
-            <div className={style.book}>
-              <input
-                type="submit"
-                value="Make Appointment"
-                className={style.btn}
-                onClick={handleSubmit}
-              />
-            </div>
             <section className={style.feedback_div}>
               <h1>OUR FEEDBACKS</h1>
 

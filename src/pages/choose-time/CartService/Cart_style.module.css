@@ -2,7 +2,7 @@
   padding: 20px;
   width: 100%;
   max-width: 400px;
-  margin: 20px 5rem;
+  margin: 0 5rem;
   background-color: transparent;
 }
 
@@ -56,5 +56,6 @@
   font-size: 2rem;
   font-weight: bold;
   color: #007bff;
+  margin-left: 19.2rem;
   /* font-family: "Arial", sans-serif; */
 }
