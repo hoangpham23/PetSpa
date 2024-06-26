@@ -99,7 +99,7 @@ function Payment() {
             </div>
           </div>
         </main>
-        <Footer />
+        {/* <Footer /> */}
 
       </div>
     </>

@@ -91,6 +91,8 @@ function ServiceInfo() {
     ) : (
         <HeaderForGuest />
       )}
+            <div className={style.wrapper}>
+            <main className={style.mainContent}>
       <section>
         <div className={style.service_div}>
           <div className={style.service_display}>
@@ -204,6 +206,9 @@ function ServiceInfo() {
           </div>
         </div>
       </section>
+      </main>
+        {/* <Footer /> */}
+      </div>
     </>
   );
 }

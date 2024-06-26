@@ -25,6 +25,20 @@ html {
   font-size: 62.5%;
   color: var(--text-color);
 }
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.mainContent {
+  background-image: url('../../assets/img/cutebg.jpg');
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat;
+} 
+
 .gg-profile,
 .gg-profile::after,
 .gg-profile::before {
@@ -69,7 +83,7 @@ html {
   position: absolute;
   width: 30rem;
   height: 28rem;
-  background-color: var(--header-color);
+  background-color: #97dde8;
   z-index: 1;
   border-radius: 20px;
   transition: 0.5s ease;
@@ -164,6 +178,7 @@ html {
   justify-content: space-between;
   margin: 6rem 5rem 0 5rem;
   text-align: center;
+  z-index: 999;
 }
 
 /* .feedback_display .ava_img {
@@ -188,15 +203,15 @@ html {
   padding: 1.2rem 0;
 }
 
-.feedback_display .service_container {
+/* .feedback_display .service_container {
   position: block;
   margin: 0 8rem;
   background-color: var(--header-color);
   z-index: -1;
   border-radius: 10px;
   transition: 0.5s ease;
-  flex: 1;
-}
+  flex: 1; 
+}*/
 
 .feedback_display .service_container .ava_img img {
   position: relative;
@@ -216,11 +231,22 @@ html {
 }
 
 .feedback_div {
-  /* position: absolute; */
+  position: relative; 
   margin: 5rem 2rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  z-index: -1;
-  height: 40rem;
+  padding-bottom: 3rem;
+  background-color: var(--bg-color); 
+  z-index: 0; 
+}
+
+.feedback_display .service_container {
+  margin: 0 8rem;
+  position: relative; 
+  background-color: var(--header-color);
+  z-index: 1; 
+  border-radius: 10px;
+  transition: 0.5s ease;
+  flex: 1;
 }
 
 .service_container:hover .feedback_div {

@@ -92,7 +92,7 @@ function ChoosePet() {
             />
           </div>
         </main>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </>
   );

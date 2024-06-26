@@ -25,7 +25,7 @@ function SuccessfullyPayment() {
             <a href="#">Click here to see history payment</a>
           </div>
         </main>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </>
   );

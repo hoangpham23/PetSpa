@@ -178,7 +178,7 @@ function ChooseService() {
             </button>
           </div>
         </main>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </>
   );
