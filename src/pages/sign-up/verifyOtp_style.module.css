@@ -27,6 +27,8 @@
   color: var(--text-color);
   overflow: hidden;
 }
+
+
 .pink_background_rectangle {
   z-index: 900;
 }

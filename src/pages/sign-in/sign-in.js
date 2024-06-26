@@ -111,10 +111,10 @@ function SignIn() {
                     <h3>SIGN IN</h3>
                     <form action="#">
                       <div className={styles.input_box}>
-                        <p>User Name:</p>{" "}
+                        <p>Gmail:</p>{" "}
                         <input
                           type="text"
-                          placeholder="ENTER YOUR USER NAME HERE"
+                          placeholder="ENTER YOUR GMAIL HERE"
                           name="email"
                           onChange={handleInput}
                         />
@@ -129,6 +129,7 @@ function SignIn() {
                         />
                       </div>
                       <div className={styles.signIn_box}>
+                      <div className={styles.msg}>{msg}</div>
                         <div className={styles.forget_btn}>
                           <a
                             href="/forgot-password"
@@ -137,7 +138,6 @@ function SignIn() {
                             Forget Password?
                           </a>
                         </div>
-                        <div>{msg}</div>
                         <div>
                           <input
                             type="submit"
