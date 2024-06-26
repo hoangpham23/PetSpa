@@ -6,6 +6,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { format, parseISO } from "date-fns";
 import "./CalendarV2_style.css";
+import { Box } from "@mui/material";
 
 export default function DateCalendarValue() {
   const initialSelectedDate = localStorage.getItem("selectedDate");
@@ -27,21 +28,40 @@ export default function DateCalendarValue() {
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer
-        components={["DateCalendar", "DateCalendar"]}
-        sx={{ overflow: "auto" }}
-      >
-        <DemoItem sx={{ overflow: "auto" }}>
-          <DateCalendar
-            value={selectedDate} // Truyền đối tượng dayjs trực tiếp
-            onChange={handleDateChange} // Xử lý khi ngày thay đổi
-            className="custom-calendar" // Áp dụng lớp CSS
-            sx={{ overflow: "auto", width: "400px", lineHeight: 1 }}
-            views={["day"]}
-          />
-        </DemoItem>
-      </DemoContainer>
-    </LocalizationProvider>
+    <Box
+      sx={{
+        backgroundColor: "#ededed",
+        border: "10px",
+        // boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+        boxShadow: "0 15px 30px rgba(0, 0, 0, 0.4)",
+        borderRadius: "8px",
+        width: "47rem",
+        height: "47rem",
+        justifyContent: "center",
+        display: "flex",
+      }}
+    >
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DemoContainer
+          components={["DateCalendar", "DateCalendar"]}
+          sx={{ overflow: "hidden" }}
+        >
+          <DemoItem sx={{ overflow: "auto" }}>
+            <DateCalendar
+              value={selectedDate} // Truyền đối tượng dayjs trực tiếp
+              onChange={handleDateChange} // Xử lý khi ngày thay đổi
+              className="custom-calendar" // Áp dụng lớp CSS
+              sx={{
+                overflow: "auto",
+                width: "400px",
+                lineHeight: 1,
+                fontSize: "1.5rem",
+              }}
+              views={["day"]}
+            />
+          </DemoItem>
+        </DemoContainer>
+      </LocalizationProvider>
+    </Box>
   );
 }

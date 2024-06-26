@@ -80,7 +80,7 @@ function Payment() {
         <main className="mainContent">
           <HeaderColor />
           <div className="payment-container">
-            <div className="payment-options">
+            {/* <div className="payment-options">
               <h2>Select Payment Method</h2>
               <label className="payment-option">
                 <input
@@ -92,15 +92,24 @@ function Payment() {
                 />
                 <img src={Paypal} alt="Paypal" />
               </label>
-            </div>
+            </div> */}
             <div className="checkout-summary">
               <Cart />
+              <div className="payment-option">
+                <input
+                  // type="radio"
+                  name="Paypal"
+                  //value="paypal"
+                  onClick={handleSubmit}
+                  // disabled={isLoading}
+                />
+                <img src={Paypal} alt="Paypal" />
+              </div>
               <p className="msg">{msg}</p>
             </div>
           </div>
         </main>
         {/* <Footer /> */}
-
       </div>
     </>
   );

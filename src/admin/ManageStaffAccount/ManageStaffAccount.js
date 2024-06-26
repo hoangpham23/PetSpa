@@ -2,12 +2,15 @@ import { ThemeProvider, createTheme, styled } from "@mui/material";
 import SideBar from "../../components/side-bar/SideBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-import DataRow from "../DashBoard/DataRow/DataRow";
-import BarChart2 from "../DashBoard/BarChart/BarChart2";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import * as React from "react";
+//import { styled } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 function getOffsetFromLocalStorage() {
   // Lấy giá trị offset từ localStorage
   const offset = localStorage.getItem("offset");
@@ -15,81 +18,9 @@ function getOffsetFromLocalStorage() {
   return offset ? parseInt(offset, 10) : 0;
 }
 
-function DashBoard() {
+function ManageStaffAccount() {
   //  Prepare data to send
 
-  const offset = getOffsetFromLocalStorage();
-  // khi nhấn vào mũi tên thì nó sẽ cập nhật offset
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [report, setReport] = useState([]);
-  useEffect(() => {
-    console.log(offset);
-    console.log("s", startDate);
-    console.log(endDate);
-    console.log(report);
-  }, [offset, startDate, endDate, report]);
-  useEffect(() => {
-    async function init() {
-      const { startOfWeek, endOfWeek } = await getStartAndEndOfWeek(0);
-      await getData(startOfWeek, endOfWeek);
-    }
-    init();
-  }, []);
-  function getStartAndEndOfWeek(offset) {
-    const today = new Date();
-    const dayOfWeek = today.getDay(); // get current day of the week (0-6), where 0 is Sunday and 6 is Saturday
-    const startOfWeek = new Date(today); // create a copy of today's date
-
-    // Calculate the start of the week (Monday)
-    startOfWeek.setDate(
-      today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1) - offset * 7 + 1
-    );
-    startOfWeek.setHours(0, 0, 0, 0); // Set to the start of the day
-
-    // Calculate the end of the week (Sunday)
-    const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 5);
-    endOfWeek.setHours(23, 59, 59, 999); // Set to the end of the day
-
-    setStartDate(startOfWeek.toISOString().split("T")[0]);
-    setEndDate(endOfWeek.toISOString().split("T")[0]);
-    return {
-      startOfWeek: startOfWeek.toISOString().split("T")[0],
-      endOfWeek: endOfWeek.toISOString().split("T")[0],
-    };
-  }
-
-  async function handleClick(action) {
-    let offset = parseInt(localStorage.getItem("offset"), 10) || 0;
-    if (action === "Previous") {
-      offset += 1;
-    } else if (action === "Next") {
-      if (offset === 0) {
-        return;
-      }
-      offset -= 1;
-    }
-    localStorage.setItem("offset", offset.toString());
-
-    const { startOfWeek, endOfWeek } = await getStartAndEndOfWeek(offset);
-    setStartDate(startOfWeek);
-    setEndDate(endOfWeek);
-    getData(startOfWeek, endOfWeek);
-  }
-  async function getData(startOfWeek, endOfWeek) {
-    try {
-      const response = await axios.get(
-        `http://localhost:8090/weekly-revenue?startDate=${startOfWeek}&endDate=${endOfWeek}`
-      );
-      console.log(response.status);
-      if (response.status === 200) {
-        setReport(response.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
   const theme = createTheme({
     typography: {
       fontFamily: "Poppins,sans-serif", // Thay đổi font chữ ở đây
@@ -118,10 +49,77 @@ function DashBoard() {
         <SideBar />
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <DrawerHeader />
+          <Box>
+            <CustomizedTables />
+          </Box>
         </Box>
       </ThemeProvider>
     </Box>
   );
 }
 
-export default DashBoard;
+export default ManageStaffAccount;
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: "#83B5A8",
+    color: theme.palette.common.white,
+    fontSize: "1.6rem",
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: "1.6rem",
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
+
+function createData(name, calories, fat, carbs, protein) {
+  return { name, calories, fat, carbs, protein };
+}
+
+const rows = [
+  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
+  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
+  createData("Eclair", 262, 16.0, 24, 6.0),
+  createData("Cupcake", 305, 3.7, 67, 4.3),
+  createData("Gingerbread", 356, 16.0, 49, 3.9),
+];
+
+function CustomizedTables() {
+  return (
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+        <TableHead>
+          <TableRow>
+            <StyledTableCell>Dessert (100g serving)</StyledTableCell>
+            <StyledTableCell align="right">Calories</StyledTableCell>
+            <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
+            <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
+            <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <StyledTableRow key={row.name}>
+              <StyledTableCell component="th" scope="row">
+                {row.name}
+              </StyledTableCell>
+              <StyledTableCell align="right">{row.calories}</StyledTableCell>
+              <StyledTableCell align="right">{row.fat}</StyledTableCell>
+              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
+              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+            </StyledTableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}

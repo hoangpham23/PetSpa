@@ -1,9 +1,10 @@
 .custom-calendar {
   width: 500px; /* Độ rộng của cuốn lịch */
-  min-height: 600px; /* Độ cao của cuốn lịch */
+  min-height: 500px; /* Độ cao của cuốn lịch */
   font-size: 1.5rem; /* Kích thước chữ cho toàn bộ cuốn lịch */
   margin-top: 0;
   font-family: "Poppins, sans-serif";
+  overflow: hidden;
 }
 
 .custom-calendar .MuiTypography-root {
