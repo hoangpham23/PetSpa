@@ -8,8 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { Pagination, Navigation } from "swiper/modules";
-// import SwiperCore, { Pagination, Navigation } from 'swiper/core';
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
 import service1 from "../../assets/img/service1.jpg";
 import HeaderForGuest from "../../components/header/header-guest";
@@ -127,6 +126,42 @@ function ServiceInfo() {
               <h1>OUR FEEDBACKS</h1>
 
               <div className={style.feedback_display}>
+              <Swiper
+                  slidesPerView={2}
+                  spaceBetween={30}
+                  loop={true}
+                  pagination={{
+                    clickable: true,
+                  }}
+                  navigation={true}
+                  autoplay={{
+                    delay: 4000,
+                    disableOnInteraction: false,
+                  }}
+                  modules={[Autoplay, Pagination, Navigation]}
+                  className={style.mySwiper}
+                >
+                  {serviceData.feedbacks.map((feedback, index) => (
+                      <SwiperSlide key={index}>
+                        <div className={style.service_container}>
+                          <div className={style.ava_img}>
+                            <img src={service1} alt="Avatar" />
+                          </div>
+                          <div className={style.quote}>
+                            <i className="gg-quote"></i>
+                          </div>
+                          <div className={style.feedback_content}>
+                            <p>{feedback.feedbackContent}</p>
+                          </div>
+                          <p>{feedback.customerName}</p>
+                        </div>
+                      </SwiperSlide>
+                    ))}
+                </Swiper>
+              </div>
+
+              {/* <h1>OUR FEEDBACKS</h1>
+              <div className={style.feedback_display}>
                 <Swiper
                   slidesPerView={2}
                   spaceBetween={30}
@@ -135,7 +170,11 @@ function ServiceInfo() {
                     clickable: true,
                   }}
                   navigation={true}
-                  modules={[Pagination, Navigation]}
+                  autoplay={{
+                    delay: 4000,
+                    disableOnInteraction: false,
+                  }}
+                  modules={[Autoplay, Pagination, Navigation]}
                   className={style.mySwiper}
                 >
                   {serviceData.feedbacks && serviceData.feedbacks.length > 0 ? (
@@ -159,7 +198,7 @@ function ServiceInfo() {
                     <p>No feedback available.</p>
                   )}
                 </Swiper>
-              </div>
+              </div> */}
             </section>
             {/* <div className={style.feedback_div}>
               <h1>OUR FEEDBACKS</h1>
