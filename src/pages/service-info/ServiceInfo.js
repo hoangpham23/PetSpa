@@ -159,71 +159,7 @@ function ServiceInfo() {
                     ))}
                 </Swiper>
               </div>
-
-              {/* <h1>OUR FEEDBACKS</h1>
-              <div className={style.feedback_display}>
-                <Swiper
-                  slidesPerView={2}
-                  spaceBetween={30}
-                  loop={true}
-                  pagination={{
-                    clickable: true,
-                  }}
-                  navigation={true}
-                  autoplay={{
-                    delay: 4000,
-                    disableOnInteraction: false,
-                  }}
-                  modules={[Autoplay, Pagination, Navigation]}
-                  className={style.mySwiper}
-                >
-                  {serviceData.feedbacks && serviceData.feedbacks.length > 0 ? (
-                    serviceData.feedbacks.map((feedback, index) => (
-                      <SwiperSlide key={index}>
-                        <div className={style.service_container}>
-                          <div className={style.ava_img}>
-                            <img src={service1} alt="Avatar" />
-                          </div>
-                          <div className={style.quote}>
-                            <i className="gg-quote"></i>
-                          </div>
-                          <div className={style.feedback_content}>
-                            <p>{feedback.feedbackContent}</p>
-                          </div>
-                          <p>{feedback.customerName}</p>
-                        </div>
-                      </SwiperSlide>
-                    ))
-                  ) : (
-                    <p>No feedback available.</p>
-                  )}
-                </Swiper>
-              </div> */}
             </section>
-            {/* <div className={style.feedback_div}>
-              <h1>OUR FEEDBACKS</h1>
-
-              <div className={style.feedback_display}>
-                {serviceData.feedbacks && serviceData.feedbacks.length > 0 ? (
-                  serviceData.feedbacks.map((feedback, index) => (
-                    <div className={style.service_container}>
-                      <div className={style.ava_img} key={index}>
-                        <img src={service1} alt="Avatar" />
-                      </div>
-                      <div className={style.quote}>
-                        <i className="gg-quote"></i>
-                      </div>
-                      <div className={style.feedback_content}>
-                        <p>{feedback.feedbackContent}</p>
-                      </div>
-                      <p>{feedback.customerName}</p>
-                    </div>
-                  ))
-                ) : (
-                  <p>No feedback available.</p>
-                )}
-              </div>
-            </div> */}
           </section>
         </main>
       </div>

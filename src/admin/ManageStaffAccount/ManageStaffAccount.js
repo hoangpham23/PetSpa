@@ -13,16 +13,13 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
 import axios from "axios";
-function getOffsetFromLocalStorage() {
-  // Lấy giá trị offset từ localStorage
-  const offset = localStorage.getItem("offset");
-  // Nếu không có giá trị trong localStorage, mặc định là 0
-  return offset ? parseInt(offset, 10) : 0;
-}
+import EditStaffAccount from "./EditStaffAccount";
+import { useNavigate } from "react-router-dom";
 
 function ManageStaffAccount() {
   //  Prepare data to send
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
   async function getData() {
     try {
       const response = await axios.get(
@@ -53,13 +50,28 @@ function ManageStaffAccount() {
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   }));
+  async function deleteEmployee(id) {
+    try {
+      console.log(id);
+      const response = await axios.delete(
+        `http://localhost:8090/admin/employees/${id}`
+      );
+      console.log((await response).status);
+      if (response.status === 200) {
+        getData();
+        //window.location.reload();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <Box
       sx={{
         display: "flex",
         fontSize: "2rem",
         backgroundColor: "#f0f0f0",
-        minHeight: "100vh",
+        minHeight: "95vh",
         marginTop: "3rem",
       }}
     >
@@ -79,7 +91,7 @@ function ManageStaffAccount() {
           </h1>
           <DrawerHeader />
           <Box>
-            <CustomizedTables data={data} />
+            <CustomizedTables data={data} onDelete={deleteEmployee} />
           </Box>
         </Box>
       </ThemeProvider>
@@ -110,19 +122,25 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+function CustomizedTables({ data, onDelete }) {
+  const navigate = useNavigate();
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
+  if (!Array.isArray(data)) {
+    return null; // Return null if data is not an array
+  }
 
-function CustomizedTables({ data }) {
+  const handleOpenEditModal = (employee) => {
+    setSelectedEmployee(employee);
+    setOpenEditModal(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setSelectedEmployee(null);
+    setOpenEditModal(false);
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -134,6 +152,8 @@ function CustomizedTables({ data }) {
             <StyledTableCell align="right">UserName</StyledTableCell>
             <StyledTableCell align="right">Email</StyledTableCell>
             <StyledTableCell align="right">Password</StyledTableCell>
+            <StyledTableCell align="right">Phone Number</StyledTableCell>
+            <StyledTableCell align="right">Gender</StyledTableCell>
             <StyledTableCell align="center">Edit</StyledTableCell>
             <StyledTableCell align="center">Delete</StyledTableCell>
           </TableRow>
@@ -150,6 +170,10 @@ function CustomizedTables({ data }) {
               <StyledTableCell align="right">{data.email}</StyledTableCell>
               <StyledTableCell align="right">{data.password}</StyledTableCell>
               <StyledTableCell align="right">
+                {data.phoneNumber}
+              </StyledTableCell>
+              <StyledTableCell align="right">{data.gender}</StyledTableCell>
+              <StyledTableCell align="right">
                 <Box
                   sx={{
                     backgroundColor: "#F6E1CC",
@@ -169,6 +193,7 @@ function CustomizedTables({ data }) {
                       },
                     },
                   }}
+                  onClick={() => handleOpenEditModal(data)}
                 >
                   <input
                     type="submit"
@@ -180,6 +205,7 @@ function CustomizedTables({ data }) {
                         backgroundColor: "#inherit", // Màu nền khi hover
                       },
                     }}
+                    onClick={() => handleOpenEditModal(data)}
                   />
                 </Box>
               </StyledTableCell>
@@ -203,6 +229,7 @@ function CustomizedTables({ data }) {
                       },
                     },
                   }}
+                  onClick={() => onDelete(data.employeeID)}
                 >
                   <input
                     type="submit"
@@ -214,6 +241,7 @@ function CustomizedTables({ data }) {
                         backgroundColor: "#inherit", // Màu nền khi hover
                       },
                     }}
+                    onClick={() => onDelete(data.employeeID)}
                   />
                 </Box>
               </StyledTableCell>
@@ -221,6 +249,14 @@ function CustomizedTables({ data }) {
           ))}
         </TableBody>
       </Table>
+      {/* Render EditStaffAccount modal */}
+      {openEditModal && (
+        <EditStaffAccount
+          open={true}
+          employee={selectedEmployee}
+          onClose={handleCloseEditModal}
+        />
+      )}
     </TableContainer>
   );
 }
