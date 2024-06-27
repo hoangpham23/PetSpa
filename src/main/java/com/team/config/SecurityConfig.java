@@ -24,21 +24,19 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Value("${SIGNER_KEY}")
-    private String SIGNER_KEY;
 
     private final String[] PUBLIC_ENDPOINTS = {"/sign-in", "/sign-in/verify", "/sign-up",
             "/home-page", "/sign-up/verify-otp", "/forgotpassword",
-            "/forgotpassword/verify-otp", "/home-page/{serviceName}"
+            "/forgotpassword/verify-otp", "/home-page/{serviceName}", "/uploads/**"
     };
     private final String[] CUSTOMER_ENDPOINTS = {"/insert-pet-info", "/choose-pet",
             "/choose-service", "/appointment/time", "/payment",
             "/payment-history"
     };
 
-    private final String[] EMPLOYEE_ENDPOINTS = {"/employee/schedule"};
+    private final String[] EMPLOYEE_ENDPOINTS = {"/employee/schedule", "/customer-feedback-for-employee"};
 
-    private final String[] ADMIN_ENDPOINTS = {"/admin/employees", "/admin/create-employee", "/admin/employees/{id}"};
+    private final String[] ADMIN_ENDPOINTS = {"/admin/employees", "/admin/create-employee", "/admin/employees/{id}", "/manage-appointment", "/add-service"};
 
     @Value("${SIGNER_KEY}")
     private String signerKey;
