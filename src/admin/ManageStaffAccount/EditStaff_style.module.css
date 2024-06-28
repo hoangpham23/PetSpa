@@ -5,7 +5,7 @@
 }
 .InfoItem {
   justify-content: space-between;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 .InfoItem .customTextField {
@@ -14,4 +14,9 @@
   margin-top: 1rem;
   text-align: right;
   justify-content: right;
+}
+.btn {
+  font-size: 1.6rem;
+  margin: 3rem 1rem;
+  box-sizing: content-box;
 }

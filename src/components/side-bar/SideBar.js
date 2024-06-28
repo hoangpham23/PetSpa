@@ -72,8 +72,9 @@ const AppBar = styled(MuiAppBar, {
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
-  backgroundColor: "#7FA3B2",
-  color: "white",
+  // backgroundColor: "#7FA3B2",
+  backgroundColor: "white",
+  color: "black",
 }));
 
 const Drawer = styled(MuiDrawer, {

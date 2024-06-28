@@ -24,7 +24,7 @@ function Payment() {
   const navigate = useNavigate();
   const [msg, setMsg] = useState("");
   const [result, setResult] = useState([]);
-  const steps = ["", "", "",""];
+  const steps = ["", "", "", ""];
   const [activeStep, setActiveStep] = useState(3);
 
   // useEffect(() => {
@@ -86,7 +86,7 @@ function Payment() {
     <>
       <div className="wrapperPayment">
         <main className="mainContent">
-        <Box sx={{ width: "100%", mt: 8 }}>
+          <Box sx={{ width: "100%", mt: 8 }}>
             <Stepper
               activeStep={activeStep}
               alternativeLabel
@@ -121,7 +121,7 @@ function Payment() {
                   onClick={handleSubmit}
                   // disabled={isLoading}
                 />
-                <img src={Paypal} alt="Paypal" />
+                <img src={Paypal} alt="Paypal" onClick={handleSubmit} />
               </div>
               <p className="msg">{msg}</p>
             </div>

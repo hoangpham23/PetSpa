@@ -1,4 +1,4 @@
-import { ThemeProvider, createTheme, styled } from "@mui/material";
+import { Grid, ThemeProvider, createTheme, styled } from "@mui/material";
 import SideBar from "../../components/side-bar/SideBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -8,6 +8,8 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import LineChartMonthly from "./LineChart/LineChartMonthly";
+
 function getOffsetFromLocalStorage() {
   // Lấy giá trị offset từ localStorage
   const offset = localStorage.getItem("offset");
@@ -109,7 +111,12 @@ function DashBoard() {
       sx={{
         display: "flex",
         fontSize: "2rem",
-        backgroundColor: "#f0f0f0",
+        // backgroundColor: "#f0f0f0",
+        //background: "linear-gradient(150deg, white, #023047)",
+        //background: "linear-gradient(185deg, white, #7FA3B2)",
+        // background: "linear-gradient(190deg, white,#FBE2E4)",
+        //backgroundImage: `url(${dbg})`,
+        background: "linear-gradient(125deg, white,#E3D1E3)",
         minHeight: "100vh",
       }}
     >
@@ -118,46 +125,154 @@ function DashBoard() {
         <SideBar />
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <DrawerHeader />
-          <Box sx={{ marginBottom: "6rem", marginTop: "5rem" }}>
-            <DataRow report={report} />
-          </Box>
-          <Box sx={{ backgroundColor: "white", borderRadius: "2rem" }}>
-            <Box
-              sx={{
-                justifyContent: "center",
-                display: "flex",
-                paddingTop: "2rem",
-              }}
-            >
-              <p sx={{ fontSize: "1.6rem" }}>Pet Spa's weekly income</p>
-            </Box>
+          <Grid container spacing={2}>
+            <Grid item xs={7} md={7}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={12}>
+                  <Box sx={{ marginBottom: "3rem", marginTop: "3rem" }}>
+                    <DataRow report={report} />
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <Box
+                    sx={{
+                      backgroundColor: "white",
+                      borderRadius: "2rem",
+                      boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        justifyContent: "flex-start",
+                        display: "flex",
+                        paddingTop: "2rem",
+                        paddingLeft: "10rem",
+                      }}
+                    >
+                      <p sx={{ fontSize: "1.6rem" }}>Pet Spa's weekly income</p>
+                    </Box>
 
-            <Box
-              sx={{
-                backgroundColor: "white",
-                borderRadius: "2rem",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Box>
-                <ChevronLeftIcon
-                  name="Previous"
-                  onClick={() => handleClick("Previous")}
-                  sx={{ fontSize: "4rem" }}
-                />
+                    <Box
+                      sx={{
+                        backgroundColor: "white",
+                        borderRadius: "2rem",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Box>
+                        <ChevronLeftIcon
+                          name="Previous"
+                          onClick={() => handleClick("Previous")}
+                          sx={{
+                            fontSize: "4rem",
+                          }}
+                        />
+                      </Box>
+                      <BarChart2 report={report} />
+                      <Box>
+                        <ChevronRightIcon
+                          name="Next"
+                          onClick={() => handleClick("Next")}
+                          sx={{ fontSize: "4rem" }}
+                        />
+                      </Box>
+                    </Box>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Grid>
+
+            <Grid item xs={5} md={5}>
+              <Grid item xs={12} md={12}>
+                <Box
+                  sx={{
+                    backgroundColor: "white",
+                    borderRadius: "2rem",
+                    height: "80vh",
+
+                    marginTop: "3rem",
+                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
+                  }}
+                >
+                  <LineChartMonthly />
+                  {/* <BasicRangeShortcuts /> */}
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={12}></Grid>
+
+              {/* <BasicRangeShortcuts /> */}
+            </Grid>
+          </Grid>
+
+          {/* DATA ROW
+            <Grid item xs={7} md={7}>
+              <Box sx={{ marginBottom: "6rem", marginTop: "5rem" }}>
+                <DataRow report={report} />
               </Box>
-              <BarChart2 report={report} />
-              <Box>
-                <ChevronRightIcon
-                  name="Next"
-                  onClick={() => handleClick("Next")}
-                  sx={{ fontSize: "4rem" }}
-                />
+            </Grid>
+            <Grid item xs={5} md={5}>
+              <Box
+                sx={{
+                  backgroundColor: "white",
+                  borderRadius: "2rem",
+                }}
+              >
+                <DataRow report={report} />
               </Box>
-            </Box>
-          </Box>
+            </Grid>
+          </Grid>
+          
+          <Grid container spacing={2}>
+            <Grid item xs={7} md={7}>
+              <Box
+                sx={{
+                  backgroundColor: "white",
+                  borderRadius: "2rem",
+                  // width: au,
+                }}
+              >
+                <Box
+                  sx={{
+                    justifyContent: "flex-start",
+                    display: "flex",
+                    paddingTop: "2rem",
+                    paddingLeft: "10rem",
+                  }}
+                >
+                  <p sx={{ fontSize: "1.6rem" }}>Pet Spa's weekly income</p>
+                </Box>
+
+                <Box
+                  sx={{
+                    backgroundColor: "white",
+                    borderRadius: "2rem",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Box>
+                    <ChevronLeftIcon
+                      name="Previous"
+                      onClick={() => handleClick("Previous")}
+                      sx={{ fontSize: "4rem" }}
+                    />
+                  </Box>
+                  <BarChart2 report={report} />
+                  <Box>
+                    <ChevronRightIcon
+                      name="Next"
+                      onClick={() => handleClick("Next")}
+                      sx={{ fontSize: "4rem" }}
+                    />
+                  </Box>
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={6} md={6}></Grid>
+          </Grid> */}
         </Box>
       </ThemeProvider>
     </Box>

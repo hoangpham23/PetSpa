@@ -4,8 +4,10 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import {
+  Alert,
   FormControl,
   FormControlLabel,
+  Grid,
   InputLabel,
   MenuItem,
   Radio,
@@ -14,6 +16,9 @@ import {
   TextField,
 } from "@mui/material";
 import styles from "./EditStaff_style.module.css";
+import axios from "axios";
+import SuccessfullyScreen from "../../components/sucessfullyScreen/SucessfullyScreen";
+import CheckIcon from "@mui/icons-material/Check";
 
 const style = {
   position: "absolute",
@@ -36,7 +41,47 @@ export default function EditStaffAccount({ open, employee, onClose }) {
   //     handleOpen();
   //   }, []);
   const [editEmployee, setEditEmployee] = React.useState(employee);
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setEditEmployee({
+      ...editEmployee,
+      [name]: value,
+    });
+  };
+  React.useEffect(() => {
+    console.log(employee, "ne");
+    console.log(editEmployee);
+  }, [editEmployee]);
 
+  async function onSave() {
+    if (
+      !editEmployee.employeeName ||
+      !editEmployee.phoneNumber ||
+      !editEmployee.email ||
+      !editEmployee.password ||
+      !editEmployee.gender
+    ) {
+      alert("Please fill all filed before saving !!!");
+      return;
+    }
+    try {
+      setTimeout(() => {
+        onClose();
+      }, 3000);
+      const response = await axios.put("http://localhost:8090/admin/update", {
+        employeeName: editEmployee.employeeName,
+        phoneNumber: editEmployee.phoneNumber,
+        email: editEmployee.email,
+        password: editEmployee.password,
+        employeeCIN: employee.employeeCIN,
+        gender: employee.gender,
+      });
+      console.log(response);
+      // <SuccessfullyScreen />;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <div>
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
@@ -50,7 +95,6 @@ export default function EditStaffAccount({ open, employee, onClose }) {
           <Typography id="modal-modal-title" variant="h3">
             Information of employee
           </Typography>
-
           {/* NAME BOX */}
           <Box
             sx={{ display: "flex", alignItems: "center" }}
@@ -67,9 +111,11 @@ export default function EditStaffAccount({ open, employee, onClose }) {
               required
               id="filled-required"
               label="Required"
-              defaultValue={employee.employeeName}
+              defaultValue={editEmployee.employeeName}
               variant="filled"
               className={styles.customTextField}
+              name="employeeName"
+              onChange={handleInputChange}
             />
           </Box>
           {/* PHONE NUMBER */}
@@ -88,9 +134,11 @@ export default function EditStaffAccount({ open, employee, onClose }) {
               required
               id="filled-required"
               label="Required"
-              defaultValue={employee.phoneNumber}
+              defaultValue={editEmployee.phoneNumber}
               variant="filled"
               className={styles.customTextField}
+              name="phoneNumber"
+              onChange={handleInputChange}
             />
           </Box>
           {/* EMAIL BOX */}
@@ -109,9 +157,11 @@ export default function EditStaffAccount({ open, employee, onClose }) {
               required
               id="filled-required"
               label="Required"
-              defaultValue={employee.email}
+              defaultValue={editEmployee.email}
               variant="filled"
               className={styles.customTextField}
+              name="email"
+              onChange={handleInputChange}
             />
           </Box>
           {/* password */}
@@ -130,35 +180,17 @@ export default function EditStaffAccount({ open, employee, onClose }) {
               required
               id="filled-required"
               label="Required"
-              defaultValue={employee.password}
+              defaultValue={editEmployee.password}
               variant="filled"
               className={styles.customTextField}
-            />
-          </Box>
-          {/* employeeCIN */}
-          <Box
-            sx={{ display: "flex", alignItems: "center" }}
-            className={styles.InfoItem}
-          >
-            <Typography
-              id="modal-modal-description"
-              sx={{ mt: 2, marginRight: 2, fontSize: "1.6rem" }}
-              className={styles.customTypography}
-            >
-              CIN
-            </Typography>
-            <TextField
-              required
-              id="filled-required"
-              label="Required"
-              defaultValue={employee.employeeCIN}
-              variant="filled"
-              className={styles.customTextField}
+              name="password"
+              onChange={handleInputChange}
             />
           </Box>
           {/* gender */}
-          <Box
-            sx={{ display: "flex", justifyContent: "space-between" }}
+
+          {/* <Box
+            sx={{ display: "flex", alignItems: "center", fontSize: "1.6rem" }}
             className={styles.InfoItem}
           >
             <Typography
@@ -168,53 +200,75 @@ export default function EditStaffAccount({ open, employee, onClose }) {
             >
               Gender
             </Typography>
-            <FormControl fullWidth sx={{ fontSize: "1.6rem" }}>
+            <FormControl variant="filled" className={styles.customTextField}>
               <InputLabel id="gender-label">Gender</InputLabel>
               <Select
                 labelId="gender-label"
-                id="gender-select"
+                name="gender"
                 value={editEmployee.gender}
-                //onChange={handleGenderChange}
-                label="Gender"
-                sx={{
-                  fontSize: "1.6rem",
-
-                  width: "60%",
+                onChange={handleInputChange}
+                sx={{ fontSize: "1.6rem", width: "100%" }}
+                MenuProps={{
+                  PaperProps: {
+                    sx: {
+                      textAlign: "left",
+                    },
+                  },
                 }}
-                className={styles.customTextField}
               >
-                <MenuItem value="male" sx={{ fontSize: "1.6rem" }}>
+                <MenuItem
+                  value="Male"
+                  sx={{
+                    fontSize: "1.6rem",
+                    textAlign: "left",
+                  }}
+                >
                   Male
                 </MenuItem>
-                <MenuItem value="female" sx={{ fontSize: "1.6rem" }}>
+                <MenuItem
+                  value="Female"
+                  sx={{ fontSize: "1.6rem", textAlign: "left" }}
+                >
                   Female
-                </MenuItem>
-                <MenuItem value="other" sx={{ fontSize: "1.6rem" }}>
-                  Other
                 </MenuItem>
               </Select>
             </FormControl>
+          </Box> */}
+          <Box
+            sx={{
+              justifyContent: "end",
+              fontSize: "1.6rem",
+              display: "flex",
+              marginTop: "2rem",
+            }}
+          >
+            <Button
+              variant="contained"
+              sx={{
+                fontSize: "1.6rem",
+                margin: "3rem 1rem",
+                boxSizing: "content-box",
+              }}
+              onClick={() => {
+                onSave();
+              }}
+            >
+              Save
+            </Button>
+            <Button
+              variant="outlined"
+              sx={{
+                fontSize: "1.6rem",
+                margin: "3rem 1rem",
+                boxSizing: "content-box",
+              }}
+              onClick={onClose}
+            >
+              Cancel
+            </Button>
           </Box>
-          <Button onClick={onClose}>UPDATE</Button>
         </Box>
       </Modal>
     </div>
   );
 }
-// export default function EditStaffAccount({ open, employee, onClose }) {
-//   React.useEffect(() => {
-//     // Side effects on mount
-//   }, []);
-
-//   return (
-//     <div style={{ display: open ? "block" : "none" }}>
-//       <Box sx={style}>
-//         <Typography variant="h6" component="h2">
-//           Edit Employee
-//         </Typography>
-//         {/* Content to edit */}
-//         <button onClick={onClose}>Close</button>
-//       </Box>
-//     </div>
-//   );
-// }

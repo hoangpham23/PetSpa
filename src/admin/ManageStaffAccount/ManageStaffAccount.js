@@ -15,6 +15,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import EditStaffAccount from "./EditStaffAccount";
 import { useNavigate } from "react-router-dom";
+import styles from "./ManageStaffAccount_style.module.css";
+import SearchBar from "./SearchBar";
 
 function ManageStaffAccount() {
   //  Prepare data to send
@@ -80,16 +82,39 @@ function ManageStaffAccount() {
         <SideBar />
 
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          <h1
-            style={{
-              marginTop: "6rem",
-              marginBottom: "-2rem",
-              textAlign: "left",
-            }}
-          >
-            Staff's account{" "}
-          </h1>
+          <Box display={"flex"} sx={{ justifyContent: "space-between" }}>
+            <h1
+              style={{
+                marginTop: "6rem",
+                marginBottom: "-2rem",
+                textAlign: "left",
+              }}
+            >
+              Staff's account{" "}
+            </h1>
+            <Box
+              display={"flex"}
+              sx={{
+                marginTop: "7rem",
+                marginBottom: "-2rem",
+                // justifyContent: "space-between",
+                height: "4.5rem",
+              }}
+            >
+              <SearchBar />
+
+              <input
+                type="submit"
+                value="+"
+                className={styles.btn}
+                // onClick={handleSubmit}
+                style={{ margin: "0px 1rem", fontSize: "1.6rem" }}
+              />
+            </Box>
+          </Box>
+
           <DrawerHeader />
+          <Box className={styles.book}></Box>
           <Box>
             <CustomizedTables data={data} onDelete={deleteEmployee} />
           </Box>
@@ -153,6 +178,7 @@ function CustomizedTables({ data, onDelete }) {
             <StyledTableCell align="right">Email</StyledTableCell>
             <StyledTableCell align="right">Password</StyledTableCell>
             <StyledTableCell align="right">Phone Number</StyledTableCell>
+            <StyledTableCell align="right">CIN</StyledTableCell>
             <StyledTableCell align="right">Gender</StyledTableCell>
             <StyledTableCell align="center">Edit</StyledTableCell>
             <StyledTableCell align="center">Delete</StyledTableCell>
@@ -172,6 +198,10 @@ function CustomizedTables({ data, onDelete }) {
               <StyledTableCell align="right">
                 {data.phoneNumber}
               </StyledTableCell>
+              <StyledTableCell align="right">
+                {data.employeeCIN}
+              </StyledTableCell>
+
               <StyledTableCell align="right">{data.gender}</StyledTableCell>
               <StyledTableCell align="right">
                 <Box

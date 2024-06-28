@@ -22,12 +22,12 @@ function DataRow({ report }) {
     <Grid
       container
       spacing={5}
-      justifyContent="center"
-      paddingLeft={"10rem"}
-      paddingRight={"10rem"}
+      //justifyContent="center"
+      // paddingLeft={"10rem"}
+      // paddingRight={"10rem"}
     >
       {/* Biểu đồ tròn 1 */}
-      <Grid item xs={4}>
+      <Grid item xs={6}>
         <Box
           sx={{
             // textAlign: "center",
@@ -42,7 +42,7 @@ function DataRow({ report }) {
           }}
         >
           <Box>
-            <p style={{ fontSize: "1.6rem" }}>Total amount</p>
+            <p style={{ fontSize: "1.6rem" }}>Weekly amount</p>
             <h2>${totalAmount}</h2>
           </Box>
           <Box sx={{ marginLeft: "10rem" }}>
@@ -58,7 +58,7 @@ function DataRow({ report }) {
         </Box>
       </Grid>
       {/* Biểu đồ tròn 2 */}
-      <Grid item xs={4}>
+      <Grid item xs={6}>
         <Box
           sx={{
             // textAlign: "center",
@@ -89,7 +89,7 @@ function DataRow({ report }) {
       </Grid>
       {/* Biểu đồ tròn 3 */}
 
-      <Grid item xs={4}>
+      {/* <Grid item xs={4}>
         <Box
           sx={{
             // textAlign: "center",
@@ -116,8 +116,8 @@ function DataRow({ report }) {
               }}
             />
           </Box>
-        </Box>
-      </Grid>
+        </Box> 
+      </Grid> */}
     </Grid>
   );
 }
