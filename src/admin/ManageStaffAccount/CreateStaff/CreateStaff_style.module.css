@@ -1,0 +1,22 @@
+.InfoItem .customTypography {
+  font-size: 1.6rem;
+  margin-right: 2rem;
+}
+.InfoItem {
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.InfoItem .customTextField {
+  width: 70%;
+  font-size: 1.6rem;
+  margin-top: 1rem;
+  text-align: right;
+  justify-content: right;
+  padding: "0rem 5rem";
+}
+.btn {
+  font-size: 1.6rem;
+  margin: 3rem 1rem;
+  box-sizing: content-box;
+}

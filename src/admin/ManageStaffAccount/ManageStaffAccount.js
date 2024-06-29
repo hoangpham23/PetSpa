@@ -21,8 +21,11 @@ function ManageStaffAccount() {
   //  Prepare data to send
   const [data, setData] = useState([]);
   const navigate = useNavigate();
-  const [search, setSearch] = useState("");
-  async function getData() {
+  const [search, setSearch] = useState(" ");
+  useState(() => {
+    console.log(search, "ne");
+  }, [search]);
+  async function getData(search) {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
@@ -42,7 +45,7 @@ function ManageStaffAccount() {
     }
   }
   useEffect(() => {
-    getData();
+    getData(search);
   }, []);
   const theme = createTheme({
     typography: {
@@ -79,6 +82,10 @@ function ManageStaffAccount() {
       console.log(error);
     }
   }
+  const [create, setCreate] = useState(false);
+
+  const handleCreate = () => setCreate(true);
+  const handleCloseCreate = () => setCreate(false);
   return (
     <Box
       sx={{
@@ -113,16 +120,25 @@ function ManageStaffAccount() {
                 height: "4.5rem",
               }}
             >
-              <SearchBar />
+              <SearchBar
+                setSearch={setSearch}
+                search={search}
+                getData={getData}
+              />
 
               <input
                 type="submit"
                 value="+"
                 className={styles.btn}
-                onClick={<CreateStaff />}
+                onClick={handleCreate}
                 style={{ margin: "0px 1rem", fontSize: "1.6rem" }}
               />
             </Box>
+            <CreateStaff
+              open={create}
+              onClose={handleCloseCreate}
+              getData={getData}
+            />
           </Box>
 
           <DrawerHeader />

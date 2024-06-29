@@ -119,12 +119,12 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
           emailError: "Email already exists",
         });
       }
-      // if (error.response.data.phoneNumber) {
-      //   setError({
-      //     ...errors,
-      //     phoneNumberError: "Phone number already exists",
-      //   });
-      // }
+      if (error.response.data.phoneNumber) {
+        setError({
+          ...errors,
+          phoneNumberError: "Phone number already exists",
+        });
+      }
     }
   }
 
