@@ -2,8 +2,6 @@ import { ThemeProvider, createTheme, styled } from "@mui/material";
 import SideBar from "../../components/side-bar/SideBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-
-//import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
@@ -13,19 +11,27 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import EditStaffAccount from "./EditStaffAccount";
+import EditStaffAccount from "./EditStaff/EditStaffAccount";
 import { useNavigate } from "react-router-dom";
 import styles from "./ManageStaffAccount_style.module.css";
 import SearchBar from "./SearchBar";
+import CreateStaff from "./CreateStaff/CreateStaff";
 
 function ManageStaffAccount() {
   //  Prepare data to send
   const [data, setData] = useState([]);
   const navigate = useNavigate();
+  const [search, setSearch] = useState("");
   async function getData() {
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.get(
-        " http://localhost:8090/admin/employees"
+        `http://localhost:8090/admin/employees?search=${search}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       console.log(response.data);
       if (response.status === 200) {
@@ -54,9 +60,15 @@ function ManageStaffAccount() {
   }));
   async function deleteEmployee(id) {
     try {
+      const token = localStorage.getItem("token");
       console.log(id);
       const response = await axios.delete(
-        `http://localhost:8090/admin/employees/${id}`
+        `http://localhost:8090/admin/employees/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       console.log((await response).status);
       if (response.status === 200) {
@@ -107,7 +119,7 @@ function ManageStaffAccount() {
                 type="submit"
                 value="+"
                 className={styles.btn}
-                // onClick={handleSubmit}
+                onClick={<CreateStaff />}
                 style={{ margin: "0px 1rem", fontSize: "1.6rem" }}
               />
             </Box>
@@ -116,7 +128,11 @@ function ManageStaffAccount() {
           <DrawerHeader />
           <Box className={styles.book}></Box>
           <Box>
-            <CustomizedTables data={data} onDelete={deleteEmployee} />
+            <CustomizedTables
+              data={data}
+              onDelete={deleteEmployee}
+              getData={getData}
+            />
           </Box>
         </Box>
       </ThemeProvider>
@@ -147,7 +163,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function CustomizedTables({ data, onDelete }) {
+function CustomizedTables({ data, onDelete, getData }) {
   const navigate = useNavigate();
   const [openEditModal, setOpenEditModal] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
@@ -182,6 +198,7 @@ function CustomizedTables({ data, onDelete }) {
             <StyledTableCell align="right">Gender</StyledTableCell>
             <StyledTableCell align="center">Edit</StyledTableCell>
             <StyledTableCell align="center">Delete</StyledTableCell>
+            <StyledTableCell align="center">Status</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -239,42 +256,55 @@ function CustomizedTables({ data, onDelete }) {
                   />
                 </Box>
               </StyledTableCell>
-              <StyledTableCell align="right">
-                <Box
-                  sx={{
-                    backgroundColor: "#F6E1CC",
-                    justifyContent: "center",
-                    display: "flex",
-                    borderRadius: "15px",
-                    //margin: "0px 10px",
-                    padding: "0.4rem",
-                    transition: "background-color 0.3s ease",
-                    boxSizing: "border-box",
-                    "&:hover": {
-                      backgroundColor: "white",
-                      //border: "1px solid black",
-                      boxShadow: "0 0 6px #E19D59",
-                      "& > input": {
-                        backgroundColor: "#FFAE5C", // Màu nền của input khi hover
-                      },
-                    },
-                  }}
-                  onClick={() => onDelete(data.employeeID)}
-                >
-                  <input
-                    type="submit"
-                    value="Delete"
-                    style={{
-                      backgroundColor: "inherit",
-                      fontSize: "1.6rem",
+              {data.status === "ACTIVE" ? (
+                <StyledTableCell align="right">
+                  <Box
+                    sx={{
+                      backgroundColor: "#F6E1CC",
+                      justifyContent: "center",
+                      display: "flex",
+                      borderRadius: "15px",
+                      padding: "0.4rem",
+                      transition: "background-color 0.3s ease",
+                      boxSizing: "border-box",
                       "&:hover": {
-                        backgroundColor: "#inherit", // Màu nền khi hover
+                        backgroundColor: "white",
+                        boxShadow: "0 0 6px #E19D59",
+                        "& > input": {
+                          backgroundColor: "#FFAE5C", // Màu nền của input khi hover
+                        },
                       },
                     }}
                     onClick={() => onDelete(data.employeeID)}
-                  />
-                </Box>
-              </StyledTableCell>
+                    disable={data.status === "INACTIVE"}
+                  >
+                    <input
+                      type="submit"
+                      value="Delete"
+                      style={{
+                        backgroundColor: "inherit",
+                        fontSize: "1.6rem",
+                      }}
+                      onClick={() => onDelete(data.employeeID)}
+                    />
+                  </Box>
+                </StyledTableCell>
+              ) : (
+                <StyledTableCell align="right">
+                  <Box
+                    sx={{
+                      justifyContent: "center",
+                      display: "flex",
+                      padding: "0.4rem",
+                      fontSize: "1.6rem",
+                    }}
+                  >
+                    --
+                  </Box>
+                </StyledTableCell>
+              )}
+
+              <StyledTableCell align="right">{data.status}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
@@ -285,6 +315,7 @@ function CustomizedTables({ data, onDelete }) {
           open={true}
           employee={selectedEmployee}
           onClose={handleCloseEditModal}
+          getData={getData}
         />
       )}
     </TableContainer>

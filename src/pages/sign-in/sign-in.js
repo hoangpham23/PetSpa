@@ -9,7 +9,6 @@ import queryString from "query-string";
 
 // import SignIn from "./signIn";
 
-
 function SignIn() {
   localStorage.setItem("role", "");
   localStorage.setItem("account", "");
@@ -66,6 +65,8 @@ function SignIn() {
 
         if (response.data.role === "CUS") {
           navigate("/home-page");
+        } else if (response.data.role === "AD") {
+          navigate("/dashboard");
         }
       }
     } catch (error) {
@@ -129,7 +130,7 @@ function SignIn() {
                         />
                       </div>
                       <div className={styles.signIn_box}>
-                      <div className={styles.msg}>{msg}</div>
+                        <div className={styles.msg}>{msg}</div>
                         <div className={styles.forget_btn}>
                           <a
                             href="/forgot-password"

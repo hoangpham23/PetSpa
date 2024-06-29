@@ -6,19 +6,13 @@ import Modal from "@mui/material/Modal";
 import {
   Alert,
   FormControl,
-  FormControlLabel,
-  Grid,
   InputLabel,
   MenuItem,
-  Radio,
-  RadioGroup,
   Select,
   TextField,
 } from "@mui/material";
 import styles from "./EditStaff_style.module.css";
 import axios from "axios";
-import SuccessfullyScreen from "../../components/sucessfullyScreen/SucessfullyScreen";
-import CheckIcon from "@mui/icons-material/Check";
 
 const style = {
   position: "absolute",
@@ -33,14 +27,14 @@ const style = {
   fontSize: "1.6rem",
 };
 
-export default function EditStaffAccount({ open, employee, onClose }) {
-  //   const [open, setOpen] = React.useState(false);
-  //   const handleOpen = () => setOpen(true);
-  //   const handleClose = () => setOpen(false);
-  //   React.useEffect(() => {
-  //     handleOpen();
-  //   }, []);
+export default function EditStaffAccount({ open, employee, onClose, getData }) {
   const [editEmployee, setEditEmployee] = React.useState(employee);
+  const [errors, setError] = React.useState({
+    nameError: "",
+    phoneNumberError: "",
+    passwordError: "",
+    emailError: "",
+  });
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setEditEmployee({
@@ -48,43 +42,94 @@ export default function EditStaffAccount({ open, employee, onClose }) {
       [name]: value,
     });
   };
-  React.useEffect(() => {
-    console.log(employee, "ne");
-    console.log(editEmployee);
-  }, [editEmployee]);
 
+  React.useEffect(() => {
+    setEditEmployee(employee);
+  }, [employee]);
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhoneNumber = (phoneNumber) => {
+    const phoneRegex = /^\+?1?\d{10,15}$/;
+    return phoneRegex.test(phoneNumber);
+  };
   async function onSave() {
-    if (
-      !editEmployee.employeeName ||
-      !editEmployee.phoneNumber ||
-      !editEmployee.email ||
-      !editEmployee.password ||
-      !editEmployee.gender
-    ) {
-      alert("Please fill all filed before saving !!!");
+    const newErrors = {};
+
+    if (editEmployee.employeeName === "") {
+      newErrors.nameError = "EmployeeName is required";
+    }
+    if (editEmployee.password === "") {
+      newErrors.passwordError = "Password is required";
+    }
+    if (editEmployee.email === "") {
+      newErrors.emailError = "Email is required";
+    }
+    if (editEmployee.phoneNumber === "") {
+      newErrors.phoneNumberError = "Phone Number is required";
+    }
+    if (!validateEmail(editEmployee.email)) {
+      newErrors.emailError = "Email is invalid";
+    }
+    if (!validatePhoneNumber(editEmployee.phoneNumber)) {
+      newErrors.phoneNumberError = "Phone Number is invalid";
+    }
+
+    setError(newErrors);
+    if (Object.keys(newErrors).length > 0) {
       return;
     }
+
     try {
-      setTimeout(() => {
-        onClose();
-      }, 3000);
-      const response = await axios.put("http://localhost:8090/admin/update", {
-        employeeName: editEmployee.employeeName,
-        phoneNumber: editEmployee.phoneNumber,
-        email: editEmployee.email,
-        password: editEmployee.password,
-        employeeCIN: employee.employeeCIN,
-        gender: employee.gender,
-      });
+      const token = localStorage.getItem("token");
+      const response = await axios.put(
+        "http://localhost:8090/admin/update",
+        {
+          employeeID: employee.employeeID,
+          employeeName: editEmployee.employeeName,
+          email: editEmployee.email,
+          password: editEmployee.password,
+          phoneNumber: editEmployee.phoneNumber,
+          employeeCIN: employee.employeeCIN,
+          gender: employee.gender,
+          status: editEmployee.status,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       console.log(response);
-      // <SuccessfullyScreen />;
+      if (response.status === 200) {
+        setTimeout(() => {
+          getData();
+          onClose();
+          alert("Successfully updating");
+        }, 1000);
+      }
     } catch (error) {
       console.log(error);
+      console.log(error.response.data);
+      if (error.response.data.email) {
+        setError({
+          ...errors,
+          emailError: "Email already exists",
+        });
+      }
+      // if (error.response.data.phoneNumber) {
+      //   setError({
+      //     ...errors,
+      //     phoneNumberError: "Phone number already exists",
+      //   });
+      // }
     }
   }
+
   return (
     <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Modal
         open={open}
         onClose={onClose}
@@ -95,6 +140,7 @@ export default function EditStaffAccount({ open, employee, onClose }) {
           <Typography id="modal-modal-title" variant="h3">
             Information of employee
           </Typography>
+
           {/* NAME BOX */}
           <Box
             sx={{ display: "flex", alignItems: "center" }}
@@ -111,13 +157,17 @@ export default function EditStaffAccount({ open, employee, onClose }) {
               required
               id="filled-required"
               label="Required"
-              defaultValue={editEmployee.employeeName}
+              value={editEmployee.employeeName}
               variant="filled"
               className={styles.customTextField}
               name="employeeName"
               onChange={handleInputChange}
+              sx={{ width: "100%" }}
+              error={!!errors.nameError}
+              helperText={errors.nameError}
             />
           </Box>
+
           {/* PHONE NUMBER */}
           <Box
             sx={{ display: "flex", alignItems: "center" }}
@@ -134,11 +184,14 @@ export default function EditStaffAccount({ open, employee, onClose }) {
               required
               id="filled-required"
               label="Required"
-              defaultValue={editEmployee.phoneNumber}
+              value={editEmployee.phoneNumber}
               variant="filled"
               className={styles.customTextField}
               name="phoneNumber"
               onChange={handleInputChange}
+              sx={{ width: "100%" }}
+              error={!!errors.phoneNumberError}
+              helperText={errors.phoneNumberError}
             />
           </Box>
           {/* EMAIL BOX */}
@@ -157,14 +210,18 @@ export default function EditStaffAccount({ open, employee, onClose }) {
               required
               id="filled-required"
               label="Required"
-              defaultValue={editEmployee.email}
+              value={editEmployee.email}
               variant="filled"
               className={styles.customTextField}
               name="email"
               onChange={handleInputChange}
+              sx={{ width: "100%" }}
+              error={!!errors.emailError}
+              helperText={errors.emailError}
             />
           </Box>
-          {/* password */}
+
+          {/* PASSWORD */}
           <Box
             sx={{ display: "flex", alignItems: "center" }}
             className={styles.InfoItem}
@@ -180,16 +237,18 @@ export default function EditStaffAccount({ open, employee, onClose }) {
               required
               id="filled-required"
               label="Required"
-              defaultValue={editEmployee.password}
+              value={editEmployee.password}
               variant="filled"
               className={styles.customTextField}
               name="password"
               onChange={handleInputChange}
+              sx={{ width: "100%" }}
+              error={!!errors.passwordError}
+              helperText={errors.passwordError}
             />
           </Box>
-          {/* gender */}
-
-          {/* <Box
+          {/* STATUS */}
+          <Box
             sx={{ display: "flex", alignItems: "center", fontSize: "1.6rem" }}
             className={styles.InfoItem}
           >
@@ -198,14 +257,14 @@ export default function EditStaffAccount({ open, employee, onClose }) {
               sx={{ mt: 2, marginRight: 2, fontSize: "1.6rem" }}
               className={styles.customTypography}
             >
-              Gender
+              STATUS
             </Typography>
             <FormControl variant="filled" className={styles.customTextField}>
-              <InputLabel id="gender-label">Gender</InputLabel>
+              <InputLabel id="status-label">Status</InputLabel>
               <Select
-                labelId="gender-label"
-                name="gender"
-                value={editEmployee.gender}
+                labelId="status-label"
+                name="status"
+                value={editEmployee.status}
                 onChange={handleInputChange}
                 sx={{ fontSize: "1.6rem", width: "100%" }}
                 MenuProps={{
@@ -217,23 +276,22 @@ export default function EditStaffAccount({ open, employee, onClose }) {
                 }}
               >
                 <MenuItem
-                  value="Male"
-                  sx={{
-                    fontSize: "1.6rem",
-                    textAlign: "left",
-                  }}
-                >
-                  Male
-                </MenuItem>
-                <MenuItem
-                  value="Female"
+                  value="ACTIVE"
                   sx={{ fontSize: "1.6rem", textAlign: "left" }}
                 >
-                  Female
+                  ACTIVE
+                </MenuItem>
+                <MenuItem
+                  value="INACTIVE"
+                  sx={{ fontSize: "1.6rem", textAlign: "left" }}
+                >
+                  INACTIVE
                 </MenuItem>
               </Select>
             </FormControl>
-          </Box> */}
+          </Box>
+
+          {/* SUBMIT BUTTONS */}
           <Box
             sx={{
               justifyContent: "end",
@@ -246,21 +304,19 @@ export default function EditStaffAccount({ open, employee, onClose }) {
               variant="contained"
               sx={{
                 fontSize: "1.6rem",
-                margin: "3rem 1rem",
-                boxSizing: "content-box",
+                margin: "3rem 1rem 1rem 1rem",
+                backgroundColor: "#1976d2",
               }}
-              onClick={() => {
-                onSave();
-              }}
+              onClick={onSave}
             >
               Save
             </Button>
             <Button
-              variant="outlined"
+              variant="contained"
               sx={{
                 fontSize: "1.6rem",
-                margin: "3rem 1rem",
-                boxSizing: "content-box",
+                margin: "3rem 1rem 1rem 1rem",
+                backgroundColor: "#d32f2f",
               }}
               onClick={onClose}
             >
