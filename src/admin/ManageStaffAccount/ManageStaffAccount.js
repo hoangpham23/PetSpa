@@ -75,7 +75,7 @@ function ManageStaffAccount() {
       );
       console.log((await response).status);
       if (response.status === 200) {
-        getData();
+        getData(" ");
         //window.location.reload();
       }
     } catch (error) {

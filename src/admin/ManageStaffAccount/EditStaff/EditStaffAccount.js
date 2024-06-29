@@ -105,7 +105,7 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
       console.log(response);
       if (response.status === 200) {
         setTimeout(() => {
-          getData();
+          getData(" ");
           onClose();
           alert("Successfully updating");
         }, 1000);
