@@ -43,9 +43,6 @@ public class Appointments {
     @Column(name = "Status", length = 20)
     private String status;
 
-    @Lob
-    @Column(name = "Note")
-    private String note;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PetID")

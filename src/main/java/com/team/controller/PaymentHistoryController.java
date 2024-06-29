@@ -25,8 +25,8 @@ public class PaymentHistoryController {
     public ResponseEntity<?> showPaymentHistory(@RequestBody Map<String, String> data) {
         try {
             int customerID = Integer.parseInt(data.get("customerID"));
-            List<PaymentHistoryDTO> listHistory = paymentHistoryService.getAllPaymentHistory(customerID);
-            return new ResponseEntity<>(listHistory, HttpStatus.OK);
+            Map<String, List<PaymentHistoryDTO>> result = paymentHistoryService.getPaymentHistory(customerID);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (RuntimeException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No payment history found");
         }

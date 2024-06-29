@@ -163,12 +163,12 @@ public class PaymentController {
                 int id = Integer.parseInt(customerID);
                 paymentService.changePaymentStatus(id, paymentStatus);
                 paymentService.savePaymentHistory(id, totalAmount, paymentMethod, appointmentID);
-                paymentService.sendEmail(id);
+//                paymentService.sendEmail(id);
                 employeeService.assignSchedule(appointmentID);
                 returnUrl = PAYMENT_SUCCESS;
             }
 
-        } catch (PayPalRESTException e) {
+        }catch (Exception e) {
             log.error("Error occurred:: ", e);
         }
         return new RedirectView(returnUrl);

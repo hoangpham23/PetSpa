@@ -13,7 +13,7 @@ public class PaymentHistoryDTO {
 
     private String paymentTime;
     private double amount;
-    private List<String> listService;
+    private List<AppointServiceDTO> listService;
     private String petName;
 
 }

@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -32,23 +33,25 @@ public class EmployeeService {
         this.appointmentRepository = appointmentRepository;
     }
 
-    public List<EmployeeDTO> showAllEmployees() {
-        List<Employees> employeesList = employeeRepository.findAllByStatus("ACTIVE");
-        List<EmployeeDTO> result = new ArrayList<>();
-        for (Employees employee : employeesList) {
-            Accounts accounts = accountRepository.findById(employee.getId()).get();
-            EmployeeDTO dto = new EmployeeDTO();
-            dto.setEmployeeID(employee.getId());
-            dto.setEmployeeName(employee.getEmployeeName());
-            dto.setEmail(employee.getEmail());
-            dto.setPassword(accounts.getPassword());
-            dto.setPhoneNumber(employee.getPhoneNumber());
-            dto.setEmployeeCIN(employee.getEmployeeCIN());
-            dto.setGender(employee.getGender());
-            result.add(dto);
-        }
-
-        return result;
+    public List<EmployeeDTO> showAllEmployees(String search) {
+        return employeeRepository.findAllByEmployeeNameContaining(search).stream()
+                .filter(employees -> "ACTIVE".equals(employees.getStatus()) || "INACTIVE".equals(employees.getStatus()))
+                .sorted(Comparator.comparing((Employees employees) -> "INACTIVE".equals(employees.getStatus()))
+                        .thenComparing(Employees::getId))
+                .map(employees -> {
+                    Accounts accounts = accountRepository.findById(employees.getId()).orElseThrow(() -> new RuntimeException("Account not found"));
+                    EmployeeDTO dto = new EmployeeDTO();
+                    dto.setEmployeeID(employees.getId());
+                    dto.setEmployeeName(employees.getEmployeeName());
+                    dto.setEmail(employees.getEmail());
+                    dto.setPassword(accounts.getPassword());
+                    dto.setPhoneNumber(employees.getPhoneNumber());
+                    dto.setEmployeeCIN(employees.getEmployeeCIN());
+                    dto.setGender(employees.getGender());
+                    dto.setStatus(employees.getStatus());
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 
     public Employees deleteEmployee(Integer employeeID) {
@@ -146,7 +149,7 @@ public class EmployeeService {
         StringTokenizer tokenizer = new StringTokenizer(appointmentID, ",");
         while (tokenizer.hasMoreTokens()) {
             Appointments appointment = appointmentRepository.findById(Integer.parseInt(tokenizer.nextToken())).get();
-            appointment.setStatus("Schedule");
+            appointment.setStatus("Scheduled");
             Employees employees = appointment.getEmployees();
             EmployeeSchedule employeeSchedule = new EmployeeSchedule();
             employeeSchedule.setEmployees(employees);
@@ -201,8 +204,8 @@ public class EmployeeService {
             }
         }
 
-        if (employeeDTO.getEmployeeCIN() != null && !employeeDTO.getEmployeeCIN().equals(employee.getEmployeeCIN())){
-            if (employeeRepository.existsByEmployeeCIN(employeeDTO.getEmployeeCIN())){
+        if (employeeDTO.getEmployeeCIN() != null && !employeeDTO.getEmployeeCIN().equals(employee.getEmployeeCIN())) {
+            if (employeeRepository.existsByEmployeeCIN(employeeDTO.getEmployeeCIN())) {
                 errors.put("employeeCIN", "EmployeeCIN already exists");
             }
         }
@@ -224,6 +227,9 @@ public class EmployeeService {
         }
         if (employeeDTO.getPassword() != null) {
             accounts.setPassword(employeeDTO.getPassword());
+        }
+        if (employeeDTO.getStatus() != null){
+            employee.setStatus(employeeDTO.getStatus());
         }
 
         employeeRepository.save(employee);

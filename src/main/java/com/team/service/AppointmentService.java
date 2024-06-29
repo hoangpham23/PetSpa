@@ -56,7 +56,7 @@ public class AppointmentService {
                 String appointmentTime = ((Timestamp) row[0]).toString().replace(".0", "");
                 Integer count = (Integer) row[1];
                 // return unavailable appointment
-                if (count == AVAILABLE_SLOT) {
+                if (count >= AVAILABLE_SLOT) {
                     result.add(new AppointmentDTO(appointmentTime, count));
                 }
             }
