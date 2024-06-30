@@ -24,6 +24,7 @@ import java.nio.file.Paths;
 
 @Service
 public class ServiceImagesService {
+
     private final ServicesImagesRepository servicesImagesRepository;
     private final ServiceRepository serviceRepository;
     private final FeedbackRepository feedbackRepository;
@@ -89,6 +90,21 @@ public class ServiceImagesService {
     private final String UPLOAD_DIR = "uploads/";
 
     public Services addService(AddServiceDTO serviceDTO) throws Exception {
+        // Check if image with the same name already exists
+        MultipartFile image = serviceDTO.getImage();
+        // Check if image is provided
+        if (image == null || image.isEmpty()) {
+            throw new Exception("This image is invalid!");
+        }
+
+        // Check if image with the same name already exists
+        String fileName = image.getOriginalFilename();
+        Optional<ServiceImages> existingImage = servicesImagesRepository.findByImageURL(generateFileUrl(fileName));
+        if (existingImage.isPresent()) {
+            throw new Exception("This image is invalid!");
+        }
+
+        // Save the service
         Services service = new Services();
         service.setServiceName(serviceDTO.getServiceName());
         service.setDescription(serviceDTO.getDescription());
@@ -97,18 +113,16 @@ public class ServiceImagesService {
         Services savedService = serviceRepository.save(service);
 
         // Save the image
-        MultipartFile image = serviceDTO.getImage();
-        if (image != null && !image.isEmpty()) {
-            String fileName = saveImage(image);
-            String fileUrl = generateFileUrl(fileName);
-            ServiceImages serviceImages = new ServiceImages();
-            serviceImages.setServiceID(savedService);
-            serviceImages.setImageURL(fileUrl);
-            servicesImagesRepository.save(serviceImages);
-        }
+        String savedFileName = saveImage(image);
+        String fileUrl = generateFileUrl(savedFileName);
+        ServiceImages serviceImages = new ServiceImages();
+        serviceImages.setServiceID(savedService);
+        serviceImages.setImageURL(fileUrl);
+        servicesImagesRepository.save(serviceImages);
 
         return savedService;
     }
+
 
     private String saveImage(MultipartFile imageFile) throws IOException {
         String filename = imageFile.getOriginalFilename();
@@ -128,5 +142,6 @@ public class ServiceImagesService {
     private String generateFileUrl(String fileName) {
         return "http://localhost:8090/" + UPLOAD_DIR + fileName;
     }
+
 }
 
