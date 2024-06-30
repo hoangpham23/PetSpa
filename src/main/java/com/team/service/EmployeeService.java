@@ -45,8 +45,8 @@ public class EmployeeService {
                     dto.setEmployeeName(employees.getEmployeeName());
                     dto.setEmail(employees.getEmail());
                     dto.setPassword(accounts.getPassword());
-                    dto.setPhoneNumber(employees.getPhoneNumber());
-                    dto.setEmployeeCIN(employees.getEmployeeCIN());
+                    dto.setPhoneNumber(formatPhoneNumber(employees.getPhoneNumber()));
+                    dto.setEmployeeCIN(formatCIN(employees.getEmployeeCIN()));
                     dto.setGender(employees.getGender());
                     dto.setStatus(employees.getStatus());
                     return dto;
@@ -67,11 +67,12 @@ public class EmployeeService {
 
     public Map<String, String> createEmployee(Map<String, String> data) {
         String name = data.get("name");
+        String password = data.get("password");
         String phoneNumber = data.get("phoneNumber");
         String email = data.get("email");
         String employeeCIN = data.get("employeeCIN");
         String gender = data.get("gender");
-        String defaultPassword = "1234";
+//        String defaultPassword = "1234";
         String role = "EM";
         Map<String, String> error = new HashMap<>();
         boolean alreadyExists = false;
@@ -91,15 +92,16 @@ public class EmployeeService {
         if (alreadyExists) {
             return error;
         }
-        Accounts accounts = accountService.createAccount(email, defaultPassword, role);
+        Accounts accounts = accountService.createAccount(email, password, role);
         Employees employees = new Employees();
         employees.setId(accounts.getAccountID());
         employees.setEmployeeName(name);
         employees.setEmail(email);
-        employees.setPhoneNumber(phoneNumber);
-        employees.setEmployeeCIN(employeeCIN);
+        employees.setPhoneNumber(formatPhoneNumber(phoneNumber));
+        employees.setEmployeeCIN(formatCIN(employeeCIN));
         employees.setGender(gender);
         employees.setStatus("ACTIVE");
+        employeeRepository.save(employees);
 
         return null;
     }
@@ -220,7 +222,10 @@ public class EmployeeService {
             employee.setEmployeeName(employeeDTO.getEmployeeName());
         }
         if (employeeDTO.getPhoneNumber() != null) {
-            employee.setPhoneNumber(employeeDTO.getPhoneNumber());
+            employee.setPhoneNumber(formatPhoneNumber(employeeDTO.getPhoneNumber()));
+        }
+        if (employeeDTO.getEmployeeCIN() != null){
+            employee.setEmployeeCIN(formatCIN(employeeDTO.getEmployeeCIN()));
         }
         if (employeeDTO.getEmail() != null) {
             employee.setEmail(employeeDTO.getEmail());
@@ -236,6 +241,19 @@ public class EmployeeService {
         accountRepository.save(accounts);
 
         return errors; // Will be empty if update was successful
+    }
+
+    private String formatPhoneNumber(String phoneNumber) {
+        StringBuilder formattedPhoneNumber = new StringBuilder(phoneNumber);
+        formattedPhoneNumber.insert(3, "-").insert(7, "-");
+        return formattedPhoneNumber.toString();
+    }
+
+    private String formatCIN(String cin){
+        StringBuilder formattedCIN = new StringBuilder(cin);
+        formattedCIN.insert(2, "-").insert(6, "-").insert(10, "-");
+        return formattedCIN.toString();
+
     }
 
 }

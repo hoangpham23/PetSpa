@@ -3,14 +3,19 @@ package com.team.service;
 import com.team.dto.AppointmentDTO;
 import com.team.dto.AppointmentRequestDTO;
 import com.team.dto.ManageAppointmentDTO;
+import com.team.dto.RescheduleDTO;
 import com.team.model.*;
 import com.team.repository.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,6 +29,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AppointmentService {
 
+    private final EmployeeScheduleRepository employeeScheduleRepository;
     @Setter
     @Getter
     private int AVAILABLE_SLOT = 4;
@@ -35,7 +41,6 @@ public class AppointmentService {
     private final CustomerRepository customerRepository;
     private final PetRepository petRepository;
     private final ServiceRepository serviceRepository;
-
 
 
     // this function return not available slots of the next 3 days. Don't include the day when the customer in the website
@@ -170,6 +175,33 @@ public class AppointmentService {
         } else {
             return false;
         }
+    }
+
+
+    public void rescheduleAppointment(RescheduleDTO request) throws Exception {
+        Appointments appointments = appointmentRepository.findById(request.getAppointmentID())
+                .orElseThrow(() -> new Exception("Appointment not found"));
+        Employees employees = employeeRepository.findById(appointments.getEmployees().getId())
+                .orElseThrow(() -> new Exception("Employee not found"));
+        EmployeeSchedule employeeSchedule = employeeScheduleRepository.findByAppointments(appointments);
+        String[] time = request.getAppointmentTime().split(" ");
+        LocalDate workDate = LocalDate.parse(time[0], FORMATTER_DATE);
+        LocalTime startTime = LocalTime.parse(time[1]);
+        boolean checkEmployeeFree = employeeScheduleRepository.existsByEmployeesIDAndWorkDateAndStartTime(employees.getId(), workDate, startTime);
+        appointments.setStatus("Rescheduled");
+        appointments.setAppointmentTime(Timestamp.valueOf(request.getAppointmentTime()));
+        int employeeID = employees.getId();
+        if (!checkEmployeeFree) {
+            employeeID = findLastEmployee(LocalDateTime.parse(request.getAppointmentTime().replace(".000", ""), FORMATTER));
+        }
+        appointments.setEmployees(employeeRepository.findById(employeeID).get());
+        employeeSchedule.setEmployees(employeeRepository.findById(employeeID).get());
+        employeeSchedule.setWorkDate(workDate);
+        employeeSchedule.setStartTime(startTime);
+        employeeSchedule.setEndTime(startTime.plusHours(1));
+        employeeSchedule.setAppointments(appointments);
+        appointmentRepository.save(appointments);
+        employeeScheduleRepository.save(employeeSchedule);
     }
 
 }
