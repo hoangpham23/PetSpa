@@ -3,27 +3,36 @@ package com.team.controller;
 import com.team.dto.AddServiceDTO;
 import com.team.model.Services;
 import com.team.service.ServiceImagesService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/add-service")
 public class AddServiceController {
 
-    @Autowired
-    private ServiceImagesService serviceImagesService;
+    private final ServiceImagesService serviceImagesService;
+
+    public AddServiceController(ServiceImagesService serviceImagesService) {
+        this.serviceImagesService = serviceImagesService;
+    }
 
     @PostMapping
-    public Services addService(@RequestParam("serviceName") String serviceName,
-                               @RequestParam("description") String description,
-                               @RequestParam("price") Double price,
-                               @RequestParam("image") MultipartFile image) throws Exception {
-        AddServiceDTO addserviceDTO = new AddServiceDTO();
-        addserviceDTO.setServiceName(serviceName);
-        addserviceDTO.setDescription(description);
-        addserviceDTO.setPrice(price);
-        addserviceDTO.setImage(image);
-        return serviceImagesService.addService(addserviceDTO);
+    public ResponseEntity<?> addService(@RequestParam("serviceName") String serviceName,
+                                        @RequestParam("description") String description,
+                                        @RequestParam("price") Double price,
+                                        @RequestParam("image") MultipartFile image) {
+        try {
+            AddServiceDTO addServiceDTO = new AddServiceDTO();
+            addServiceDTO.setServiceName(serviceName);
+            addServiceDTO.setDescription(description);
+            addServiceDTO.setPrice(price);
+            addServiceDTO.setImage(image);
+            Services service = serviceImagesService.addService(addServiceDTO);
+            return new ResponseEntity<>(service, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }
