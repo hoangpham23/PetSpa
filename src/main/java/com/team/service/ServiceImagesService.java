@@ -12,7 +12,9 @@ import com.team.repository.ServicesImagesRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -41,32 +43,11 @@ public class ServiceImagesService {
             Optional<Services> serviceOpt = Optional.ofNullable(image.getServiceID());
             if (serviceOpt.isPresent()) {
                 Services services = serviceOpt.get();
-                if ("ACTIVE".equals(services.getStatus())) {
-                    result.add(new ServiceImageDTO(image.getImageID(), services.getId(), image.getImageURL(), services.getServiceName()));
-                }
+                result.add(new ServiceImageDTO(image.getImageID(), services.getId(), image.getImageURL(), services.getServiceName()));
             }
         }
         return result;
     }
-
-    public List<ManageServiceDTO> getServiceInformation() {
-        List<ServiceImages> images = servicesImagesRepository.findAll();
-        List<ManageServiceDTO> result = images.stream()
-                .map(image -> {
-                    Optional<Services> serviceOpt = Optional.ofNullable(image.getServiceID());
-                    if (serviceOpt.isPresent()) {
-                        Services services = serviceOpt.get();
-                        return new ManageServiceDTO(image.getImageID(), services.getId(), image.getImageURL(), services.getServiceName(), services.getPrice(), services.getStatus());
-                    }
-                    return null;
-                })
-                .filter(Objects::nonNull)
-                .sorted(Comparator.comparing(ManageServiceDTO::getStatus))
-                .collect(Collectors.toList());
-
-        return result;
-    }
-
     public List<ChooseServiceDTO> chooseServicePage() {
         List<ServiceImages> images = servicesImagesRepository.findAll();
         List<ChooseServiceDTO> result = new ArrayList<>();
@@ -75,9 +56,7 @@ public class ServiceImagesService {
             Optional<Services> serviceOpt = Optional.ofNullable(image.getServiceID());
             if (serviceOpt.isPresent()) {
                 Services services = serviceOpt.get();
-                if ("ACTIVE".equals(services.getStatus())) {
-                    result.add(new ChooseServiceDTO(services.getId(), services.getServiceName(), image.getImageURL(), services.getPrice()));
-                }
+                result.add(new ChooseServiceDTO(services.getId(),services.getServiceName(),image.getImageURL(), services.getPrice()));
             }
         }
         return result;
@@ -124,18 +103,12 @@ public class ServiceImagesService {
         if (existingImage.isPresent()) {
             throw new Exception("This image is invalid!");
         }
-        // Check if service with the same name already exists
-        Services existingService = getServiceByName(serviceDTO.getServiceName());
-        if (existingService != null) {
-            throw new Exception("A service with this name already exists!");
-        }
 
         // Save the service
         Services service = new Services();
         service.setServiceName(serviceDTO.getServiceName());
         service.setDescription(serviceDTO.getDescription());
         service.setPrice(serviceDTO.getPrice());
-        service.setStatus("ACTIVE");
 
         Services savedService = serviceRepository.save(service);
 
@@ -166,91 +139,9 @@ public class ServiceImagesService {
         return filename;
     }
 
-    public Services updateService(Services service) {
-        // update the service in the database
-        return serviceRepository.save(service);
-    }
-
-    public ServiceImages updateServiceImage(ServiceImages serviceImages) {
-        // update the service image in the database
-        return servicesImagesRepository.save(serviceImages);
-    }
-
-    public Services getServiceById(Integer serviceId) {
-        return serviceRepository.findById(serviceId).orElse(null);
-    }
-
-    public ServiceImages getServiceImageByService(Services service) {
-        return servicesImagesRepository.findByServiceID(service).stream().findFirst().orElse(null);
-    }
-
-
-    public Services editService(Integer serviceId, String serviceName, String description, Double price, MultipartFile image) throws Exception {
-        Services service = getServiceById(serviceId);
-        // Check if service with the same name already exists
-        Optional<Services> existingServiceOpt = serviceRepository.findByServiceName(serviceName);
-        if (existingServiceOpt.isPresent()) {
-            Services existingService = existingServiceOpt.get();
-            if (existingService.getId().equals(serviceId)) {
-                throw new Exception("A service with this name already exists!");
-            }
-        }
-
-        // Check if image with the same URL already exists
-        String fileName = image.getOriginalFilename();
-        Optional<ServiceImages> existingImage = servicesImagesRepository.findByImageURL(fileName);
-        if (existingImage.isPresent()) {
-            throw new Exception("This image is invalid!");
-        }
-
-
-        if (service != null) {
-            service.setServiceName(serviceName);
-            service.setDescription(description);
-            service.setPrice(price);
-
-            if (!image.isEmpty()) {
-                String savedFileName = saveImage(image);
-                String fileUrl = generateFileUrl(savedFileName);
-
-
-                ServiceImages serviceImages = getServiceImageByService(service);
-                serviceImages.setImageURL(fileUrl);
-                updateServiceImage(serviceImages);
-            }
-
-            return updateService(service);
-        } else {
-            throw new Exception("Service not found");
-        }
-    }
-
     private String generateFileUrl(String fileName) {
         return "http://localhost:8090/" + UPLOAD_DIR + fileName;
     }
 
-    public Services getServiceByName(String serviceName) {
-        return serviceRepository.findByServiceName(serviceName).orElse(null);
-    }
-
-    public List<ManageServiceDTO> searchServiceByName(String serviceName) {
-        List<Services> services = serviceRepository.findAllByServiceNameContaining(serviceName);
-        return services.stream()
-                .map(service -> {
-                    ServiceImages serviceImage = servicesImagesRepository.findByServiceID(service).stream().findFirst().orElse(null);
-                    String imageUrl = serviceImage != null ? serviceImage.getImageURL() : null;
-                    return new ManageServiceDTO(serviceImage.getImageID(), service.getId(), imageUrl, service.getServiceName(), service.getPrice(), service.getStatus());
-                })
-                .sorted(Comparator.comparing(ManageServiceDTO::getStatus))
-                .collect(Collectors.toList());
-    }
-
-    public Services deactivateService(Integer serviceId) {
-        Services service = getServiceById(serviceId);
-        if (service != null) {
-            service.setStatus("INACTIVE");
-            return updateService(service);
-        }
-        return null;
-    }
 }
+
