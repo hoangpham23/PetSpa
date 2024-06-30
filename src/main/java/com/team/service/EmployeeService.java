@@ -7,6 +7,7 @@ import com.team.repository.AppointmentRepository;
 import com.team.repository.EmployeeRepository;
 import com.team.repository.EmployeeScheduleRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -68,9 +69,9 @@ public class EmployeeService {
     public Map<String, String> createEmployee(Map<String, String> data) {
         String name = data.get("name");
         String password = data.get("password");
-        String phoneNumber = data.get("phoneNumber");
+        String phoneNumber = formatPhoneNumber(data.get("phoneNumber"));
         String email = data.get("email");
-        String employeeCIN = data.get("employeeCIN");
+        String employeeCIN = formatCIN(data.get("employeeCIN"));
         String gender = data.get("gender");
 //        String defaultPassword = "1234";
         String role = "EM";
@@ -179,6 +180,7 @@ public class EmployeeService {
         return null;
     }
 
+    @Transactional
     public Map<String, String> updateEmployee(EmployeeDTO employeeDTO) {
         Map<String, String> errors = new HashMap<>();
         Employees employee;
@@ -195,19 +197,21 @@ public class EmployeeService {
         }
 
         if (employeeDTO.getPhoneNumber() != null && !employeeDTO.getPhoneNumber().equals(employee.getPhoneNumber())) {
-            if (employeeRepository.existsByPhoneNumber(employeeDTO.getPhoneNumber())) {
+            String phoneNumber = formatPhoneNumber(employeeDTO.getPhoneNumber());
+            if (employeeRepository.existsByPhoneNumberAndIdNot(phoneNumber, employeeDTO.getEmployeeID())) {
                 errors.put("phoneNumber", "Phone number already exists");
             }
         }
 
         if (employeeDTO.getEmail() != null && !employeeDTO.getEmail().equals(employee.getEmail())) {
-            if (employeeRepository.existsByEmail(employeeDTO.getEmail())) {
+            if (employeeRepository.existsByEmailAndIdNot(employee.getEmail(), employeeDTO.getEmployeeID())) {
                 errors.put("email", "Email already exists");
             }
         }
 
         if (employeeDTO.getEmployeeCIN() != null && !employeeDTO.getEmployeeCIN().equals(employee.getEmployeeCIN())) {
-            if (employeeRepository.existsByEmployeeCIN(employeeDTO.getEmployeeCIN())) {
+            String employeeCIN = formatCIN(employeeDTO.getEmployeeCIN());
+            if (employeeRepository.existsByEmployeeCINAndIdNot(employeeCIN, employeeDTO.getEmployeeID())) {
                 errors.put("employeeCIN", "EmployeeCIN already exists");
             }
         }
@@ -237,8 +241,8 @@ public class EmployeeService {
             employee.setStatus(employeeDTO.getStatus());
         }
 
-        employeeRepository.save(employee);
         accountRepository.save(accounts);
+        employeeRepository.save(employee);
 
         return errors; // Will be empty if update was successful
     }
