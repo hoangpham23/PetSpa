@@ -37,6 +37,7 @@ public class AppointmentService {
     private final CustomerRepository customerRepository;
     private final PetRepository petRepository;
     private final ServiceRepository serviceRepository;
+    private final FeedbackRepository feedbackRepository;
 
 
     // this function return not available slots of the next 3 days. Don't include the day when the customer in the website
@@ -167,6 +168,17 @@ public class AppointmentService {
             Appointments appointment = appointmentOpt.get();
             appointment.setStatus(status);
             appointmentRepository.save(appointment);
+
+            if ("Completed".equals(status)) {
+                Feedback feedback = new Feedback();
+                feedback.setAppointmentID(appointment);
+                feedback.setCustomerID(appointment.getCustomer());
+                feedback.setEmployeeID(appointment.getEmployees());
+                feedback.setServiceID(appointment.getServices());
+                feedback.setStatus("Have not feedback");
+                feedbackRepository.save(feedback);
+            }
+
             return true;
         } else {
             return false;
