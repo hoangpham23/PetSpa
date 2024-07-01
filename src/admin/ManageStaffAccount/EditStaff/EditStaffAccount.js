@@ -34,6 +34,7 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
     phoneNumberError: "",
     passwordError: "",
     emailError: "",
+    employeeCINError: "",
   });
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -55,6 +56,10 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
     const phoneRegex = /^\+?1?\d{10,15}$/;
     return phoneRegex.test(phoneNumber);
   };
+  const validateEmployeeCIN = (employeeCIN) => {
+    const cinRegex = /^\d{12}$/;
+    return cinRegex.test(employeeCIN);
+  };
   async function onSave() {
     const newErrors = {};
 
@@ -70,11 +75,17 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
     if (editEmployee.phoneNumber === "") {
       newErrors.phoneNumberError = "Phone Number is required";
     }
+    if (editEmployee.employeeCIN === "") {
+      newErrors.employeeCINError = "Employee CIN is required";
+    }
     if (!validateEmail(editEmployee.email)) {
       newErrors.emailError = "Email is invalid";
     }
     if (!validatePhoneNumber(editEmployee.phoneNumber)) {
       newErrors.phoneNumberError = "Phone Number is invalid";
+    }
+    if (!validateEmployeeCIN(editEmployee.employeeCIN)) {
+      newErrors.employeeCINError = "CIN must have 12 numbers";
     }
 
     setError(newErrors);
@@ -92,8 +103,8 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
           email: editEmployee.email,
           password: editEmployee.password,
           phoneNumber: editEmployee.phoneNumber,
-          employeeCIN: employee.employeeCIN,
-          gender: employee.gender,
+          employeeCIN: editEmployee.employeeCIN,
+          gender: editEmployee.gender,
           status: editEmployee.status,
         },
         {
@@ -123,6 +134,12 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
         setError({
           ...errors,
           phoneNumberError: "Phone number already exists",
+        });
+      }
+      if (error.response.data.employeeCIN) {
+        setError({
+          ...errors,
+          phoneNumberError: "Employee CIN already exists",
         });
       }
     }
@@ -163,6 +180,9 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
               name="employeeName"
               onChange={handleInputChange}
               sx={{ width: "100%" }}
+              InputProps={{
+                sx: { fontSize: "1.6rem" },
+              }}
               error={!!errors.nameError}
               helperText={errors.nameError}
             />
@@ -190,6 +210,9 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
               name="phoneNumber"
               onChange={handleInputChange}
               sx={{ width: "100%" }}
+              InputProps={{
+                sx: { fontSize: "1.6rem" },
+              }}
               error={!!errors.phoneNumberError}
               helperText={errors.phoneNumberError}
             />
@@ -216,6 +239,9 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
               name="email"
               onChange={handleInputChange}
               sx={{ width: "100%" }}
+              InputProps={{
+                sx: { fontSize: "1.6rem" },
+              }}
               error={!!errors.emailError}
               helperText={errors.emailError}
             />
@@ -243,9 +269,84 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
               name="password"
               onChange={handleInputChange}
               sx={{ width: "100%" }}
+              InputProps={{
+                sx: { fontSize: "1.6rem" },
+              }}
               error={!!errors.passwordError}
               helperText={errors.passwordError}
             />
+          </Box>
+          {/* CIN */}
+          <Box
+            sx={{ display: "flex", alignItems: "center" }}
+            className={styles.InfoItem}
+          >
+            <Typography
+              id="modal-modal-description"
+              sx={{ mt: 2, marginRight: 2, fontSize: "1.6rem" }}
+              className={styles.customTypography}
+            >
+              EmployeeCIN
+            </Typography>
+            <TextField
+              required
+              id="filled-required"
+              label="Required"
+              value={editEmployee.employeeCIN}
+              variant="filled"
+              className={styles.customTextField}
+              name="employeeCIN"
+              onChange={handleInputChange}
+              sx={{ width: "100%" }}
+              InputProps={{
+                sx: { fontSize: "1.6rem" },
+              }}
+              error={!!errors.employeeCINError}
+              helperText={errors.employeeCINError}
+            />
+          </Box>
+          {/* gender */}
+          <Box
+            sx={{ display: "flex", alignItems: "center", fontSize: "1.6rem" }}
+            className={styles.InfoItem}
+          >
+            <Typography
+              id="modal-modal-description"
+              sx={{ mt: 2, marginRight: 2, fontSize: "1.6rem" }}
+              className={styles.customTypography}
+            >
+              Gender
+            </Typography>
+            <FormControl variant="filled" className={styles.customTextField}>
+              <InputLabel id="gender-label">Gender</InputLabel>
+              <Select
+                labelId="gender-label"
+                name="gender"
+                value={editEmployee.gender}
+                onChange={handleInputChange}
+                sx={{ fontSize: "1.6rem", width: "100%", textAlign: "left" }}
+                MenuProps={{
+                  PaperProps: {
+                    sx: {
+                      textAlign: "left",
+                    },
+                  },
+                }}
+              >
+                <MenuItem
+                  value="Male"
+                  sx={{ fontSize: "1.6rem", textAlign: "left" }}
+                >
+                  Male
+                </MenuItem>
+                <MenuItem
+                  value="Female"
+                  sx={{ fontSize: "1.6rem", textAlign: "left" }}
+                >
+                  Female
+                </MenuItem>
+              </Select>
+            </FormControl>
           </Box>
           {/* STATUS */}
           <Box
@@ -254,7 +355,11 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
           >
             <Typography
               id="modal-modal-description"
-              sx={{ mt: 2, marginRight: 2, fontSize: "1.6rem" }}
+              sx={{
+                mt: 2,
+                marginRight: 2,
+                fontSize: "1.6rem",
+              }}
               className={styles.customTypography}
             >
               STATUS
@@ -266,7 +371,7 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
                 name="status"
                 value={editEmployee.status}
                 onChange={handleInputChange}
-                sx={{ fontSize: "1.6rem", width: "100%" }}
+                sx={{ fontSize: "1.6rem", width: "100%", textAlign: "left" }}
                 MenuProps={{
                   PaperProps: {
                     sx: {

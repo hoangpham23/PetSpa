@@ -36,6 +36,7 @@ function CreateStaff({ open, onClose, getData }) {
     name: "",
     phoneNumber: "",
     email: "",
+    password: "",
     employeeCIN: "",
     gender: "",
   });
@@ -103,10 +104,15 @@ function CreateStaff({ open, onClose, getData }) {
       );
       console.log(response.status);
       if (response.status === 201) {
-        getData();
+        setTimeout(() => {
+          getData(" ");
+          onClose();
+          alert("Successfully Create");
+        }, 1000);
       }
     } catch (error) {
       console.log(error);
+      console.log(error.response.data);
       if (error.response.data.errorEmail) {
         setErrors({
           ...errors,
@@ -162,6 +168,9 @@ function CreateStaff({ open, onClose, getData }) {
               name="name"
               onChange={handleInputChange}
               sx={{ width: "100%" }}
+              InputProps={{
+                sx: { fontSize: "1.6rem" },
+              }}
               error={!!errors.nameError}
               helperText={errors.nameError}
             />
@@ -189,6 +198,9 @@ function CreateStaff({ open, onClose, getData }) {
               name="phoneNumber"
               onChange={handleInputChange}
               sx={{ width: "100%" }}
+              InputProps={{
+                sx: { fontSize: "1.6rem" },
+              }}
               error={!!errors.phoneNumberError}
               helperText={errors.phoneNumberError}
             />
@@ -215,13 +227,16 @@ function CreateStaff({ open, onClose, getData }) {
               name="email"
               onChange={handleInputChange}
               sx={{ width: "100%" }}
+              InputProps={{
+                sx: { fontSize: "1.6rem" },
+              }}
               error={!!errors.emailError}
               helperText={errors.emailError}
             />
           </Box>
 
           {/* PASSWORD */}
-          {/* <Box
+          <Box
             sx={{ display: "flex", alignItems: "center" }}
             className={styles.InfoItem}
           >
@@ -236,16 +251,18 @@ function CreateStaff({ open, onClose, getData }) {
               required
               id="filled-required"
               label="Required"
-              // value={newEmployee.password}
               variant="filled"
               className={styles.customTextField}
               name="password"
-              //onChange={handleInputChange}
+              onChange={handleInputChange}
               sx={{ width: "100%" }}
-              //error={!!errors.passwordError}
-              //helperText={errors.passwordError}
+              InputProps={{
+                sx: { fontSize: "1.6rem" },
+              }}
+              error={!!errors.passwordError}
+              helperText={errors.passwordError}
             />
-          </Box> */}
+          </Box>
           {/* EmployeeCIN */}
           <Box
             sx={{ display: "flex", alignItems: "center" }}
@@ -262,12 +279,14 @@ function CreateStaff({ open, onClose, getData }) {
               required
               id="filled-required"
               label="Required"
-              //value={newEmployee.password}
               variant="filled"
               className={styles.customTextField}
               name="employeeCIN"
               onChange={handleInputChange}
               sx={{ width: "100%" }}
+              InputProps={{
+                sx: { fontSize: "1.6rem" },
+              }}
               error={!!errors.employeeCINError}
               helperText={errors.employeeCINError}
             />
@@ -294,9 +313,8 @@ function CreateStaff({ open, onClose, getData }) {
               <Select
                 labelId="status-label"
                 name="gender"
-                //value={newEmployee.gender}
                 onChange={handleInputChange}
-                sx={{ fontSize: "1.6rem", width: "100%" }}
+                sx={{ fontSize: "1.6rem", width: "100%", textAlign: "left" }}
                 MenuProps={{
                   PaperProps: {
                     sx: {

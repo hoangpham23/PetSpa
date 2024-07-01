@@ -77,99 +77,128 @@ import { Style } from "@mui/icons-material";
 import styled from "styled-components";
 import Footer from "../../components/footer/footer";
 import { useEffect, useState } from "react";
-
+import styles from "./CustomerInfo_style.module.css";
+import EditInfo from "./EditInfo/EditInfo";
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: "#E3ECE9",
+    color: "white",
+    fontSize: "1.5rem",
+    fontFamily: "Poppins, sans-serif",
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: "1.5rem",
+  },
+}));
 export default function CustomerInfo() {
   const [cusInfo, setCusInfo] = useState({
-    email: "",
-    phoneNumber: "",
+    customerID: "",
     name: "",
-    amountOfPets: "",
+    email: "",
+    numberOfPets: "",
+    phoneNumber: "",
+    role: "",
   });
+  function getData() {
+    try {
+      const savedCus = JSON.parse(localStorage.getItem("account")) || {};
+      if (savedCus) {
+        setCusInfo({
+          customerID: savedCus.customerID || "",
+          customerName: savedCus.customerName || "",
+          email: savedCus.email || "",
+          numberOfPets: savedCus.numberOfPets || "",
+          password: savedCus.password || "",
+          phoneNumber: savedCus.phoneNumber || "",
+          role: savedCus.role || "",
+        });
+      }
+    } catch (error) {
+      console.error("Error parsing customer data from localStorage:", error);
+    }
+  }
   useEffect(() => {
-    const savedCus = JSON.parse(localStorage.getItem("account"));
-    setCusInfo({
-      email: savedCus.email,
-      phoneNumber: savedCus.phoneNumber,
-      name: savedCus.customerName,
-      amountOfPets: savedCus.numberOfPets,
-    });
+    getData();
   }, []);
   useEffect(() => {
     console.log(cusInfo);
   }, [cusInfo]);
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: "#E3ECE9",
-      color: "white",
-      fontSize: "1.5rem",
-      fontFamily: "Poppins, sans-serif",
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: "1.5rem",
-    },
-  }));
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    "&:nth-of-type(odd)": {
-      backgroundColor: "#E3ECE9",
-    },
-    // hide last border
-    "&:last-child td, &:last-child th": {
-      border: 0,
-    },
-  }));
+
+  const [edit, setEdit] = useState(false);
+  const handleOpenEdit = () => setEdit(true);
+  const handleCloseEdit = () => setEdit(false);
   return (
     <>
       <HeaderColor />
       <Box marginTop="12rem" marginLeft={"10rem"} fontSize={"1.8rem"}>
         <h1>CUSTOMER INFORMATION</h1>
       </Box>
-      <Box sx={{ minHeight: "56vh" }}>
-        <Box
-          display="flex"
-          justifyContent="center"
-          mt={5}
-          marginTop={"5rem"}
-          marginLeft={"9rem"}
-          marginRight={"9rem"}
-          marginBottom={"5rem"}
-        >
-          <TableContainer component={Paper}>
-            <Table
-              sx={{
-                minWidth: "10%",
-                maxWidth: "100%",
-                border: "5px solid #C0ABE4",
-              }}
-              aria-label="customized table"
-            >
-              <TableBody>
-                <TableRow>
-                  <StyledTableCell align="left">Email</StyledTableCell>
-                  <StyledTableCell align="left">
-                    {cusInfo.email}
-                  </StyledTableCell>
-                </TableRow>
-                <TableRow>
-                  <StyledTableCell align="left">Phone Number</StyledTableCell>
-                  <StyledTableCell align="left">
-                    {cusInfo.phoneNumber}
-                  </StyledTableCell>
-                </TableRow>
-                <TableRow>
-                  <StyledTableCell align="left">Name</StyledTableCell>
-                  <StyledTableCell align="left">{cusInfo.name}</StyledTableCell>
-                </TableRow>
-                <TableRow>
-                  <StyledTableCell align="left">
-                    Amount of pet(s)
-                  </StyledTableCell>
-                  <StyledTableCell align="left">
-                    {cusInfo.amountOfPets}
-                  </StyledTableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
+      <Box sx={{ minHeight: "51vh" }}>
+        <Box sx={{}}>
+          <Box
+            display="flex"
+            justifyContent="center"
+            mt={5}
+            marginTop={"5rem"}
+            marginLeft={"9rem"}
+            marginRight={"9rem"}
+            marginBottom={"5rem"}
+          >
+            <TableContainer component={Paper}>
+              <Table
+                sx={{
+                  minWidth: "10%",
+                  maxWidth: "100%",
+                  border: "5px solid #C0ABE4",
+                }}
+                aria-label="customized table"
+              >
+                <TableBody>
+                  <TableRow>
+                    <StyledTableCell align="left">Email</StyledTableCell>
+                    <StyledTableCell align="left">
+                      {cusInfo.email}
+                    </StyledTableCell>
+                  </TableRow>
+                  <TableRow>
+                    <StyledTableCell align="left">Phone Number</StyledTableCell>
+                    <StyledTableCell align="left">
+                      {cusInfo.phoneNumber}
+                    </StyledTableCell>
+                  </TableRow>
+                  <TableRow>
+                    <StyledTableCell align="left">Name</StyledTableCell>
+                    <StyledTableCell align="left">
+                      {cusInfo.customerName}
+                    </StyledTableCell>
+                  </TableRow>
+                  <TableRow>
+                    <StyledTableCell align="left">
+                      Amount of pet(s)
+                    </StyledTableCell>
+                    <StyledTableCell align="left">
+                      {cusInfo.numberOfPets}
+                    </StyledTableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
+        </Box>
+        <Box sx={{ justifyContent: "center", display: "flex" }}>
+          <input
+            type="submit"
+            value="Edit Information"
+            className={styles.btn}
+            onClick={handleOpenEdit}
+          />
+          <EditInfo
+            isOpen={edit}
+            handleCloseEdit={handleCloseEdit}
+            cusInfo={cusInfo}
+            setCusInfo={setCusInfo}
+            getData={getData}
+          />
         </Box>
       </Box>
       <Footer />

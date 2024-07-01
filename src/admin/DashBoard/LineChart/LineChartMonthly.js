@@ -35,8 +35,14 @@ export default function LineChartMonthly() {
 
   async function getData(startDate, endDate) {
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:8090/weekly-revenue?startDate=${startDate}&endDate=${endDate}`
+        `http://localhost:8090/weekly-revenue?startDate=${startDate}&endDate=${endDate}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       console.log(response.data);
       setValue(response.data);
@@ -159,9 +165,9 @@ export default function LineChartMonthly() {
           </Box>
         </Grid>
       </Grid>
-      <Box style={{ textAlign: "center", margin: "3rem 0rem" }}>
+      {/* <Box style={{ textAlign: "center", margin: "3rem 0rem" }}>
         <p style={{ fontSize: "1.6rem" }}>abcdefghijk@gmail.com</p>
-      </Box>
+      </Box> */}
     </>
   );
 }

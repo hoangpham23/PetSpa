@@ -32,6 +32,9 @@ function DashBoard() {
     console.log(report);
   }, [offset, startDate, endDate, report]);
   useEffect(() => {
+    localStorage.setItem("offset", 0);
+  }, []);
+  useEffect(() => {
     async function init() {
       const { startOfWeek, endOfWeek } = await getStartAndEndOfWeek(0);
       await getData(startOfWeek, endOfWeek);
@@ -81,8 +84,14 @@ function DashBoard() {
   }
   async function getData(startOfWeek, endOfWeek) {
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:8090/weekly-revenue?startDate=${startOfWeek}&endDate=${endOfWeek}`
+        `http://localhost:8090/weekly-revenue?startDate=${startOfWeek}&endDate=${endOfWeek}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       console.log(response.status);
       if (response.status === 200) {
@@ -190,7 +199,7 @@ function DashBoard() {
                   sx={{
                     backgroundColor: "white",
                     borderRadius: "2rem",
-                    height: "80vh",
+                    height: "78vh",
 
                     marginTop: "3rem",
                     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
