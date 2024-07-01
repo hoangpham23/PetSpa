@@ -26,19 +26,24 @@ public class FeedbackService {
         this.appointmentRepository = appointmentRepository;
     }
 
-    public List<CustomerFeedbackForEmployeeDTO> getFeedbackForEmployeeByAppointment(Integer appointmentID) {
+    public Object getFeedbackForEmployeeByAppointment(Integer appointmentID) {
         Optional<Appointments> appointmentOptional = appointmentRepository.findById(appointmentID);
         if (appointmentOptional.isEmpty()) {
-            // Handle the case where the appointment is not found
-            return List.of();
+            return "There is no Feedback";
         }
 
         Appointments appointment = appointmentOptional.get();
         List<Feedback> feedbackList = feedbackRepository.findByAppointmentID(appointment);
+
+        if (feedbackList.isEmpty() || feedbackList.stream().allMatch(feedback ->
+                "Have not feedback".equalsIgnoreCase(feedback.getStatus()) || "Don't feedback".equalsIgnoreCase(feedback.getStatus()))) {
+            return "There is no Feedback";
+        }
+
         return feedbackList.stream()
                 .map(feedback -> {
                     List<ServiceImages> serviceImages = servicesImagesRepository.findByServiceID(feedback.getAppointmentID().getServices());
-                    String imageUrl = serviceImages.isEmpty() ? null : serviceImages.getFirst().getImageURL();
+                    String imageUrl = serviceImages.isEmpty() ? null : serviceImages.get(0).getImageURL();
                     return new CustomerFeedbackForEmployeeDTO(
                             feedback.getCustomerID().getCustomerName(),
                             feedback.getAppointmentID().getPets().getPetName(),

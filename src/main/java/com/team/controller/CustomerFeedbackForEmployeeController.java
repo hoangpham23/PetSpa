@@ -2,6 +2,7 @@ package com.team.controller;
 
 import com.team.dto.CustomerFeedbackForEmployeeDTO;
 import com.team.service.FeedbackService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,12 @@ public class CustomerFeedbackForEmployeeController {
     }
 
     @GetMapping()
-    public List<CustomerFeedbackForEmployeeDTO> getFeedbackForEmployee(@RequestParam("appointmentID") Integer appointmentID) {
-        return feedbackService.getFeedbackForEmployeeByAppointment(appointmentID);
+    public ResponseEntity<?> getFeedbackForEmployee(@RequestParam("appointmentID") Integer appointmentID) {
+        Object response = feedbackService.getFeedbackForEmployeeByAppointment(appointmentID);
+        if (response instanceof String) {
+            return ResponseEntity.badRequest().body(response);
+        } else {
+            return ResponseEntity.ok(response);
+        }
     }
 }
