@@ -370,6 +370,7 @@ function PaymentHistory() {
             open={open}
             handleClose={handleClose}
             listService={listService}
+            getDataUpcoming={getData}
           />
         </Grid>
       </Box>

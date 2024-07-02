@@ -23,7 +23,12 @@ const style = {
 // BOX CHOOSE NEW TIME
 
 // CHOOSE WHAT SERVICE TO RESCHEDULE
-export default function Reschedule({ open, handleClose, listService }) {
+export default function Reschedule({
+  open,
+  handleClose,
+  listService,
+  getDataUpcoming,
+}) {
   const [selectedServices, setSelectedServices] = React.useState([]);
   React.useEffect(() => {
     if (listService && listService.length > 0) {
@@ -121,11 +126,13 @@ export default function Reschedule({ open, handleClose, listService }) {
             Next Step
           </Button>
           <ChooseTime
+            handleClose={handleClose}
             openChooseTime={openChooseTime}
             handleCloseChooseTime={handleCloseChooseTime}
             selectedServices={selectedServices.filter(
               (service) => service.selected
             )}
+            getDataUpcoming={getDataUpcoming}
           />
         </Box>
       </Modal>

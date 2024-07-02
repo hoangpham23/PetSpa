@@ -30,6 +30,8 @@ export default function ChooseTime({
   openChooseTime,
   handleCloseChooseTime,
   selectedServices,
+  handleClose,
+  getDataUpcoming,
 }) {
   const today = new Date();
   let startDay = format(today, "yyyy-MM-dd");
@@ -136,6 +138,9 @@ export default function ChooseTime({
       console.log(response.status);
       if (response.status === 200) {
         handleCloseChooseTime();
+        handleClose();
+        getDataUpcoming();
+        alert("Update successfully");
       }
     } catch (error) {
       console.log(error);
