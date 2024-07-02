@@ -202,9 +202,10 @@ public class PaymentService {
         }
     }
 
-    public void savePaymentHistory(int customerID, double totalAmount, String paymentMethod, String appointmentID) {
+    public List<PaymentDetail> savePaymentHistory(int customerID, double totalAmount, String paymentMethod, String appointmentID) {
         Customers customers = customerRepository.findById(customerID).get();
         String paymentTime = LocalDateTime.now().format(FORMATTER);
+        List<PaymentDetail> result = new ArrayList<>();
         PaymentHistory paymentHistory = new PaymentHistory();
         paymentHistory.setCustomers(customers);
         paymentHistory.setTotalAmount(totalAmount);
@@ -217,9 +218,10 @@ public class PaymentService {
             paymentDetail.setCustomers(customers);
             Appointments appointments = appointmentRepository.findById(Integer.parseInt(tokenizer.nextToken())).get();
             paymentDetail.setAppointments(appointments);
-            paymentDetail.setPaymentHistoryID(savePayment);
-            paymentDetailRepository.save(paymentDetail);
+            paymentDetail.setPaymentHistory(savePayment);
+            result.add(paymentDetailRepository.save(paymentDetail));
         }
+        return result;
     }
 
     public void sendEmail(int customerID){

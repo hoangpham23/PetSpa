@@ -27,7 +27,7 @@ public class SecurityConfig {
 
     private final String[] PUBLIC_ENDPOINTS = {"/sign-in", "/sign-in/verify", "/sign-up",
             "/home-page", "/sign-up/verify-otp", "/forgotpassword",
-            "/forgotpassword/verify-otp", "/home-page/**", "/uploads/**", "/payment/**"
+            "/forgotpassword/verify-otp", "/home-page/**", "/uploads/**", "/payment/**", "/send-email"
     };
     private final String[] CUSTOMER_ENDPOINTS = {"/insert-pet-info", "/choose-pet",
              "/appointment/**", "/payment", "/choose-service",
@@ -52,7 +52,7 @@ public class SecurityConfig {
                                 .requestMatchers(EMPLOYEE_ENDPOINTS).hasRole("EM")
                                 .requestMatchers(ADMIN_ENDPOINTS).hasRole("AD")
                                 .anyRequest().authenticated()
-//                        request.anyRequest().permitAll()
+//                                .anyRequest().permitAll()
                 )
                 .oauth2Login(oauth2 ->
                         oauth2.loginPage("http://localhost:3000/sign-in")

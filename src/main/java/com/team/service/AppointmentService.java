@@ -10,12 +10,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -179,29 +175,40 @@ public class AppointmentService {
 
 
     public void rescheduleAppointment(RescheduleDTO request) throws Exception {
-        Appointments appointments = appointmentRepository.findById(request.getAppointmentID())
-                .orElseThrow(() -> new Exception("Appointment not found"));
-        Employees employees = employeeRepository.findById(appointments.getEmployees().getId())
-                .orElseThrow(() -> new Exception("Employee not found"));
-        EmployeeSchedule employeeSchedule = employeeScheduleRepository.findByAppointments(appointments);
-        String[] time = request.getAppointmentTime().split(" ");
-        LocalDate workDate = LocalDate.parse(time[0], FORMATTER_DATE);
-        LocalTime startTime = LocalTime.parse(time[1]);
-        boolean checkEmployeeFree = employeeScheduleRepository.existsByEmployeesIDAndWorkDateAndStartTime(employees.getId(), workDate, startTime);
-        appointments.setStatus("Rescheduled");
-        appointments.setAppointmentTime(Timestamp.valueOf(request.getAppointmentTime()));
-        int employeeID = employees.getId();
-        if (!checkEmployeeFree) {
-            employeeID = findLastEmployee(LocalDateTime.parse(request.getAppointmentTime().replace(".000", ""), FORMATTER));
+        int index = 0;
+        List<Integer> listAppointmentID = request.getAppointmentID();
+        List<String> listAppointmentTime = request.getAppointmentTime();
+        while(index < request.getAppointmentID().size()){
+            Integer appointmentID = request.getAppointmentID().get(index);
+            String appointmentTime = request.getAppointmentTime().get(index);
+            Appointments appointments = appointmentRepository.findById(appointmentID)
+                    .orElseThrow(() -> new Exception("Appointment not found"));
+            Employees employees = employeeRepository.findById(appointments.getEmployees().getId())
+                    .orElseThrow(() -> new Exception("Employee not found"));
+
+            EmployeeSchedule employeeSchedule = employeeScheduleRepository.findByAppointments(appointments);
+            String[] time = appointmentTime.split(" ");
+            LocalDate workDate = LocalDate.parse(time[0], FORMATTER_DATE);
+            LocalTime startTime = LocalTime.parse(time[1]);
+            boolean checkEmployeeFree = employeeScheduleRepository.existsByEmployeesIDAndWorkDateAndStartTime(employees.getId(), workDate, startTime);
+
+            appointments.setStatus("Rescheduled");
+            appointments.setAppointmentTime(Timestamp.valueOf(appointmentTime));
+            int employeeID = employees.getId();
+            if (!checkEmployeeFree) {
+                employeeID = findLastEmployee(LocalDateTime.parse(appointmentTime.replace(".000", ""), FORMATTER));
+            }
+            appointments.setEmployees(employeeRepository.findById(employeeID).get());
+            employeeSchedule.setEmployees(employeeRepository.findById(employeeID).get());
+            employeeSchedule.setWorkDate(workDate);
+            employeeSchedule.setStartTime(startTime);
+            employeeSchedule.setEndTime(startTime.plusHours(1));
+            employeeSchedule.setAppointments(appointments);
+            appointmentRepository.save(appointments);
+            employeeScheduleRepository.save(employeeSchedule);
+            index++;
         }
-        appointments.setEmployees(employeeRepository.findById(employeeID).get());
-        employeeSchedule.setEmployees(employeeRepository.findById(employeeID).get());
-        employeeSchedule.setWorkDate(workDate);
-        employeeSchedule.setStartTime(startTime);
-        employeeSchedule.setEndTime(startTime.plusHours(1));
-        employeeSchedule.setAppointments(appointments);
-        appointmentRepository.save(appointments);
-        employeeScheduleRepository.save(employeeSchedule);
+
     }
 
 }

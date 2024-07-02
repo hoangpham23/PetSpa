@@ -5,6 +5,8 @@ import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 import com.team.config.VNPayConfig;
 import com.team.dto.AppointmentRequestDTO;
+import com.team.model.PaymentDetail;
+import com.team.service.EmailService;
 import com.team.service.EmployeeService;
 import com.team.service.PaymentService;
 import com.team.service.PaypalService;
@@ -30,13 +32,16 @@ public class PaymentController {
     private final VNPayConfig VNPayConfig;
     private final PaypalService paypalService;
     private final EmployeeService employeeService;
+    private final EmailService emailService;
+//    private final EmailService emailService;
 
 
-    public PaymentController(PaymentService paymentService, VNPayConfig VNPayConfig, PaypalService paypalService, EmployeeService employeeService) {
+    public PaymentController(PaymentService paymentService, VNPayConfig VNPayConfig, PaypalService paypalService, EmployeeService employeeService, EmailService emailService) {
         this.paymentService = paymentService;
         this.VNPayConfig = VNPayConfig;
         this.paypalService = paypalService;
         this.employeeService = employeeService;
+        this.emailService = emailService;
     }
 
     // this function receive the information from front end
@@ -162,8 +167,8 @@ public class PaymentController {
             if (payment.getState().equals("approved")) {
                 int id = Integer.parseInt(customerID);
                 paymentService.changePaymentStatus(id, paymentStatus);
-                paymentService.savePaymentHistory(id, totalAmount, paymentMethod, appointmentID);
-                paymentService.sendEmail(id);
+                List<PaymentDetail> paymentDetails = paymentService.savePaymentHistory(id, totalAmount, paymentMethod, appointmentID);
+                emailService.sendEmail(paymentDetails, "Invoice");
                 employeeService.assignSchedule(appointmentID);
                 returnUrl = PAYMENT_SUCCESS;
             }

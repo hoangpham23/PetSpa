@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface PaymentDetailRepository extends JpaRepository<PaymentDetail, Integer> {
 
-    List<PaymentDetail> findAllByPaymentHistoryID(PaymentHistory paymentHistory);
+    List<PaymentDetail> findAllByPaymentHistory(PaymentHistory paymentHistory);
 }

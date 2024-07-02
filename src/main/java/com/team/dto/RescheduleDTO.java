@@ -5,10 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class RescheduleDTO {
-    private Integer appointmentID;
-    private String appointmentTime;
+    private List<Integer> appointmentID;
+    private List<String> appointmentTime;
 }

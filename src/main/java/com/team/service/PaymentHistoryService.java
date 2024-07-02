@@ -73,7 +73,7 @@ public class PaymentHistoryService {
 
     private Map<String, Object> getServiceName(PaymentHistory paymentHistory) {
 
-        List<PaymentDetail> listDetail = paymentDetailRepository.findAllByPaymentHistoryID(paymentHistory);
+        List<PaymentDetail> listDetail = paymentDetailRepository.findAllByPaymentHistory(paymentHistory);
         String petName = listDetail.getFirst().getAppointments().getPets().getPetName();
         List<AppointServiceDTO> listService = listDetail.stream()
                 .map(pd -> new AppointServiceDTO(
