@@ -1,5 +1,6 @@
 package com.team.service;
 
+import com.team.dto.CustomerFeedbackDTO;
 import com.team.dto.CustomerFeedbackForEmployeeDTO;
 import com.team.model.Appointments;
 import com.team.model.Customers;
@@ -55,12 +56,25 @@ public class FeedbackService {
                 .collect(Collectors.toList());
     }
 
+
     public Optional<Feedback> getFeedbackByCustomerAndStatus(Customers customer, String status) {
-        return feedbackRepository.findByCustomerIDAndStatus(customer, status);
+        List<Feedback> feedbacks = feedbackRepository.findAllByCustomerIDAndStatus(customer, status);
+        return feedbacks.isEmpty() ? Optional.empty() : Optional.of(feedbacks.getFirst());
     }
 
     public void updateFeedbackStatus(Feedback feedback, String status) {
         feedback.setStatus(status);
         feedbackRepository.save(feedback);
+    }
+
+    public List<CustomerFeedbackDTO> getFeedbacksByCustomerAndStatus(Customers customer, String status) {
+        List<Feedback> feedbacks = feedbackRepository.findAllByCustomerIDAndStatus(customer, status);
+        return feedbacks.stream()
+                .map(feedback -> new CustomerFeedbackDTO(
+                        feedback.getId(),
+                        feedback.getAppointmentID().getAppointmentTime().toString(),
+                        feedback.getAppointmentID().getServices().getServiceName(),
+                        feedback.getAppointmentID().getPets().getPetName()))
+                .collect(Collectors.toList());
     }
 }
