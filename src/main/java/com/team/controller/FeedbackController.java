@@ -38,7 +38,8 @@ public class FeedbackController {
 
     @PostMapping("/submit")
     public ResponseEntity<String> submitFeedback(@RequestBody FeedbackRequestDTO feedbackRequest) {
-        Optional<Feedback> existingFeedbackOpt = feedbackService.getFeedbackByID(feedbackRequest.getFeedbackID());
+        Customers customer = customerService.getCustomerById(feedbackRequest.getCustomerID());
+        Optional<Feedback> existingFeedbackOpt = feedbackService.getFeedbackByCustomerAndStatus(customer, "Have not feedback");
         if (existingFeedbackOpt.isPresent()) {
             Feedback existingFeedback = existingFeedbackOpt.get();
             existingFeedback.setFeedbackContent(feedbackRequest.getFeedbackContent());
@@ -51,17 +52,12 @@ public class FeedbackController {
     @PostMapping("/close")
     public ResponseEntity<String> closeFeedbackForm(@RequestBody FeedbackRequestDTO feedbackRequest) {
         Customers customer = customerService.getCustomerById(feedbackRequest.getCustomerID());
-        List<CustomerFeedbackDTO> feedbacks = feedbackService.getFeedbacksByCustomerAndStatus(customer, "Have not feedback");
-        if (!feedbacks.isEmpty()) {
-            for (CustomerFeedbackDTO feedbackDTO : feedbacks) {
-                Optional<Feedback> feedback = feedbackService.getFeedbackByID(feedbackDTO.getFeedbackID());
-                if (feedback.isPresent()) {
-                    feedbackService.updateFeedbackStatus(feedback.get(), "Don't feedback");
-                }
-            }
-            return ResponseEntity.ok("All feedbacks have been closed");
-        } else {
-            return ResponseEntity.badRequest().body("No feedback records found to update");
+        Optional<Feedback> existingFeedbackOpt = feedbackService.getFeedbackByCustomerAndStatus(customer, "Have not feedback");
+        if (existingFeedbackOpt.isPresent()) {
+            Feedback existingFeedback = existingFeedbackOpt.get();
+            feedbackService.updateFeedbackStatus(existingFeedback, "Don't feedback");
+            return ResponseEntity.ok("Feedback form closed successfully");
         }
+        return ResponseEntity.badRequest().body("No feedback record found to update");
     }
 }
