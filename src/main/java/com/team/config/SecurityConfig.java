@@ -27,7 +27,7 @@ public class SecurityConfig {
 
     private final String[] PUBLIC_ENDPOINTS = {"/sign-in", "/sign-in/verify", "/sign-up",
             "/home-page", "/sign-up/verify-otp", "/forgotpassword",
-            "/forgotpassword/verify-otp", "/home-page/{serviceName}", "/uploads/**"
+            "/forgotpassword/verify-otp", "/home-page/{serviceName}", "/uploads/**", "/payment/**"
     };
     private final String[] CUSTOMER_ENDPOINTS = {"/insert-pet-info", "/choose-pet",
             "/choose-service", "/appointment/time", "/payment",
