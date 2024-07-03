@@ -26,6 +26,7 @@ import PaymentHistory from "./pages/paymentHistory/PaymentHistory.js";
 import NoAccessPermission from "./components/noAccessPermission/NoAccessPermission.js";
 import ManageStaffAccount from "./admin/ManageStaffAccount/ManageStaffAccount.js";
 import EditStaffAccount from "./admin/ManageStaffAccount/SampleSideBar";
+import ManageAppointment from "./admin/ManageAppointment/ManageAppointment.js";
 
 function App() {
   return (
@@ -56,6 +57,10 @@ function App() {
           element={<NoAccessPermission />}
         ></Route>
         <Route path="/manage-staff" element={<ManageStaffAccount />}></Route>
+        <Route
+          path="/manage-appointment"
+          element={<ManageAppointment />}
+        ></Route>
         {/* <Route path="/manage-staff/edit" element={<EditStaffAccount />}></Route> */}
       </Routes>
     </Router>
