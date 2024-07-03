@@ -40,7 +40,7 @@ public interface AppointmentRepository extends JpaRepository<Appointments, Integ
             "JOIN FETCH a.customer c " +
             "JOIN FETCH a.services s " +
             "JOIN FETCH a.pets p " +
-            "WHERE a.appointmentTime >= :startOfDay AND a.appointmentTime <= :endOfDay")
+            "WHERE a.appointmentTime >= :startOfDay AND a.appointmentTime <= :endOfDay AND a.status <> 'Not assign'")
     List<Appointments> findAppointmentsForDate(@Param("startOfDay") LocalDateTime startOfDay, @Param("endOfDay") LocalDateTime endOfDay);
 
 }
