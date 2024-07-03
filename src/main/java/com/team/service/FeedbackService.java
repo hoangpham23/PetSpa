@@ -77,4 +77,8 @@ public class FeedbackService {
                         feedback.getAppointmentID().getPets().getPetName()))
                 .collect(Collectors.toList());
     }
+
+    public Optional<Feedback> getFeedbackByID(Integer feedbackID) {
+        return feedbackRepository.findById(feedbackID);
+    }
 }

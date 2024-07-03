@@ -38,8 +38,7 @@ public class FeedbackController {
 
     @PostMapping("/submit")
     public ResponseEntity<String> submitFeedback(@RequestBody FeedbackRequestDTO feedbackRequest) {
-        Customers customer = customerService.getCustomerById(feedbackRequest.getCustomerID());
-        Optional<Feedback> existingFeedbackOpt = feedbackService.getFeedbackByCustomerAndStatus(customer, "Have not feedback");
+        Optional<Feedback> existingFeedbackOpt = feedbackService.getFeedbackByID(feedbackRequest.getFeedbackID());
         if (existingFeedbackOpt.isPresent()) {
             Feedback existingFeedback = existingFeedbackOpt.get();
             existingFeedback.setFeedbackContent(feedbackRequest.getFeedbackContent());
