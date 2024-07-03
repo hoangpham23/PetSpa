@@ -154,6 +154,7 @@ public class AppointmentService {
         return appointments.stream().map(appointment -> {
             ManageAppointmentDTO dto = new ManageAppointmentDTO();
             dto.setAppointmentID(appointment.getAppointmentID());
+            dto.setAppointmentTime(appointment.getAppointmentTime().toString());
             dto.setServiceName(appointment.getServices().getServiceName());
             dto.setCustomerName(appointment.getCustomer().getEmail());
             dto.setPetName(appointment.getPets().getPetName());
