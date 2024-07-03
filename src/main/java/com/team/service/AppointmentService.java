@@ -168,6 +168,27 @@ public class AppointmentService {
 
         return result;
     }
+    public List<ManageAppointmentDTO> getAppointmentsByPhoneNumberAndDate(String phoneNumber, LocalDate date) {
+        String formattedDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        List<Appointments> appointments = appointmentRepository.findAppointmentsByPhoneNumberAndDate(phoneNumber, formattedDate);
+
+        List<ManageAppointmentDTO> result = appointments.stream().map(appointment -> {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+            String formattedDateTime = appointment.getAppointmentTime().toLocalDateTime().format(formatter);
+            ManageAppointmentDTO dto = new ManageAppointmentDTO();
+            dto.setAppointmentID(appointment.getAppointmentID());
+            dto.setAppointmentTime(formattedDateTime);
+            dto.setServiceName(appointment.getServices().getServiceName());
+            dto.setCustomerName(appointment.getCustomer().getCustomerName());
+            dto.setCustomerEmail(appointment.getCustomer().getEmail());
+            dto.setCustomerPhoneNumber(appointment.getCustomer().getPhoneNumber());
+            dto.setPetName(appointment.getPets().getPetName());
+            dto.setStatus(appointment.getStatus());
+            return dto;
+        }).sorted(Comparator.comparing(ManageAppointmentDTO::getAppointmentTime)).collect(Collectors.toList());
+
+        return result;
+    }
 
     public boolean updateAppointmentStatus(int appointmentID, String status) {
         Optional<Appointments> appointmentOpt = appointmentRepository.findById(appointmentID);

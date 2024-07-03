@@ -22,10 +22,16 @@ public class ManageAppointmentController {
     }
 
     @GetMapping
-    public List<ManageAppointmentDTO> getAppointmentsForDate(
-            @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    public List<ManageAppointmentDTO> getAppointmentsForDate(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return appointmentService.getAppointmentsForDate(date);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ManageAppointmentDTO>> getAppointmentsByPhoneNumberAndDate(@RequestParam String phoneNumber, @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        List<ManageAppointmentDTO> appointments = appointmentService.getAppointmentsByPhoneNumberAndDate(phoneNumber, date);
+        return ResponseEntity.ok(appointments);
+    }
+
     @PutMapping("")
     public ResponseEntity<String> updateAppointmentStatus(@RequestBody Appointments request) {
         boolean isUpdated = appointmentService.updateAppointmentStatus(request.getAppointmentID(), request.getStatus());
