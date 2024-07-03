@@ -56,7 +56,6 @@ public class FeedbackService {
                 .collect(Collectors.toList());
     }
 
-
     public Optional<Feedback> getFeedbackByCustomerAndStatus(Customers customer, String status) {
         List<Feedback> feedbacks = feedbackRepository.findAllByCustomerIDAndStatus(customer, status);
         return feedbacks.isEmpty() ? Optional.empty() : Optional.of(feedbacks.getFirst());
