@@ -163,9 +163,8 @@ public class AppointmentService {
             dto.setPetName(appointment.getPets().getPetName());
             dto.setStatus(appointment.getStatus());
             return dto;
-        }).collect(Collectors.toList());
+        }).sorted(Comparator.comparing(ManageAppointmentDTO::getAppointmentTime)).collect(Collectors.toList());
 
-        result.sort(Comparator.comparing(ManageAppointmentDTO::getAppointmentTime));
         return result;
     }
 
