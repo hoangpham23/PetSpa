@@ -19,6 +19,7 @@ public interface AppointmentRepository extends JpaRepository<Appointments, Integ
     String SQL_findAllEmployeeInOneShift = "select EmployeeID from APPOINTMENTS where AppointmentTime = :appointmentTime AND PaymentStatus = 'Paid' order by employeeID";
     String SQL_findLastEmployeeID = "select top 1 EmployeeID, AppointmentTime from APPOINTMENTS order by AppointmentID desc";
     String SQL_findCustomerIDAndPaymentStatus = "SELECT * FROM APPOINTMENTS WHERE CustomerID = :customerID AND PaymentStatus = :paymentStatus";
+    String SQL_findAppointmentsByPhoneNumberAndDate = "SELECT a.* FROM APPOINTMENTS a JOIN CUSTOMERS c ON a.CustomerID = c.CustomerID WHERE CAST(a.AppointmentTime AS DATE) = :appointmentTime AND c.PhoneNumber LIKE %:phoneNumber% ORDER BY a.AppointmentID desc";
 
     @Query(value = SQL_findLastEmployeeIDInADay, nativeQuery = true)
     Optional<Integer> findLastEmployeeIDInADay(@Param("appointmentTime") String appointmentTime);
@@ -42,5 +43,8 @@ public interface AppointmentRepository extends JpaRepository<Appointments, Integ
             "JOIN FETCH a.pets p " +
             "WHERE a.appointmentTime >= :startOfDay AND a.appointmentTime <= :endOfDay AND a.status <> 'Not assign'")
     List<Appointments> findAppointmentsForDate(@Param("startOfDay") LocalDateTime startOfDay, @Param("endOfDay") LocalDateTime endOfDay);
+
+    @Query(value = SQL_findAppointmentsByPhoneNumberAndDate, nativeQuery = true)
+    List<Appointments> findAppointmentsByPhoneNumberAndDate(@Param("phoneNumber") String phoneNumber, @Param("appointmentTime") String appointmentTime);
 
 }
