@@ -19,7 +19,8 @@ public interface AppointmentRepository extends JpaRepository<Appointments, Integ
     String SQL_findAllEmployeeInOneShift = "select EmployeeID from APPOINTMENTS where AppointmentTime = :appointmentTime AND PaymentStatus = 'Paid' order by employeeID";
     String SQL_findLastEmployeeID = "select top 1 EmployeeID, AppointmentTime from APPOINTMENTS order by AppointmentID desc";
     String SQL_findCustomerIDAndPaymentStatus = "SELECT * FROM APPOINTMENTS WHERE CustomerID = :customerID AND PaymentStatus = :paymentStatus";
-    String SQL_findAppointmentsByPhoneNumberAndDate = "SELECT a.* FROM APPOINTMENTS a JOIN CUSTOMERS c ON a.CustomerID = c.CustomerID WHERE CAST(a.AppointmentTime AS DATE) = :appointmentTime AND c.PhoneNumber LIKE %:phoneNumber% AND a.status <> 'Not assign' ORDER BY a.AppointmentID desc ";
+    String SQL_findAppointmentsByPhoneNumberAndDate = "SELECT a.* FROM APPOINTMENTS a JOIN CUSTOMERS c ON a.CustomerID = c.CustomerID WHERE CAST(a.AppointmentTime AS DATE) = :appointmentTime AND c.PhoneNumber LIKE %:phoneNumber% ORDER BY a.AppointmentID desc";
+
     @Query(value = SQL_findLastEmployeeIDInADay, nativeQuery = true)
     Optional<Integer> findLastEmployeeIDInADay(@Param("appointmentTime") String appointmentTime);
 
