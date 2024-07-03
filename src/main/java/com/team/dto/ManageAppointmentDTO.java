@@ -14,6 +14,8 @@ public class ManageAppointmentDTO {
     private String appointmentTime;
     private String ServiceName;
     private String customerName;
+    private String customerEmail;
+    private String customerPhoneNumber;
     private String petName;
     private String status;
 }
