@@ -14,4 +14,6 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
     List<Feedback> findByAppointmentID(Appointments appointment);
 
     Optional<Feedback> findByCustomerIDAndStatus(Customers customer, String status);
+
+    List<Feedback> findAllByCustomerIDAndStatus(Customers customer, String status);
 }

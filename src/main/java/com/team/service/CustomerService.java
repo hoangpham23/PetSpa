@@ -6,7 +6,6 @@ import com.team.model.Accounts;
 import com.team.model.Customers;
 import com.team.repository.AccountRepository;
 import com.team.repository.CustomerRepository;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -89,11 +88,8 @@ public class CustomerService {
 
         return dto;
     }
-    public Customers getLoggedInCustomer() {
-        // Retrieve the email of the currently authenticated user
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        Accounts account = accountRepository.findByEmail(email);
-        return customerRepository.findByAccounts(account);
+    public Customers getCustomerById(Integer id) {
+        return customerRepository.findById(id).orElse(null);
     }
 
 }
