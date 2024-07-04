@@ -26,4 +26,9 @@ public class Services {
     @Column(name = "Price")
     private Double price;
 
+
+    @Size(max = 20)
+    @Column(name = "Status", length = 20)
+    private String status;
+
 }
