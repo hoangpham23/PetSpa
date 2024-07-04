@@ -1,20 +1,16 @@
 package com.team.controller;
 
 import com.team.dto.AddServiceDTO;
-import com.team.dto.ManageAppointmentDTO;
 import com.team.dto.ManageServiceDTO;
-import com.team.dto.ServiceImageDTO;
 import com.team.model.Services;
 import com.team.service.ServiceImagesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +65,19 @@ public class AddServiceController {
             addServiceDTO.setImage(image);
             Services service = serviceImagesService.addService(addServiceDTO);
             return new ResponseEntity<>(service, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    @PutMapping("/edit-service/{serviceId}")
+    public ResponseEntity<?> editService(@PathVariable Integer serviceId,
+                                         @RequestParam("serviceName") String serviceName,
+                                         @RequestParam("description") String description,
+                                         @RequestParam("price") Double price,
+                                         @RequestParam("image") MultipartFile image) {
+        try {
+            serviceImagesService.editService(serviceId, serviceName, description, price, image);
+            return ResponseEntity.ok("Service has been updated");
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
