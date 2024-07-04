@@ -118,6 +118,11 @@ public class ServiceImagesService {
         if (existingImage.isPresent()) {
             throw new Exception("This image is invalid!");
         }
+        // Check if service with the same name already exists
+        Services existingService = getServiceByName(serviceDTO.getServiceName());
+        if (existingService != null) {
+            throw new Exception("A service with this name already exists!");
+        }
 
         // Save the service
         Services service = new Services();
@@ -174,18 +179,29 @@ public class ServiceImagesService {
 
     public Services editService(Integer serviceId, String serviceName, String description, Double price, MultipartFile image) throws Exception {
         Services service = getServiceById(serviceId);
+        // Check if service with the same name already exists
+        Optional<Services> existingServiceOpt = serviceRepository.findByServiceName(serviceName);
+        if (existingServiceOpt.isPresent()) {
+            Services existingService = existingServiceOpt.get();
+            if (existingService.getId().equals(serviceId)) {
+                throw new Exception("A service with this name already exists!");
+            }
+        }
+
         // Check if image with the same URL already exists
         String fileName = image.getOriginalFilename();
         Optional<ServiceImages> existingImage = servicesImagesRepository.findByImageURL(fileName);
         if (existingImage.isPresent()) {
             throw new Exception("This image is invalid!");
         }
+
+
         if (service != null) {
             service.setServiceName(serviceName);
             service.setDescription(description);
             service.setPrice(price);
 
-            if (image != null && !image.isEmpty()) {
+            if (!image.isEmpty()) {
                 String savedFileName = saveImage(image);
                 String fileUrl = generateFileUrl(savedFileName);
 
