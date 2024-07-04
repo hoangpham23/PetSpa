@@ -41,7 +41,7 @@ public class ServiceImagesService {
             Optional<Services> serviceOpt = Optional.ofNullable(image.getServiceID());
             if (serviceOpt.isPresent()) {
                 Services services = serviceOpt.get();
-                if ("active".equals(services.getStatus())) {
+                if ("ACTIVE".equals(services.getStatus())) {
                     result.add(new ServiceImageDTO(image.getImageID(), services.getId(), image.getImageURL(), services.getServiceName()));
                 }
             }
@@ -75,7 +75,7 @@ public class ServiceImagesService {
             Optional<Services> serviceOpt = Optional.ofNullable(image.getServiceID());
             if (serviceOpt.isPresent()) {
                 Services services = serviceOpt.get();
-                if ("active".equals(services.getStatus())) {
+                if ("ACTIVE".equals(services.getStatus())) {
                     result.add(new ChooseServiceDTO(services.getId(), services.getServiceName(), image.getImageURL(), services.getPrice()));
                 }
             }
