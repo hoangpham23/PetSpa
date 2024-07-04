@@ -12,9 +12,7 @@ import com.team.repository.ServicesImagesRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -43,7 +41,9 @@ public class ServiceImagesService {
             Optional<Services> serviceOpt = Optional.ofNullable(image.getServiceID());
             if (serviceOpt.isPresent()) {
                 Services services = serviceOpt.get();
-                result.add(new ServiceImageDTO(image.getImageID(), services.getId(), image.getImageURL(), services.getServiceName()));
+                if ("active".equals(services.getStatus())) {
+                    result.add(new ServiceImageDTO(image.getImageID(), services.getId(), image.getImageURL(), services.getServiceName()));
+                }
             }
         }
         return result;
@@ -71,7 +71,9 @@ public class ServiceImagesService {
             Optional<Services> serviceOpt = Optional.ofNullable(image.getServiceID());
             if (serviceOpt.isPresent()) {
                 Services services = serviceOpt.get();
-                result.add(new ChooseServiceDTO(services.getId(),services.getServiceName(),image.getImageURL(), services.getPrice()));
+                if ("active".equals(services.getStatus())) {
+                    result.add(new ChooseServiceDTO(services.getId(), services.getServiceName(), image.getImageURL(), services.getPrice()));
+                }
             }
         }
         return result;
@@ -168,6 +170,7 @@ public class ServiceImagesService {
         // update the service image in the database
         return servicesImagesRepository.save(serviceImages);
     }
+
     public Services getServiceById(Integer serviceId) {
         return serviceRepository.findById(serviceId).orElse(null);
     }
@@ -206,7 +209,6 @@ public class ServiceImagesService {
                 String fileUrl = generateFileUrl(savedFileName);
 
 
-
                 ServiceImages serviceImages = getServiceImageByService(service);
                 serviceImages.setImageURL(fileUrl);
                 updateServiceImage(serviceImages);
@@ -225,5 +227,14 @@ public class ServiceImagesService {
     public Services getServiceByName(String serviceName) {
         return serviceRepository.findByServiceName(serviceName).orElse(null);
     }
-}
 
+    public ManageServiceDTO searchServiceByName(String serviceName) {
+        Services service = serviceRepository.findByServiceName(serviceName).orElse(null);
+        if (service != null) {
+            ServiceImages serviceImage = servicesImagesRepository.findByServiceID(service).stream().findFirst().orElse(null);
+            String imageUrl = serviceImage != null ? serviceImage.getImageURL() : null;
+            return new ManageServiceDTO(serviceImage.getImageID(), service.getId(), imageUrl, service.getServiceName(), service.getPrice());
+        }
+        return null;
+    }
+}

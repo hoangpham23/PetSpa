@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/add-service")
@@ -40,9 +41,9 @@ public class AddServiceController {
     @GetMapping("/search")
     public ResponseEntity<?> getServiceByName(@RequestParam String serviceName) {
         try {
-            Services service = serviceImagesService.getServiceByName(serviceName);
-            if (service != null) {
-                return new ResponseEntity<>(service, HttpStatus.OK);
+            ManageServiceDTO serviceData = serviceImagesService.searchServiceByName(serviceName);
+            if (serviceData != null) {
+                return new ResponseEntity<>(serviceData, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>("Service not found", HttpStatus.NOT_FOUND);
             }
