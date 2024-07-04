@@ -107,7 +107,7 @@ export default function SideBar() {
   };
   const items = [
     { text: "Dash Board", path: "/dashboard" },
-    { text: "Manage customer account", path: "/manage-customer" },
+
     { text: "Manage staff account", path: "/manage-staff" },
   ];
   const items2 = [
