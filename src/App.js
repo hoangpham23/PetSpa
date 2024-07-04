@@ -27,6 +27,7 @@ import NoAccessPermission from "./components/noAccessPermission/NoAccessPermissi
 import ManageStaffAccount from "./admin/ManageStaffAccount/ManageStaffAccount.js";
 import EditStaffAccount from "./admin/ManageStaffAccount/SampleSideBar";
 import ManageAppointment from "./admin/ManageAppointment/ManageAppointment.js";
+import ManageService from "./admin/ManageService/ManageService.js";
 
 function App() {
   return (
@@ -61,7 +62,7 @@ function App() {
           path="/manage-appointment"
           element={<ManageAppointment />}
         ></Route>
-        {/* <Route path="/manage-staff/edit" element={<EditStaffAccount />}></Route> */}
+        <Route path="/manage-services" element={<ManageService />}></Route>
       </Routes>
     </Router>
   );

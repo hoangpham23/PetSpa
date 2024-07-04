@@ -109,7 +109,7 @@ function ManageStaffAccount() {
                 textAlign: "left",
               }}
             >
-              Staff's account{" "}
+              Staff's account
             </h1>
             <Box
               display={"flex"}
@@ -204,7 +204,7 @@ function CustomizedTables({ data, onDelete, getData }) {
         <TableHead>
           <TableRow>
             <StyledTableCell size="small" align="left" width={"10rem"}>
-              ID
+              No.
             </StyledTableCell>
             <StyledTableCell align="right">UserName</StyledTableCell>
             <StyledTableCell align="right">Email</StyledTableCell>
@@ -218,10 +218,10 @@ function CustomizedTables({ data, onDelete, getData }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((data) => (
+          {data.map((data, index) => (
             <StyledTableRow key={data.employeeID}>
               <StyledTableCell component="th" scope="row">
-                {data.employeeID}
+                {index + 1}
               </StyledTableCell>
               <StyledTableCell align="right">
                 {data.employeeName}
@@ -243,13 +243,13 @@ function CustomizedTables({ data, onDelete, getData }) {
                     justifyContent: "center",
                     display: "flex",
                     borderRadius: "15px",
-                    //margin: "0px 10px",
+
                     padding: "0.4rem",
                     transition: "background-color 0.3s ease",
                     boxSizing: "border-box",
                     "&:hover": {
                       backgroundColor: "white",
-                      //border: "1px solid black",
+
                       boxShadow: "0 0 6px #E19D59",
                       "& > input": {
                         backgroundColor: "#FFAE5C", // Màu nền của input khi hover
