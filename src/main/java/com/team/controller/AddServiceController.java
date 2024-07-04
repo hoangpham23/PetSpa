@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/add-service")
@@ -41,7 +40,11 @@ public class AddServiceController {
     @GetMapping("/search")
     public ResponseEntity<?> getServiceByName(@RequestParam String serviceName) {
         try {
-            ManageServiceDTO serviceData = serviceImagesService.searchServiceByName(serviceName);
+            List<ManageServiceDTO> serviceDataList = serviceImagesService.searchServiceByName(serviceName);
+            ManageServiceDTO serviceData = null;
+            if (!serviceDataList.isEmpty()) {
+                serviceData = serviceDataList.get(0);
+            }
             if (serviceData != null) {
                 return new ResponseEntity<>(serviceData, HttpStatus.OK);
             } else {
@@ -52,7 +55,6 @@ public class AddServiceController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @PostMapping
     public ResponseEntity<?> addService(@RequestParam("serviceName") String serviceName,
                                         @RequestParam("description") String description,
@@ -81,6 +83,19 @@ public class AddServiceController {
             return ResponseEntity.ok("Service has been updated");
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    @DeleteMapping("/delete-service/{serviceId}")
+    public ResponseEntity<?> deleteService(@PathVariable Integer serviceId) {
+        try {
+            Services service = serviceImagesService.deactivateService(serviceId);
+            if (service != null) {
+                return ResponseEntity.ok("Service status has been updated to INACTIVE");
+            } else {
+                return new ResponseEntity<>("Service not found", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
