@@ -154,6 +154,54 @@ public class ServiceImagesService {
         return filename;
     }
 
+    public Services updateService(Services service) {
+        // update the service in the database
+        return serviceRepository.save(service);
+    }
+
+    public ServiceImages updateServiceImage(ServiceImages serviceImages) {
+        // update the service image in the database
+        return servicesImagesRepository.save(serviceImages);
+    }
+    public Services getServiceById(Integer serviceId) {
+        return serviceRepository.findById(serviceId).orElse(null);
+    }
+
+    public ServiceImages getServiceImageByService(Services service) {
+        return servicesImagesRepository.findByServiceID(service).stream().findFirst().orElse(null);
+    }
+
+
+    public Services editService(Integer serviceId, String serviceName, String description, Double price, MultipartFile image) throws Exception {
+        Services service = getServiceById(serviceId);
+        // Check if image with the same URL already exists
+        String fileName = image.getOriginalFilename();
+        Optional<ServiceImages> existingImage = servicesImagesRepository.findByImageURL(fileName);
+        if (existingImage.isPresent()) {
+            throw new Exception("This image is invalid!");
+        }
+        if (service != null) {
+            service.setServiceName(serviceName);
+            service.setDescription(description);
+            service.setPrice(price);
+
+            if (image != null && !image.isEmpty()) {
+                String savedFileName = saveImage(image);
+                String fileUrl = generateFileUrl(savedFileName);
+
+
+
+                ServiceImages serviceImages = getServiceImageByService(service);
+                serviceImages.setImageURL(fileUrl);
+                updateServiceImage(serviceImages);
+            }
+
+            return updateService(service);
+        } else {
+            throw new Exception("Service not found");
+        }
+    }
+
     private String generateFileUrl(String fileName) {
         return "http://localhost:8090/" + UPLOAD_DIR + fileName;
     }
