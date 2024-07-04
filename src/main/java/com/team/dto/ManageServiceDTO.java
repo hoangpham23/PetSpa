@@ -13,5 +13,4 @@ public class ManageServiceDTO {
     private String imageURL;
     private String serviceName;
     private Double price;
-    private String status;
 }

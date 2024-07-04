@@ -1,16 +1,20 @@
 package com.team.controller;
 
 import com.team.dto.AddServiceDTO;
+import com.team.dto.ManageAppointmentDTO;
+import com.team.dto.ManageServiceDTO;
 import com.team.dto.ServiceImageDTO;
 import com.team.model.Services;
 import com.team.service.ServiceImagesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,12 +33,27 @@ public class AddServiceController {
     @GetMapping("")
     public ResponseEntity<?> getAllImages() {
         try {
-            List<ServiceImageDTO> images = serviceImagesService.getHomePageImages();
+            List<ManageServiceDTO> images = serviceImagesService.getServiceInformation();
             return new ResponseEntity<>(images, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error in getting all images", e);
         }
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> getServiceByName(@RequestParam String serviceName) {
+        try {
+            Services service = serviceImagesService.getServiceByName(serviceName);
+            if (service != null) {
+                return new ResponseEntity<>(service, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Service not found", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            logger.error("Error in getting service by name", e);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping

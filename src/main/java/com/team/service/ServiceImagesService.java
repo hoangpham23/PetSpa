@@ -48,6 +48,21 @@ public class ServiceImagesService {
         }
         return result;
     }
+
+    public List<ManageServiceDTO> getServiceInformation() {
+        List<ServiceImages> images = servicesImagesRepository.findAll();
+        List<ManageServiceDTO> result = new ArrayList<>();
+
+        for (ServiceImages image : images) {
+            Optional<Services> serviceOpt = Optional.ofNullable(image.getServiceID());
+            if (serviceOpt.isPresent()) {
+                Services services = serviceOpt.get();
+                result.add(new ManageServiceDTO(image.getImageID(), services.getId(), image.getImageURL(), services.getServiceName(), services.getPrice()));
+            }
+        }
+        return result;
+    }
+
     public List<ChooseServiceDTO> chooseServicePage() {
         List<ServiceImages> images = servicesImagesRepository.findAll();
         List<ChooseServiceDTO> result = new ArrayList<>();
@@ -143,5 +158,8 @@ public class ServiceImagesService {
         return "http://localhost:8090/" + UPLOAD_DIR + fileName;
     }
 
+    public Services getServiceByName(String serviceName) {
+        return serviceRepository.findByServiceName(serviceName).orElse(null);
+    }
 }
 
