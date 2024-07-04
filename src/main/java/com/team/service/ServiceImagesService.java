@@ -51,15 +51,19 @@ public class ServiceImagesService {
 
     public List<ManageServiceDTO> getServiceInformation() {
         List<ServiceImages> images = servicesImagesRepository.findAll();
-        List<ManageServiceDTO> result = new ArrayList<>();
+        List<ManageServiceDTO> result = images.stream()
+                .map(image -> {
+                    Optional<Services> serviceOpt = Optional.ofNullable(image.getServiceID());
+                    if (serviceOpt.isPresent()) {
+                        Services services = serviceOpt.get();
+                        return new ManageServiceDTO(image.getImageID(), services.getId(), image.getImageURL(), services.getServiceName(), services.getPrice(), services.getStatus());
+                    }
+                    return null;
+                })
+                .filter(Objects::nonNull)
+                .sorted(Comparator.comparing(ManageServiceDTO::getStatus))
+                .collect(Collectors.toList());
 
-        for (ServiceImages image : images) {
-            Optional<Services> serviceOpt = Optional.ofNullable(image.getServiceID());
-            if (serviceOpt.isPresent()) {
-                Services services = serviceOpt.get();
-                result.add(new ManageServiceDTO(image.getImageID(), services.getId(), image.getImageURL(), services.getServiceName(), services.getPrice()));
-            }
-        }
         return result;
     }
 
@@ -228,12 +232,23 @@ public class ServiceImagesService {
         return serviceRepository.findByServiceName(serviceName).orElse(null);
     }
 
-    public ManageServiceDTO searchServiceByName(String serviceName) {
-        Services service = serviceRepository.findByServiceName(serviceName).orElse(null);
+    public List<ManageServiceDTO> searchServiceByName(String serviceName) {
+        List<Services> services = serviceRepository.findAllByServiceName(serviceName);
+        return services.stream()
+                .map(service -> {
+                    ServiceImages serviceImage = servicesImagesRepository.findByServiceID(service).stream().findFirst().orElse(null);
+                    String imageUrl = serviceImage != null ? serviceImage.getImageURL() : null;
+                    return new ManageServiceDTO(serviceImage.getImageID(), service.getId(), imageUrl, service.getServiceName(), service.getPrice(), service.getStatus());
+                })
+                .sorted(Comparator.comparing(ManageServiceDTO::getStatus))
+                .collect(Collectors.toList());
+    }
+
+    public Services deactivateService(Integer serviceId) {
+        Services service = getServiceById(serviceId);
         if (service != null) {
-            ServiceImages serviceImage = servicesImagesRepository.findByServiceID(service).stream().findFirst().orElse(null);
-            String imageUrl = serviceImage != null ? serviceImage.getImageURL() : null;
-            return new ManageServiceDTO(serviceImage.getImageID(), service.getId(), imageUrl, service.getServiceName(), service.getPrice());
+            service.setStatus("INACTIVE");
+            return updateService(service);
         }
         return null;
     }
