@@ -33,14 +33,7 @@ function ServiceInfo() {
     try {
       const token = localStorage.getItem("token");
       console.log(serviceName);
-      const response = await axios.get(
-        `http://localhost:8090/home-page/${serviceName}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`http://localhost:8090/home-page/${serviceName}`);
       if (response.status === 200) {
         console.log(response.data);
         setServiceData(response.data);

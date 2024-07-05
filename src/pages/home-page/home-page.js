@@ -30,11 +30,7 @@ function HomePage() {
       }
       console.log(account.role);
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:8090/home-page", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get("http://localhost:8090/home-page");
       const responseData = response.data; // Lưu dữ liệu từ API vào biến tạm
       setItems(responseData); // Cập nhật state với dữ liệu từ API
       localStorage.setItem("dataArray", JSON.stringify(responseData)); // Lưu dữ liệu vào localStorage sau khi đã cập nhật items

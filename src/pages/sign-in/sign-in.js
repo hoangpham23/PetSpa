@@ -6,7 +6,7 @@ import axios from "axios";
 import { Helmet } from "react-helmet";
 import styles from "./SignIn_style.module.css";
 import queryString from "query-string";
-
+import $ from 'jquery';
 // import SignIn from "./signIn";
 
 function SignIn() {
@@ -83,7 +83,7 @@ function SignIn() {
     <>
       <Helmet>
         <title>Sign In Page</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        {/* <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link
           rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -97,7 +97,7 @@ function SignIn() {
         <link
           href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
           rel="stylesheet"
-        />
+        /> */}
       </Helmet>
       <div className={styles.wrapperSignup}>
         <main className={styles.mainContent}>

@@ -41,11 +41,6 @@ function SignUp() {
           password: info.password,
           phoneNumber: info.phoneNumber,
           email: info.email,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
         }
       );
       if (response.status === 200) {

@@ -36,11 +36,6 @@ function NewPass() {
           email: newPass.email,
           password: newPass.password,
           otp: newPass.otp,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
         }
       );
       if (response.status === 200) {
