@@ -46,8 +46,8 @@ public class EmployeeService {
                     dto.setEmployeeName(employees.getEmployeeName());
                     dto.setEmail(employees.getEmail());
                     dto.setPassword(accounts.getPassword());
-                    dto.setPhoneNumber(formatPhoneNumber(employees.getPhoneNumber()));
-                    dto.setEmployeeCIN(formatCIN(employees.getEmployeeCIN()));
+                    dto.setPhoneNumber(employees.getPhoneNumber());
+                    dto.setEmployeeCIN(employees.getEmployeeCIN());
                     dto.setGender(employees.getGender());
                     dto.setStatus(employees.getStatus());
                     return dto;

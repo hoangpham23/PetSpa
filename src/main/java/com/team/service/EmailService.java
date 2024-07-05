@@ -4,7 +4,6 @@ import com.team.dto.MailBody;
 import com.team.model.PaymentDetail;
 import com.team.model.PaymentHistory;
 import com.team.repository.PaymentHistoryRepository;
-import freemarker.template.*;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.mail.SimpleMailMessage;
@@ -61,30 +60,6 @@ public class EmailService {
             // set mediaType
             MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
                     StandardCharsets.UTF_8.name());
-//            Map<String, Object> data = new HashMap<>();
-////            model.addAttribute();
-//            String customerName = paymentDetails.getFirst().getCustomers().getCustomerName();
-//            String customerEmail = paymentDetails.getFirst().getCustomers().getEmail();
-//            String petName = paymentDetails.getFirst().getAppointments().getPets().getPetName();
-//            data.put("customerName", customerName);
-//            data.put("customerEmail", customerEmail);
-//            data.put("petName", petName);
-//            List<Map<String, Object>> listTable = new ArrayList<>();
-//            for (PaymentDetail pd : paymentDetails) {
-//                Map<String, Object> paymentInfo = new HashMap<>();
-//                String serviceName = pd.getAppointments().getServices().getServiceName();
-//                String appointmentTime = pd.getAppointments().getAppointmentTime().toString();
-//                double price = pd.getAppointments().getServices().getPrice();
-//                paymentInfo.put("serviceName", serviceName);
-//                paymentInfo.put("dateTime", appointmentTime);
-//                paymentInfo.put("price", price);
-//                listTable.add(paymentInfo);
-//            }
-//            data.put("listTable", listTable);
-//            data.put("paymentDate", paymentTime);
-//
-//            Template t = config.getTemplate("index2.html");
-//            String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, data);
 
             Context context = new Context();
             String customerName = paymentDetails.getFirst().getCustomers().getCustomerName();
