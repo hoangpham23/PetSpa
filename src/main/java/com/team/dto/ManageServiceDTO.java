@@ -12,6 +12,7 @@ public class ManageServiceDTO {
     private Integer serviceId;
     private String imageURL;
     private String serviceName;
+    private String description;
     private Double price;
     private String status;
 }

@@ -56,7 +56,7 @@ public class ServiceImagesService {
                     Optional<Services> serviceOpt = Optional.ofNullable(image.getServiceID());
                     if (serviceOpt.isPresent()) {
                         Services services = serviceOpt.get();
-                        return new ManageServiceDTO(image.getImageID(), services.getId(), image.getImageURL(), services.getServiceName(), services.getPrice(), services.getStatus());
+                        return new ManageServiceDTO(image.getImageID(), services.getId(), image.getImageURL(), services.getServiceName(),services.getDescription(), services.getPrice(), services.getStatus());
                     }
                     return null;
                 })
@@ -199,12 +199,41 @@ public class ServiceImagesService {
             }
         }
 
-        // Check if image with the same URL already exists
+        // Check if a new image is provided and if it's different from the current image
         if (!image.isEmpty()) {
-            String fileName = image.getOriginalFilename();
-            Optional<ServiceImages> existingImage = servicesImagesRepository.findByImageURL(fileName);
-            if (existingImage.isPresent()) {
-                throw new Exception("This image is invalid!");
+            String newFileName = image.getOriginalFilename();
+            ServiceImages currentServiceImage = getServiceImageByService(service);
+
+            // Use ternary operator to safely get the current image URL
+            String currentImageUrl;
+            if (currentServiceImage != null) {
+                currentImageUrl = currentServiceImage.getImageURL();
+            } else {
+                currentImageUrl = null;
+            }
+
+            // Check if the new image filename is different from the current image URL
+            if (currentImageUrl == null || !currentImageUrl.endsWith(newFileName)) {
+                // Check if the new image URL already exists
+                Optional<ServiceImages> existingImage = servicesImagesRepository.findByImageURL(generateFileUrl(newFileName));
+                if (existingImage.isPresent()) {
+                    throw new Exception("This image is invalid!");
+                }
+
+                // Save the new image
+                String savedFileName = saveImage(image);
+                String fileUrl = generateFileUrl(savedFileName);
+
+                if (currentServiceImage != null) {
+                    currentServiceImage.setImageURL(fileUrl);
+                    updateServiceImage(currentServiceImage);
+                } else {
+                    // If there's no existing image for this service, create a new one
+                    ServiceImages newServiceImage = new ServiceImages();
+                    newServiceImage.setServiceID(service);
+                    newServiceImage.setImageURL(fileUrl);
+                    updateServiceImage(newServiceImage);
+                }
             }
         }
 
@@ -213,15 +242,6 @@ public class ServiceImagesService {
         service.setDescription(description);
         service.setPrice(price);
         service.setStatus(status);
-
-        if (!image.isEmpty()) {
-            String savedFileName = saveImage(image);
-            String fileUrl = generateFileUrl(savedFileName);
-
-            ServiceImages serviceImages = getServiceImageByService(service);
-            serviceImages.setImageURL(fileUrl);
-            updateServiceImage(serviceImages);
-        }
 
         return updateService(service);
     }
@@ -240,7 +260,7 @@ public class ServiceImagesService {
                 .map(service -> {
                     ServiceImages serviceImage = servicesImagesRepository.findByServiceID(service).stream().findFirst().orElse(null);
                     String imageUrl = serviceImage != null ? serviceImage.getImageURL() : null;
-                    return new ManageServiceDTO(serviceImage.getImageID(), service.getId(), imageUrl, service.getServiceName(), service.getPrice(), service.getStatus());
+                    return new ManageServiceDTO(serviceImage.getImageID(), service.getId(), imageUrl, service.getServiceName(),service.getStatus(), service.getPrice(), service.getStatus());
                 })
                 .sorted(Comparator.comparing(ManageServiceDTO::getStatus))
                 .collect(Collectors.toList());
