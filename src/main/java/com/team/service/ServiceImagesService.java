@@ -135,6 +135,7 @@ public class ServiceImagesService {
         service.setServiceName(serviceDTO.getServiceName());
         service.setDescription(serviceDTO.getDescription());
         service.setPrice(serviceDTO.getPrice());
+        service.setStatus("ACTIVE");
 
         Services savedService = serviceRepository.save(service);
 
@@ -233,7 +234,7 @@ public class ServiceImagesService {
     }
 
     public List<ManageServiceDTO> searchServiceByName(String serviceName) {
-        List<Services> services = serviceRepository.findAllByServiceName(serviceName);
+        List<Services> services = serviceRepository.findAllByServiceNameContaining(serviceName);
         return services.stream()
                 .map(service -> {
                     ServiceImages serviceImage = servicesImagesRepository.findByServiceID(service).stream().findFirst().orElse(null);

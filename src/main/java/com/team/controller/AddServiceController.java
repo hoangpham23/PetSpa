@@ -42,14 +42,18 @@ public class AddServiceController {
         try {
             List<ManageServiceDTO> serviceDataList = serviceImagesService.searchServiceByName(serviceName);
             ManageServiceDTO serviceData = null;
-            if (!serviceDataList.isEmpty()) {
-                serviceData = serviceDataList.get(0);
+//            if (!serviceDataList.isEmpty()) {
+//                serviceData = serviceDataList.get(0);
+//            }
+//            if (serviceData != null) {
+//                return new ResponseEntity<>(serviceData, HttpStatus.OK);
+//            } else {
+//                return new ResponseEntity<>("Service not found", HttpStatus.NOT_FOUND);
+//            }
+            if (serviceDataList.isEmpty()){
+                return new ResponseEntity<>(new ArrayList<>(), HttpStatus.NOT_FOUND);
             }
-            if (serviceData != null) {
-                return new ResponseEntity<>(serviceData, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>("Service not found", HttpStatus.NOT_FOUND);
-            }
+            return new ResponseEntity<>(serviceDataList, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error in getting service by name", e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

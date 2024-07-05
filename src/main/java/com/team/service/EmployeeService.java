@@ -226,10 +226,10 @@ public class EmployeeService {
             employee.setEmployeeName(employeeDTO.getEmployeeName());
         }
         if (employeeDTO.getPhoneNumber() != null) {
-            employee.setPhoneNumber(formatPhoneNumber(employeeDTO.getPhoneNumber()));
+            employee.setPhoneNumber(employeeDTO.getPhoneNumber());
         }
         if (employeeDTO.getEmployeeCIN() != null){
-            employee.setEmployeeCIN(formatCIN(employeeDTO.getEmployeeCIN()));
+            employee.setEmployeeCIN(employeeDTO.getEmployeeCIN());
         }
         if (employeeDTO.getEmail() != null) {
             employee.setEmail(employeeDTO.getEmail());
