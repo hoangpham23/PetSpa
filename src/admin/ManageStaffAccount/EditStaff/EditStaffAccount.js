@@ -20,6 +20,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 600,
+  maxHeight: "82vh",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -158,10 +159,10 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={{ ...style, lineHeight: 3 }}>
-          <Typography id="modal-modal-title" variant="h3">
+          {/* <Typography id="modal-modal-title" variant="h3">
             Information of employee
-          </Typography>
-
+          </Typography> */}
+          <Box sx={{ marginTop: "-2rem" }}></Box>
           {/* NAME BOX */}
           <Box
             sx={{ display: "flex", alignItems: "center" }}
@@ -413,7 +414,7 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
               variant="contained"
               sx={{
                 fontSize: "1.6rem",
-                margin: "3rem 1rem 1rem 1rem",
+                margin: "1rem 1rem 1rem 1rem",
                 backgroundColor: "#1976d2",
               }}
               onClick={onSave}
@@ -424,7 +425,7 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
               variant="contained"
               sx={{
                 fontSize: "1.6rem",
-                margin: "3rem 1rem 1rem 1rem",
+                margin: "1rem 1rem 1rem 1rem",
                 backgroundColor: "#d32f2f",
               }}
               onClick={onClose}

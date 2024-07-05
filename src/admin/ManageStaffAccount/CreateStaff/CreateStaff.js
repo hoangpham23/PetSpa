@@ -18,6 +18,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 600,
+  maxHeight: "80vh",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -148,10 +149,10 @@ function CreateStaff({ open, onClose, getData }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h3">
+          {/* <Typography id="modal-modal-title" variant="h3">
             Information of employee
-          </Typography>
-
+          </Typography> */}
+          <Box sx={{ marginTop: "-2rem" }}></Box>
           {/* NAME BOX */}
           <Box
             sx={{ display: "flex", alignItems: "center" }}

@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   CssBaseline,
+  Divider,
   ThemeProvider,
   createTheme,
 } from "@mui/material";
@@ -17,6 +18,8 @@ import { useEffect, useRef, useState } from "react";
 import { set } from "date-fns";
 import SearchBar from "./SearchBar";
 import AddService from "./AddService";
+import * as React from "react";
+import EditAndDeleteService from "./EditAndDeleteService";
 function ManageService() {
   const [data, setData] = useState([]);
   const theme = createTheme({
@@ -106,7 +109,7 @@ function ManageService() {
                 />
               </Box>
             </Box>
-            <ResponsiveGrid data={data} setData={setData} />
+            <ResponsiveGrid data={data} setData={setData} getData={getData} />
           </Box>
         </Box>
       </ThemeProvider>
@@ -123,7 +126,11 @@ const Item = experimentalStyled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-function ResponsiveGrid({ data, setData }) {
+function ResponsiveGrid({ data, setData, getData }) {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [selectedService, setSelectedService] = useState(null);
   console.log(data, " dataaa");
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -133,36 +140,93 @@ function ResponsiveGrid({ data, setData }) {
         columns={{ xs: 3, sm: 3, md: 12 }}
       >
         {data.map((service, index) => (
-          <Grid item xs={2} sm={4} md={3} key={index}>
-            {/* <Item>xs=2</Item> */}
-            <Box
-              sx={{
-                borderRadius: "20px",
-                backgroundColor: "#c2e1e6",
-                width: "250px",
-                height: "280px",
-                padding: "0",
-                textAlign: "center",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
-                marginTop: "1rem",
-              }}
-            >
-              <img
-                src={service.imageURL}
-                alt="display"
-                style={{
-                  width: "200px",
-                  height: "200px",
-                  marginTop: "2rem",
-                  borderRadius: "10px",
-                }}
-              />
-              <p>
-                {service.serviceName} ~ {service.price}$
-              </p>
-            </Box>
-          </Grid>
+          <React.Fragment key={service.seriveID}>
+            {index > 0 && service.status !== data.at(index - 1).status && (
+              <Grid item xs={12} md={12}>
+                <Divider
+                  sx={{
+                    backgroundColor: "#083141",
+                    padding: "1px",
+                    marginY: "1rem",
+                  }}
+                />
+              </Grid>
+            )}
+            <Grid item xs={2} sm={4} md={3} key={index}>
+              {service.status === "INACTIVE" ? (
+                <Box
+                  sx={{
+                    borderRadius: "20px",
+                    backgroundColor: "#DCDCDC",
+                    width: "250px",
+                    height: "150px",
+                    padding: "0",
+                    textAlign: "center",
+                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
+                    marginTop: "1rem",
+                    alignItems: "center",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                  onClick={() => {
+                    handleOpen();
+                    setSelectedService(service);
+                  }}
+                >
+                  <Box>
+                    <p style={{ fontSize: "1.2rem" }}>
+                      This service is inactive
+                    </p>
+                    <p>
+                      {service.serviceName} ~ {service.price}$
+                    </p>
+                  </Box>
+                </Box>
+              ) : (
+                <Box
+                  sx={{
+                    borderRadius: "20px",
+                    backgroundColor: "#c2e1e6",
+                    width: "250px",
+                    height: "280px",
+                    padding: "0",
+                    textAlign: "center",
+                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
+                    marginTop: "1rem",
+                  }}
+                  onClick={() => {
+                    handleOpen();
+                    setSelectedService(service);
+                  }}
+                >
+                  <img
+                    src={service.imageURL}
+                    alt="display"
+                    style={{
+                      width: "200px",
+                      height: "200px",
+                      marginTop: "2rem",
+                      borderRadius: "10px",
+                    }}
+                    onClick={() => {
+                      handleOpen();
+                      setSelectedService(service);
+                    }}
+                  />
+                  <p>
+                    {service.serviceName} ~ {service.price}$
+                  </p>
+                </Box>
+              )}
+            </Grid>
+          </React.Fragment>
         ))}
+        <EditAndDeleteService
+          open={open}
+          handleClose={handleClose}
+          service={selectedService}
+          getData={getData}
+        />
       </Grid>
     </Box>
   );
