@@ -6,7 +6,7 @@ function Footer() {
       <h1>PAWFECTION</h1>
       <div className="footer-content">
         <p>WORKING TIME: 8am TO 5pm</p>
-        <p>GMAIL: abcd@gmail.com</p>
+        <p>GMAIL: pawfection392@gmail.com</p>
         <p>PHONE NUMBER: 0937821928</p>
       </div>
     </footer>
