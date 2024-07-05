@@ -90,8 +90,9 @@ public class ServiceImagesService {
             List<ServiceImages> images = servicesImagesRepository.findByServiceID(service);
             List<Feedback> feedbacks = feedbackRepository.findByServiceID(service);
 
-            // Extract feedback content and customer name
+            // Filter feedbacks by status "Had feedback" and map to FeedbackDTO
             List<FeedbackDTO> feedbackDTOs = feedbacks.stream()
+                    .filter(feedback -> "Had feedback".equals(feedback.getStatus()))
                     .map(feedback -> {
                         Customers customer = feedback.getCustomerID();
                         String customerName = customer.getCustomerName();
@@ -200,18 +201,14 @@ public class ServiceImagesService {
             }
         }
 
+        // Track the previous image URL
+        ServiceImages currentServiceImage = getServiceImageByService(service);
+        String currentImageUrl = currentServiceImage != null ? currentServiceImage.getImageURL() : null;
+        String newImageUrl = currentImageUrl; // Initialize with the current image URL
+
         // Check if a new image is provided and if it's different from the current image
         if (!image.isEmpty()) {
             String newFileName = image.getOriginalFilename();
-            ServiceImages currentServiceImage = getServiceImageByService(service);
-
-            // Use ternary operator to safely get the current image URL
-            String currentImageUrl;
-            if (currentServiceImage != null) {
-                currentImageUrl = currentServiceImage.getImageURL();
-            } else {
-                currentImageUrl = null;
-            }
 
             // Check if the new image filename is different from the current image URL
             if (currentImageUrl == null || !currentImageUrl.endsWith(newFileName)) {
@@ -223,19 +220,24 @@ public class ServiceImagesService {
 
                 // Save the new image
                 String savedFileName = saveImage(image);
-                String fileUrl = generateFileUrl(savedFileName);
+                newImageUrl = generateFileUrl(savedFileName);
 
                 if (currentServiceImage != null) {
-                    currentServiceImage.setImageURL(fileUrl);
+                    currentServiceImage.setImageURL(newImageUrl);
                     updateServiceImage(currentServiceImage);
                 } else {
                     // If there's no existing image for this service, create a new one
                     ServiceImages newServiceImage = new ServiceImages();
                     newServiceImage.setServiceID(service);
-                    newServiceImage.setImageURL(fileUrl);
+                    newServiceImage.setImageURL(newImageUrl);
                     updateServiceImage(newServiceImage);
                 }
             }
+        }
+
+        // Delete the previous image file if a new image has been uploaded
+        if (currentImageUrl != null && !currentImageUrl.equals(newImageUrl)) {
+            deleteImageFile(currentImageUrl);
         }
 
         // Update the service details
@@ -246,6 +248,20 @@ public class ServiceImagesService {
 
         return updateService(service);
     }
+
+    private void deleteImageFile(String imageUrl) {
+        // Extract the filename from the image URL
+        String filename = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+        Path filePath = Paths.get(UPLOAD_DIR, filename);
+
+        try {
+            Files.deleteIfExists(filePath);
+        } catch (IOException e) {
+            // Handle the exception, e.g., log it
+            e.printStackTrace();
+        }
+    }
+
 
     private String generateFileUrl(String fileName) {
         return "http://localhost:8090/" + UPLOAD_DIR + fileName;
