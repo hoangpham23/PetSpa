@@ -10,6 +10,7 @@
     "@mui/lab": "^5.0.0-alpha.170",
     "@mui/material": "^5.15.20",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
+    "@mui/types": "^7.2.14",
     "@mui/x-charts": "^7.7.1",
     "@mui/x-date-pickers": "^7.7.1",
     "@mui/x-date-pickers-pro": "^7.7.1",
@@ -33,7 +34,8 @@
     "recharts": "^2.12.7",
     "styled-components": "^6.1.11",
     "swiper": "^11.1.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "jquery": "^3.6.0"
   },
   "scripts": {
     "start": "react-scripts start",
