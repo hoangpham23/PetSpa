@@ -1,0 +1,58 @@
+
+.schedule {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background-color: #fbeff9;
+    border-radius: 10px;
+    width: 80%;
+    margin: auto;
+}
+
+.period {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.period_schedule {
+    display: flex;
+    gap: 10px;
+    justify-content: space-around;
+}
+
+.schedule_item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #d6e7e8;
+    padding: 10px;
+    border-radius: 10px;
+    width: 100px;
+}
+
+.time {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.service {
+    font-weight: bold;
+    text-align: center;
+}
+
+.feedback_button {
+    background-color: #f797b1;
+    border: none;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
