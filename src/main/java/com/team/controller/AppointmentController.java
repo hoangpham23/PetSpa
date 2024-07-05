@@ -2,6 +2,7 @@ package com.team.controller;
 
 
 import com.team.dto.AppointmentDTO;
+import com.team.dto.RescheduleDTO;
 import com.team.service.AppointmentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,15 @@ public class AppointmentController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error at server site");
     }
 
-
-
+    @PostMapping("reschedule")
+    public ResponseEntity<?> rescheduleAppointment(@RequestBody RescheduleDTO request) {
+        try {
+            appointmentService.rescheduleAppointment(request);
+            return ResponseEntity.ok("Rescheduled successful");
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error at server site");
+        }
+    }
 
 }

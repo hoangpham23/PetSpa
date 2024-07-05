@@ -7,12 +7,14 @@ import com.team.repository.AppointmentRepository;
 import com.team.repository.EmployeeRepository;
 import com.team.repository.EmployeeScheduleRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -32,23 +34,25 @@ public class EmployeeService {
         this.appointmentRepository = appointmentRepository;
     }
 
-    public List<EmployeeDTO> showAllEmployees() {
-        List<Employees> employeesList = employeeRepository.findAllByStatus("ACTIVE");
-        List<EmployeeDTO> result = new ArrayList<>();
-        for (Employees employee : employeesList) {
-            Accounts accounts = accountRepository.findById(employee.getId()).get();
-            EmployeeDTO dto = new EmployeeDTO();
-            dto.setEmployeeID(employee.getId());
-            dto.setEmployeeName(employee.getEmployeeName());
-            dto.setEmail(employee.getEmail());
-            dto.setPassword(accounts.getPassword());
-            dto.setPhoneNumber(employee.getPhoneNumber());
-            dto.setEmployeeCIN(employee.getEmployeeCIN());
-            dto.setGender(employee.getGender());
-            result.add(dto);
-        }
-
-        return result;
+    public List<EmployeeDTO> showAllEmployees(String search) {
+        return employeeRepository.findAllByEmployeeNameContaining(search).stream()
+                .filter(employees -> "ACTIVE".equals(employees.getStatus()) || "INACTIVE".equals(employees.getStatus()))
+                .sorted(Comparator.comparing((Employees employees) -> "INACTIVE".equals(employees.getStatus()))
+                        .thenComparing(Employees::getId))
+                .map(employees -> {
+                    Accounts accounts = accountRepository.findById(employees.getId()).orElseThrow(() -> new RuntimeException("Account not found"));
+                    EmployeeDTO dto = new EmployeeDTO();
+                    dto.setEmployeeID(employees.getId());
+                    dto.setEmployeeName(employees.getEmployeeName());
+                    dto.setEmail(employees.getEmail());
+                    dto.setPassword(accounts.getPassword());
+                    dto.setPhoneNumber(employees.getPhoneNumber());
+                    dto.setEmployeeCIN(employees.getEmployeeCIN());
+                    dto.setGender(employees.getGender());
+                    dto.setStatus(employees.getStatus());
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 
     public Employees deleteEmployee(Integer employeeID) {
@@ -64,11 +68,12 @@ public class EmployeeService {
 
     public Map<String, String> createEmployee(Map<String, String> data) {
         String name = data.get("name");
-        String phoneNumber = data.get("phoneNumber");
+        String password = data.get("password");
+        String phoneNumber = formatPhoneNumber(data.get("phoneNumber"));
         String email = data.get("email");
-        String employeeCIN = data.get("employeeCIN");
+        String employeeCIN = formatCIN(data.get("employeeCIN"));
         String gender = data.get("gender");
-        String defaultPassword = "1234";
+//        String defaultPassword = "1234";
         String role = "EM";
         Map<String, String> error = new HashMap<>();
         boolean alreadyExists = false;
@@ -88,15 +93,16 @@ public class EmployeeService {
         if (alreadyExists) {
             return error;
         }
-        Accounts accounts = accountService.createAccount(email, defaultPassword, role);
+        Accounts accounts = accountService.createAccount(email, password, role);
         Employees employees = new Employees();
         employees.setId(accounts.getAccountID());
         employees.setEmployeeName(name);
         employees.setEmail(email);
-        employees.setPhoneNumber(phoneNumber);
-        employees.setEmployeeCIN(employeeCIN);
+        employees.setPhoneNumber(formatPhoneNumber(phoneNumber));
+        employees.setEmployeeCIN(formatCIN(employeeCIN));
         employees.setGender(gender);
         employees.setStatus("ACTIVE");
+        employeeRepository.save(employees);
 
         return null;
     }
@@ -146,7 +152,7 @@ public class EmployeeService {
         StringTokenizer tokenizer = new StringTokenizer(appointmentID, ",");
         while (tokenizer.hasMoreTokens()) {
             Appointments appointment = appointmentRepository.findById(Integer.parseInt(tokenizer.nextToken())).get();
-            appointment.setStatus("Schedule");
+            appointment.setStatus("Scheduled");
             Employees employees = appointment.getEmployees();
             EmployeeSchedule employeeSchedule = new EmployeeSchedule();
             employeeSchedule.setEmployees(employees);
@@ -174,6 +180,7 @@ public class EmployeeService {
         return null;
     }
 
+    @Transactional
     public Map<String, String> updateEmployee(EmployeeDTO employeeDTO) {
         Map<String, String> errors = new HashMap<>();
         Employees employee;
@@ -190,19 +197,21 @@ public class EmployeeService {
         }
 
         if (employeeDTO.getPhoneNumber() != null && !employeeDTO.getPhoneNumber().equals(employee.getPhoneNumber())) {
-            if (employeeRepository.existsByPhoneNumber(employeeDTO.getPhoneNumber())) {
+            String phoneNumber = formatPhoneNumber(employeeDTO.getPhoneNumber());
+            if (employeeRepository.existsByPhoneNumberAndIdNot(phoneNumber, employeeDTO.getEmployeeID())) {
                 errors.put("phoneNumber", "Phone number already exists");
             }
         }
 
         if (employeeDTO.getEmail() != null && !employeeDTO.getEmail().equals(employee.getEmail())) {
-            if (employeeRepository.existsByEmail(employeeDTO.getEmail())) {
+            if (employeeRepository.existsByEmailAndIdNot(employee.getEmail(), employeeDTO.getEmployeeID())) {
                 errors.put("email", "Email already exists");
             }
         }
 
-        if (employeeDTO.getEmployeeCIN() != null && !employeeDTO.getEmployeeCIN().equals(employee.getEmployeeCIN())){
-            if (employeeRepository.existsByEmployeeCIN(employeeDTO.getEmployeeCIN())){
+        if (employeeDTO.getEmployeeCIN() != null && !employeeDTO.getEmployeeCIN().equals(employee.getEmployeeCIN())) {
+            String employeeCIN = formatCIN(employeeDTO.getEmployeeCIN());
+            if (employeeRepository.existsByEmployeeCINAndIdNot(employeeCIN, employeeDTO.getEmployeeID())) {
                 errors.put("employeeCIN", "EmployeeCIN already exists");
             }
         }
@@ -219,17 +228,36 @@ public class EmployeeService {
         if (employeeDTO.getPhoneNumber() != null) {
             employee.setPhoneNumber(employeeDTO.getPhoneNumber());
         }
+        if (employeeDTO.getEmployeeCIN() != null){
+            employee.setEmployeeCIN(employeeDTO.getEmployeeCIN());
+        }
         if (employeeDTO.getEmail() != null) {
             employee.setEmail(employeeDTO.getEmail());
         }
         if (employeeDTO.getPassword() != null) {
             accounts.setPassword(employeeDTO.getPassword());
         }
+        if (employeeDTO.getStatus() != null){
+            employee.setStatus(employeeDTO.getStatus());
+        }
 
-        employeeRepository.save(employee);
         accountRepository.save(accounts);
+        employeeRepository.save(employee);
 
         return errors; // Will be empty if update was successful
+    }
+
+    private String formatPhoneNumber(String phoneNumber) {
+        StringBuilder formattedPhoneNumber = new StringBuilder(phoneNumber);
+        formattedPhoneNumber.insert(3, "-").insert(7, "-");
+        return formattedPhoneNumber.toString();
+    }
+
+    private String formatCIN(String cin){
+        StringBuilder formattedCIN = new StringBuilder(cin);
+        formattedCIN.insert(2, "-").insert(6, "-").insert(10, "-");
+        return formattedCIN.toString();
+
     }
 
 }

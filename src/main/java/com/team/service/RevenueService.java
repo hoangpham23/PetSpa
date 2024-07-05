@@ -44,7 +44,7 @@ public class RevenueService {
 
         // Filter payment details to only include those related to payments in the specified date range
         List<PaymentDetail> paymentDetailsInRange = paymentDetails.stream()
-                .filter(pd -> paymentsInRange.contains(pd.getPaymentHistoryID()))
+                .filter(pd -> paymentsInRange.contains(pd.getPaymentHistory()))
                 .collect(Collectors.toList());
 
         // Filter appointments to only include those with customers who made payments in the specified date range
@@ -70,7 +70,7 @@ public class RevenueService {
                     List<PaymentHistory> paymentsForDate = groupedPaymentsByDate.getOrDefault(date, List.of());
                     // Filter payment details for the current date
                     List<PaymentDetail> paymentDetailsForDate = paymentDetailsInRange.stream()
-                            .filter(pd -> pd.getPaymentHistoryID().getPaymentTime().toLocalDateTime().toLocalDate().isEqual(date))
+                            .filter(pd -> pd.getPaymentHistory().getPaymentTime().toLocalDateTime().toLocalDate().isEqual(date))
                             .collect(Collectors.toList());
 
                     Double totalRevenue = paymentsForDate.stream().mapToDouble(PaymentHistory::getTotalAmount).sum();

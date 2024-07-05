@@ -27,35 +27,40 @@ public class SecurityConfig {
 
     private final String[] PUBLIC_ENDPOINTS = {"/sign-in", "/sign-in/verify", "/sign-up",
             "/home-page", "/sign-up/verify-otp", "/forgotpassword",
-            "/forgotpassword/verify-otp", "/home-page/{serviceName}", "/uploads/**", "/payment/**"
+            "/forgotpassword/verify-otp", "/home-page/**", "/uploads/**", "/payment/**", "/send-email"
     };
     private final String[] CUSTOMER_ENDPOINTS = {"/insert-pet-info", "/choose-pet",
-            "/choose-service", "/appointment/time", "/payment",
-            "/payment-history"
+             "/appointment/**", "/payment", "/choose-service",
+            "/payment-history",
     };
 
     private final String[] EMPLOYEE_ENDPOINTS = {"/employee/schedule", "/customer-feedback-for-employee"};
 
-    private final String[] ADMIN_ENDPOINTS = {"/admin/employees", "/admin/create-employee", "/admin/employees/{id}", "/manage-appointment", "/add-service"};
+    private final String[] ADMIN_ENDPOINTS = {"/admin/employees", "/admin/create-employee", "/admin/employees/{id}", "/manage-appointment", "/add-service", "/weekly-revenue"};
 
     @Value("${SIGNER_KEY}")
     private String signerKey;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler) throws Exception {
-        httpSecurity.oauth2Login(oauth2 ->
-                        oauth2.loginPage("http://localhost:3000/sign-in")
-                                .successHandler(oAuth2AuthenticationSuccessHandler)
-        );
         httpSecurity
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(request ->
                         request
+                                .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                                 .requestMatchers(CUSTOMER_ENDPOINTS).hasRole("CUS")
                                 .requestMatchers(EMPLOYEE_ENDPOINTS).hasRole("EM")
                                 .requestMatchers(ADMIN_ENDPOINTS).hasRole("AD")
-                                .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                                 .anyRequest().authenticated()
+//                                .anyRequest().permitAll()
+                )
+                .oauth2Login(oauth2 ->
+                        oauth2.loginPage("http://localhost:3000/sign-in")
+                                .successHandler(oAuth2AuthenticationSuccessHandler)
+                )
+                .oauth2Login(oauth2 ->
+                        oauth2.loginPage("http://localhost:3000/sign-in")
+                                .successHandler(oAuth2AuthenticationSuccessHandler)
                 )
                 .oauth2ResourceServer(oauth2 ->
                         oauth2.jwt(jwtConfigurer ->

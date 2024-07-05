@@ -13,5 +13,5 @@ public interface ServiceRepository extends ListCrudRepository<Services, Integer>
 
     Optional<Services> findByServiceName(String serviceName);
 
-    List<Services> findAllByServiceName(String serviceName);
+    List<Services> findAllByServiceNameContaining(String serviceName);
 }

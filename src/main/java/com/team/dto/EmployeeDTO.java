@@ -16,6 +16,7 @@ public class EmployeeDTO {
     private String phoneNumber;
     private String employeeCIN;
     private String gender;
+    private String status;
 
 
 }
