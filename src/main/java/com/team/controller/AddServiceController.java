@@ -81,9 +81,10 @@ public class AddServiceController {
                                          @RequestParam("serviceName") String serviceName,
                                          @RequestParam("description") String description,
                                          @RequestParam("price") Double price,
+                                         @RequestParam("status") String status,
                                          @RequestParam("image") MultipartFile image) {
         try {
-            serviceImagesService.editService(serviceId, serviceName, description, price, image);
+            serviceImagesService.editService(serviceId, serviceName, description, price,status, image);
             return ResponseEntity.ok("Service has been updated");
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

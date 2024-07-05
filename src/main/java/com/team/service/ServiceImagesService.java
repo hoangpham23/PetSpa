@@ -185,44 +185,46 @@ public class ServiceImagesService {
     }
 
 
-    public Services editService(Integer serviceId, String serviceName, String description, Double price, MultipartFile image) throws Exception {
+    public Services editService(Integer serviceId, String serviceName, String description, Double price, String status, MultipartFile image) throws Exception {
         Services service = getServiceById(serviceId);
-        // Check if service with the same name already exists
-        Optional<Services> existingServiceOpt = serviceRepository.findByServiceName(serviceName);
-        if (existingServiceOpt.isPresent()) {
-            Services existingService = existingServiceOpt.get();
-            if (existingService.getId().equals(serviceId)) {
+
+        if (service == null) {
+            throw new Exception("Service not found");
+        }
+
+        // Check if serviceName is being changed and if so, check for duplicates
+        if (!service.getServiceName().equals(serviceName)) {
+            Optional<Services> existingServiceOpt = serviceRepository.findByServiceName(serviceName);
+            if (existingServiceOpt.isPresent()) {
                 throw new Exception("A service with this name already exists!");
             }
         }
 
         // Check if image with the same URL already exists
-        String fileName = image.getOriginalFilename();
-        Optional<ServiceImages> existingImage = servicesImagesRepository.findByImageURL(fileName);
-        if (existingImage.isPresent()) {
-            throw new Exception("This image is invalid!");
-        }
-
-
-        if (service != null) {
-            service.setServiceName(serviceName);
-            service.setDescription(description);
-            service.setPrice(price);
-
-            if (!image.isEmpty()) {
-                String savedFileName = saveImage(image);
-                String fileUrl = generateFileUrl(savedFileName);
-
-
-                ServiceImages serviceImages = getServiceImageByService(service);
-                serviceImages.setImageURL(fileUrl);
-                updateServiceImage(serviceImages);
+        if (!image.isEmpty()) {
+            String fileName = image.getOriginalFilename();
+            Optional<ServiceImages> existingImage = servicesImagesRepository.findByImageURL(fileName);
+            if (existingImage.isPresent()) {
+                throw new Exception("This image is invalid!");
             }
-
-            return updateService(service);
-        } else {
-            throw new Exception("Service not found");
         }
+
+        // Update the service details
+        service.setServiceName(serviceName);
+        service.setDescription(description);
+        service.setPrice(price);
+        service.setStatus(status);
+
+        if (!image.isEmpty()) {
+            String savedFileName = saveImage(image);
+            String fileUrl = generateFileUrl(savedFileName);
+
+            ServiceImages serviceImages = getServiceImageByService(service);
+            serviceImages.setImageURL(fileUrl);
+            updateServiceImage(serviceImages);
+        }
+
+        return updateService(service);
     }
 
     private String generateFileUrl(String fileName) {
