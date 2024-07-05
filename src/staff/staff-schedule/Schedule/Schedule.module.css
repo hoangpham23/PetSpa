@@ -1,3 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333;
+  --blue-color: rgba(194, 225, 230, 1);
+  --footer-color: rgba(255, 46, 255, 0.11);
+  --pink-color: rgba(237, 143, 181, 1);
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --icon-color: #c2bcbc;
+}
 
 .schedule {
     display: flex;
@@ -6,8 +17,8 @@
     padding: 20px;
     background-color: #fbeff9;
     border-radius: 10px;
-    width: 80%;
     margin: auto;
+    min-height: 80dvh;
 }
 
 .period {
@@ -22,37 +33,78 @@
     justify-content: space-around;
 }
 
-.schedule_item {
+.schedule_table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .schedule_table th,
+  .schedule_table td {
+    padding: 5px 0px;
+
+  }
+  
+  .schedule_item {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    background-color: #d6e7e8;
     padding: 10px;
     border-radius: 10px;
-    width: 100px;
+    width: 100%;
+    margin: 0 auto; 
+    background-color: var(--blue-color);
+    height: 15rem;
+  }
+
+.schedule_item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 30px;
+    width: 90%;
+    justify-content: center;
 }
 
 .time {
-    font-size: 14px;
+    font-size: 1.8rem;
     font-weight: bold;
+    margin-left: -3rem;
+    margin-top: 7rem;
 }
 
 .details {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
+    gap: 1.5rem;
+    position: relative;
+}
+
+.MuiTimelineDot{
+    margin: .5rem 0;
+}
+
+.MuiTimelineItem{
+    min-height: 10rem;
 }
 
 .service {
     font-weight: bold;
-    text-align: center;
 }
 
 .feedback_button {
-    background-color: #f797b1;
-    border: none;
-    color: white;
-    padding: 5px;
-    border-radius: 5px;
-    cursor: pointer;
+    display: inline-block;
+    padding: 0.5rem 0;
+    background: var(--pink-color);
+    border-radius: 60px;
+    box-shadow: 0 0.2rem 0.5rem var(--pink-color);
+    color: var(--text-color);
+    letter-spacing: 0.1rem;
+    border: 0.2rem solid transparent;
+    transition: 0.5s ease;
+}
+
+.feedback_button:hover{
+    background: var(--bg-color);
+    color: var(--text-color);
+    border-color: var(--pink-color);
 }

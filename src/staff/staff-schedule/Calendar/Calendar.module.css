@@ -1,3 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+@import '~boxicons/css/boxicons.min.css';
+
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333;
+  --header-color: #c2e1e6;
+  --footer-color: rgba(255, 46, 255, 0.11);
+  --pink-div-color: rgba(251, 226, 228, 1);
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --icon-color: #c2bcbc;
+}
 .week_calendar {
     display: flex;
     justify-content: space-between;
@@ -32,5 +44,8 @@
 
 .today {
     text-align: center;
-    margin-bottom: 10px;
+    padding: 10px;
+    background-color: var(--pink-div-color);
+    font-size: 2rem;
+    font-weight: bold;
 }
