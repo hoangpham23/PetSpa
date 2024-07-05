@@ -17,12 +17,7 @@ function ForgotPassword() {
       const token = localStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:8090/forgotpassword",
-        { email: email },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        { email: email }
       );
       if (response.status === 200) {
         setMsg("OTP has sent to your email");

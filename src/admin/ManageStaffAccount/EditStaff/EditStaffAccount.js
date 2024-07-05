@@ -52,14 +52,18 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
     return emailRegex.test(email);
   };
 
+
   const validatePhoneNumber = (phoneNumber) => {
-    const phoneRegex = /^\+?1?\d{10,15}$/;
-    return phoneRegex.test(phoneNumber);
+    const phoneNumberWithoutHyphens = phoneNumber.replace(/-/g, '');
+    return phoneNumberWithoutHyphens.length === 10;
   };
+
+
   const validateEmployeeCIN = (employeeCIN) => {
-    const cinRegex = /^\d{12}$/;
-    return cinRegex.test(employeeCIN);
+    const cinWithoutHyphens = employeeCIN.replace(/-/g, '');
+    return cinWithoutHyphens.length === 12;
   };
+
   async function onSave() {
     const newErrors = {};
 
@@ -82,7 +86,7 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
       newErrors.emailError = "Email is invalid";
     }
     if (!validatePhoneNumber(editEmployee.phoneNumber)) {
-      newErrors.phoneNumberError = "Phone Number is invalid";
+      newErrors.phoneNumberError = "Phone Number must have 10 numbers";
     }
     if (!validateEmployeeCIN(editEmployee.employeeCIN)) {
       newErrors.employeeCINError = "CIN must have 12 numbers";

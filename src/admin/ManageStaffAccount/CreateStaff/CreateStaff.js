@@ -56,8 +56,11 @@ function CreateStaff({ open, onClose, getData }) {
   };
 
   const validatePhoneNumber = (phoneNumber) => {
-    const phoneRegex = /^\+?1?\d{10,15}$/;
-    return phoneRegex.test(phoneNumber);
+    return phoneNumber.length === 10;
+  };
+
+  const validateEmployeeCIN = (employeeCIN) => {
+    return employeeCIN.length === 12;
   };
   async function handleSubmit() {
     try {
@@ -74,8 +77,11 @@ function CreateStaff({ open, onClose, getData }) {
       if (newEmployee.phoneNumber === "") {
         newErrors.phoneNumberError = "Phone Number is required";
       }
-      if (newEmployee.employeeCIN === "") {
+      if(newEmployee.employeeCIN === ""){
         newErrors.employeeCINError = "Employee CIN is required";
+      }
+      if (!validateEmployeeCIN(newEmployee.employeeCIN)) {
+        newErrors.employeeCINError = "Employee CIN is invalid";
       }
       if (newEmployee.gender === "") {
         newErrors.genderError = "Gender is required";
