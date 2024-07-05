@@ -33,7 +33,13 @@ function ManageAppointment() {
       );
       console.log(response.status);
       console.log(response.data);
-      setAppointments(response.data);
+      if (response.status === 200) {
+        if (Array.isArray(response.data)) {
+          setAppointments(response.data);
+        } else if (response.data && typeof response.data === "object") {
+          setAppointments([response.data]);
+        }
+      }
     } catch (error) {
       console.log(error);
       console.log(error.response);
