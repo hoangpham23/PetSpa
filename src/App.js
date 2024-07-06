@@ -32,6 +32,7 @@ import Schedule from './staff/staff-schedule/Schedule/Schedule';
 import Schedule_draft from './staff/staff-schedule/Schedule/Schedule_draft.js';
 import Schedule_box from './staff/staff-schedule/Schedule/Schedule_box.js';
 import Timetable from './staff/staff-schedule/Timetable/Timetable.js';
+
 const schedules = [
   {
     time: "9:00",
