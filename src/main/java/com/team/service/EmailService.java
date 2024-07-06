@@ -20,6 +20,7 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
+
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -191,6 +192,31 @@ public class EmailService {
             System.err.println("Error converting datetime: " + e.getMessage());
             return null;
         }
+    }
+    public void sendOtpEmail(String to, String otp, String companyName) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+                StandardCharsets.UTF_8.name());
+
+        Context context = new Context();
+        context.setVariable("otp", otp);
+        context.setVariable("companyName", companyName);
+
+        // Process template
+        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        templateResolver.setPrefix("templates/");
+        templateResolver.setSuffix(".html");
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+
+        TemplateEngine templateEngine = new TemplateEngine();
+        templateEngine.setTemplateResolver(templateResolver);
+
+        String htmlContent = templateEngine.process("otp-email", context);
+        helper.setTo(to);
+        helper.setSubject("Your OTP Code");
+        helper.setText(htmlContent, true);
+
+        javaMailSender.send(message);
     }
 
 

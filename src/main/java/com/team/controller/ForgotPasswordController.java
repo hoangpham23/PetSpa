@@ -45,49 +45,47 @@ public class ForgotPasswordController {
             int otp = otpGenerator();
             accounts.setOtp(String.valueOf(otp)); // Ensure OTP is stored as a String
             accountRepository.save(accounts);
-            String text = "This is the OTP for your Forgot Password request: " + otp;
-            String subject = "OTP for Forgot Password request";
 
-            emailService.sendEmail(email, text, subject);
+            emailService.sendOtpEmail(email, String.valueOf(otp), "Pawfection");
+
             return ResponseEntity.status(HttpStatus.OK).body("OTP has been sent to your email");
-        }catch (Exception e) {
-            logger.error(e.getMessage());
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
         }
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This account does not exist");
     }
 
     @PutMapping("/verify-otp")
     public ResponseEntity<String> verifyOtp(@RequestBody Map<String, String> customerVerify) {
-        String email = customerVerify.get("email");
-        String password = customerVerify.get("password");
-        int otp = Integer.parseInt(customerVerify.get("otp"));
+        try {
+            String email = customerVerify.get("email");
+            String password = customerVerify.get("password");
+            int otp = Integer.parseInt(customerVerify.get("otp"));
 
-        Customers customers = customerRepository.findByEmail(email);
-        if (customers == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This account does not exist");
+            Customers customers = customerRepository.findByEmail(email);
+            if (customers == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This account does not exist");
+            }
+
+            Accounts accounts = accountRepository.findById(customers.getCustomerID()).get();
+
+            if (!accounts.getOtp().equals(String.valueOf(otp))) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid OTP");
+            }
+
+            accounts.setPassword(password);
+            accounts.setOtp(null); // Clear OTP after successful verification
+            accountRepository.save(accounts);
+            return ResponseEntity.status(HttpStatus.OK).body("Password has been reset successfully");
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
         }
-
-        Accounts accounts = accountRepository.findById(customers.getCustomerID()).get();
-
-        if (!accounts.getOtp().equals(String.valueOf(otp))) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid OTP");
-        }
-        accounts.setPassword(password);
-        accounts.setOtp(null); // Clear OTP after successful verification
-        accountRepository.save(accounts);
-        return ResponseEntity.status(HttpStatus.OK).body("Password has been reset successfully");
     }
 
     private final SecureRandom secureRandom = new SecureRandom();
 
-
     private int otpGenerator() {
-        return secureRandom.nextInt(900000) + 100000; // Tạo OTP 6 chữ số
+        return secureRandom.nextInt(900000) + 100000; // Generate 6-digit OTP
     }
-
 }
-
-
-
-
