@@ -168,7 +168,7 @@ public class PaymentController {
                 int id = Integer.parseInt(customerID);
                 paymentService.changePaymentStatus(id, paymentStatus);
                 List<PaymentDetail> paymentDetails = paymentService.savePaymentHistory(id, totalAmount, paymentMethod, appointmentID);
-                emailService.sendEmail(paymentDetails, "Invoice");
+                emailService.sendEmailPayment(paymentDetails, "Invoice");
                 employeeService.assignSchedule(appointmentID);
                 returnUrl = PAYMENT_SUCCESS;
             }

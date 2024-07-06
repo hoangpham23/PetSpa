@@ -4,6 +4,7 @@ package com.team.controller;
 import com.team.dto.AppointmentDTO;
 import com.team.dto.RescheduleDTO;
 import com.team.service.AppointmentService;
+import com.team.service.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,11 @@ import java.util.List;
 public class AppointmentController {
 
     private final AppointmentService appointmentService;
+    private final EmailService emailService;
 
-    public AppointmentController(AppointmentService appointmentService) {
+    public AppointmentController(AppointmentService appointmentService, EmailService emailService) {
         this.appointmentService = appointmentService;
+        this.emailService = emailService;
     }
 
 
@@ -44,6 +47,7 @@ public class AppointmentController {
     public ResponseEntity<?> rescheduleAppointment(@RequestBody RescheduleDTO request) {
         try {
             appointmentService.rescheduleAppointment(request);
+//            emailService.sendEmailReschedule(request);
             return ResponseEntity.ok("Rescheduled successful");
         } catch (Exception e) {
             log.error(e.getMessage());

@@ -31,4 +31,7 @@ public class Services {
     @Column(name = "Status", length = 20)
     private String status;
 
+    @Column(name = "maxSlots")
+    private Integer maxSlots;
+
 }

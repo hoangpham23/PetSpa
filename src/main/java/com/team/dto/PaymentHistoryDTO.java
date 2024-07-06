@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -16,4 +17,11 @@ public class PaymentHistoryDTO {
     private List<AppointServiceDTO> listService;
     private String petName;
 
+
+    public PaymentHistoryDTO(PaymentHistoryDTO pd, List<AppointServiceDTO> listService){
+        this.paymentTime = pd.getPaymentTime();
+        this.amount = pd.getAmount();
+        this.listService = new ArrayList<>(listService);
+        this.petName = pd.getPetName();
+    }
 }

@@ -1,11 +1,16 @@
 package com.team.service;
 
 import com.team.dto.MailBody;
+import com.team.dto.RescheduleDTO;
+import com.team.model.Appointments;
 import com.team.model.PaymentDetail;
 import com.team.model.PaymentHistory;
+import com.team.repository.AppointmentRepository;
 import com.team.repository.PaymentHistoryRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -23,13 +28,16 @@ import java.util.*;
 @Service
 public class EmailService {
 
+    private static final Logger log = LoggerFactory.getLogger(EmailService.class);
     private final JavaMailSender javaMailSender;
     private final PaymentHistoryRepository paymentHistoryRepository;
+    private final AppointmentRepository appointmentRepository;
 
 
-    public EmailService(JavaMailSender javaMailSender, PaymentHistoryRepository paymentHistoryRepository) {
+    public EmailService(JavaMailSender javaMailSender, PaymentHistoryRepository paymentHistoryRepository, AppointmentRepository appointmentRepository) {
         this.javaMailSender = javaMailSender;
         this.paymentHistoryRepository = paymentHistoryRepository;
+        this.appointmentRepository = appointmentRepository;
     }
 
 
@@ -48,7 +56,7 @@ public class EmailService {
         javaMailSender.send(message);
     }
 
-    public Map<String, String> sendEmail(List<PaymentDetail> paymentDetails, String type) {
+    public Map<String, String> sendEmailPayment(List<PaymentDetail> paymentDetails, String type) {
         MimeMessage message = javaMailSender.createMimeMessage();
         Map<String, String> response = new HashMap<>();
         int paymentID = paymentDetails.getFirst().getPaymentHistory().getPaymentHistoryID();
@@ -110,6 +118,63 @@ public class EmailService {
         }
 
         return response;
+    }
+
+
+    public void sendEmailReschedule(RescheduleDTO request){
+        MimeMessage message = javaMailSender.createMimeMessage();
+        Appointments appointments = appointmentRepository.findById(request.getAppointmentID().getFirst()).get();
+        String customerName = appointments.getCustomer().getCustomerName();
+        String email = appointments.getCustomer().getEmail();
+        String petName = appointments.getPets().getPetName();
+        try {
+            // set mediaType
+            MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+                    StandardCharsets.UTF_8.name());
+
+            Context context = new Context();
+            context.setVariable("customerName", customerName);
+            context.setVariable("customerEmail", email);
+            context.setVariable("petName", petName);
+            context.setVariable("type", "Reschedule");
+            double total = 0;
+
+            List<Map<String, Object>> listTable = new ArrayList<>();
+            for (Integer appointmentID : request.getAppointmentID()) {
+                Map<String, Object> paymentInfo = new HashMap<>();
+                Appointments appoint = appointmentRepository.findById(appointmentID).get();
+                String serviceName = appoint.getServices().getServiceName();
+                String appointmentTime = appoint.getAppointmentTime().toString();
+                double price = appoint.getServices().getPrice();
+                total += price;
+                paymentInfo.put("price", price);
+                paymentInfo.put("dateTime", convertDateTimeFormat(appointmentTime));
+                paymentInfo.put("serviceName", serviceName);
+                listTable.add(paymentInfo);
+            }
+            context.setVariable("listTable", listTable);
+//            context.setVariable("paymentDate", convertDateTimeFormat(paymentTime));
+
+            context.setVariable("total", String.format("%.2f", total));
+            // Process template
+            ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+            templateResolver.setPrefix("templates/");
+            templateResolver.setSuffix(".html");
+            templateResolver.setTemplateMode(TemplateMode.HTML);
+
+            TemplateEngine templateEngine = new TemplateEngine();
+            templateEngine.setTemplateResolver(templateResolver);
+
+            String html = templateEngine.process("reschedule", context);
+
+            helper.setTo(email);
+            helper.setText(html, true);
+            helper.setSubject("Thank you for using our services");
+            javaMailSender.send(message);
+
+        } catch (MessagingException  e) {
+            log.error("Error at sendEmailSchedule: {}", e.getMessage());
+        }
     }
 
     private String convertDateTimeFormat(String inputDateTime) {

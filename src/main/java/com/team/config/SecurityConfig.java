@@ -36,7 +36,11 @@ public class SecurityConfig {
 
     private final String[] EMPLOYEE_ENDPOINTS = {"/employee/schedule", "/customer-feedback-for-employee"};
 
-    private final String[] ADMIN_ENDPOINTS = {"/admin/employees", "/admin/create-employee", "/admin/employees/{id}", "/manage-appointment", "/add-service", "/weekly-revenue"};
+    private final String[] ADMIN_ENDPOINTS = {"/admin/employees", "/admin/create-employee", "/admin/employees/{id}",
+            "/manage-appointment", "/add-service", "/weekly-revenue", "/admin/updateMaxBooking",
+            "/admin/getMaxBooking"
+
+    };
 
     @Value("${SIGNER_KEY}")
     private String signerKey;

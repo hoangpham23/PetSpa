@@ -98,8 +98,8 @@ public class EmployeeService {
         employees.setId(accounts.getAccountID());
         employees.setEmployeeName(name);
         employees.setEmail(email);
-        employees.setPhoneNumber(formatPhoneNumber(phoneNumber));
-        employees.setEmployeeCIN(formatCIN(employeeCIN));
+        employees.setPhoneNumber(phoneNumber);
+        employees.setEmployeeCIN(employeeCIN);
         employees.setGender(gender);
         employees.setStatus("ACTIVE");
         employeeRepository.save(employees);

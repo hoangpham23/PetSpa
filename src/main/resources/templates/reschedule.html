@@ -21,12 +21,13 @@
              style="margin-top: 0;line-height: 1.5em;background: #fff;border-radius: 10px;padding: 50px;">
             <div class="tm_invoice_in" style="margin-top: 0;line-height: 1.5em;position: relative;z-index: 100;">
                 <div class="tm_invoice_head tm_align_center tm_mb20"
-                     style="margin-top: 0;line-height: 1.5em;margin-bottom: 20px;-webkit-box-align: center;-ms-flex-align: center;align-items: center;display: flex;-webkit-box-pack: justify;-ms-flex-pack: justify;justify-content: space-between;">
-                    <div class="tm_invoice_right tm_text_right"
-                         style="margin-top: 0;line-height: 1.5em;text-align: right;-webkit-box-flex: 0;-ms-flex: none;flex: none;width: 60%;">
+                     style="margin-top: 0;line-height: 1.5em;margin-bottom: 20px;-webkit-box-align: center;-ms-flex-align: center;align-items: center;display: flex;-webkit-box-pack: center;-ms-flex-pack: center;justify-content: center;">
+                    <div class="tm_invoice_right"
+                         style="margin-top: 0;line-height: 1.5em;width: 60%;display: flex; justify-content: center">
                         <div class="tm_primary_color tm_f50 tm_text_uppercase"
-                             style="margin-top: 0;line-height: 1em;font-size: 50px;color: #111;text-transform: uppercase;">
-                            <span th:text="${type}"></span>
+                             style="margin-top: 0;line-height: 1em;font-size: 50px;color: #111;text-transform: uppercase;display:flex; justify-content:center; text-align: center;">
+                            <span style="padding-left: 200px" th:text="${type}"></span>
+                            <!--                            <span>reschedule</span>-->
                         </div>
                     </div>
                 </div>

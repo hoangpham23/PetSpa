@@ -99,25 +99,29 @@ public class PaymentHistoryService {
         List<PaymentHistoryDTO> upcoming = new ArrayList<>();
 
         for (PaymentHistoryDTO dto : paymentHistory) {
-            boolean allServicesCompleted = true;
+            List<AppointServiceDTO> upcomingService = new ArrayList<>();
+            List<AppointServiceDTO> completedService = new ArrayList<>();
             for (AppointServiceDTO service : dto.getListService()) {
                 try {
                     String appointmentTime = service.getAppointmentTime().split("\\.")[0]; // Remove milliseconds if present
                     LocalDateTime appointmentDateTime = LocalDateTime.parse(appointmentTime, formatter);
-                    if (!appointmentDateTime.isBefore(now)) {
-                        allServicesCompleted = false;
-                        break;
+                    if (appointmentDateTime.isBefore(now)) {
+                        completedService.add(service);
+                    } else {
+                        upcomingService.add(service);
                     }
                 } catch (DateTimeParseException e) {
                     log.error("Error parsing date: {}", service.getAppointmentTime());
-                    allServicesCompleted = false;
                     break;
                 }
             }
-            if (allServicesCompleted) {
-                completed.add(dto);
+            if (!upcomingService.isEmpty()) {
+                upcoming.add(new PaymentHistoryDTO(dto, upcomingService));
+                if (!completedService.isEmpty()){
+                    completed.add(new PaymentHistoryDTO(dto, completedService));
+                }
             } else {
-                upcoming.add(dto);
+                completed.add(dto);
             }
         }
 

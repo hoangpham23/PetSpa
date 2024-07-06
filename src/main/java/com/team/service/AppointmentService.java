@@ -58,7 +58,7 @@ public class AppointmentService {
                 String appointmentTime = ((Timestamp) row[0]).toString().replace(".0", "");
                 Integer count = (Integer) row[1];
                 // return unavailable appointment
-                if (count >= AVAILABLE_SLOT) {
+                if (count >= getMaxBooking()) {
                     result.add(new AppointmentDTO(appointmentTime, count));
                 }
             }
@@ -249,6 +249,15 @@ public class AppointmentService {
             index++;
         }
 
+    }
+
+
+    public void updateMaxBookings(int maxBooking){
+        serviceRepository.updateMaxSlotsForAllServices(maxBooking);
+    }
+
+    public int getMaxBooking(){
+        return serviceRepository.findAllByStatus("ACTIVE").getFirst().getMaxSlots();
     }
 
 }
