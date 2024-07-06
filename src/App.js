@@ -32,6 +32,8 @@ import Schedule from './staff/staff-schedule/Schedule/Schedule';
 import Schedule_draft from './staff/staff-schedule/Schedule/Schedule_draft.js';
 import Schedule_box from './staff/staff-schedule/Schedule/Schedule_box.js';
 import Timetable from './staff/staff-schedule/Timetable/Timetable.js';
+import Feedback from './staff/viewfeedback/Feedback.js';
+
 
 const schedules = [
   {
@@ -104,6 +106,7 @@ function App() {
         <Route path="/staff/staff-schedule/schedule" element={<Schedule schedules={schedules} />}></Route>
         <Route path="/staff/staff-schedule/schedule_draft" element={<Schedule_draft />}></Route>
         <Route path="/staff/staff-schedule/Timetable" element={<Timetable />}></Route>
+        <Route path="/staff/viewfeedback/feedback" element={<Feedback />}></Route>
 
       </Routes>
     </Router>
