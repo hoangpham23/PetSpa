@@ -8,8 +8,10 @@ import styles from "./SignIn_style.module.css";
 import queryString from "query-string";
 import $ from 'jquery';
 // import SignIn from "./signIn";
+import Cookies from 'js-cookie';
 
 function SignIn() {
+  Cookies.remove("customerData")
   localStorage.setItem("role", "");
   localStorage.setItem("account", "");
   localStorage.setItem("resetPasswordEmail", "");

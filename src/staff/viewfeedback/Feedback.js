@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import style from "./Feedback.module.css";
+import style from "./feedback.module.css";
 import service1 from "../../assets/img/service1.jpg";
 import service2 from "../../assets/img/service2.jpg";
 import arrow from "../../assets/img/left-arrow.png";
