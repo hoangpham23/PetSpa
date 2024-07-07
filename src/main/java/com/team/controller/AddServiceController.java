@@ -3,6 +3,7 @@ package com.team.controller;
 import com.team.dto.AddServiceDTO;
 import com.team.dto.ManageServiceDTO;
 import com.team.model.Services;
+import com.team.repository.ServiceRepository;
 import com.team.service.ServiceImagesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +21,12 @@ public class AddServiceController {
 
     private final ServiceImagesService serviceImagesService;
     private final Logger logger = LoggerFactory.getLogger(HomePageImagesController.class);
+    private final ServiceRepository serviceRepository;
 
 
-    public AddServiceController(ServiceImagesService serviceImagesService) {
+    public AddServiceController(ServiceImagesService serviceImagesService, ServiceRepository serviceRepository) {
         this.serviceImagesService = serviceImagesService;
+        this.serviceRepository = serviceRepository;
     }
 
     @GetMapping("")
@@ -78,7 +81,7 @@ public class AddServiceController {
                                          @RequestParam("description") String description,
                                          @RequestParam("price") Double price,
                                          @RequestParam("status") String status,
-                                         @RequestParam("image") MultipartFile image) {
+                                          @RequestParam(value = "image", required = false) MultipartFile image) {
         try {
             serviceImagesService.editService(serviceId, serviceName, description, price,status, image);
             return ResponseEntity.ok("Service has been updated");

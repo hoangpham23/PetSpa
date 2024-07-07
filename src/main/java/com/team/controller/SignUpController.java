@@ -66,7 +66,7 @@ public class SignUpController {
             String password = (String) tempData.get("password");
 
             CustomerDTO customers = customerService.createCustomer(customerName, phoneNumber, email, password);
-            return ResponseEntity.status(HttpStatus.CREATED).body(customers);
+            return ResponseEntity.status(HttpStatus.OK).body(customers);
         } catch (Exception e) {
             logger.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error at server site");

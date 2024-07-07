@@ -51,6 +51,7 @@ public class SignInController {
             if ("EM".equals(accounts.getRole())) {
                 EmployeeResponseDTO employeeResponseDTO = employeeService.getEmployee(accounts);
                 if (employeeResponseDTO != null){
+                    employeeResponseDTO.setRole("EM");
                     return ResponseEntity.ok().body(employeeResponseDTO);
                 }
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");

@@ -12,4 +12,5 @@ public class EmployeeResponseDTO {
     private String employeeName;
     private String phoneNumber;
     private String token;
+    private String role;
 }
