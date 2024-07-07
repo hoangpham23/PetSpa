@@ -1,15 +1,14 @@
 package com.team.controller;
 
-
 import com.team.dto.CustomerDTO;
 import com.team.service.AccountService;
 import com.team.service.CustomerService;
 import com.team.service.EmailService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.security.SecureRandom;
 import java.util.*;
@@ -25,13 +24,11 @@ public class SignUpController {
     private final Map<String, Object> tempData = new HashMap<>();
     private static final SecureRandom secureRandom = new SecureRandom();
 
-
     public SignUpController(EmailService emailService, CustomerService customerService, AccountService accountService) {
         this.customerService = customerService;
         this.accountService = accountService;
         this.emailService = emailService;
     }
-
 
     @PostMapping("")
     public ResponseEntity<?> signUp(@RequestBody Map<String, String> data) {
@@ -42,10 +39,8 @@ public class SignUpController {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("Email is already in use");
             }
 
-            // send email to verity that email valid
-            String text = "This is the OTP for verification: " + otp;
-            String subject = "Verify OTP";
-            emailService.sendEmail(email, text, subject);
+            // send email to verify that email is valid
+            emailService.sendOtpEmail(email, String.valueOf(otp), "Pawfection");
 
             // store the information when customer sign up
             tempData.putAll(data);
@@ -53,8 +48,8 @@ public class SignUpController {
             return ResponseEntity.ok("send verity otp");
         } catch (Exception e) {
             logger.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Server error");
         }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error at server site");
     }
 
     @PostMapping("/verify-otp")
@@ -81,6 +76,4 @@ public class SignUpController {
     public int otpGenerator() {
         return secureRandom.nextInt(900000) + 100000; // Generate 6-digit OTP
     }
-
-
 }
