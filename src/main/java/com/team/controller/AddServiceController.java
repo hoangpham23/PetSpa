@@ -59,16 +59,13 @@ public class AddServiceController {
         }
     }
     @PostMapping
-    public ResponseEntity<?> addService(@RequestParam("serviceName") String serviceName,
-                                        @RequestParam("description") String description,
-                                        @RequestParam("price") Double price,
-                                        @RequestParam("image") MultipartFile image) {
+    public ResponseEntity<?> addService(AddServiceDTO addServiceDTO) {
         try {
-            AddServiceDTO addServiceDTO = new AddServiceDTO();
-            addServiceDTO.setServiceName(serviceName);
-            addServiceDTO.setDescription(description);
-            addServiceDTO.setPrice(price);
-            addServiceDTO.setImage(image);
+//            AddServiceDTO addServiceDTO = new AddServiceDTO();
+//            addServiceDTO.setServiceName(serviceName);
+//            addServiceDTO.setDescription(description);
+//            addServiceDTO.setPrice(price);
+//            addServiceDTO.setImage(image);
             Services service = serviceImagesService.addService(addServiceDTO);
             return new ResponseEntity<>(service, HttpStatus.OK);
         } catch (Exception e) {

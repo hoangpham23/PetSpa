@@ -208,7 +208,7 @@ public class ServiceImagesService {
         String newImageUrl = currentImageUrl; // Initialize with the current image URL
 
         // Check if a new image is provided and if it's different from the current image
-        if (!image.isEmpty()) {
+        if (image != null && !image.isEmpty()) {
             String newFileName = image.getOriginalFilename();
 
             // Check if the new image filename is different from the current image URL
@@ -233,12 +233,12 @@ public class ServiceImagesService {
                     newServiceImage.setImageURL(newImageUrl);
                     updateServiceImage(newServiceImage);
                 }
-            }
-        }
 
-        // Delete the previous image file if a new image has been uploaded
-        if (currentImageUrl != null && !currentImageUrl.equals(newImageUrl)) {
-            deleteImageFile(currentImageUrl);
+                // Delete the previous image file if a new image has been uploaded
+                if (currentImageUrl != null && !currentImageUrl.equals(newImageUrl)) {
+                    deleteImageFile(currentImageUrl);
+                }
+            }
         }
 
         // Update the service details
