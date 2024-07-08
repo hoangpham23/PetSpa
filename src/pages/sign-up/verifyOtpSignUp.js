@@ -54,6 +54,7 @@ function VerifyOtpSignUp() {
                 onChange={handleInput}
               />
             </div>
+            <div className={style.noti}>{msg}</div>
             <div className={style.button_div}>
               <div className={style.backToPrevious}>
                 <button className="btn" onClick={() => navigate("/sign-up")}>
@@ -72,7 +73,6 @@ function VerifyOtpSignUp() {
           </form>
         </div>
 
-        {msg}
       </div>
     </>
   );

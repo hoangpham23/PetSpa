@@ -28,7 +28,7 @@ export default function LimitMaxSlot({ handleClose, open }) {
       const token = localStorage.getItem("token");
       const response = await axios.get(
         "http://localhost:8090/admin/getMaxBooking",
-        { maxSlot },
+       
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -37,7 +37,9 @@ export default function LimitMaxSlot({ handleClose, open }) {
       );
       console.log(response.status);
       if (response.status === 200) {
-        setMaxSlot(response.data);
+        console.log(response.data.maxBooking); 
+        setMaxSlot(JSON.stringify(response.data.maxBooking));
+        
       }
     } catch (error) {
       console.log(error);
@@ -49,6 +51,11 @@ export default function LimitMaxSlot({ handleClose, open }) {
   }
   React.useEffect(() => {
     getData();
+  }, []);
+  React.useEffect(() => {
+    if(open){
+      getData();
+    }
   }, []);
 
   async function handleSubmit() {
@@ -63,8 +70,8 @@ export default function LimitMaxSlot({ handleClose, open }) {
     }
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.post(
-        "http://localhost:8090/admin/updateMaxBooking",
+      const response = await axios.put(
+        "http://localhost:8090/admin/updateMaxBooking", { maxBooking: maxSlot },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -72,7 +79,7 @@ export default function LimitMaxSlot({ handleClose, open }) {
         }
       );
       if (response.status === 200) {
-        setMaxSlot(response.data);
+        alert("Successfully update")
       }
     } catch (error) {
       console.log(error);
@@ -95,9 +102,9 @@ export default function LimitMaxSlot({ handleClose, open }) {
             MAX APPOINTMENT IN A SLOT
           </Typography>
           <TextField
-            error
-            id="outlined-error-helper-text"
-            label="Error"
+           required
+           id="filled-required"
+           label="Required"
             value={maxSlot}
             helperText={error}
             sx={{ marginTop: "3rem", width: "100%" }}
