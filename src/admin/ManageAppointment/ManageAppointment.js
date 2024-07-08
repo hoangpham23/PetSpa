@@ -1,10 +1,11 @@
 import { Box, CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import SideBar from "../../components/side-bar/SideBar";
-import styled from "styled-components";
 import CustomizedTables from "./Table";
 import SearchBar from "./SearchBar";
 import axios from "axios";
 import * as React from "react";
+import styles from "./ManageAppointment_style.module.css";
+import LimitMaxSlot from "./LimitMaxSlot";
 function ManageAppointment() {
   const theme = createTheme({
     typography: {
@@ -17,6 +18,9 @@ function ManageAppointment() {
     getAppointmentToday();
   }, []);
 
+  const [openLimitSlotFuncion, setOpenLimitSlotFuncion] = React.useState(false);
+  const handleOpenLimitSlotFunction = () => setOpenLimitSlotFuncion(true);
+  const handleCloseLimitSlotFunction = () => setOpenLimitSlotFuncion(false);
   async function getAppointmentToday() {
     try {
       const token = localStorage.getItem("token");
@@ -76,6 +80,7 @@ function ManageAppointment() {
               Appointment today
             </h1>
             <Box
+              disp
               display={"flex"}
               sx={{
                 marginTop: "7rem",
@@ -85,12 +90,21 @@ function ManageAppointment() {
               }}
             >
               <SearchBar
-                // setSearch={setSearch}
-                // search={search}
-                // getData={getData}
                 setAppointments={setAppointments}
                 appointments={appointments}
                 getAppointmentToday={getAppointmentToday}
+              />
+              <input
+                type="submit"
+                value="Appointment limitation"
+                className={styles.btn}
+                onClick={handleOpenLimitSlotFunction}
+                style={{ margin: "0px 1rem", fontSize: "1.6rem" }}
+              />
+              <LimitMaxSlot
+                open={openLimitSlotFuncion}
+                handleOpen={handleOpenLimitSlotFunction}
+                handleClose={handleCloseLimitSlotFunction}
               />
             </Box>
           </Box>

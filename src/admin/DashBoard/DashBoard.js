@@ -199,7 +199,7 @@ function DashBoard() {
                   sx={{
                     backgroundColor: "white",
                     borderRadius: "2rem",
-                    height: "80vh",
+                    height: "95vh",
 
                     marginTop: "3rem",
                     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
