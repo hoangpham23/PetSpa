@@ -41,18 +41,16 @@
   .schedule_table th,
   .schedule_table td {
     padding: 5px 0px;
-
   }
   
   .schedule_item {
     display: flex;
     align-items: center;
-    padding: 10px;
-    border-radius: 10px;
-    width: 100%;
+    /* padding: 10px; */
+    /* border-radius: 10px; */
     margin: 0 auto; 
     background-color: var(--blue-color);
-    height: 15rem;
+    height: 20rem;
   }
 
 .schedule_item {
@@ -60,7 +58,7 @@
     align-items: center;
     padding: 10px;
     border-radius: 30px;
-    width: 90%;
+    width: 21rem;
     justify-content: center;
 }
 
@@ -68,7 +66,7 @@
     font-size: 1.8rem;
     font-weight: bold;
     margin-left: -3rem;
-    margin-top: 7rem;
+    margin-top: 12rem;
 }
 
 .details {
@@ -84,7 +82,7 @@
 }
 
 .MuiTimelineItem{
-    min-height: 10rem;
+    min-height: 15rem;
 }
 
 .service {
@@ -104,7 +102,7 @@
 }
 
 .feedback_button:hover{
-    background: var(--bg-color);
+    background: transparent;
     color: var(--text-color);
     border-color: var(--pink-color);
 }
