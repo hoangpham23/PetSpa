@@ -100,7 +100,6 @@ public class AppointmentService {
             appointments.setCustomer(customers);
             appointments.setPets(pets);
             appointments.setServices(services);
-            appointments.setDepositAmount(totalMoney);
             appointments.setPaymentStatus("Pending");
             appointments.setStatus("Not assign");
             Appointments savedAppointments = appointmentRepository.save(appointments);

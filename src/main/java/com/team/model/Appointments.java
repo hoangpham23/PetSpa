@@ -32,9 +32,6 @@ public class Appointments {
     @Column(name = "AppointmentTime")
     private Timestamp appointmentTime;
 
-    @Column(name = "DepositAmount")
-    private Double depositAmount;
-
     @Size(max = 20)
     @Column(name = "PaymentStatus", length = 20)
     private String paymentStatus;
