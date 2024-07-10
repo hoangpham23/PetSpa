@@ -33,7 +33,9 @@ function SignIn() {
       [event.target.name]: event.target.value,
     }));
   }
-
+  useEffect(() => {
+    localStorage.setItem("customerID", "");
+  }, []);
   useEffect(() => {
     const queryParams = queryString.parse(location.search);
     if (queryParams.error === "email_exists") {
