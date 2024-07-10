@@ -36,7 +36,7 @@ export default function FeedBack({ open, handleClose }) {
   });
   React.useEffect(() => {
     if (dropDownData.length === 0 && open) {
-      saveCloseData();
+      handleClose();
     }
   }, [dropDownData]);
   async function getFeedbackData() {
@@ -145,6 +145,7 @@ export default function FeedBack({ open, handleClose }) {
     } catch (error) {
       if (open) {
         alert("Error occured !!!");
+        handleClose();
       }
       console.log(error);
     }
