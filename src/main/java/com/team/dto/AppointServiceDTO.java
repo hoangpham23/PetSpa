@@ -12,4 +12,5 @@ public class AppointServiceDTO {
     private int appointmentID;
     private String appointmentTime;
     private String serviceName;
+    private String appointmentStatus;
 }

@@ -8,8 +8,6 @@ import com.team.model.PaymentHistory;
 import com.team.repository.CustomerRepository;
 import com.team.repository.PaymentDetailRepository;
 import com.team.repository.PaymentHistoryRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,7 +20,6 @@ import java.util.stream.Collectors;
 public class PaymentHistoryService {
 
     private final static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    private static final Logger log = LoggerFactory.getLogger(PaymentHistoryService.class);
     private final CustomerRepository customerRepository;
     private final PaymentHistoryRepository paymentHistoryRepository;
     private final PaymentDetailRepository paymentDetailRepository;
@@ -79,7 +76,8 @@ public class PaymentHistoryService {
                 .map(pd -> new AppointServiceDTO(
                         pd.getAppointments().getAppointmentID(),
                         pd.getAppointments().getAppointmentTime().toLocalDateTime().format(FORMATTER),
-                        pd.getAppointments().getServices().getServiceName()
+                        pd.getAppointments().getServices().getServiceName(),
+                        pd.getAppointments().getStatus()
                 ))
                 .sorted(Comparator.comparing(AppointServiceDTO::getAppointmentID))
                 .collect(Collectors.toList());
@@ -92,8 +90,7 @@ public class PaymentHistoryService {
 
     public Map<String, List<PaymentHistoryDTO>> getPaymentHistory(int customerID) {
         List<PaymentHistoryDTO> paymentHistory = getAllPaymentHistory(customerID);
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
 
         List<PaymentHistoryDTO> completed = new ArrayList<>();
         List<PaymentHistoryDTO> upcoming = new ArrayList<>();
@@ -102,17 +99,12 @@ public class PaymentHistoryService {
             List<AppointServiceDTO> upcomingService = new ArrayList<>();
             List<AppointServiceDTO> completedService = new ArrayList<>();
             for (AppointServiceDTO service : dto.getListService()) {
-                try {
-                    String appointmentTime = service.getAppointmentTime().split("\\.")[0]; // Remove milliseconds if present
-                    LocalDateTime appointmentDateTime = LocalDateTime.parse(appointmentTime, formatter);
-                    if (appointmentDateTime.isBefore(now)) {
-                        completedService.add(service);
-                    } else {
-                        upcomingService.add(service);
-                    }
-                } catch (DateTimeParseException e) {
-                    log.error("Error parsing date: {}", service.getAppointmentTime());
-                    break;
+                String appointmentStatus = service.getAppointmentStatus();
+                if (("Completed").equals(appointmentStatus) || ("In progress").equals(appointmentStatus)) {
+                    completedService.add(service);
+                }
+                else if (("Scheduled").equals(appointmentStatus) || ("Rescheduled").equals(appointmentStatus)) {
+                    upcomingService.add(service);
                 }
             }
             if (!upcomingService.isEmpty()) {
