@@ -43,7 +43,7 @@ export default function EditAndDeleteService({
         price: service.price || "",
         status: service.status || "",
         imageURL: service.imageURL || "",
-        imageFile: handleImageURLChange(service.imageURL) || "",
+        //imageFile: handleImageURLChange(service.imageURL) || "",
       });
     }
   }, [open]);
@@ -56,7 +56,7 @@ export default function EditAndDeleteService({
         price: service.price || "",
         status: service.status || "",
         imageURL: service.imageURL || "",
-        imageFile: handleImageURLChange(service.imageURL) || "",
+        //imageFile: handleImageURLChange(service.imageURL) || "",
       });
     }
   }, [service]);
@@ -85,36 +85,36 @@ export default function EditAndDeleteService({
       }));
     }
   };
-  const fetchImageAsBlob = async (imageUrl) => {
-    try {
-      const response = await axios.get(imageUrl, {
-        responseType: "blob", // Đảm bảo rằng axios trả về dữ liệu dạng Blob
-      });
+  // const fetchImageAsBlob = async (imageUrl) => {
+  //   try {
+  //     const response = await axios.get(imageUrl, {
+  //       responseType: "blob", // Đảm bảo rằng axios trả về dữ liệu dạng Blob
+  //     });
 
-      return response.data; // Trả về Blob dữ liệu hình ảnh
-    } catch (error) {
-      console.error("Error fetching image:", error);
-      throw new Error("Error fetching image");
-    }
-  };
-  const handleImageURLChange = async (imageUrl) => {
-    try {
-      const imageBlob = await fetchImageAsBlob(imageUrl);
+  //     return response.data; // Trả về Blob dữ liệu hình ảnh
+  //   } catch (error) {
+  //     console.error("Error fetching image:", error);
+  //     throw new Error("Error fetching image");
+  //   }
+  // };
+  // const handleImageURLChange = async (imageUrl) => {
+  //   try {
+  //     const imageBlob = await fetchImageAsBlob(imageUrl);
 
-      // Convert blob to File
-      const imageFile = new File([imageBlob], "image.jpg", {
-        type: "image/jpeg",
-      });
+  //     // Convert blob to File
+  //     const imageFile = new File([imageBlob], "image.jpg", {
+  //       type: "image/jpeg",
+  //     });
 
-      setServiceInfo((prevInfo) => ({
-        ...prevInfo,
-        imageURL: imageUrl,
-        imageFile: imageFile,
-      }));
-    } catch (error) {
-      console.error("Error converting image URL to file:", error);
-    }
-  };
+  //     setServiceInfo((prevInfo) => ({
+  //       ...prevInfo,
+  //       imageURL: imageUrl,
+  //       imageFile: imageFile,
+  //     }));
+  //   } catch (error) {
+  //     console.error("Error converting image URL to file:", error);
+  //   }
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();

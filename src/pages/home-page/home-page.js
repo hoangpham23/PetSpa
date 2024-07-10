@@ -14,17 +14,19 @@ import { Pagination, Navigation } from "swiper/modules";
 import "swiper/css"; // Core Swiper styles
 import "swiper/css/pagination"; // Pagination module styles
 import "swiper/css/navigation"; // Navigation module styles
-import Cookies from 'js-cookie';
-
+import Cookies from "js-cookie";
+import FeedBack from "./FeedBack";
 
 function decodeString(encodedString) {
   // Replace '+' with '%20' before decoding
-  const formattedString = encodedString.replace(/\+/g, '%20');
+  const formattedString = encodedString.replace(/\+/g, "%20");
   return decodeURIComponent(formattedString);
 }
 
-
 function HomePage() {
+  const [openFeedBack, setOpenFeedBack] = React.useState(false);
+  const handleOpenFeedBack = () => setOpenFeedBack(true);
+  const handleCloseFeedBack = () => setOpenFeedBack(false);
   const [items, setItems] = useState([]);
   const dataArray = [];
   const [accountCookie, setAccount] = useState({
@@ -42,7 +44,7 @@ function HomePage() {
     try {
       axios.defaults.withCredentials = true;
       const response = await axios.get("http://localhost:8090/home-page", {
-        withCredentials: true
+        withCredentials: true,
       });
 
       const accountData = localStorage.getItem("account");
@@ -52,22 +54,21 @@ function HomePage() {
         // Xử lý trường hợp Local Storage không có dữ liệu "account"
         console.error("No account data found in Local Storage");
         account = {}; // hoặc giá trị mặc định khác phù hợp với ứng dụng của bạn
-        const combinedData = Cookies.get('customerData');
+        const combinedData = Cookies.get("customerData");
         if (combinedData) {
-          console.log("just run here")
+          console.log("just run here");
           const decodedData = decodeURIComponent(combinedData);
           const accountData = JSON.parse(decodedData);
           const account = JSON.parse(decodedData);
-          account.customerName = decodeString(accountData.customerName)
-          account.numberOfPets = parseInt(accountData.numberOfPets)
-          localStorage.setItem("account", JSON.stringify(account))
-          localStorage.setItem("token", account.token)
-          localStorage.setItem("role", account.role)
+          account.customerName = decodeString(accountData.customerName);
+          account.numberOfPets = parseInt(accountData.numberOfPets);
+          localStorage.setItem("account", JSON.stringify(account));
+          localStorage.setItem("token", account.token);
+          localStorage.setItem("role", account.role);
         }
       }
       console.log(account.role);
       const token = localStorage.getItem("token");
-
 
       const responseData = response.data; // Lưu dữ liệu từ API vào biến tạm
       setItems(responseData); // Cập nhật state với dữ liệu từ API
@@ -83,8 +84,29 @@ function HomePage() {
 
   useEffect(() => {
     getData();
+    getFeedback();
   }, []); //
-
+  async function getFeedback() {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `http://localhost:8090/feedback/check?customerID=${localStorage.getItem(
+          "customerID"
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response.data);
+      if (response.status === 200) {
+        if (response.data === true) {
+          handleOpenFeedBack();
+        }
+      }
+    } catch (error) {}
+  }
   return (
     <>
       <Helmet>
@@ -111,6 +133,7 @@ function HomePage() {
       ) : (
         <HeaderForGuest />
       )}
+      <FeedBack open={openFeedBack} handleClose={handleCloseFeedBack} />
       <Tittle />
       <Introduce />
       <Service />
