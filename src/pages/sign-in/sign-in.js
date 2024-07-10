@@ -15,6 +15,7 @@ function SignIn() {
   localStorage.setItem("role", "");
   localStorage.setItem("account", "");
   localStorage.setItem("resetPasswordEmail", "");
+  localStorage.setItem("customerID", "");
   const [account, setAccount] = useState({
     customerID: "",
     customerName: "",
@@ -33,9 +34,6 @@ function SignIn() {
       [event.target.name]: event.target.value,
     }));
   }
-  useEffect(() => {
-    localStorage.setItem("customerID", "");
-  }, []);
   useEffect(() => {
     const queryParams = queryString.parse(location.search);
     if (queryParams.error === "email_exists") {

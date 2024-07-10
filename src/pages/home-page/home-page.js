@@ -131,7 +131,10 @@ function HomePage() {
       {localStorage.getItem("role") === "CUS" ? (
         <HeaderForCus />
       ) : (
-        <HeaderForGuest />
+        <>
+          {localStorage.setItem("customerID", "")}
+          <HeaderForGuest />
+        </>
       )}
       <FeedBack open={openFeedBack} handleClose={handleCloseFeedBack} />
       <Tittle />
