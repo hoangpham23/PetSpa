@@ -24,7 +24,9 @@ function SuccessfullyPayment() {
           <div className={styles.notification}>
             <h1>SUCCESSFULLY BOOKING</h1>
             <h3>[check your gmail, we have sent the bill]</h3>
-            <a href="#">Click here to see history payment</a>
+            <a onClick={navigate("/payment-history")} href="/payment-history">
+              Click here to see history payment
+            </a>
           </div>
         </main>
         {/* <Footer /> */}

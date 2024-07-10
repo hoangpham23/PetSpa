@@ -70,7 +70,6 @@ export default function FeedBack({ open, handleClose }) {
       }
     }
   }
-  console.log("dropDownData length ngao:", dropDownData.length);
   React.useEffect(() => {
     getFeedbackData();
   }, []);
@@ -98,12 +97,16 @@ export default function FeedBack({ open, handleClose }) {
   };
   const handleNext = async () => {
     try {
+      if (selectingService.feedbackText.trim() === "") {
+        alert("Feedback is empty");
+        return;
+      }
       const token = localStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:8090/feedback/submit",
         {
           feedbackID: selectingService.feedbackID,
-          feedbackContent: selectingService.feedbackText,
+          feedbackContent: selectingService.feedbackText.trim(),
         },
         {
           headers: {

@@ -73,7 +73,7 @@ function HomePage() {
       const responseData = response.data; // Lưu dữ liệu từ API vào biến tạm
       setItems(responseData); // Cập nhật state với dữ liệu từ API
       localStorage.setItem("dataArray", JSON.stringify(responseData)); // Lưu dữ liệu vào localStorage sau khi đã cập nhật items
-      localStorage.setItem("customerID", account.customerID);
+
       localStorage.setItem("petID", "");
       localStorage.setItem("cart", "");
       localStorage.setItem("serviceIds", "");
