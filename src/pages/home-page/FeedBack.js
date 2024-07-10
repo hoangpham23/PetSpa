@@ -34,7 +34,11 @@ export default function FeedBack({ open, handleClose }) {
     petName: "",
     feedbackText: "",
   });
-
+  React.useEffect(() => {
+    if (dropDownData.length === 0 && open) {
+      saveCloseData();
+    }
+  }, [dropDownData]);
   async function getFeedbackData() {
     try {
       const token = localStorage.getItem("token");
@@ -66,7 +70,7 @@ export default function FeedBack({ open, handleClose }) {
       }
     }
   }
-
+  console.log("dropDownData length ngao:", dropDownData.length);
   React.useEffect(() => {
     getFeedbackData();
   }, []);
@@ -111,10 +115,8 @@ export default function FeedBack({ open, handleClose }) {
       if (response.status === 200) {
         alert("Successfully submit feedback");
         getFeedbackData();
-        if (dropDownData.length === 0) {
-          saveCloseData();
-          handleClose();
-        }
+        console.log("dropDownData length:", dropDownData.length);
+        console.log(dropDownData.length === 0);
       }
     } catch (error) {
       console.log(error);
@@ -129,7 +131,7 @@ export default function FeedBack({ open, handleClose }) {
       const token = localStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:8090/feedback/close",
-        { customerID: localStorage.getItem("customerID") },
+        { customerID: parseInt(localStorage.getItem("customerID")) },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -137,14 +139,17 @@ export default function FeedBack({ open, handleClose }) {
         }
       );
       console.log(response.status);
+      if (response.status === 200) {
+        handleClose();
+      }
     } catch (error) {
       if (open) {
         alert("Error occured !!!");
-        handleClose();
       }
       console.log(error);
     }
   }
+
   return (
     <div>
       <Modal
@@ -162,7 +167,6 @@ export default function FeedBack({ open, handleClose }) {
               aria-label="close"
               className={styles.closeButton}
               onClick={() => {
-                handleClose();
                 saveCloseData();
               }}
             >
