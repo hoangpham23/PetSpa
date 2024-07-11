@@ -1,0 +1,114 @@
+Index: src/test/java/com/team/repository/AccountRepositoryTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/com/team/repository/AccountRepositoryTest.java b/src/test/java/com/team/repository/AccountRepositoryTest.java
+new file mode 100644
+--- /dev/null	(date 1720326175926)
++++ b/src/test/java/com/team/repository/AccountRepositoryTest.java	(date 1720326175926)
+@@ -0,0 +1,54 @@
++package com.team.repository;
++
++import com.team.model.Accounts;
++import org.junit.jupiter.api.BeforeEach;
++import org.junit.jupiter.api.Test;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
++import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
++import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
++
++import static org.junit.jupiter.api.Assertions.*;
++
++@DataJpaTest
++@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
++class AccountRepositoryTest {
++
++    private static final String CORRECT_EMAIL = "email@gmail.com";
++    private static final String CORRECT_PASSWORD = "password";
++    private static final String WRONG_EMAIL = "wrongEmail@gmail.com";
++    private static final String WRONG_PASSWORD = "wrongPassword";
++
++    @Autowired
++    private AccountRepository accountRepository;
++
++    @BeforeEach
++    void setUp() {
++        Accounts account = new Accounts();
++        account.setEmail(CORRECT_EMAIL);
++        account.setPassword(CORRECT_PASSWORD);
++        accountRepository.save(account);
++    }
++
++    @Test
++    void findByEmailAndPassword_ShouldReturnAccount_WhenEmailAndPasswordAreCorrect() {
++        Accounts foundAccount = accountRepository.findAccountsByEmailAndPassword(CORRECT_EMAIL, CORRECT_PASSWORD);
++        assertNotNull(foundAccount);
++        assertEquals(CORRECT_EMAIL, foundAccount.getEmail());
++    }
++
++    @Test
++    void findByEmailAndPassword_ShouldReturnNull_WhenEmailOrPasswordIsIncorrect() {
++        assertNull(accountRepository.findAccountsByEmailAndPassword(WRONG_EMAIL, CORRECT_PASSWORD));
++        assertNull(accountRepository.findAccountsByEmailAndPassword(CORRECT_EMAIL, WRONG_PASSWORD));
++        assertNull(accountRepository.findAccountsByEmailAndPassword(WRONG_EMAIL, WRONG_PASSWORD));
++    }
++
++    @Test
++    void existsAccountByEmail_ShouldReturnTrueForExistingEmail_AndFalseForNonExistingEmail() {
++        assertTrue(accountRepository.existsAccountByEmail(CORRECT_EMAIL));
++        assertFalse(accountRepository.existsAccountByEmail(WRONG_EMAIL));
++    }
++
++
++}
+\ No newline at end of file
+Index: src/test/java/com/team/repository/AppointmentRepositoryTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/com/team/repository/AppointmentRepositoryTest.java b/src/test/java/com/team/repository/AppointmentRepositoryTest.java
+new file mode 100644
+--- /dev/null	(date 1720326175922)
++++ b/src/test/java/com/team/repository/AppointmentRepositoryTest.java	(date 1720326175922)
+@@ -0,0 +1,38 @@
++package com.team.repository;
++
++import org.junit.jupiter.api.BeforeAll;
++import org.junit.jupiter.api.Test;
++
++import static org.junit.jupiter.api.Assertions.*;
++
++class AppointmentRepositoryTest {
++
++    @BeforeAll
++    static void setUpBeforeClass() throws Exception {
++
++    }
++
++    @Test
++    void findLastEmployeeIDInADay() {
++    }
++
++    @Test
++    void findAppointmentsAfterBefore() {
++    }
++
++    @Test
++    void findLastEmployeeID() {
++    }
++
++    @Test
++    void findAllEmployeeInOneShift() {
++    }
++
++    @Test
++    void SQL_findCustomerIDAndPaymentStatus() {
++    }
++
++    @Test
++    void findAppointmentsForDate() {
++    }
++}
+\ No newline at end of file

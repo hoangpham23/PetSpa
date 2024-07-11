@@ -1,0 +1,1153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8201afb4-7493-46b4-9a34-d404d2e88aed" name="Changes" comment="change payment history">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/Application.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/config/ApplicationInitConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/config/Config.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/config/EncoderMomo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/config/OAuth2AuthenticationSuccessHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/config/PaypalConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/config/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/config/VNPayConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/controller/AddServiceController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/controller/AdminController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/controller/AppointmentController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/controller/ChoosePetController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/controller/ChooseServiceController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/controller/CustomerFeedbackForEmployeeController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/controller/EditAcountController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/controller/EmployeeController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/controller/FeedbackController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/controller/ForgotPasswordController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/controller/HomePageImagesController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/controller/InsertPetInfoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/controller/ManageAppointmentController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/controller/PaymentController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/controller/PaymentHistoryController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/controller/RevenueController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/controller/SignInController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/controller/SignUpController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/AccountDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/AddServiceDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/AppointServiceDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/AppointmentDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/AppointmentRequestDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/ChooseServiceDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/CustomerDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/CustomerFeedbackDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/CustomerFeedbackForEmployeeDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/EditAccountDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/EmployeeDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/EmployeeResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/FeedbackDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/FeedbackRequestDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/IntrospectRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/MailBody.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/ManageAppointmentDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/ManageServiceDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/PaymentHistoryDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/PetDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/RescheduleDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/RevenueDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/ScheduleDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/ServiceDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/ServiceImageDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/ServicePageDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/dto/WorkDateDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/model/Accounts.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/model/Appointments.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/model/Customers.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/model/EmployeeSchedule.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/model/Employees.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/model/Feedback.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/model/PaymentDetail.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/model/PaymentHistory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/model/Pets.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/model/ServiceImages.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/model/Services.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/repository/AccountRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/repository/AppointmentRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/repository/CustomerRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/repository/EmployeeRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/repository/EmployeeScheduleRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/repository/FeedbackRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/repository/PaymentDetailRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/repository/PaymentHistoryRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/repository/PetDetailRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/repository/PetRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/repository/ServiceRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/repository/ServicesImagesRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/service/AccountService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/service/AppointmentService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/service/CustomerService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/service/EmailService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/service/EmployeeService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/service/FeedbackService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/service/PaymentHistoryService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/service/PaymentService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/service/PaypalService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/service/PetDetailService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/service/RevenueService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/team/service/ServiceImagesService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/assets/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/assets/img/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/assets/js/html2canvas.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/assets/js/jquery.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/assets/js/jspdf.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/assets/js/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/otp-email.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/reschedule.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/team/PetsSpaApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/team/application/ApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/Bath.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/Nail.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/Shave.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/massage.jpg" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="com.intellij.jpb.JpaEntity" />
+        <option value="Interface" />
+        <option value="Class" />
+        <option value="HTML File" />
+        <option value="JUnit5 Test Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="main" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="SignIn/Up" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="reactjs" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="SWAP_SIDES_IN_COMPARE_BRANCHES" value="true" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;hoangpham23&quot;
+  }
+}</component>
+  <component name="GitHubPullRequestState">{
+  &quot;prStates&quot;: [
+    {
+      &quot;id&quot;: {
+        &quot;id&quot;: &quot;PR_kwDOL_C8lc5wMAs3&quot;,
+        &quot;number&quot;: 1
+      },
+      &quot;lastSeen&quot;: 1716376265000
+    }
+  ]
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/hoangpham23/PetSpa.git&quot;,
+    &quot;accountId&quot;: &quot;2d5765aa-1137-4b86-b9f9-1dce9ff449c4&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;hoangpham23&quot;,
+    &quot;repository&quot;: &quot;PetSpa&quot;
+  },
+  &quot;editorReviewEnabled&quot;: false
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2gh1PzyPMXFUnPpwyI1RIrlFpFr" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "JUnit.AccountRepositoryTest.executor": "Run",
+    "JUnit.AccountRepositoryTest.existsAccountByEmail_ShouldReturnTrueForExistingEmail_AndFalseForNonExistingEmail.executor": "Run",
+    "JUnit.AccountRepositoryTest.findAccountsByEmailAndPassword_WhenAccountExists_ReturnsAccount.executor": "Run",
+    "JUnit.AccountRepositoryTest.findByEmailAndPassword_ShouldReturnNull_WhenEmailOrPasswordIsIncorrect.executor": "Run",
+    "JUnit.AccountRepositoryTest.findByEmailAndPassword_WhenIncorrectEmailOrPassword_ReturnsNull.executor": "Run",
+    "Maven.PetSpa [com.github.spotbugs:spotbugs-maven-plugin:4.8.5.0:check].executor": "Run",
+    "Maven.PetSpa [com.github.spotbugs:spotbugs-maven-plugin:4.8.5.0:gui].executor": "Run",
+    "Maven.PetSpa [com.github.spotbugs:spotbugs-maven-plugin:4.8.5.0:help].executor": "Run",
+    "Maven.PetSpa [com.github.spotbugs:spotbugs-maven-plugin:4.8.5.0:spotbugs].executor": "Run",
+    "Maven.PetSpa [com.github.spotbugs:spotbugs-maven-plugin:4.8.5.0:verify].executor": "Run",
+    "Maven.PetSpa [compile].executor": "Run",
+    "Maven.PetSpa [org.springframework.boot:spring-boot-maven-plugin:3.2.5:build-image].executor": "Run",
+    "Maven.PetSpa [test].executor": "Run",
+    "Maven.PetSpa [validate].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.Application.executor": "Run",
+    "Spring Boot.PetSpaApplication.executor": "Run",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "database.data.extractors.current.export.id": "SQL-Insert-Multirow.sql.groovy",
+    "database.data.extractors.current.id": "SQL Inserts",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "E:/SpringBoot/pokemon-review-springboot-master (1)/pokemon-review-springboot-master",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.sourceCode.Java",
+    "settings.editor.splitter.proportion": "0.2246941",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "exasol",
+      "sqlserver"
+    ]
+  }
+}]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.team" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.team.repository" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="AccountRepositoryTest" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.Application">
+    <configuration name="AccountRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PetSpa" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.team.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.team.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.team.repository.AccountRepositoryTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AccountRepositoryTest.existsAccountByEmail_ShouldReturnTrueForExistingEmail_AndFalseForNonExistingEmail" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PetSpa" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.team.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.team.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.team.repository.AccountRepositoryTest" />
+      <option name="METHOD_NAME" value="existsAccountByEmail_ShouldReturnTrueForExistingEmail_AndFalseForNonExistingEmail" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AccountRepositoryTest.findAccountsByEmailAndPassword_WhenAccountExists_ReturnsAccount" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PetSpa" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.team.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.team.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.team.repository.AccountRepositoryTest" />
+      <option name="METHOD_NAME" value="findAccountsByEmailAndPassword_WhenAccountExists_ReturnsAccount" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AccountRepositoryTest.findByEmailAndPassword_ShouldReturnNull_WhenEmailOrPasswordIsIncorrect" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PetSpa" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.team.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.team.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.team.repository.AccountRepositoryTest" />
+      <option name="METHOD_NAME" value="findByEmailAndPassword_ShouldReturnNull_WhenEmailOrPasswordIsIncorrect" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AccountRepositoryTest.findByEmailAndPassword_WhenIncorrectEmailOrPassword_ReturnsNull" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PetSpa" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.team.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.team.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.team.repository.AccountRepositoryTest" />
+      <option name="METHOD_NAME" value="findByEmailAndPassword_WhenIncorrectEmailOrPassword_ReturnsNull" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="envFilePaths">
+        <option value="$PROJECT_DIR$/src/main/resources/.env" />
+      </option>
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="PetSpa" />
+      <selectedOptions>
+        <option name="environmentVariables" />
+      </selectedOptions>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team.Application" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.AccountRepositoryTest" />
+        <item itemvalue="JUnit.AccountRepositoryTest.findByEmailAndPassword_WhenIncorrectEmailOrPassword_ReturnsNull" />
+        <item itemvalue="JUnit.AccountRepositoryTest.findByEmailAndPassword_ShouldReturnNull_WhenEmailOrPasswordIsIncorrect" />
+        <item itemvalue="JUnit.AccountRepositoryTest.findAccountsByEmailAndPassword_WhenAccountExists_ReturnsAccount" />
+        <item itemvalue="JUnit.AccountRepositoryTest.existsAccountByEmail_ShouldReturnTrueForExistingEmail_AndFalseForNonExistingEmail" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\pcm23\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8201afb4-7493-46b4-9a34-d404d2e88aed" name="Changes" comment="" />
+      <created>1716134977169</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1716134977169</updated>
+      <workItem from="1716134977664" duration="306000" />
+      <workItem from="1716137133018" duration="92000" />
+      <workItem from="1716137503201" duration="17000" />
+      <workItem from="1716184614119" duration="5543000" />
+      <workItem from="1716194644661" duration="400000" />
+      <workItem from="1716197671486" duration="2017000" />
+      <workItem from="1716204212338" duration="54000" />
+      <workItem from="1716214373965" duration="5859000" />
+      <workItem from="1716263502781" duration="2719000" />
+      <workItem from="1716273899363" duration="2010000" />
+      <workItem from="1716278272830" duration="10797000" />
+      <workItem from="1716301694270" duration="6780000" />
+      <workItem from="1716308992044" duration="5481000" />
+      <workItem from="1716319272257" duration="3324000" />
+      <workItem from="1716350554158" duration="10650000" />
+      <workItem from="1716373291289" duration="456000" />
+      <workItem from="1716373789002" duration="601000" />
+      <workItem from="1716374410054" duration="324000" />
+      <workItem from="1716374751672" duration="194000" />
+      <workItem from="1716375057413" duration="41000" />
+      <workItem from="1716375109375" duration="95000" />
+      <workItem from="1716375224128" duration="533000" />
+      <workItem from="1716375775121" duration="3465000" />
+      <workItem from="1716379425508" duration="2634000" />
+      <workItem from="1716396809332" duration="457000" />
+      <workItem from="1716442522966" duration="5902000" />
+      <workItem from="1716462987381" duration="845000" />
+      <workItem from="1716463849716" duration="12764000" />
+      <workItem from="1716519058469" duration="2220000" />
+      <workItem from="1716528476102" duration="77000" />
+      <workItem from="1716532395927" duration="1006000" />
+      <workItem from="1716553553524" duration="7737000" />
+      <workItem from="1716568700215" duration="882000" />
+      <workItem from="1716606934872" duration="1619000" />
+      <workItem from="1716608586831" duration="33000" />
+      <workItem from="1716619254522" duration="3102000" />
+      <workItem from="1716626573031" duration="23000" />
+      <workItem from="1716640738902" duration="4032000" />
+      <workItem from="1716644837842" duration="913000" />
+      <workItem from="1716645797343" duration="460000" />
+      <workItem from="1716646274759" duration="366000" />
+      <workItem from="1716711645143" duration="14189000" />
+      <workItem from="1716789016079" duration="1102000" />
+      <workItem from="1716794578256" duration="2113000" />
+      <workItem from="1716798578553" duration="480000" />
+      <workItem from="1716799134254" duration="1809000" />
+      <workItem from="1716800971357" duration="5970000" />
+      <workItem from="1716824923758" duration="3994000" />
+      <workItem from="1716864609638" duration="4612000" />
+      <workItem from="1716883429223" duration="3575000" />
+      <workItem from="1716887034800" duration="1960000" />
+      <workItem from="1716889071401" duration="9744000" />
+      <workItem from="1716899468702" duration="4628000" />
+      <workItem from="1716905162502" duration="3055000" />
+      <workItem from="1716908245577" duration="7349000" />
+      <workItem from="1716968409537" duration="10567000" />
+      <workItem from="1716990388239" duration="9473000" />
+      <workItem from="1717047378162" duration="6053000" />
+      <workItem from="1717124128553" duration="6480000" />
+      <workItem from="1717134348064" duration="4831000" />
+      <workItem from="1717158818611" duration="15974000" />
+      <workItem from="1717218115402" duration="16000" />
+      <workItem from="1717227377646" duration="3809000" />
+      <workItem from="1717233112197" duration="4074000" />
+      <workItem from="1717313137791" duration="70000" />
+      <workItem from="1717316231084" duration="20000" />
+      <workItem from="1717316286970" duration="2756000" />
+      <workItem from="1717402226504" duration="7443000" />
+      <workItem from="1717418912445" duration="16564000" />
+      <workItem from="1717469016726" duration="6787000" />
+      <workItem from="1717480732288" duration="648000" />
+      <workItem from="1717511657611" duration="1428000" />
+      <workItem from="1717517883563" duration="5364000" />
+      <workItem from="1717575103590" duration="28268000" />
+      <workItem from="1717654967205" duration="3480000" />
+      <workItem from="1717660631524" duration="669000" />
+      <workItem from="1717664066207" duration="2507000" />
+      <workItem from="1717729051300" duration="809000" />
+      <workItem from="1717732353160" duration="3241000" />
+      <workItem from="1717750618992" duration="20408000" />
+      <workItem from="1717829587963" duration="14675000" />
+      <workItem from="1717911530677" duration="1610000" />
+      <workItem from="1717913166971" duration="12165000" />
+      <workItem from="1717940648440" duration="254000" />
+      <workItem from="1717949315596" duration="70000" />
+      <workItem from="1717949400496" duration="6329000" />
+      <workItem from="1717960967656" duration="50000" />
+      <workItem from="1717990182080" duration="1197000" />
+      <workItem from="1717993564038" duration="735000" />
+      <workItem from="1718007870999" duration="2000" />
+      <workItem from="1718007957192" duration="500000" />
+      <workItem from="1718008792362" duration="336000" />
+      <workItem from="1718009164032" duration="8000" />
+      <workItem from="1718019309699" duration="774000" />
+      <workItem from="1718025068618" duration="11377000" />
+      <workItem from="1718074051090" duration="3819000" />
+      <workItem from="1718077889869" duration="1232000" />
+      <workItem from="1718080017541" duration="915000" />
+      <workItem from="1718084440270" duration="6490000" />
+      <workItem from="1718113521748" duration="6851000" />
+      <workItem from="1718121577733" duration="4235000" />
+      <workItem from="1718126572970" duration="1545000" />
+      <workItem from="1718170235463" duration="6939000" />
+      <workItem from="1718180518863" duration="185000" />
+      <workItem from="1718180943284" duration="9909000" />
+      <workItem from="1718252032020" duration="4165000" />
+      <workItem from="1718258142099" duration="6950000" />
+      <workItem from="1718266314826" duration="3029000" />
+      <workItem from="1718272925820" duration="6000" />
+      <workItem from="1718343595280" duration="7497000" />
+      <workItem from="1718369638554" duration="9448000" />
+      <workItem from="1718442928202" duration="8788000" />
+      <workItem from="1718459290463" duration="14320000" />
+      <workItem from="1718508054581" duration="2128000" />
+      <workItem from="1718526127219" duration="2953000" />
+      <workItem from="1718530322327" duration="529000" />
+      <workItem from="1718536127113" duration="9295000" />
+      <workItem from="1718546901938" duration="40000" />
+      <workItem from="1718556522662" duration="1834000" />
+      <workItem from="1718558779697" duration="2391000" />
+      <workItem from="1718604504004" duration="6234000" />
+      <workItem from="1718611556382" duration="509000" />
+      <workItem from="1718612734905" duration="4234000" />
+      <workItem from="1718630059570" duration="1549000" />
+      <workItem from="1718631624487" duration="8933000" />
+      <workItem from="1718678964785" duration="5948000" />
+      <workItem from="1718706730140" duration="7454000" />
+      <workItem from="1718723511681" duration="13991000" />
+      <workItem from="1718737978133" duration="12000" />
+      <workItem from="1718782718009" duration="10143000" />
+      <workItem from="1718815765712" duration="219000" />
+      <workItem from="1718873893006" duration="1220000" />
+      <workItem from="1718893614857" duration="11528000" />
+      <workItem from="1718940719708" duration="27000" />
+      <workItem from="1718942169220" duration="1053000" />
+      <workItem from="1718943328574" duration="420000" />
+      <workItem from="1718948734573" duration="20836000" />
+      <workItem from="1719033772199" duration="10389000" />
+      <workItem from="1719062291805" duration="8199000" />
+      <workItem from="1719123158339" duration="220000" />
+      <workItem from="1719123395819" duration="1062000" />
+      <workItem from="1719136369378" duration="6831000" />
+      <workItem from="1719148197934" duration="16393000" />
+      <workItem from="1719167506041" duration="237000" />
+      <workItem from="1719207614308" duration="6460000" />
+      <workItem from="1719215964603" duration="1109000" />
+      <workItem from="1719219754720" duration="21000" />
+      <workItem from="1719230748296" duration="11053000" />
+      <workItem from="1719285039991" duration="81000" />
+      <workItem from="1719285343168" duration="1072000" />
+      <workItem from="1719287184809" duration="955000" />
+      <workItem from="1719321315185" duration="2074000" />
+      <workItem from="1719323836758" duration="3467000" />
+      <workItem from="1719387789201" duration="1930000" />
+      <workItem from="1719396608568" duration="9727000" />
+      <workItem from="1719412709110" duration="1605000" />
+      <workItem from="1719415134025" duration="1606000" />
+      <workItem from="1719419356050" duration="805000" />
+      <workItem from="1719469572486" duration="4980000" />
+      <workItem from="1719478035444" duration="1850000" />
+      <workItem from="1719482716511" duration="654000" />
+      <workItem from="1719489551224" duration="162000" />
+      <workItem from="1719489736436" duration="1243000" />
+      <workItem from="1719497563768" duration="6337000" />
+      <workItem from="1719543114927" duration="5037000" />
+      <workItem from="1719551846559" duration="496000" />
+      <workItem from="1719559981731" duration="361000" />
+      <workItem from="1719562038646" duration="20570000" />
+      <workItem from="1719640348597" duration="26354000" />
+      <workItem from="1719727237423" duration="4251000" />
+      <workItem from="1719733295785" duration="10245000" />
+      <workItem from="1719756773520" duration="1549000" />
+      <workItem from="1719759573750" duration="5994000" />
+      <workItem from="1719803681794" duration="21398000" />
+      <workItem from="1719831707708" duration="4000" />
+      <workItem from="1719850042416" duration="415000" />
+      <workItem from="1719905815932" duration="1082000" />
+      <workItem from="1719920078094" duration="4778000" />
+      <workItem from="1719989538667" duration="454000" />
+      <workItem from="1719990182461" duration="364000" />
+      <workItem from="1720011007027" duration="1592000" />
+      <workItem from="1720016837231" duration="2027000" />
+      <workItem from="1720075723834" duration="3661000" />
+      <workItem from="1720092031169" duration="8197000" />
+      <workItem from="1720156770499" duration="6943000" />
+      <workItem from="1720170587028" duration="16792000" />
+      <workItem from="1720191731153" duration="4691000" />
+      <workItem from="1720196443927" duration="3659000" />
+      <workItem from="1720249397070" duration="291000" />
+      <workItem from="1720279471266" duration="1536000" />
+      <workItem from="1720283102832" duration="2934000" />
+      <workItem from="1720286337544" duration="2000" />
+      <workItem from="1720325566589" duration="12025000" />
+      <workItem from="1720353168616" duration="2736000" />
+      <workItem from="1720360606370" duration="623000" />
+      <workItem from="1720369782433" duration="1000" />
+      <workItem from="1720417523787" duration="5333000" />
+      <workItem from="1720425664652" duration="1025000" />
+      <workItem from="1720446717097" duration="2823000" />
+      <workItem from="1720453629838" duration="1000" />
+      <workItem from="1720496358409" duration="667000" />
+      <workItem from="1720506631719" duration="789000" />
+      <workItem from="1720529702555" duration="1000" />
+      <workItem from="1720603577568" duration="6614000" />
+      <workItem from="1720623867171" duration="590000" />
+      <workItem from="1720676498200" duration="874000" />
+      <workItem from="1720682918104" duration="336000" />
+    </task>
+    <task id="LOCAL-00042" summary="change sign-in response">
+      <option name="closed" value="true" />
+      <created>1718074110786</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1718074110786</updated>
+    </task>
+    <task id="LOCAL-00043" summary="request more appointments">
+      <option name="closed" value="true" />
+      <created>1718074155220</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1718074155220</updated>
+    </task>
+    <task id="LOCAL-00044" summary="vnpay payment">
+      <option name="closed" value="true" />
+      <created>1718074179891</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1718074179891</updated>
+    </task>
+    <task id="LOCAL-00045" summary="delete unnecessary">
+      <option name="closed" value="true" />
+      <created>1718075867407</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1718075867407</updated>
+    </task>
+    <task id="LOCAL-00046" summary="delete unnecessary">
+      <option name="closed" value="true" />
+      <created>1718077137932</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1718077137932</updated>
+    </task>
+    <task id="LOCAL-00047" summary="response customerID sign-in">
+      <option name="closed" value="true" />
+      <created>1718081227944</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1718081227944</updated>
+    </task>
+    <task id="LOCAL-00048" summary="update response sign-in">
+      <option name="closed" value="true" />
+      <created>1718088107614</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1718088107614</updated>
+    </task>
+    <task id="LOCAL-00049" summary="fix bug sign in">
+      <option name="closed" value="true" />
+      <created>1718172780413</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1718172780413</updated>
+    </task>
+    <task id="LOCAL-00050" summary="vnpay payment and update payment history">
+      <option name="closed" value="true" />
+      <created>1718267111010</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1718267111010</updated>
+    </task>
+    <task id="LOCAL-00051" summary="add paypal dependency">
+      <option name="closed" value="true" />
+      <created>1718448673689</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1718448673690</updated>
+    </task>
+    <task id="LOCAL-00052" summary="update payment method">
+      <option name="closed" value="true" />
+      <created>1718448723321</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1718448723321</updated>
+    </task>
+    <task id="LOCAL-00053" summary="update payment method">
+      <option name="closed" value="true" />
+      <created>1718448831987</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1718448831987</updated>
+    </task>
+    <task id="LOCAL-00054" summary="add setter and getter">
+      <option name="closed" value="true" />
+      <created>1718472927885</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1718472927885</updated>
+    </task>
+    <task id="LOCAL-00055" summary="search, create, delete employee">
+      <option name="closed" value="true" />
+      <created>1718472994573</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1718472994573</updated>
+    </task>
+    <task id="LOCAL-00056" summary="search, create, delete employee">
+      <option name="closed" value="true" />
+      <created>1718473007474</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1718473007474</updated>
+    </task>
+    <task id="LOCAL-00057" summary="save payment to database">
+      <option name="closed" value="true" />
+      <created>1718473047371</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1718473047371</updated>
+    </task>
+    <task id="LOCAL-00058" summary="update feedback model">
+      <option name="closed" value="true" />
+      <created>1718537719215</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1718537719216</updated>
+    </task>
+    <task id="LOCAL-00059" summary="response payment Url">
+      <option name="closed" value="true" />
+      <created>1718543399287</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1718543399287</updated>
+    </task>
+    <task id="LOCAL-00060" summary="assign employees are &quot;ACTIVE&quot;">
+      <option name="closed" value="true" />
+      <created>1718544949089</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1718544949089</updated>
+    </task>
+    <task id="LOCAL-00061" summary="delete unused function">
+      <option name="closed" value="true" />
+      <created>1718605308240</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1718605308241</updated>
+    </task>
+    <task id="LOCAL-00062" summary="fix bugs for">
+      <option name="closed" value="true" />
+      <created>1718637932167</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1718637932167</updated>
+    </task>
+    <task id="LOCAL-00063" summary="fix bugs for">
+      <option name="closed" value="true" />
+      <created>1718638563056</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1718638563056</updated>
+    </task>
+    <task id="LOCAL-00064" summary="comment revenue">
+      <option name="closed" value="true" />
+      <created>1718638588757</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1718638588757</updated>
+    </task>
+    <task id="LOCAL-00065" summary="comment revenue">
+      <option name="closed" value="true" />
+      <created>1718638594585</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1718638594585</updated>
+    </task>
+    <task id="LOCAL-00066" summary="update payment, show payment history">
+      <option name="closed" value="true" />
+      <created>1718789662212</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1718789662213</updated>
+    </task>
+    <task id="LOCAL-00067" summary="remove assign employee schedule">
+      <option name="closed" value="true" />
+      <created>1718972075531</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1718972075531</updated>
+    </task>
+    <task id="LOCAL-00068" summary="CRUD employees">
+      <option name="closed" value="true" />
+      <created>1718972125065</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1718972125065</updated>
+    </task>
+    <task id="LOCAL-00069" summary="assign employee schedule">
+      <option name="closed" value="true" />
+      <created>1718972158101</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1718972158101</updated>
+    </task>
+    <task id="LOCAL-00070" summary="show employee schedule">
+      <option name="closed" value="true" />
+      <created>1718972192490</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1718972192490</updated>
+    </task>
+    <task id="LOCAL-00071" summary="assign employee schedule when payment success">
+      <option name="closed" value="true" />
+      <created>1718972223319</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1718972223319</updated>
+    </task>
+    <task id="LOCAL-00072" summary="change response entity">
+      <option name="closed" value="true" />
+      <created>1718983922393</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1718983922393</updated>
+    </task>
+    <task id="LOCAL-00073" summary="add jwt security">
+      <option name="closed" value="true" />
+      <created>1719049582251</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1719049582252</updated>
+    </task>
+    <task id="LOCAL-00074" summary="Authorization for employee">
+      <option name="closed" value="true" />
+      <created>1719123259384</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1719123259385</updated>
+    </task>
+    <task id="LOCAL-00075" summary="jwt send when login with google">
+      <option name="closed" value="true" />
+      <created>1719324830663</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1719324830664</updated>
+    </task>
+    <task id="LOCAL-00076" summary="can book before 2 hours">
+      <option name="closed" value="true" />
+      <created>1719404651034</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1719404651034</updated>
+    </task>
+    <task id="LOCAL-00077" summary="fix bugs save to db">
+      <option name="closed" value="true" />
+      <created>1719404673035</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1719404673035</updated>
+    </task>
+    <task id="LOCAL-00078" summary="change datatype of weight">
+      <option name="closed" value="true" />
+      <created>1719404693481</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1719404693482</updated>
+    </task>
+    <task id="LOCAL-00079" summary="clean code">
+      <option name="closed" value="true" />
+      <created>1719407340783</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1719407340783</updated>
+    </task>
+    <task id="LOCAL-00080" summary="allow upload file">
+      <option name="closed" value="true" />
+      <created>1719489867086</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1719489867086</updated>
+    </task>
+    <task id="LOCAL-00081" summary="change response payment history">
+      <option name="closed" value="true" />
+      <created>1719651657406</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1719651657407</updated>
+    </task>
+    <task id="LOCAL-00082" summary="reschedule appointment">
+      <option name="closed" value="true" />
+      <created>1719730008592</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1719730008592</updated>
+    </task>
+    <task id="LOCAL-00083" summary="reschedule appointment">
+      <option name="closed" value="true" />
+      <created>1719748343288</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1719748343288</updated>
+    </task>
+    <task id="LOCAL-00084" summary="reschedule appointment">
+      <option name="closed" value="true" />
+      <created>1719748454206</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1719748454206</updated>
+    </task>
+    <task id="LOCAL-00085" summary="fix bug update">
+      <option name="closed" value="true" />
+      <created>1719748544389</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1719748544389</updated>
+    </task>
+    <task id="LOCAL-00086" summary="send email">
+      <option name="closed" value="true" />
+      <created>1720159588107</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1720159588107</updated>
+    </task>
+    <task id="LOCAL-00087" summary="fix bug">
+      <option name="closed" value="true" />
+      <created>1720163729403</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1720163729403</updated>
+    </task>
+    <task id="LOCAL-00088" summary="admin can update max booking">
+      <option name="closed" value="true" />
+      <created>1720286017055</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1720286017055</updated>
+    </task>
+    <task id="LOCAL-00089" summary="clean code">
+      <option name="closed" value="true" />
+      <created>1720336441622</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1720336441623</updated>
+    </task>
+    <task id="LOCAL-00090" summary="change payment history">
+      <option name="closed" value="true" />
+      <created>1720624058361</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1720624058362</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="bfc6683c-0600-4a13-84e9-c10128446751" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="User">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="*" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/hoang" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="user">
+                    <value>
+                      <list>
+                        <option value="*" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="bfc6683c-0600-4a13-84e9-c10128446751">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="delete unused function" />
+    <MESSAGE value="fix bugs for" />
+    <MESSAGE value="comment revenue" />
+    <MESSAGE value="update payment, show payment history" />
+    <MESSAGE value="remove assign employee schedule" />
+    <MESSAGE value="CRUD employees" />
+    <MESSAGE value="assign employee schedule" />
+    <MESSAGE value="show employee schedule" />
+    <MESSAGE value="assign employee schedule when payment success" />
+    <MESSAGE value="change response entity" />
+    <MESSAGE value="add jwt security" />
+    <MESSAGE value="Authorization for employee" />
+    <MESSAGE value="jwt send when login with google" />
+    <MESSAGE value="can book before 2 hours" />
+    <MESSAGE value="fix bugs save to db" />
+    <MESSAGE value="change datatype of weight" />
+    <MESSAGE value="allow upload file" />
+    <MESSAGE value="change response payment history" />
+    <MESSAGE value="reschedule appointment" />
+    <MESSAGE value="fix bug update" />
+    <MESSAGE value="send email" />
+    <MESSAGE value="fix bug" />
+    <MESSAGE value="admin can update max booking" />
+    <MESSAGE value="clean code" />
+    <MESSAGE value="change payment history" />
+    <option name="LAST_COMMIT_MESSAGE" value="change payment history" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/team/service/FeedbackService.java</url>
+          <line>80</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/team/service/ServiceImagesService.java</url>
+          <line>190</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/team/controller/PaymentController.java</url>
+          <line>170</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/team/service/EmailService.java</url>
+          <line>60</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/team/controller/ForgotPasswordController.java</url>
+          <line>60</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile" memberName="filename" />
+      </pinned-members>
+    </pin-to-top-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org"
+      style="line-height: 1.6em;-webkit-text-size-adjust: 100%;color: #666;font-family: sans-serif;font-size: 14px;font-weight: 400;overflow-x: hidden;background-color: #f5f6fa;">
+
+
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<head>
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Site Title -->
+    <title>Invoice</title>
+</head>
+
+<body style="margin: 0;color: #666;font-family: sans-serif;font-size: 14px;font-weight: 400;line-height: 1.6em;overflow-x: hidden;background-color: #f5f6fa;">
+<div class="tm_container"
+     style="margin-top: 0;line-height: 1.5em;max-width: 880px;padding: 30px 15px;margin-left: auto;margin-right: auto;position: relative;">
+    <div class="tm_invoice_wrap" style="margin-top: 0;line-height: 1.5em;">
+        <div class="tm_invoice tm_style1" id="tm_download_section"
+             style="margin-top: 0;line-height: 1.5em;background: #fff;border-radius: 10px;padding: 50px;">
+            <div class="tm_invoice_in" style="margin-top: 0;line-height: 1.5em;position: relative;z-index: 100;">
+                <div class="tm_invoice_head tm_align_center tm_mb20"
+                     style="margin-top: 0;line-height: 1.5em;margin-bottom: 20px;-webkit-box-align: center;-ms-flex-align: center;align-items: center;display: flex;-webkit-box-pack: justify;-ms-flex-pack: justify;justify-content: space-between;">
+                    <div class="tm_invoice_right tm_text_right"
+                         style="margin-top: 0;line-height: 1.5em;text-align: right;-webkit-box-flex: 0;-ms-flex: none;flex: none;width: 60%;">
+                        <div class="tm_primary_color tm_f50 tm_text_uppercase"
+                             style="margin-top: 0;line-height: 1em;font-size: 50px;color: #111;text-transform: uppercase;">
+                            <span th:text="${type}"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${paymentDate != null}" class="tm_invoice_info tm_mb20"
+                     style="margin-top: 0;line-height: 1.5em;margin-bottom: 20px;display: flex;-webkit-box-align: center;-ms-flex-align: center;align-items: center;-webkit-box-pack: justify;-ms-flex-pack: justify;justify-content: space-between;">
+                    <!--                    <div class="tm_invoice_seperator tm_gray_bg" style="margin-top: 0;line-height: 1.5em;background: #f5f6fa;min-height: 18px;border-radius: 1.6em;-webkit-box-flex: 1;-ms-flex: 1;flex: 1;margin-right: 20px;"></div>-->
+                    <div class="tm_invoice_info_list" style="margin-top: 0;line-height: 1.5em;display: flex;">
+                        <!--                        <p class="tm_invoice_number tm_m0" style="color: red;margin-top: 0;line-height: 1.5em;margin-bottom: 15px;margin: 0px;margin-right: 20px;">Invoice No: <b class="tm_primary_color" style="font-weight: bold;color: #111;">#LL93784</b></p>-->
+                        <p class="tm_invoice_date tm_m0"
+                           style="margin-top: 0;line-height: 1.5em;margin-bottom: 15px;margin: 0px;">Payment Date: <b
+                                class="tm_primary_color" style="font-weight: bold;color: #111;"><span
+                                th:text="${paymentDate}"></span></b></p>
+                    </div>
+                </div>
+                <div class="tm_invoice_head tm_mb10"
+                     style="margin-top: 0; line-height: 1.5em; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div class="tm_invoice_left" style="margin-top: 0; line-height: 1.5em; flex: 1;">
+                        <p class="tm_mb2" style="margin-top: 0; line-height: 1.5em; margin-bottom: 2px;"><b
+                                class="tm_primary_color" style="font-weight: bold; color: #111;">Invoice To:</b></p>
+                        <div style="margin-top: 0; line-height: 1.5em; margin-bottom: 15px;">
+                            <span style="color: black" th:text="'Name: ' + ${customerName}"></span><br>
+                            <span style="color: black" th:text="'Email: ' + ${customerEmail}"></span><br>
+                            <span style="color: black" th:text="'Pet\'s name: '+ ${petName}"></span>
+                        </div>
+                    </div>
+                    <div class="tm_invoice_right tm_text_right"
+                         style="margin-top: 0; line-height: 1.5em; text-align: right; flex: 0 0 auto; margin-left: auto;">
+                        <p class="tm_mb2"
+                           style="margin-top: 0; line-height: 1.5em; margin-bottom: 2px; text-align: right"><b
+                                class="tm_primary_color" style="font-weight: bold; color: #111;">Pay To:</b></p>
+                        <p style="margin-top: 0; line-height: 1.5em; margin-bottom: 15px; text-align: right;">
+                            <span style="color: black;">Pawfection</span><br>
+                            <span>pawfection392@gmail.com</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="tm_table tm_style1 tm_mb30" style="margin-top: 0;line-height: 1.5em;margin-bottom: 30px;">
+                    <div class="tm_round_border"
+                         style="margin-top: 0;line-height: 1.5em;border: 1px solid #dbdfea;overflow: hidden;border-radius: 6px;">
+                        <div class="tm_table_responsive" style="margin-top: 0;line-height: 1.5em;overflow-x: auto;">
+                            <table style="width: 100%;caption-side: bottom;border-collapse: collapse;min-width: 600px;">
+                                <thead>
+                                <tr>
+                                    <th class="tm_width_3 tm_semi_bold tm_primary_color tm_gray_bg"
+                                        style="text-align: left;padding: 10px 15px;line-height: 1.55em;font-weight: 600;width: 25%;color: #111;background: #f5f6fa;">
+                                        Service Name
+                                    </th>
+                                    <th class="tm_width_4 tm_semi_bold tm_primary_color tm_gray_bg"
+                                        style="text-align: left;padding: 10px 15px;line-height: 1.55em;font-weight: 600;width: 33.33333333%;color: #111;background: #f5f6fa;">
+                                        Date & Time
+                                    </th>
+                                    <th class="tm_width_2 tm_semi_bold tm_primary_color tm_gray_bg"
+                                        style="text-align: left;padding: 10px 30px;line-height: 1.55em;font-weight: 600;width: 16.66666667%;color: #111;background: #f5f6fa;">
+                                        Price
+                                    </th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr th:each="item, iterStat : ${listTable}">
+                                    <td class="tm_width_3"
+                                        style="border-top: 1px solid #dbdfea; padding: 10px 15px; line-height: 1.55em; width: 25%;">
+                                        <span th:text="${item['serviceName']}"></span>
+
+                                    </td>
+                                    <td class="tm_width_4"
+                                        style="border-top: 1px solid #dbdfea; padding: 10px 15px; line-height: 1.55em; width: 33.33333333%;">
+                                        <span th:text="${item['dateTime'] != null ? item['dateTime'] : ''}"></span>
+                                    </td>
+                                    <td class="tm_width_2"
+                                        style="border-top: 1px solid #dbdfea; padding: 10px 30px; line-height: 1.55em; width: 16.66666667%;">
+                                        <span th:text="${item['price'] != null ? item['price'] : ''}"></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tm_invoice_footer"
+                         style="margin-top: 10px;line-height: 1.5em;display: flex; justify-content: flex-end;">
+
+                        <div class="tm_right_footer"
+                             style="margin-top: 0; line-height: 1.5em; width: 42%; margin-left: auto;">
+                            <table style="width: 100%; caption-side: bottom; border-collapse: collapse; margin-top: -1px;">
+                                <tbody>
+                                <tr class="tm_border_top tm_border_bottom" style="border-bottom: 1px solid #dbdfea;">
+                                    <td class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color"
+                                        style="border-top: 0; padding: 10px 15px; line-height: 1.55em; font-size: 16px; font-weight: 700; width: 75%; color: #111; border: none;">
+                                        Grand Total
+                                    </td>
+                                    <td class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color tm_text_right"
+                                        style="border-top: 0; padding: 10px 50px; padding-right: 100px; line-height: 1.55em; font-size: 16px; font-weight: 700; width: 25%; color: #111;
+                                         text-align: right; border: none;" th:text="'$' + ${total}">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="tm_padd_15_20 tm_round_border"
+                     style="margin-top: 0;line-height: 1.5em;border: 1px solid #dbdfea;overflow: hidden;border-radius: 6px;">
+                    <p class="tm_mb5" style="margin-top: 0;line-height: 1.5em;margin-bottom: 5px;"><b
+                            class="tm_primary_color" style="font-weight: bold;color: #111;">Terms & Conditions:</b></p>
+                    <ul class="tm_m0 tm_note_list" style="margin: 0px;padding-left: 15px;list-style: disc;">
+                        <li>All claims relating to quantity or shipping errors shall be waived by Buyer unless made in
+                            writing to Seller within thirty (30) days after delivery of goods to the address stated.
+                        </li>
+                        <li>Delivery dates are not guaranteed and Seller has no liability for damages that may be
+                            incurred due to any delay in shipment of goods hereunder. Taxes are excluded unless
+                            otherwise stated.
+                        </li>
+                    </ul>
+                </div><!-- .tm_note -->
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jspdf.min.js"></script>
+<script src="assets/js/html2canvas.min.js"></script>
+<script src="assets/js/main.js"></script>
+
+
+</body>
+
+<!-- Mirrored from invoma.vercel.app/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 30 Jun 2024 14:49:59 GMT -->
+</html>

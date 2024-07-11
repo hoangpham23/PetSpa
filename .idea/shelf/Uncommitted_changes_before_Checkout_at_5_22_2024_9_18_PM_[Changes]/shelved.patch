@@ -1,0 +1,320 @@
+Index: src/main/java/com/team/service/AccountService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.team.service;\r\n\r\n\r\nimport com.team.model.Account;\r\nimport com.team.repository.AccountRepository;\r\nimport org.apache.catalina.User;\r\nimport org.springframework.stereotype.Service;\r\n\r\n@Service\r\npublic class AccountService {\r\n\r\n    private AccountRepository accountRepository ;\r\n\r\n\r\n    public AccountService(AccountRepository accountRepository) {\r\n        this.accountRepository = accountRepository;\r\n    }\r\n\r\n    public Account checkLogin(String email, String password) {\r\n        return accountRepository.findAccountByEmailAndPassword(email, password);\r\n    }\r\n\r\n    public Account findAccountID(String email, String password) {\r\n        return accountRepository.findAccountByEmailAndPassword(email,password);\r\n    }\r\n\r\n    public boolean checkEmail(String email) {\r\n        return accountRepository.existsAccountByEmail(email);\r\n    }\r\n\r\n    public void createAccount(String email, String password) {\r\n        Account account = new Account();\r\n        account.setEmail(email);\r\n        account.setPassword(password);\r\n        account.setRole(\"CUS\");\r\n        accountRepository.save(account);\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/team/service/AccountService.java b/src/main/java/com/team/service/AccountService.java
+--- a/src/main/java/com/team/service/AccountService.java	
++++ b/src/main/java/com/team/service/AccountService.java	
+@@ -2,8 +2,8 @@
+ 
+ 
+ import com.team.model.Account;
++import com.team.model.Customers;
+ import com.team.repository.AccountRepository;
+-import org.apache.catalina.User;
+ import org.springframework.stereotype.Service;
+ 
+ @Service
+@@ -11,22 +11,25 @@
+ 
+     private AccountRepository accountRepository ;
+ 
+-
+     public AccountService(AccountRepository accountRepository) {
+         this.accountRepository = accountRepository;
+     }
+ 
++    public void updatePassword(Accounts accounts){
++        accountRepository.save(accounts);
+     public Account checkLogin(String email, String password) {
+         return accountRepository.findAccountByEmailAndPassword(email, password);
+     }
+ 
+     public Account findAccountID(String email, String password) {
+         return accountRepository.findAccountByEmailAndPassword(email,password);
+-    }
++
++    public Accounts findById(int id){
++        return accountRepository.findById(id);
+ 
+     public boolean checkEmail(String email) {
+         return accountRepository.existsAccountByEmail(email);
+-    }
++
+ 
+     public void createAccount(String email, String password) {
+         Account account = new Account();
+Index: src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>spring.application.name=PetSpa\r\n\r\n\r\n\r\n\r\nspring.datasource.url=jdbc:sqlserver://localhost:1433;database=PET_SPA;encrypt=true;trustServerCertificate=true\r\nspring.datasource.username=sa\r\nspring.datasource.password=12345\r\nspring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl\r\nserver.port=8090
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/src/main/resources/application.properties b/src/main/resources/application.properties
+--- a/src/main/resources/application.properties	
++++ b/src/main/resources/application.properties	
+@@ -1,10 +1,14 @@
+ spring.application.name=PetSpa
+-
+-
+-
+-
+ spring.datasource.url=jdbc:sqlserver://localhost:1433;database=PET_SPA;encrypt=true;trustServerCertificate=true
+ spring.datasource.username=sa
+ spring.datasource.password=12345
++server.port=8090
++
+ spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+-server.port=8090
+\ No newline at end of file
++
++spring.mail.host=smtp.gmail.com
++spring.mail.port=587
++spring.mail.username=pawfection391@gmail.com
++spring.mail.password=idbq obuj qrtu uuhb
++spring.mail.properties.mail.smtp.auth=true
++spring.mail.properties.mail.smtp.starttls.enable=true
+\ No newline at end of file
+Index: src/main/java/com/team/repository/CustomerRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.team.repository;\r\n\r\nimport com.team.model.Customer;\r\nimport org.springframework.data.repository.ListCrudRepository;\r\nimport org.springframework.stereotype.Repository;\r\n\r\n@Repository\r\npublic interface CustomerRepository extends ListCrudRepository<Customer, Integer> {\r\n//    Customer findCustomerByAccountID(int accountID);\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/team/repository/CustomerRepository.java b/src/main/java/com/team/repository/CustomerRepository.java
+--- a/src/main/java/com/team/repository/CustomerRepository.java	
++++ b/src/main/java/com/team/repository/CustomerRepository.java	
+@@ -1,10 +1,15 @@
+ package com.team.repository;
+ 
+ import com.team.model.Customer;
++import com.team.model.Customers;
++import org.springframework.data.jpa.repository.JpaRepository;
++import org.springframework.data.jpa.repository.Query;
+ import org.springframework.data.repository.ListCrudRepository;
+ import org.springframework.stereotype.Repository;
+-
+ @Repository
+-public interface CustomerRepository extends ListCrudRepository<Customer, Integer> {
+-//    Customer findCustomerByAccountID(int accountID);
++public interface CustomerRepository extends JpaRepository<Customers,Integer> {
++    Customers findByEmail(String email);
++//check query
++//    @Query("UPDATE Accounts u SET u.Password = ?2 WHERE u.Username = ?1")
++//    void updatePassword(String email, String password);
+ }
+Index: src/main/java/com/team/repository/AccountRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.team.repository;\r\n\r\nimport com.team.model.Account;\r\nimport org.springframework.data.repository.ListCrudRepository;\r\nimport org.springframework.stereotype.Repository;\r\n\r\n\r\n@Repository\r\npublic interface AccountRepository extends ListCrudRepository<Account, Integer> {\r\n\r\n    Account findAccountByEmailAndPassword(String email, String password);\r\n    boolean existsAccountByEmail(String email);\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/team/repository/AccountRepository.java b/src/main/java/com/team/repository/AccountRepository.java
+--- a/src/main/java/com/team/repository/AccountRepository.java	
++++ b/src/main/java/com/team/repository/AccountRepository.java	
+@@ -10,4 +10,5 @@
+ 
+     Account findAccountByEmailAndPassword(String email, String password);
+     boolean existsAccountByEmail(String email);
++    Accounts findById(int id);
+ }
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n    <modelVersion>4.0.0</modelVersion>\r\n    <parent>\r\n        <groupId>org.springframework.boot</groupId>\r\n        <artifactId>spring-boot-starter-parent</artifactId>\r\n        <version>3.2.5</version>\r\n        <relativePath/> <!-- lookup parent from repository -->\r\n    </parent>\r\n    <groupId>com.team</groupId>\r\n    <artifactId>PetSpa</artifactId>\r\n    <version>0.0.1-SNAPSHOT</version>\r\n    <name>PetSpa</name>\r\n    <description>PetSpa</description>\r\n    <properties>\r\n        <java.version>21</java.version>\r\n    </properties>\r\n    <dependencies>\r\n<!--        <dependency>-->\r\n<!--            <groupId>org.springframework.boot</groupId>-->\r\n<!--            <artifactId>spring-boot-starter-oauth2-client</artifactId>-->\r\n<!--        </dependency>-->\r\n\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-data-jpa</artifactId>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-web</artifactId>\r\n        </dependency>\r\n\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-devtools</artifactId>\r\n            <scope>runtime</scope>\r\n            <optional>true</optional>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>com.microsoft.sqlserver</groupId>\r\n            <artifactId>mssql-jdbc</artifactId>\r\n            <scope>runtime</scope>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.projectlombok</groupId>\r\n            <artifactId>lombok</artifactId>\r\n            <optional>true</optional>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-test</artifactId>\r\n            <scope>test</scope>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-validation</artifactId>\r\n        </dependency>\r\n    </dependencies>\r\n\r\n    <build>\r\n        <plugins>\r\n            <plugin>\r\n                <groupId>org.springframework.boot</groupId>\r\n                <artifactId>spring-boot-maven-plugin</artifactId>\r\n                <configuration>\r\n                    <excludes>\r\n                        <exclude>\r\n                            <groupId>org.projectlombok</groupId>\r\n                            <artifactId>lombok</artifactId>\r\n                        </exclude>\r\n                    </excludes>\r\n                </configuration>\r\n            </plugin>\r\n        </plugins>\r\n    </build>\r\n\r\n</project>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pom.xml b/pom.xml
+--- a/pom.xml	
++++ b/pom.xml	
+@@ -1,78 +1,78 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+-    <modelVersion>4.0.0</modelVersion>
+-    <parent>
+-        <groupId>org.springframework.boot</groupId>
+-        <artifactId>spring-boot-starter-parent</artifactId>
+-        <version>3.2.5</version>
+-        <relativePath/> <!-- lookup parent from repository -->
+-    </parent>
+-    <groupId>com.team</groupId>
+-    <artifactId>PetSpa</artifactId>
+-    <version>0.0.1-SNAPSHOT</version>
+-    <name>PetSpa</name>
+-    <description>PetSpa</description>
+-    <properties>
+-        <java.version>21</java.version>
+-    </properties>
+-    <dependencies>
+-<!--        <dependency>-->
+-<!--            <groupId>org.springframework.boot</groupId>-->
+-<!--            <artifactId>spring-boot-starter-oauth2-client</artifactId>-->
+-<!--        </dependency>-->
+-
+-        <dependency>
+-            <groupId>org.springframework.boot</groupId>
+-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.springframework.boot</groupId>
+-            <artifactId>spring-boot-starter-web</artifactId>
+-        </dependency>
++	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
++	<modelVersion>4.0.0</modelVersion>
++	<parent>
++		<groupId>org.springframework.boot</groupId>
++		<artifactId>spring-boot-starter-parent</artifactId>
++		<version>3.2.5</version>
++		<relativePath/> <!-- lookup parent from repository -->
++	</parent>
++	<groupId>com.team</groupId>
++	<artifactId>PetSpa</artifactId>
++	<version>0.0.1-SNAPSHOT</version>
++	<name>PetSpa</name>
++	<description>Demo project for Spring Boot</description>
++	<properties>
++		<java.version>21</java.version>
++	</properties>
++	<dependencies>
++		<dependency>
++			<groupId>org.springframework.boot</groupId>
++			<artifactId>spring-boot-starter-data-jpa</artifactId>
++		</dependency>
++		<dependency>
++			<groupId>org.springframework.boot</groupId>
++			<artifactId>spring-boot-starter-validation</artifactId>
++		</dependency>
++		<dependency>
++			<groupId>org.springframework.boot</groupId>
++			<artifactId>spring-boot-starter-web</artifactId>
++		</dependency>
+ 
+-        <dependency>
+-            <groupId>org.springframework.boot</groupId>
+-            <artifactId>spring-boot-devtools</artifactId>
+-            <scope>runtime</scope>
+-            <optional>true</optional>
+-        </dependency>
+-        <dependency>
+-            <groupId>com.microsoft.sqlserver</groupId>
+-            <artifactId>mssql-jdbc</artifactId>
+-            <scope>runtime</scope>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.projectlombok</groupId>
+-            <artifactId>lombok</artifactId>
+-            <optional>true</optional>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.springframework.boot</groupId>
+-            <artifactId>spring-boot-starter-test</artifactId>
+-            <scope>test</scope>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.springframework.boot</groupId>
+-            <artifactId>spring-boot-starter-validation</artifactId>
+-        </dependency>
+-    </dependencies>
++		<dependency>
++			<groupId>org.springframework.boot</groupId>
++			<artifactId>spring-boot-devtools</artifactId>
++			<scope>runtime</scope>
++			<optional>true</optional>
++		</dependency>
++		<dependency>
++			<groupId>org.springframework.boot</groupId>
++			<artifactId>spring-boot-starter-test</artifactId>
++			<scope>test</scope>
++		</dependency>
++		<dependency>
++			<groupId>com.microsoft.sqlserver</groupId>
++			<artifactId>mssql-jdbc</artifactId>
++			<scope>runtime</scope>
++		</dependency>
++		<dependency>
++			<groupId>org.projectlombok</groupId>
++			<artifactId>lombok</artifactId>
++			<scope>annotationProcessor</scope>
++		</dependency>
++<!--		<dependency>-->
++<!--			<groupId>org.springframework.boot</groupId>-->
++<!--			<artifactId>spring-boot-starter-security</artifactId>-->
++<!--		</dependency>-->
++<!--		<dependency>-->
++<!--			<groupId>org.springframework.security</groupId>-->
++<!--			<artifactId>spring-security-test</artifactId>-->
++<!--			<scope>test</scope>-->
++<!--		</dependency>-->
++		<dependency>
++			<groupId>org.springframework.boot</groupId>
++			<artifactId>spring-boot-starter-mail</artifactId>
++		</dependency>
++	</dependencies>
+ 
+-    <build>
+-        <plugins>
+-            <plugin>
+-                <groupId>org.springframework.boot</groupId>
+-                <artifactId>spring-boot-maven-plugin</artifactId>
+-                <configuration>
+-                    <excludes>
+-                        <exclude>
+-                            <groupId>org.projectlombok</groupId>
+-                            <artifactId>lombok</artifactId>
+-                        </exclude>
+-                    </excludes>
+-                </configuration>
+-            </plugin>
+-        </plugins>
+-    </build>
++	<build>
++		<plugins>
++			<plugin>
++				<groupId>org.springframework.boot</groupId>
++				<artifactId>spring-boot-maven-plugin</artifactId>
++			</plugin>
++		</plugins>
++	</build>
+ 
+ </project>
+Index: src/main/java/com/team/service/CustomerService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.team.service;\r\n\r\n\r\nimport com.team.model.Customer;\r\nimport com.team.repository.CustomerRepository;\r\nimport org.springframework.stereotype.Service;\r\nimport org.springframework.transaction.annotation.Transactional;\r\n\r\nimport java.util.Optional;\r\n\r\n@Service\r\npublic class CustomerService {\r\n\r\n    private CustomerRepository customerRepository;\r\n    public CustomerService(CustomerRepository customerRepository) {\r\n        this.customerRepository = customerRepository;\r\n    }\r\n\r\n//    public Customer getCustomer(int accountID){\r\n//        return customerRepository.findCustomerByAccountID(accountID);\r\n//    }\r\n\r\n    public Customer createCustomer(int customerID, String customerName, String phoneNumber, String email){\r\n        Customer customer = new Customer();\r\n        customer.setCustomerID(customerID);\r\n        customer.setCustomerName(customerName);\r\n        customer.setPhoneNumber(phoneNumber);\r\n        customer.setEmail(email);\r\n        return customerRepository.save(customer);\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/team/service/CustomerService.java b/src/main/java/com/team/service/CustomerService.java
+--- a/src/main/java/com/team/service/CustomerService.java	
++++ b/src/main/java/com/team/service/CustomerService.java	
+@@ -1,7 +1,7 @@
+ package com.team.service;
+ 
+-
+-import com.team.model.Customer;
++import com.team.model.Accounts;
++import com.team.model.Customers;
+ import com.team.repository.CustomerRepository;
+ import org.springframework.stereotype.Service;
+ import org.springframework.transaction.annotation.Transactional;
+@@ -27,7 +27,10 @@
+         customer.setPhoneNumber(phoneNumber);
+         customer.setEmail(email);
+         return customerRepository.save(customer);
++    public Customers checkMail(String email){
++        return customerRepository.findByEmail(email);
+     }
+-
+-
++    public void update(Customers customers){
++        customerRepository.save(customers);
++    }
+ }

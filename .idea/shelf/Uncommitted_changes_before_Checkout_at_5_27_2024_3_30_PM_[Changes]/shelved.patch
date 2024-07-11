@@ -1,0 +1,17 @@
+Index: src/main/java/com/team/controller/SignUpController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.team.controller;\r\n\r\n\r\nimport com.team.model.Customers;\r\nimport com.team.service.AccountService;\r\nimport com.team.service.CustomerService;\r\nimport org.springframework.http.HttpStatus;\r\nimport org.springframework.http.ResponseEntity;\r\nimport org.springframework.web.bind.annotation.*;\r\n\r\nimport java.util.Map;\r\n\r\n@RestController\r\n@RequestMapping(\"/sign-up\")\r\npublic class SignUpController {\r\n\r\n    private CustomerService customerService;\r\n    private AccountService accountService;\r\n\r\n    public SignUpController(CustomerService customerService, AccountService accountService) {\r\n        this.customerService = customerService;\r\n        this.accountService = accountService;\r\n    }\r\n\r\n\r\n    @PostMapping(\"\")\r\n    public ResponseEntity<?> signUp(@RequestBody Map<String, String> data) {\r\n\r\n        System.out.println(\"data \" + data);\r\n        String customerName = data.get(\"customerName\");\r\n        String password = data.get(\"password\");\r\n        String email = data.get(\"email\");\r\n        String phoneNumber = data.get(\"phone\");\r\n\r\n        if (accountService.checkEmail(email)){\r\n            return ResponseEntity.status(HttpStatus.CONFLICT).body(\"Email is already in use\");\r\n        }\r\n        accountService.createAccount(email, password);\r\n        int customerId = accountService.findAccountID(email, password).getAccountID();\r\n\r\n        Customers customers = customerService.createCustomer(customerId, customerName, phoneNumber, email);\r\n        return ResponseEntity.status(HttpStatus.CREATED).body(customers);\r\n    }\r\n\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/com/team/controller/SignUpController.java b/src/main/java/com/team/controller/SignUpController.java
+--- a/src/main/java/com/team/controller/SignUpController.java	
++++ b/src/main/java/com/team/controller/SignUpController.java	
+@@ -30,7 +30,7 @@
+         String customerName = data.get("customerName");
+         String password = data.get("password");
+         String email = data.get("email");
+-        String phoneNumber = data.get("phone");
++        String phoneNumber = data.get("phoneNumber");
+ 
+         if (accountService.checkEmail(email)){
+             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email is already in use");
