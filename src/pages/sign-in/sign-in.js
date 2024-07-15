@@ -67,6 +67,8 @@ function SignIn() {
           navigate("/home-page");
         } else if (response.data.role === "AD") {
           navigate("/dashboard");
+        } else if (response.data.role === "EM") {
+          navigate("/timetable");
         }
       }
     } catch (error) {

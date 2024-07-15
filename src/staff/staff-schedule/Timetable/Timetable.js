@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 // import style from "./Schedule.module.css";
 import Calendar from "../Calendar/Calendar";
 // import Timeline from "@mui/lab/Timeline";
@@ -14,87 +14,67 @@ import Calendar from "../Calendar/Calendar";
 // } from "@mui/lab/TimelineOppositeContent";
 // import Schedule_box from "./Schedule_box";
 import Schedule from "../Schedule/Schedule";
+import Schedule_box from "../Schedule/Schedule_box";
 
-const schedules = [
-  {
-    time: "9:00",
-    client: "Ms. Lisa",
-    service: "HAIR CUT SPA SERVICE",
-    period: "MORNING",
-  },
-  {
-    time: "10:00",
-    client: "Ms. Jenny",
-    service: "NAIL CUT SPA SERVICE",
-    period: "MORNING",
-  },
-  {
-    time: "12:00",
-    client: "Ms. Jenny",
-    service: "NAIL CUT SPA SERVICE",
-    period: "MORNING",
-  },
-  {
-    time: "13:00",
-    client: "Ms. Lisa",
-    service: "HAIR WASH SPA SERVICE",
-    period: "AFTERNOON",
-  },
-  {
-    time: "16:00",
-    client: "Ms. July",
-    service: "NAIL CUT SPA SERVICE",
-    period: "AFTERNOON",
-  },
-];
 
 const Timetable = () => {
-
   let { serviceName } = useParams();
 
-  const [serviceData, setServiceData] = useState({
-    // Thêm các trường dữ liệu mới từ lịch làm việc
-    startTime: "",
-    endTime: "",
-    serviceName:"",
-    customerName: "",
-  });
-
+  const [schedule, setSchedule] = useState([]);
+useEffect(()=>(console.log(schedule)),[schedule])
   useEffect(() => {
-    async function fetchData() {
-      // You can await here
-        await getData(); 
-      // ...
-    }
-    fetchData();
-  }, []); // Or [] if effect doesn't need props or state // Chỉ gọi getData một lần khi component được mount
-
-  async function getData() {
-    try {
-    //   const token = localStorage.getItem("token");
-      const response = await axios.get(`http://localhost:8090/employee/schedule?serviceName=${serviceName}`);
+    (async () => {
+      try {
+        const token = localStorage.getItem("token");
+      const response = await axios.get(
+        "http://localhost:8090/employee/schedule?employeeID=19&date=2024-06-20",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response.status);
       if (response.status === 200) {
-        const schedule = response.data;
-        console.log(schedule); // Kiểm tra dữ liệu trả về từ API
-        const updatedServiceData = {
-          ...serviceData,
-          startTime: schedule.startTime,
-          endTime: schedule.endTime,
-          customerName: schedule.customerName,
-        };
-        setServiceData(updatedServiceData);
-      } else {
-        console.log("Lịch làm việc không tồn tại cho dịch vụ này.");
+        setSchedule(response.data);
+        console.log(response.data);
       }
-    } catch (error) {
-      console.error("Lỗi khi lấy dữ liệu lịch làm việc:", error);
-    }
-  }
+      
+      
+      console.log(
+        // response.data[0].schedule
+        //   .filter
+          // (schedule) => (
+          //   schedule.startTime === "09:00:00" ||
+          //   schedule.startTime === "10:00:00" ||
+          //   schedule.startTime === "11:00:00" ||
+          //   schedule.startTime === "12:00:00")
+          // ()
+      );
+       // console.log(
+      //   [8, 9, 10, 11, 12].map((hour) => {
+      //     const schedule = response.data[0].schedule.find((item) =>
+      //       item.time.startsWith(`${hour}:`)
+      //     );
+      //     return (
+      //       schedule
+      //     );
+      //   })
+      // );
+        
+      } catch (error) {
+        console.log(error);
+      }
+      
+     
+    })();
+  }, []);
 
   return (
     <>
       <Calendar />
-      <Schedule schedules={schedules}/>
+      
+      <Schedule_box schedules={schedule} />
     </>
   );
 };

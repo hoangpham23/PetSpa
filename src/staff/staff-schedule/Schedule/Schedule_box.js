@@ -14,6 +14,14 @@ import TimelineOppositeContent, {
 } from "@mui/lab/TimelineOppositeContent";
 
 const Schedule_box = ({schedule}) => {
+
+  let { serviceName } = useParams();
+  const navigate = useNavigate();
+
+  const handleFeedbackClick = (appointmentID) => {
+    navigate(`/feedback/${appointmentID}`);
+  };
+
   return (
     <div className={style.schedule_item}>
       <div className={style.time}>
@@ -26,7 +34,7 @@ const Schedule_box = ({schedule}) => {
         >
           <TimelineItem>
             <TimelineOppositeContent color="textSecondary">
-              {schedule.startTime}
+              {schedule.schedule.startTime}
             </TimelineOppositeContent>
             <TimelineSeparator className={style.MuiTimelineItem}>
               <TimelineDot className={style.MuiTimelineDot} />
@@ -46,7 +54,7 @@ const Schedule_box = ({schedule}) => {
       <div className={style.details}>
         <p>{schedule.client}</p>
         <h2 className={style.service}>{schedule.service}</h2>
-        <button className={style.feedback_button}>View Feedback</button>
+        <button className={style.feedback_button} onClick={() => handleFeedbackClick(schedule.appointmentID)}>View Feedback</button>
       </div>
     </div>
   );
