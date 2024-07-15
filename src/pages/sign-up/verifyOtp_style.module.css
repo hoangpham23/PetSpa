@@ -50,7 +50,7 @@
 
 .newPass_container .pink_background_rectangle {
   position: absolute;
-  width: 55rem;
+  width: 70rem;
   height: 35rem;
   background-color: var(--pink-div-color);
   border-radius: 30px;
@@ -87,11 +87,18 @@
 }
 
 .newPass_container .newPass_form form .input_box input {
-  width: 60%;
+  width: 70%;
 }
 
 .newPass_container .sendOTP{
   padding-top: 3rem;
+}
+
+.noti{
+  font-size: 2rem;
+  color: red;
+  z-index: 1;
+  margin-bottom: 1rem;
 }
 
 .button_div{

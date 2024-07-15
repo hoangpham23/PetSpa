@@ -6,13 +6,16 @@ import axios from "axios";
 import { Helmet } from "react-helmet";
 import styles from "./SignIn_style.module.css";
 import queryString from "query-string";
-import $ from 'jquery';
+import $ from "jquery";
 // import SignIn from "./signIn";
+import Cookies from "js-cookie";
 
 function SignIn() {
+  Cookies.remove("customerData");
   localStorage.setItem("role", "");
   localStorage.setItem("account", "");
   localStorage.setItem("resetPasswordEmail", "");
+  localStorage.setItem("customerID", "");
   const [account, setAccount] = useState({
     customerID: "",
     customerName: "",
@@ -31,7 +34,6 @@ function SignIn() {
       [event.target.name]: event.target.value,
     }));
   }
-
   useEffect(() => {
     const queryParams = queryString.parse(location.search);
     if (queryParams.error === "email_exists") {
@@ -62,7 +64,7 @@ function SignIn() {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("account", JSON.stringify(updatedAccount));
         localStorage.setItem("role", response.data.role);
-
+        localStorage.setItem("customerID", response.data.customerID);
         if (response.data.role === "CUS") {
           navigate("/home-page");
         } else if (response.data.role === "AD") {

@@ -20,7 +20,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 600,
-  maxHeight: "82vh",
+  maxHeight: "85vh",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -53,15 +53,13 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
     return emailRegex.test(email);
   };
 
-
   const validatePhoneNumber = (phoneNumber) => {
-    const phoneNumberWithoutHyphens = phoneNumber.replace(/-/g, '');
+    const phoneNumberWithoutHyphens = phoneNumber.replace(/-/g, "");
     return phoneNumberWithoutHyphens.length === 10;
   };
 
-
   const validateEmployeeCIN = (employeeCIN) => {
-    const cinWithoutHyphens = employeeCIN.replace(/-/g, '');
+    const cinWithoutHyphens = employeeCIN.replace(/-/g, "");
     return cinWithoutHyphens.length === 12;
   };
 
@@ -414,7 +412,7 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
               variant="contained"
               sx={{
                 fontSize: "1.6rem",
-                margin: "1rem 1rem 1rem 1rem",
+                margin: "0rem 1rem",
                 backgroundColor: "#1976d2",
               }}
               onClick={onSave}
@@ -425,7 +423,7 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
               variant="contained"
               sx={{
                 fontSize: "1.6rem",
-                margin: "1rem 1rem 1rem 1rem",
+                margin: "0rem 1rem",
                 backgroundColor: "#d32f2f",
               }}
               onClick={onClose}
