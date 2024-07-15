@@ -130,6 +130,7 @@ public class EmployeeService {
             LocalTime endTime = schedule.getEndTime();
             String customerName = schedule.getAppointments().getCustomer().getCustomerName();
             String serviceName = schedule.getAppointments().getServices().getServiceName();
+            int appointmentID = schedule.getAppointments().getAppointmentID();
 
             if (saveDate == null) {
                 saveDate = workDate;
@@ -141,7 +142,7 @@ public class EmployeeService {
                 saveDate = workDate;
             }
 
-            scheduleDTOList.add(new ScheduleDTO(startTime, endTime, serviceName, customerName));
+            scheduleDTOList.add(new ScheduleDTO(appointmentID, startTime, endTime, serviceName, customerName));
         }
 
         result.add(new WorkDateDTO(saveDate, new ArrayList<>(scheduleDTOList)));

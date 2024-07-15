@@ -3,7 +3,6 @@ package com.team.controller;
 import com.team.dto.AddServiceDTO;
 import com.team.dto.ManageServiceDTO;
 import com.team.model.Services;
-import com.team.repository.ServiceRepository;
 import com.team.service.ServiceImagesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,12 +20,10 @@ public class AddServiceController {
 
     private final ServiceImagesService serviceImagesService;
     private final Logger logger = LoggerFactory.getLogger(HomePageImagesController.class);
-    private final ServiceRepository serviceRepository;
 
 
-    public AddServiceController(ServiceImagesService serviceImagesService, ServiceRepository serviceRepository) {
+    public AddServiceController(ServiceImagesService serviceImagesService) {
         this.serviceImagesService = serviceImagesService;
-        this.serviceRepository = serviceRepository;
     }
 
     @GetMapping("")
@@ -44,13 +41,10 @@ public class AddServiceController {
     public ResponseEntity<?> getServiceByName(@RequestParam String serviceName) {
         try {
             List<ManageServiceDTO> serviceDataList = serviceImagesService.searchServiceByName(serviceName);
-            ManageServiceDTO serviceData = null;
             if (!serviceDataList.isEmpty()) {
-                serviceData = serviceDataList.get(0);
+                return new ResponseEntity<>(serviceDataList, HttpStatus.OK);
             }
-            if (serviceData != null) {
-                return new ResponseEntity<>(serviceData, HttpStatus.OK);
-            } else {
+            else {
                 return new ResponseEntity<>("Service not found", HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
