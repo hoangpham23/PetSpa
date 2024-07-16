@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import style from "./feedback.module.css";
+import style from "./Feedback.module.css";
 import service1 from "../../assets/img/service1.jpg";
 import arrow from "../../assets/img/left-arrow.png";
 import axios from "axios";
@@ -14,20 +14,44 @@ function CustomerFeedback() {
   const handleBackClick = () => {
     navigate(`/timetable`);
   };
+  useEffect(() => {
+    const fetchFeedback = async () => {
+      try {
+        console.log(appointmentID,"neeees");
+        const formData = new FormData();
+        formData.append("appointmentID", appointmentID);
+        const token = localStorage.getItem("token");
+        const response = await axios.get("http://localhost:8090/customer-feedback-for-employee", {
+          params: {
+            appointmentID: appointmentID,
+          },
+          
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${token}`,
+            },
+          
+        });
+        console.log(response.status);
+        if (response.status === 200) {
+          const feedbackData = response.data;
+          setFeedback(feedbackData);
+        } else {
+          console.error("Failed to fetch feedback");
+        }
+      } catch (error) {
+        console.error("Error fetching feedback:", error);
+      }
+    };
+
+    fetchFeedback();
+  }, []);
 
   useEffect(() => {
-    (async () => {
-      const response = await axios;
-      const feedback = {
-        customerName: "",
-        dogName: "",
-        feedback: "",
-        appointmentTime: "",
-        imgURL: "",
-      };
-      setFeedback(feedback);
-    })();
-  }, []);
+    console.log(feedback);
+  }, [feedback]);
+
+
   return (
     <>
       <div className={style.wrapper}>

@@ -65,6 +65,10 @@ function SignIn() {
         localStorage.setItem("account", JSON.stringify(updatedAccount));
         localStorage.setItem("role", response.data.role);
         localStorage.setItem("customerID", response.data.customerID);
+        if(response.data.employeeID){
+          localStorage.setItem("employeeID",response.data.employeeID);
+        }
+       
         if (response.data.role === "CUS") {
           navigate("/home-page");
         } else if (response.data.role === "AD") {

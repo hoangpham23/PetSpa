@@ -46,8 +46,6 @@
   .schedule_item {
     display: flex;
     align-items: center;
-    /* padding: 10px; */
-    /* border-radius: 10px; */
     margin: 0 auto; 
     background-color: var(--blue-color);
     height: 20rem;
