@@ -102,7 +102,7 @@ function ChooseTimeBox() {
       <div className={style.displayTime}>
         <div class={style.timeDisplay}>
           <div class={style.timeContent}>
-            <p>Not Available</p>
+            <p>Selecting</p>
             <div class={style.timeColor1}></div>
           </div>
           <div class={style.timeContent}>

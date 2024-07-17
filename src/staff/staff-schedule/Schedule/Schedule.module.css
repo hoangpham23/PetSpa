@@ -10,6 +10,16 @@
   --icon-color: #c2bcbc;
 }
 
+.schedule_entry_empty{
+    position: relative;
+    align-items: center;
+    margin: 0 auto; 
+    background-color: blue;
+    height: 20rem;
+    width: 100%;
+    z-index: -1;
+}
+
 .schedule {
     display: flex;
     flex-direction: column;
@@ -41,6 +51,7 @@
   .schedule_table th,
   .schedule_table td {
     padding: 5px 0px;
+
   }
   
   .schedule_item {
@@ -49,6 +60,7 @@
     margin: 0 auto; 
     background-color: var(--blue-color);
     height: 20rem;
+    width: 100%;
   }
 
 .schedule_item {
@@ -73,6 +85,14 @@
     align-items: left;
     gap: 1.5rem;
     position: relative;
+}
+
+.details p{
+    font-size: 1.5rem;
+}
+
+.details h2{
+    font-size: 2rem;
 }
 
 .MuiTimelineDot{
@@ -103,4 +123,14 @@
     background: transparent;
     color: var(--text-color);
     border-color: var(--pink-color);
+}
+
+.row{
+    display:flex;
+    padding: 5px 0;
+}
+
+.filter{
+    width: 10rem;
+    font-size: 1.5rem;
 }

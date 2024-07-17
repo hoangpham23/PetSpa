@@ -128,8 +128,6 @@
 
 // export default Schedule_box;
 
-
-
 // import React from "react";
 // import { useNavigate } from "react-router-dom";
 // import Timeline from "@mui/lab/Timeline";
@@ -199,7 +197,6 @@
 
 // export default Schedule_box;
 
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Timeline from "@mui/lab/Timeline";
@@ -222,8 +219,20 @@ const Schedule_box = ({ Schedule_today }) => {
   console.log(Schedule_today);
 
   // Define the time slots for morning and afternoon
-  const morningSlots = ["08:00:00", "09:00:00", "10:00:00", "11:00:00", "12:00:00"];
-  const afternoonSlots = ["13:00:00", "14:00:00", "15:00:00", "16:00:00"];
+  const morningSlots = [
+    "08:00:00",
+    "09:00:00",
+    "10:00:00",
+    "11:00:00",
+    "12:00:00",
+  ];
+  const afternoonSlots = [
+    "13:00:00",
+    "14:00:00",
+    "15:00:00",
+    "16:00:00",
+    "17:00:00",
+  ];
 
   // Create a function to find the schedule item for a specific time slot
   const findScheduleForSlot = (slot) =>
@@ -234,7 +243,7 @@ const Schedule_box = ({ Schedule_today }) => {
     const schedule = findScheduleForSlot(slot);
     console.log(schedule);
     return schedule ? (
-      <div key={slot} className={style.schedule_entry}>
+      <div key={slot} className={style.schedule_item}>
         <div className={style.time}>
           <Timeline
             sx={{
@@ -274,23 +283,32 @@ const Schedule_box = ({ Schedule_today }) => {
         </div>
       </div>
     ) : (
-      <div key={slot} className={style.schedule_entry_empty}>
-        <p>No appointments</p>
+      <div key={slot}>
+        <div className={style.schedule_entry_empty}>
+          <p>No appointments</p>
+        </div>
       </div>
     );
   };
 
   return (
-    <div className={style.schedule_table}>
-      <h2>Morning</h2>
-      <div className={style.schedule_row}>
-        {morningSlots.map((slot) => renderScheduleItem(slot))}
+    <>
+      <div className={style.schedule}>
+        <table className={style.schedule_table}>
+          <thead></thead>
+          <tbody>
+            <tr className={style.row}>
+              <td className={style.filter}>MORNING</td>
+              {morningSlots.map((slot) => renderScheduleItem(slot))}
+            </tr>
+            <tr className={style.row}>
+              <td className={style.filter}>AFTERNOON</td>
+              {afternoonSlots.map((slot) => renderScheduleItem(slot))}
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <h2>Afternoon</h2>
-      <div className={style.schedule_row}>
-        {afternoonSlots.map((slot) => renderScheduleItem(slot))}
-      </div>
-    </div>
+    </>
   );
 };
 
