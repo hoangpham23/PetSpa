@@ -11,7 +11,9 @@ import com.team.repository.FeedbackRepository;
 import com.team.repository.ServicesImagesRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -27,24 +29,21 @@ public class FeedbackService {
         this.appointmentRepository = appointmentRepository;
     }
 
-    public Object getFeedbackForEmployeeByAppointment(Integer appointmentID) {
-        Optional<Appointments> appointmentOptional = appointmentRepository.findById(appointmentID);
-        if (appointmentOptional.isEmpty()) {
-            return "There is no Feedback";
-        }
+    public List<CustomerFeedbackForEmployeeDTO> getFeedbackForEmployeeByAppointment(Integer appointmentID) {
+        Appointments appointment = appointmentRepository.findById(appointmentID)
+                .orElseThrow(() -> new NoSuchElementException("Appointment not found"));
 
-        Appointments appointment = appointmentOptional.get();
         List<Feedback> feedbackList = feedbackRepository.findByAppointmentID(appointment);
 
         if (feedbackList.isEmpty() || feedbackList.stream().allMatch(feedback ->
                 "Have not feedback".equalsIgnoreCase(feedback.getStatus()) || "Don't feedback".equalsIgnoreCase(feedback.getStatus()))) {
-            return "There is no Feedback";
+            return Collections.emptyList();
         }
 
         return feedbackList.stream()
                 .map(feedback -> {
                     List<ServiceImages> serviceImages = servicesImagesRepository.findByServiceID(feedback.getAppointmentID().getServices());
-                    String imageUrl = serviceImages.isEmpty() ? null : serviceImages.get(0).getImageURL();
+                    String imageUrl = serviceImages.isEmpty() ? null : serviceImages.getFirst().getImageURL();
                     return new CustomerFeedbackForEmployeeDTO(
                             feedback.getCustomerID().getCustomerName(),
                             feedback.getAppointmentID().getPets().getPetName(),
