@@ -197,7 +197,7 @@
 
 // export default Schedule_box;
 
-import React from "react";
+import React, { useState }  from "react";
 import { useNavigate } from "react-router-dom";
 import Timeline from "@mui/lab/Timeline";
 import TimelineItem from "@mui/lab/TimelineItem";
@@ -209,6 +209,7 @@ import TimelineOppositeContent, {
   timelineOppositeContentClasses,
 } from "@mui/lab/TimelineOppositeContent";
 import style from "./Schedule.module.css";
+
 
 const Schedule_box = ({ Schedule_today }) => {
   const navigate = useNavigate();
@@ -277,6 +278,7 @@ const Schedule_box = ({ Schedule_today }) => {
           <button
             className={style.feedback_button}
             onClick={() => handleFeedbackClick(schedule.appointmentID)}
+            // disabled={!schedule.feedback} // Disable button if there's no feedback
           >
             View Feedback
           </button>

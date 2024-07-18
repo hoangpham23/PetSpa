@@ -26,14 +26,16 @@ p {
   background-size: cover; 
   background-position: center;
   background-repeat: no-repeat;
+  min-height: 80vh;
 }
 
 .Feedback_container {
   display: flex;
-  margin: 5rem;
+  margin: 4rem 5rem;
   padding: 2rem;
   border-radius: 20px;
   background-color: var(--bg-color);
+  height: 90dvh;
 }
 
 .Pet_infor {
@@ -77,11 +79,12 @@ p {
   background-color: var(--header-color);
   border-radius: 40px;
   padding: 0 3rem;
-  bottom:0;
+  bottom:3rem;
 }
 
 .Feedback_content {
   flex: 5;
+  margin-top: 3rem;
 }
 
 .Customer_info {

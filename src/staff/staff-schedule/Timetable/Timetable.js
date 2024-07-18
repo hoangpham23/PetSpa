@@ -5,8 +5,8 @@ import Calendar from "../Calendar/Calendar";
 import Schedule_box from "../Schedule/Schedule_box";
 
 const Timetable = () => {
-  let { serviceName } = useParams();
-
+  
+  const [feedback, setFeedback] = useState({});
   const [schedule, setSchedule] = useState([]);
   const [Schedule_today, setSchedule_today] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
@@ -61,7 +61,7 @@ const Timetable = () => {
   return (
     <>
       <Calendar selectedDate={selectedDate} setSelectedDate={setSelectedDate}  />
-      <Schedule_box Schedule_today={Schedule_today}  />
+      <Schedule_box Schedule_today={Schedule_today}/>
     </>
   );
 };
