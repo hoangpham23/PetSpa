@@ -30,7 +30,7 @@ function ChooseService() {
     imageURL: "",
   });
   const today = new Date();
-  const steps = ["", "", "",""];
+  const steps = ["Choose Pet", "Choose Services", "Choose Time","Payment"];
   const [activeStep, setActiveStep] = useState(1);
   // chỉ nhận lịch trong 3 ngày, tính từ thời điểm hiện tại
   const startDay = format(today, "yyyy-MM-dd");

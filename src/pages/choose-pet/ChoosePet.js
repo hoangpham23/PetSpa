@@ -33,7 +33,7 @@ function ChoosePet() {
   const [petData, setPetData] = useState([]);
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
-  const steps = ["", "", "",""];
+  const steps = ["Choose Pet", "Choose Services", "Choose Time","Payment"];
   const [activeStep, setActiveStep] = useState(0);
 
   UserAuth(["CUS"]);

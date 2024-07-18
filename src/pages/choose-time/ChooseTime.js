@@ -36,7 +36,7 @@ function ChooseTime2() {
   const [appointments, setAppointments] = useState([]);
   const [isFullSlot, setIsFullSlot] = useState([]);
   const [customerID, setCustomerID] = useState("");
-  const steps = ["", "", "",""];
+  const steps = ["Choose Pet", "Choose Services", "Choose Time","Payment"];
   const [activeStep, setActiveStep] = useState(2);
 
   useEffect(() => {

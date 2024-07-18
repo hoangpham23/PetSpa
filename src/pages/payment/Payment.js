@@ -24,7 +24,7 @@ function Payment() {
   const navigate = useNavigate();
   const [msg, setMsg] = useState("");
   const [result, setResult] = useState([]);
-  const steps = ["", "", "", ""];
+  const steps = ["Choose Pet", "Choose Services", "Choose Time","Payment"];
   const [activeStep, setActiveStep] = useState(3);
 
   // useEffect(() => {
