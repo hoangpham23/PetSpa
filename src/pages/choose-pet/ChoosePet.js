@@ -112,7 +112,8 @@ function ChoosePet() {
               navigate("/appointment/service");
             }}
           >
-            <h1>CHOOSE PET FOR SERVICES</h1>
+            {/* <h1>CHOOSE PET FOR SERVICES</h1> */}
+            <br/> <br></br>
             {petData.map((pet, index) => (
               <div
                 key={index}

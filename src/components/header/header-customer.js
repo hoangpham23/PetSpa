@@ -44,7 +44,6 @@ function HeaderForCus() {
               ))}
             </div>
           </div>
-          <a href="#">CONTACT</a>
           <a href="/payment-history">HISTORY PAYMENT</a>
           <a href="/sign-in">SIGN OUT</a>
         </nav>
