@@ -57,11 +57,11 @@ const Timetable = () => {
       }
     }
   }, [selectedDate, schedule]);
-
+console.log(Schedule_today,"Test");
   return (
     <>
       <Calendar selectedDate={selectedDate} setSelectedDate={setSelectedDate}  />
-      <Schedule_box Schedule_today={Schedule_today}/>
+      <Schedule_box Schedule_today={Schedule_today} setAppointments={setSchedule_today}/>
     </>
   );
 };

@@ -87,7 +87,7 @@ export default function CustomizedTables({ appointments, setAppointments }) {
           },
         }
       );
-
+      
       if (response.status === 200) {
         setAppointments((prevAppointments) =>
           prevAppointments.map((appointment) =>
