@@ -16,5 +16,6 @@ public class ScheduleDTO {
     private LocalTime endTime;
     private String serviceName;
     private String customerName;
+    private String appointmentStatus;
 
 }

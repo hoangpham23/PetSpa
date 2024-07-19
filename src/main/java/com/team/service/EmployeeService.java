@@ -73,7 +73,6 @@ public class EmployeeService {
         String email = data.get("email");
         String employeeCIN = formatCIN(data.get("employeeCIN"));
         String gender = data.get("gender");
-//        String defaultPassword = "1234";
         String role = "EM";
         Map<String, String> error = new HashMap<>();
         boolean alreadyExists = false;
@@ -131,6 +130,7 @@ public class EmployeeService {
             String customerName = schedule.getAppointments().getCustomer().getCustomerName();
             String serviceName = schedule.getAppointments().getServices().getServiceName();
             int appointmentID = schedule.getAppointments().getAppointmentID();
+            String appointmentStatus = schedule.getAppointments().getStatus();
 
             if (saveDate == null) {
                 saveDate = workDate;
@@ -142,7 +142,7 @@ public class EmployeeService {
                 saveDate = workDate;
             }
 
-            scheduleDTOList.add(new ScheduleDTO(appointmentID, startTime, endTime, serviceName, customerName));
+            scheduleDTOList.add(new ScheduleDTO(appointmentID, startTime, endTime, serviceName, customerName, appointmentStatus));
         }
 
         result.add(new WorkDateDTO(saveDate, new ArrayList<>(scheduleDTOList)));
