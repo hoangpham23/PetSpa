@@ -55,11 +55,6 @@ public class AddServiceController {
     @PostMapping
     public ResponseEntity<?> addService(AddServiceDTO addServiceDTO) {
         try {
-//            AddServiceDTO addServiceDTO = new AddServiceDTO();
-//            addServiceDTO.setServiceName(serviceName);
-//            addServiceDTO.setDescription(description);
-//            addServiceDTO.setPrice(price);
-//            addServiceDTO.setImage(image);
             Services service = serviceImagesService.addService(addServiceDTO);
             return new ResponseEntity<>(service, HttpStatus.OK);
         } catch (Exception e) {

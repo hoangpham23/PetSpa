@@ -34,7 +34,7 @@ public class SecurityConfig {
             "/payment-history",
     };
 
-    private final String[] EMPLOYEE_ENDPOINTS = {"/employee/schedule", "/customer-feedback-for-employee"};
+    private final String[] EMPLOYEE_ENDPOINTS = {"/employee/schedule", "/customer-feedback-for-employee", "/manage-appointment"};
 
     private final String[] ADMIN_ENDPOINTS = {"/admin/employees", "/admin/create-employee", "/admin/employees/{id}",
             "/manage-appointment", "/add-service", "/weekly-revenue", "/admin/updateMaxBooking",
