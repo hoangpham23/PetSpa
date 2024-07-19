@@ -13,7 +13,6 @@ function SearchBar({ setAppointments, appointments, getAppointmentToday }) {
   const handleKeyPress = async (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-
       try {
         console.log(inputValue, "wwww");
         if (inputValue.trim() === "") {
@@ -70,7 +69,7 @@ function SearchBar({ setAppointments, appointments, getAppointmentToday }) {
         type="button"
         sx={{ p: "10px" }}
         aria-label="search"
-        onClick={handleButtonClick} // Handle button click
+        onClick={handleKeyPress} // Handle button click
       >
         <SearchIcon />
       </IconButton>
