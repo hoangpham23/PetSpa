@@ -38,7 +38,6 @@ function HeaderForGuest() {
             </div>
           </div>
 
-          <a href="#contact">CONTACT</a>
           <a href="/sign-in">SIGN IN</a>
         </nav>
         <p>GUEST</p>
