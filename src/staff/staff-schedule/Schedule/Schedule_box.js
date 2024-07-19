@@ -305,6 +305,7 @@
 //             <tr className={style.row}>
 //               <td className={style.filter}>AFTERNOON</td>
 //               {afternoonSlots.map((slot) => renderScheduleItem(slot))}
+
 //             </tr>
 //           </tbody>
 //         </table>
@@ -359,61 +360,61 @@ const Schedule_box = ({ Schedule_today, setAppointments }) => {
     Schedule_today.find((schedule) => schedule.startTime === slot);
 
   // Function to handle status change
-  const handleStatusChange = async (id) => {
-    const appointmentToUpdate = Schedule_today.find(
-      (appointment) => appointment.appointmentID === id
-    );
-    console.log(appointmentToUpdate)
+  // const handleStatusChange = async (id) => {
+  //   const appointmentToUpdate = Schedule_today.find(
+  //     (appointment) => appointment.appointmentID === id
+  //   );
+  //   console.log(appointmentToUpdate)
 
-    let newStatus;
-    switch (appointmentToUpdate.status) {
-      case "Scheduled":
-      case "Rescheduled":
-        newStatus = "In Progress";
-        break;
-      case "In Progress":
-        newStatus = "Completed";
-        break;
-      case "Completed":
-        newStatus = "Completed";
-        break;
-      default:
-        newStatus = appointmentToUpdate.status;
-    }
+  //   let newStatus;
+  //   switch (appointmentToUpdate.status) {
+  //     case "Scheduled":
+  //     case "Rescheduled":
+  //       newStatus = "In Progress";
+  //       break;
+  //     case "In Progress":
+  //       newStatus = "Completed";
+  //       break;
+  //     case "Completed":
+  //       newStatus = "Completed";
+  //       break;
+  //     default:
+  //       newStatus = appointmentToUpdate.status;
+  //   }
 
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.put(
-        "http://localhost:8090/manage-appointment",
-        {
-          appointmentID: appointmentToUpdate.appointmentID,
-          status: newStatus,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  //   try {
+  //     const token = localStorage.getItem("token");
+  //     const response = await axios.put(
+  //       "http://localhost:8090/manage-appointment",
+  //       {
+  //         appointmentID: appointmentToUpdate.appointmentID,
+  //         status: newStatus,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
 
-      if (response.status === 200) {
-        setAppointments((prevAppointments) =>
-          prevAppointments.map((appointment) =>
-            appointment.appointmentID === id
-              ? { ...appointment, status: newStatus }
-              : appointment
-          )
-        );
-        alert("Status updated successfully.");
-      } else {
-        alert("Failed to update status. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error updating status:", error);
-      alert("Failed to update status. Please try again.");
-    }
-  };
+  //     if (response.status === 200) {
+  //       setAppointments((prevAppointments) =>
+  //         prevAppointments.map((appointment) =>
+  //           appointment.appointmentID === id
+  //             ? { ...appointment, status: newStatus }
+  //             : appointment
+  //         )
+  //       );
+  //       alert("Status updated successfully.");
+  //     } else {
+  //       alert("Failed to update status. Please try again.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error updating status:", error);
+  //     alert("Failed to update status. Please try again.");
+  //   }
+  // };
 
   // Render schedule items for a specific slot
   const renderScheduleItem = (slot) => {
@@ -456,30 +457,6 @@ const Schedule_box = ({ Schedule_today, setAppointments }) => {
           >
             View Feedback
           </button>
-          <Box sx={{ boxSizing: "content-box" }}>
-            <Button
-              variant="contained"
-              onClick={() => handleStatusChange(schedule.appointmentID)}
-              style={{
-                backgroundColor:
-                  schedule.status === "Scheduled"
-                    ? "#FFC107"
-                    : schedule.status === "In Progress"
-                    ? "#1976D2"
-                    : schedule.status === "Completed"
-                    ? "#4CAF50"
-                    : schedule.status === "Rescheduled"
-                    ? "#FFC107"
-                    : null,
-                color:
-                  schedule.status === "In Progress" ? "#FFF" : "inherit",
-                boxSizing: "content-box",
-              }}
-              disabled={schedule.status === "Completed"}
-            >
-              {schedule.status}
-            </Button>
-          </Box>
         </div>
       </div>
     ) : (
