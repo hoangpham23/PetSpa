@@ -22,7 +22,6 @@ function ManageStaffAccount() {
   UserAuth(["AD"]);
   //  Prepare data to send
   const [data, setData] = useState([]);
-  const navigate = useNavigate();
   const [search, setSearch] = useState(" ");
   useState(() => {
     console.log(search, "ne");
