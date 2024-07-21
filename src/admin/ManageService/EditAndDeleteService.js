@@ -118,8 +118,28 @@ export default function EditAndDeleteService({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (!serviceInfo.serviceName.trim()) {
+      alert("Service name cannot be empty");
+      return;
+    }
+    if (!isNaN(serviceInfo.serviceName)) {
+      alert("Service name cannot be a number");
+      return;
+    }
+    if (!serviceInfo.description.trim()) {
+      alert("Description cannot be empty");
+      return;
+    }
+    if (isNaN(serviceInfo.price) || serviceInfo.price <= 0) {
+      alert("Price must be a number greater than 0");
+      return;
+    }
+    // if (!serviceInfo.imageFile) {
+    //   alert("Image file cannot be empty");
+    //   return;
+    // }
     const formData = new FormData();
+
     formData.append("serviceName", serviceInfo.serviceName);
     formData.append("description", serviceInfo.description);
     formData.append("price", serviceInfo.price);
@@ -127,7 +147,6 @@ export default function EditAndDeleteService({
     formData.append("status", serviceInfo.status);
     try {
       const token = localStorage.getItem("token");
-
       console.log(formData.get("serviceName"), "name");
       console.log(formData.get("image"), "img");
       console.log(formData.get("status"), "status");

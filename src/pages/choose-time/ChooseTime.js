@@ -47,7 +47,14 @@ function ChooseTime2() {
       setCustomerID(account.customerID);
     }
   }, []);
-
+  useEffect(() => {
+    if (
+      !Array.isArray(localStorage.getItem("cart")) ||
+      localStorage.getItem("cart").length === 0
+    ) {
+      navigate("/choose-pet");
+    }
+  }, []);
   function getHours() {
     const hours = [];
     for (let i = 8; i <= 17; i++) {

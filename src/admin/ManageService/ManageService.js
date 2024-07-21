@@ -215,7 +215,7 @@ function ResponsiveGrid({ data, setData, getData }) {
                     }}
                   />
                   <p>
-                    {service.serviceName} ~ {service.price}$
+                    {service.serviceName} - {service.price}$
                   </p>
                 </Box>
               )}

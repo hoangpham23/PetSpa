@@ -28,9 +28,14 @@ function Payment() {
   const steps = ["Choose Pet", "Choose Services", "Choose Time", "Payment"];
   const [activeStep, setActiveStep] = useState(3);
 
-  // useEffect(() => {
-  //   handleSubmit();
-  // }, []);
+  useEffect(() => {
+    if (
+      !Array.isArray(localStorage.getItem("cart")) ||
+      localStorage.getItem("cart").length === 0
+    ) {
+      navigate("/choose-pet");
+    }
+  }, []);
   const location = useLocation();
   localStorage.setItem("isPaid", false);
   useEffect(() => {
