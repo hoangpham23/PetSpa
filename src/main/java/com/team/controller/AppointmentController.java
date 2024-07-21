@@ -47,7 +47,7 @@ public class AppointmentController {
     public ResponseEntity<?> rescheduleAppointment(@RequestBody RescheduleDTO request) {
         try {
             appointmentService.rescheduleAppointment(request);
-//            emailService.sendEmailReschedule(request);
+            emailService.sendEmailReschedule(request);
             return ResponseEntity.ok("Rescheduled successful");
         } catch (Exception e) {
             log.error(e.getMessage());
