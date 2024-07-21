@@ -55,6 +55,7 @@ public class AddServiceController {
     @PostMapping
     public ResponseEntity<?> addService(AddServiceDTO addServiceDTO) {
         try {
+
             Services service = serviceImagesService.addService(addServiceDTO);
             return new ResponseEntity<>(service, HttpStatus.OK);
         } catch (Exception e) {
@@ -69,6 +70,12 @@ public class AddServiceController {
                                          @RequestParam("status") String status,
                                           @RequestParam(value = "image", required = false) MultipartFile image) {
         try {
+            if (serviceName.isEmpty() || description.isEmpty()) {
+                return new ResponseEntity<>("Service name, description cannot be empty", HttpStatus.BAD_REQUEST);
+            }
+            if(price <= 0) {
+                return new ResponseEntity<>("Price cannot be negative", HttpStatus.BAD_REQUEST);
+            }
             serviceImagesService.editService(serviceId, serviceName, description, price,status, image);
             return ResponseEntity.ok("Service has been updated");
         } catch (Exception e) {

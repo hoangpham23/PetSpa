@@ -11,6 +11,7 @@ import com.team.repository.FeedbackRepository;
 import com.team.repository.ServicesImagesRepository;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -39,16 +40,19 @@ public class FeedbackService {
                 "Have not feedback".equalsIgnoreCase(feedback.getStatus()) || "Don't feedback".equalsIgnoreCase(feedback.getStatus()))) {
             return Collections.emptyList();
         }
+        SimpleDateFormat outputFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm");
 
         return feedbackList.stream()
                 .map(feedback -> {
                     List<ServiceImages> serviceImages = servicesImagesRepository.findByServiceID(feedback.getAppointmentID().getServices());
                     String imageUrl = serviceImages.isEmpty() ? null : serviceImages.getFirst().getImageURL();
+                    String formattedAppointmentTime = outputFormat.format(feedback.getAppointmentID().getAppointmentTime());
+
                     return new CustomerFeedbackForEmployeeDTO(
                             feedback.getCustomerID().getCustomerName(),
                             feedback.getAppointmentID().getPets().getPetName(),
                             feedback.getFeedbackContent(),
-                            feedback.getAppointmentID().getAppointmentTime().toString(),
+                            formattedAppointmentTime,
                             imageUrl
                     );
                 })

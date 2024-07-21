@@ -9,6 +9,8 @@ import com.team.model.Services;
 import com.team.repository.FeedbackRepository;
 import com.team.repository.ServiceRepository;
 import com.team.repository.ServicesImagesRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -117,6 +119,12 @@ public class ServiceImagesService {
         // Check if image is provided
         if (image == null || image.isEmpty()) {
             throw new Exception("This image is invalid!");
+        }
+        if (serviceDTO.getServiceName().isEmpty() || serviceDTO.getDescription().isEmpty()) {
+            throw  new Exception("Service name, description cannot be empty");
+        }
+        if (serviceDTO.getPrice() <= 0) {
+            throw new Exception("Price cannot be negative");
         }
 
         // Check if image with the same name already exists
