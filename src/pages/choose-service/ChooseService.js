@@ -30,7 +30,7 @@ function ChooseService() {
     imageURL: "",
   });
   const today = new Date();
-  const steps = ["Choose Pet", "Choose Services", "Choose Time","Payment"];
+  const steps = ["Choose Pet", "Choose Services", "Choose Time", "Payment"];
   const [activeStep, setActiveStep] = useState(1);
   // chỉ nhận lịch trong 3 ngày, tính từ thời điểm hiện tại
   const startDay = format(today, "yyyy-MM-dd");
@@ -142,7 +142,7 @@ function ChooseService() {
       <HeaderColor />
       <div className={style.wrapper}>
         <main className={style.mainContent}>
-        <Box sx={{ width: "100%", mt: 8 }}>
+          <Box sx={{ width: "100%", mt: 8 }}>
             <Stepper
               activeStep={activeStep}
               alternativeLabel
@@ -165,10 +165,7 @@ function ChooseService() {
               ))}
             </Stepper>
           </Box>
-          <div className={style.Ask}>
-            <h1>CHOOSE SERVICES FOR YOUR PET </h1>
-          </div>
-
+          <br /> <br /> <br />
           <section className={style.service} id="service">
             <div className={style.service_checklist}>
               {services.map((service, index) => (

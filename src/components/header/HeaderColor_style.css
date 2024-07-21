@@ -31,7 +31,7 @@
 
 .header .header-pink-background-rectangle {
   position: absolute;
-  width: 70rem;
+  width: 75rem;
   height: 5rem;
   background-color: var(--pink-div-color);
   z-index: -1;

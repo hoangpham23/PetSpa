@@ -138,7 +138,7 @@ function InfoPet() {
                     <p>Age :</p>{" "}
                     <input
                       type="number"
-                      placeholder="ENTER YOUR PET'S WEIGHT HERE"
+                      placeholder="ENTER YOUR PET'S AGE HERE"
                       name="age"
                       onChange={handleInput}
                     />

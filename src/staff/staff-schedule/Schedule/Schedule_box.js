@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import Timeline from "@mui/lab/Timeline";
 import TimelineItem from "@mui/lab/TimelineItem";
@@ -13,7 +13,7 @@ import style from "./Schedule.module.css";
 import { Button, Box } from "@mui/material";
 import axios from "axios";
 
-const Schedule_box = ({ Schedule_today, setAppointments }) => {
+const Schedule_box = ({ Schedule_today, setAppointments, selectedDate }) => {
   const navigate = useNavigate();
 
   const handleFeedbackClick = (appointmentID) => {
@@ -83,6 +83,12 @@ const Schedule_box = ({ Schedule_today, setAppointments }) => {
 
   const renderScheduleItem = (slot) => {
     const schedule = findScheduleForSlot(slot);
+
+    // Compare selectedDate with today's date
+    const today = new Date();
+    const isToday =
+      selectedDate === `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
     return schedule ? (
       <div key={slot} className={style.schedule_item}>
         <div className={style.time}>
@@ -140,7 +146,7 @@ const Schedule_box = ({ Schedule_today, setAppointments }) => {
                   schedule.appointmentStatus === "In Progress" ? "#FFF" : "inherit",
                 boxSizing: "content-box",
               }}
-              disabled={schedule.appointmentStatus === "Completed"}
+              disabled={schedule.appointmentStatus === "Completed" || !isToday}
             >
               {schedule.appointmentStatus}
             </Button>
@@ -178,4 +184,3 @@ const Schedule_box = ({ Schedule_today, setAppointments }) => {
 };
 
 export default Schedule_box;
-
