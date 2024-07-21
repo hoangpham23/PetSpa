@@ -39,6 +39,9 @@ export default function Reschedule({
       setSelectedServices(initialSelectedServices);
     }
   }, [listService]);
+  React.useEffect(() => {
+    console.log(listService, "test");
+  }, [listService]);
   const [openChooseTime, setOpenChooseTime] = React.useState(false);
   const handleOpenChooseTime = () => {
     setOpenChooseTime(true);

@@ -9,6 +9,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import LineChartMonthly from "./LineChart/LineChartMonthly";
+import UserAuth from "../../hooks/UserAuth";
 
 function getOffsetFromLocalStorage() {
   // Lấy giá trị offset từ localStorage
@@ -19,7 +20,7 @@ function getOffsetFromLocalStorage() {
 
 function DashBoard() {
   //  Prepare data to send
-
+  UserAuth(["AD"]);
   const offset = getOffsetFromLocalStorage();
   // khi nhấn vào mũi tên thì nó sẽ cập nhật offset
   const [startDate, setStartDate] = useState("");

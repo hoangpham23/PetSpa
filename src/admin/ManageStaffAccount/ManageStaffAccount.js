@@ -16,8 +16,10 @@ import { useNavigate } from "react-router-dom";
 import styles from "./ManageStaffAccount_style.module.css";
 import SearchBar from "./SearchBar";
 import CreateStaff from "./CreateStaff/CreateStaff";
+import UserAuth from "../../hooks/UserAuth";
 
 function ManageStaffAccount() {
+  UserAuth(["AD"]);
   //  Prepare data to send
   const [data, setData] = useState([]);
   const navigate = useNavigate();

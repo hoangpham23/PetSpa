@@ -20,7 +20,9 @@ import SearchBar from "./SearchBar";
 import AddService from "./AddService";
 import * as React from "react";
 import EditAndDeleteService from "./EditAndDeleteService";
+import UserAuth from "../../hooks/UserAuth";
 function ManageService() {
+  UserAuth(["AD"]);
   const [data, setData] = useState([]);
   const theme = createTheme({
     typography: {
