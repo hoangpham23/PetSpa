@@ -10,6 +10,14 @@
   --shadow-color: rgba(0, 0, 0, 0.2);
   --icon-color: #c2bcbc;
 }
+
+.logout{
+    position: absolute;
+    padding-top: 0.5rem;
+    padding-left: 0.5rem;
+    cursor: pointer;
+}
+
 .week_calendar {
     display: flex;
     justify-content: space-between;

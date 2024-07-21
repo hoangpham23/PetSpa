@@ -10,8 +10,6 @@ import Footer from "../../components/footer/footer";
 import { addDays, format } from "date-fns";
 import HeaderColor from "../../components/header/HeaderColor";
 import UserAuth from "../../hooks/UserAuth";
-// import service2 from "../../assets/img/service2.jpg";
-// import service3 from "../../assets/img/service3.jpg";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";

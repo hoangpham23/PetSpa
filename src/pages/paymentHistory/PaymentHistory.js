@@ -293,7 +293,7 @@ function TableUpcoming({ upcoming, handleOpen, setListService }) {
                         fontWeight: "200",
                       }}
                     >
-                      you only can reschedule once time
+                      you only can reschedule once
                     </p>
                   )}
                 </StyledTableUpcomingCell>

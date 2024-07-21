@@ -23,6 +23,8 @@ import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlin
 import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import { useNavigate } from "react-router-dom";
+import logoutIcon from "../../assets/img/logoutIcon.png";
+import style from "./SideBar.module.css";
 
 const drawerWidth = 260;
 
@@ -95,6 +97,9 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function SideBar() {
+  const handleLogoutClick = () => {
+    navigate("/sign-in"); // Navigate to /sign-in when the image is clicked
+  };
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -122,7 +127,7 @@ export default function SideBar() {
   ];
   const navigate = useNavigate();
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", position: "relative" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
@@ -141,6 +146,9 @@ export default function SideBar() {
           <Typography variant="h6" noWrap component="div">
             Admin Page
           </Typography>
+          <div className={style.logout} onClick={handleLogoutClick}>
+            <img src={logoutIcon} alt="Logout" />
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>

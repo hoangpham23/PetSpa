@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useCallback } from "react";
 import style from "./Calendar.module.css";
+import logoutIcon from "../../../assets/img/logoutIcon.png";
+import { useNavigate } from "react-router-dom";
 
 const Calendar = ({ selectedDate, setSelectedDate }) => {
   const [startOfWeek, setStartOfWeek] = useState(new Date());
+  const navigate = useNavigate(); // Initialize navigate
 
   const formatDate = useCallback((date) => {
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months start at 0
-    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months start at 0
+    const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`; // Format as yyyy-mm-dd
   }, []);
 
@@ -45,12 +48,19 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
     setSelectedDate(formattedDate); // Update selectedDate with formatted value
   };
 
+  const handleLogoutClick = () => {
+    navigate("/sign-in"); // Navigate to /sign-in when the image is clicked
+  };
+
   useEffect(() => {
     console.log(selectedDate, "formatted selectedDate"); // Log the formatted date
   }, [selectedDate]);
 
   return (
     <>
+      <div className={style.logout} onClick={handleLogoutClick}>
+        <img src={logoutIcon} alt="Logout"/>
+      </div>
       <div className={style.today}>
         <p>
           {new Date(selectedDate).toLocaleDateString("en-US", {
