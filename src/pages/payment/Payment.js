@@ -105,6 +105,8 @@ function Payment() {
                     }}
                     style={{
                       transform: "scale(3)",
+                      marginTop: "3rem",
+                      index:"11",
                     }}
                   >
                     {label}

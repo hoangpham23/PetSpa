@@ -145,6 +145,9 @@ const Schedule_box = ({ Schedule_today, setAppointments, selectedDate }) => {
                 color:
                   schedule.appointmentStatus === "In Progress" ? "#FFF" : "inherit",
                 boxSizing: "content-box",
+                paddingLeft: "2.5rem",
+                paddingRight: "2.5rem",
+                borderRadius: "60px",
               }}
               disabled={schedule.appointmentStatus === "Completed" || !isToday}
             >

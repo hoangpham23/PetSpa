@@ -148,7 +148,7 @@ function ChooseTime2() {
           <Stepper
             activeStep={activeStep}
             alternativeLabel
-            sx={{ padding: "2rem", borderRadius: "10px" }}
+            sx={{ padding: "2rem", borderRadius: "10px", mt:"2rem"}}
           >
             {steps.map((label, index) => (
               <Step key={label}>
@@ -159,6 +159,8 @@ function ChooseTime2() {
                   }}
                   style={{
                     transform: "scale(3)",
+                    marginTop: "3rem",
+                    index:"11",
                   }}
                 >
                   {label}

@@ -12,6 +12,7 @@ import stepperStyle from "./Stepper_style.module.css";
 import style from "./ChoosePet_style.module.css";
 import { Helmet } from "react-helmet";
 
+
 function ChoosePet() {
   const [customerID, setCustomerID] = useState("");
   const [isCustomerIDSent, setIsCustomerIDSent] = useState(false);
@@ -86,6 +87,8 @@ function ChoosePet() {
                     }}
                     style={{
                       transform: "scale(3)",
+                      marginTop: "3rem",
+                      index:"11",
                     }}
                   >
                     {label}
