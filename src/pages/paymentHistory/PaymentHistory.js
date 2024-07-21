@@ -16,6 +16,7 @@ import HeaderColor from "../../components/header/HeaderColor";
 import UserAuth from "../../hooks/UserAuth";
 import Grid from "@mui/material/Grid";
 import Reschedule from "./reschedule/Reschedule";
+import { Helmet } from "react-helmet";
 
 function PaymentHistory() {
   UserAuth(["CUS"]);
@@ -65,6 +66,9 @@ function PaymentHistory() {
   }, [upcoming]);
   return (
     <>
+      <Helmet>
+        <title>Payment</title>
+      </Helmet>
       <Box>
         <HeaderColor />
       </Box>

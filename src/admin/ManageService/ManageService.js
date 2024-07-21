@@ -21,6 +21,7 @@ import AddService from "./AddService";
 import * as React from "react";
 import EditAndDeleteService from "./EditAndDeleteService";
 import UserAuth from "../../hooks/UserAuth";
+import { Helmet } from "react-helmet";
 function ManageService() {
   UserAuth(["AD"]);
   const [data, setData] = useState([]);
@@ -54,68 +55,73 @@ function ManageService() {
   }, []);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        fontSize: "2rem",
-        backgroundColor: "#f0f0f0",
-        minHeight: "95vh",
-        marginTop: "3rem",
-      }}
-    >
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <SideBar />
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          {/* <Box sx={{ marginTop: "10rem", marginLeft: "7rem" }}> */}
-          <Box sx={{ marginLeft: "2rem" }}>
-            {/* tạo button add new service */}
-            <Box
-              display={"flex"}
-              sx={{
-                justifyContent: "space-between",
-                marginBottom: "5rem",
-              }}
-            >
-              <h1
-                style={{
-                  marginTop: "6rem",
-                  marginBottom: "-2rem",
-                  textAlign: "left",
-                }}
-              >
-                List Services
-              </h1>
+    <>
+      <Helmet>
+        <title>Manage Services</title>
+      </Helmet>
+      <Box
+        sx={{
+          display: "flex",
+          fontSize: "2rem",
+          backgroundColor: "#f0f0f0",
+          minHeight: "95vh",
+          marginTop: "3rem",
+        }}
+      >
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <SideBar />
+          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+            {/* <Box sx={{ marginTop: "10rem", marginLeft: "7rem" }}> */}
+            <Box sx={{ marginLeft: "2rem" }}>
+              {/* tạo button add new service */}
               <Box
                 display={"flex"}
                 sx={{
-                  marginTop: "7rem",
-                  marginBottom: "-2rem",
-                  // justifyContent: "space-between",
-                  height: "4.5rem",
+                  justifyContent: "space-between",
+                  marginBottom: "5rem",
                 }}
               >
-                <SearchBar data={data} setData={setData} getData={getData} />
+                <h1
+                  style={{
+                    marginTop: "6rem",
+                    marginBottom: "-2rem",
+                    textAlign: "left",
+                  }}
+                >
+                  List Services
+                </h1>
+                <Box
+                  display={"flex"}
+                  sx={{
+                    marginTop: "7rem",
+                    marginBottom: "-2rem",
+                    // justifyContent: "space-between",
+                    height: "4.5rem",
+                  }}
+                >
+                  <SearchBar data={data} setData={setData} getData={getData} />
 
-                <input
-                  type="submit"
-                  value="+"
-                  className={styles.btn}
-                  onClick={handleCreate}
-                  style={{ margin: "0px 1rem", fontSize: "1.6rem" }}
-                />
-                <AddService
-                  open={create}
-                  handleClose={handleCloseCreate}
-                  getData={getData}
-                />
+                  <input
+                    type="submit"
+                    value="+"
+                    className={styles.btn}
+                    onClick={handleCreate}
+                    style={{ margin: "0px 1rem", fontSize: "1.6rem" }}
+                  />
+                  <AddService
+                    open={create}
+                    handleClose={handleCloseCreate}
+                    getData={getData}
+                  />
+                </Box>
               </Box>
+              <ResponsiveGrid data={data} setData={setData} getData={getData} />
             </Box>
-            <ResponsiveGrid data={data} setData={setData} getData={getData} />
           </Box>
-        </Box>
-      </ThemeProvider>
-    </Box>
+        </ThemeProvider>
+      </Box>
+    </>
   );
 }
 

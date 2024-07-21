@@ -17,6 +17,7 @@ import styles from "./ManageStaffAccount_style.module.css";
 import SearchBar from "./SearchBar";
 import CreateStaff from "./CreateStaff/CreateStaff";
 import UserAuth from "../../hooks/UserAuth";
+import { Helmet } from "react-helmet";
 
 function ManageStaffAccount() {
   UserAuth(["AD"]);
@@ -87,72 +88,77 @@ function ManageStaffAccount() {
   const handleCreate = () => setCreate(true);
   const handleCloseCreate = () => setCreate(false);
   return (
-    <Box
-      sx={{
-        display: "flex",
-        fontSize: "2rem",
-        backgroundColor: "#f0f0f0",
-        minHeight: "95vh",
-        marginTop: "3rem",
-      }}
-    >
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <SideBar />
+    <>
+      <Helmet>
+        <title>Manage Staff Account</title>
+      </Helmet>
+      <Box
+        sx={{
+          display: "flex",
+          fontSize: "2rem",
+          backgroundColor: "#f0f0f0",
+          minHeight: "95vh",
+          marginTop: "3rem",
+        }}
+      >
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <SideBar />
 
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          <Box display={"flex"} sx={{ justifyContent: "space-between" }}>
-            <h1
-              style={{
-                marginTop: "6rem",
-                marginBottom: "-2rem",
-                textAlign: "left",
-              }}
-            >
-              Staff's account
-            </h1>
-            <Box
-              display={"flex"}
-              sx={{
-                marginTop: "7rem",
-                marginBottom: "-2rem",
-                // justifyContent: "space-between",
-                height: "4.5rem",
-              }}
-            >
-              <SearchBar
-                setSearch={setSearch}
-                search={search}
+          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+            <Box display={"flex"} sx={{ justifyContent: "space-between" }}>
+              <h1
+                style={{
+                  marginTop: "6rem",
+                  marginBottom: "-2rem",
+                  textAlign: "left",
+                }}
+              >
+                Staff's account
+              </h1>
+              <Box
+                display={"flex"}
+                sx={{
+                  marginTop: "7rem",
+                  marginBottom: "-2rem",
+                  // justifyContent: "space-between",
+                  height: "4.5rem",
+                }}
+              >
+                <SearchBar
+                  setSearch={setSearch}
+                  search={search}
+                  getData={getData}
+                />
+
+                <input
+                  type="submit"
+                  value="+"
+                  className={styles.btn}
+                  onClick={handleCreate}
+                  style={{ margin: "0px 1rem", fontSize: "1.6rem" }}
+                />
+              </Box>
+              <CreateStaff
+                open={create}
+                onClose={handleCloseCreate}
                 getData={getData}
               />
+            </Box>
 
-              <input
-                type="submit"
-                value="+"
-                className={styles.btn}
-                onClick={handleCreate}
-                style={{ margin: "0px 1rem", fontSize: "1.6rem" }}
+            <DrawerHeader />
+            <Box className={styles.book}></Box>
+            <Box>
+              <CustomizedTables
+                data={data}
+                onDelete={deleteEmployee}
+                getData={getData}
               />
             </Box>
-            <CreateStaff
-              open={create}
-              onClose={handleCloseCreate}
-              getData={getData}
-            />
           </Box>
-
-          <DrawerHeader />
-          <Box className={styles.book}></Box>
-          <Box>
-            <CustomizedTables
-              data={data}
-              onDelete={deleteEmployee}
-              getData={getData}
-            />
-          </Box>
-        </Box>
-      </ThemeProvider>
-    </Box>
+        </ThemeProvider>
+      </Box>
+    </>
   );
 }
 

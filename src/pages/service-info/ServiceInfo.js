@@ -33,7 +33,9 @@ function ServiceInfo() {
     try {
       const token = localStorage.getItem("token");
       console.log(serviceName);
-      const response = await axios.get(`http://localhost:8090/home-page/${serviceName}`);
+      const response = await axios.get(
+        `http://localhost:8090/home-page/${serviceName}`
+      );
       if (response.status === 200) {
         console.log(response.data);
         setServiceData(response.data);
@@ -75,6 +77,8 @@ function ServiceInfo() {
     <>
       {" "}
       <Helmet>
+        <title>Service information</title>
+
         <link
           href="https://unpkg.com/css.gg@2.0.0/icons/css/quote.css"
           rel="stylesheet"
@@ -119,7 +123,7 @@ function ServiceInfo() {
               <h1>OUR FEEDBACKS</h1>
 
               <div className={style.feedback_display}>
-              <Swiper
+                <Swiper
                   slidesPerView={2}
                   spaceBetween={30}
                   loop={true}
@@ -135,21 +139,21 @@ function ServiceInfo() {
                   className={style.mySwiper}
                 >
                   {serviceData.feedbacks.map((feedback, index) => (
-                      <SwiperSlide key={index}>
-                        <div className={style.service_container}>
-                          <div className={style.ava_img}>
-                            <img src={service1} alt="Avatar" />
-                          </div>
-                          <div className={style.quote}>
-                            <i className="gg-quote"></i>
-                          </div>
-                          <div className={style.feedback_content}>
-                            <p>{feedback.feedbackContent}</p>
-                          </div>
-                          <p>{feedback.customerName}</p>
+                    <SwiperSlide key={index}>
+                      <div className={style.service_container}>
+                        <div className={style.ava_img}>
+                          <img src={service1} alt="Avatar" />
                         </div>
-                      </SwiperSlide>
-                    ))}
+                        <div className={style.quote}>
+                          <i className="gg-quote"></i>
+                        </div>
+                        <div className={style.feedback_content}>
+                          <p>{feedback.feedbackContent}</p>
+                        </div>
+                        <p>{feedback.customerName}</p>
+                      </div>
+                    </SwiperSlide>
+                  ))}
                 </Swiper>
               </div>
             </section>

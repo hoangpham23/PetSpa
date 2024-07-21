@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import LineChartMonthly from "./LineChart/LineChartMonthly";
 import UserAuth from "../../hooks/UserAuth";
+import { Helmet } from "react-helmet";
 
 function getOffsetFromLocalStorage() {
   // Lấy giá trị offset từ localStorage
@@ -117,105 +118,111 @@ function DashBoard() {
     ...theme.mixins.toolbar,
   }));
   return (
-    <Box
-      sx={{
-        display: "flex",
-        fontSize: "2rem",
-        // backgroundColor: "#f0f0f0",
-        //background: "linear-gradient(150deg, white, #023047)",
-        //background: "linear-gradient(185deg, white, #7FA3B2)",
-        // background: "linear-gradient(190deg, white,#FBE2E4)",
-        //backgroundImage: `url(${dbg})`,
-        background: "linear-gradient(125deg, white,#E3D1E3)",
-        minHeight: "100vh",
-      }}
-    >
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <SideBar />
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          <DrawerHeader />
-          <Grid container spacing={2}>
-            <Grid item xs={7} md={7}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={12}>
-                  <Box sx={{ marginBottom: "3rem", marginTop: "3rem" }}>
-                    <DataRow report={report} />
-                  </Box>
+    <>
+      <Helmet>
+        <title>DashBoard</title>
+      </Helmet>
+      <Box
+        sx={{
+          display: "flex",
+          fontSize: "2rem",
+          // backgroundColor: "#f0f0f0",
+          //background: "linear-gradient(150deg, white, #023047)",
+          //background: "linear-gradient(185deg, white, #7FA3B2)",
+          // background: "linear-gradient(190deg, white,#FBE2E4)",
+          //backgroundImage: `url(${dbg})`,
+          background: "linear-gradient(125deg, white,#E3D1E3)",
+          minHeight: "100vh",
+        }}
+      >
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <SideBar />
+          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+            <DrawerHeader />
+            <Grid container spacing={2}>
+              <Grid item xs={7} md={7}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} md={12}>
+                    <Box sx={{ marginBottom: "3rem", marginTop: "3rem" }}>
+                      <DataRow report={report} />
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                    <Box
+                      sx={{
+                        backgroundColor: "white",
+                        borderRadius: "2rem",
+                        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          justifyContent: "flex-start",
+                          display: "flex",
+                          paddingTop: "2rem",
+                          paddingLeft: "10rem",
+                        }}
+                      >
+                        <p sx={{ fontSize: "1.6rem" }}>
+                          Pet Spa's weekly income
+                        </p>
+                      </Box>
+
+                      <Box
+                        sx={{
+                          backgroundColor: "white",
+                          borderRadius: "2rem",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Box>
+                          <ChevronLeftIcon
+                            name="Previous"
+                            onClick={() => handleClick("Previous")}
+                            sx={{
+                              fontSize: "4rem",
+                            }}
+                          />
+                        </Box>
+                        <BarChart2 report={report} />
+                        <Box>
+                          <ChevronRightIcon
+                            name="Next"
+                            onClick={() => handleClick("Next")}
+                            sx={{ fontSize: "4rem" }}
+                          />
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Grid>
                 </Grid>
+              </Grid>
+
+              <Grid item xs={5} md={5}>
                 <Grid item xs={12} md={12}>
                   <Box
                     sx={{
                       backgroundColor: "white",
                       borderRadius: "2rem",
+                      height: "86.5vh",
+                      marginTop: "3rem",
                       boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
                     }}
                   >
-                    <Box
-                      sx={{
-                        justifyContent: "flex-start",
-                        display: "flex",
-                        paddingTop: "2rem",
-                        paddingLeft: "10rem",
-                      }}
-                    >
-                      <p sx={{ fontSize: "1.6rem" }}>Pet Spa's weekly income</p>
-                    </Box>
-
-                    <Box
-                      sx={{
-                        backgroundColor: "white",
-                        borderRadius: "2rem",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Box>
-                        <ChevronLeftIcon
-                          name="Previous"
-                          onClick={() => handleClick("Previous")}
-                          sx={{
-                            fontSize: "4rem",
-                          }}
-                        />
-                      </Box>
-                      <BarChart2 report={report} />
-                      <Box>
-                        <ChevronRightIcon
-                          name="Next"
-                          onClick={() => handleClick("Next")}
-                          sx={{ fontSize: "4rem" }}
-                        />
-                      </Box>
-                    </Box>
+                    <LineChartMonthly />
+                    {/* <BasicRangeShortcuts /> */}
                   </Box>
                 </Grid>
+                <Grid item xs={12} md={12}></Grid>
+
+                {/* <BasicRangeShortcuts /> */}
               </Grid>
             </Grid>
 
-            <Grid item xs={5} md={5}>
-              <Grid item xs={12} md={12}>
-                <Box
-                  sx={{
-                    backgroundColor: "white",
-                    borderRadius: "2rem",
-                    height: "86.5vh",
-                    marginTop: "3rem",
-                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
-                  }}
-                >
-                  <LineChartMonthly />
-                  {/* <BasicRangeShortcuts /> */}
-                </Box>
-              </Grid>
-              <Grid item xs={12} md={12}></Grid>
-
-              {/* <BasicRangeShortcuts /> */}
-            </Grid>
-          </Grid>
-
-          {/* DATA ROW
+            {/* DATA ROW
             <Grid item xs={7} md={7}>
               <Box sx={{ marginBottom: "6rem", marginTop: "5rem" }}>
                 <DataRow report={report} />
@@ -282,9 +289,10 @@ function DashBoard() {
             </Grid>
             <Grid item xs={6} md={6}></Grid>
           </Grid> */}
-        </Box>
-      </ThemeProvider>
-    </Box>
+          </Box>
+        </ThemeProvider>
+      </Box>
+    </>
   );
 }
 

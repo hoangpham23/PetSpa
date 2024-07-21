@@ -19,6 +19,7 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import StepConnector from "@mui/material/StepConnector";
 import stepperStyle from "./Stepper_style.module.css";
+import { Helmet } from "react-helmet";
 function ChooseTime2() {
   UserAuth(["CUS"]);
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ function ChooseTime2() {
   const [appointments, setAppointments] = useState([]);
   const [isFullSlot, setIsFullSlot] = useState([]);
   const [customerID, setCustomerID] = useState("");
-  const steps = ["Choose Pet", "Choose Services", "Choose Time","Payment"];
+  const steps = ["Choose Pet", "Choose Services", "Choose Time", "Payment"];
   const [activeStep, setActiveStep] = useState(2);
 
   useEffect(() => {
@@ -138,32 +139,35 @@ function ChooseTime2() {
   // so sánh và set trạng thái
   return (
     <>
+      <Helmet>
+        <title>Choose Time</title>
+      </Helmet>
       <div className={style.backGround}>
         <HeaderColor />
-        <Box sx={{ width: "100%", mt: 0, mb: 2,}}>
-            <Stepper
-              activeStep={activeStep}
-              alternativeLabel
-              sx={{ padding: "2rem", borderRadius: "10px" }}
-            >
-              {steps.map((label, index) => (
-                <Step key={label}>
-                  <StepLabel
-                    classes={{
-                      label: stepperStyle.stepLabel,
-                      iconContainer: stepperStyle.stepIconContainer,
-                    }}
-                    style={{
-                      transform: "scale(3)",
-                    }}
-                  >
-                    {label}
-                  </StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-          </Box>
-          <br/>
+        <Box sx={{ width: "100%", mt: 0, mb: 2 }}>
+          <Stepper
+            activeStep={activeStep}
+            alternativeLabel
+            sx={{ padding: "2rem", borderRadius: "10px" }}
+          >
+            {steps.map((label, index) => (
+              <Step key={label}>
+                <StepLabel
+                  classes={{
+                    label: stepperStyle.stepLabel,
+                    iconContainer: stepperStyle.stepIconContainer,
+                  }}
+                  style={{
+                    transform: "scale(3)",
+                  }}
+                >
+                  {label}
+                </StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+        </Box>
+        <br />
 
         <div className={style.boxInfo}>
           {/* <CalendarV2 /> */}

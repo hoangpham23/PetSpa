@@ -15,6 +15,7 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import StepConnector from "@mui/material/StepConnector";
 import stepperStyle from "./Stepper_style.module.css";
+import { Helmet } from "react-helmet";
 
 function Payment() {
   UserAuth(["CUS"]);
@@ -24,7 +25,7 @@ function Payment() {
   const navigate = useNavigate();
   const [msg, setMsg] = useState("");
   const [result, setResult] = useState([]);
-  const steps = ["Choose Pet", "Choose Services", "Choose Time","Payment"];
+  const steps = ["Choose Pet", "Choose Services", "Choose Time", "Payment"];
   const [activeStep, setActiveStep] = useState(3);
 
   // useEffect(() => {
@@ -84,6 +85,9 @@ function Payment() {
 
   return (
     <>
+      <Helmet>
+        <title>Payment</title>
+      </Helmet>
       <div className="wrapperPayment">
         <main className="mainContent">
           <Box sx={{ width: "100%", mt: 8 }}>
