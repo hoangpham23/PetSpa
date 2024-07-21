@@ -7,6 +7,7 @@ import * as React from "react";
 import styles from "./ManageAppointment_style.module.css";
 import LimitMaxSlot from "./LimitMaxSlot";
 import UserAuth from "../../hooks/UserAuth";
+import { Helmet } from "react-helmet";
 function ManageAppointment() {
   UserAuth(["AD"]);
   const theme = createTheme({
@@ -52,71 +53,76 @@ function ManageAppointment() {
     }
   }
   return (
-    <Box
-      sx={{
-        display: "flex",
-        fontSize: "2rem",
-        backgroundColor: "#f0f0f0",
-        minHeight: "95vh",
-        marginTop: "3rem",
-      }}
-    >
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <SideBar />
-        <Box
-          component="main"
-          sx={{ flexGrow: 1, p: 3, justifyContent: "center" }}
-        >
+    <>
+      <Helmet>
+        <title>Manage Appointment</title>
+      </Helmet>
+      <Box
+        sx={{
+          display: "flex",
+          fontSize: "2rem",
+          backgroundColor: "#f0f0f0",
+          minHeight: "95vh",
+          marginTop: "3rem",
+        }}
+      >
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <SideBar />
           <Box
-            display={"flex"}
-            sx={{ justifyContent: "space-between", marginBottom: "4rem" }}
+            component="main"
+            sx={{ flexGrow: 1, p: 3, justifyContent: "center" }}
           >
-            <h1
-              style={{
-                marginTop: "6rem",
-                marginBottom: "-2rem",
-                textAlign: "left",
-              }}
-            >
-              Appointment today
-            </h1>
             <Box
-              disp
               display={"flex"}
-              sx={{
-                marginTop: "7rem",
-                marginBottom: "-2rem",
-                // justifyContent: "space-between",
-                height: "4.5rem",
-              }}
+              sx={{ justifyContent: "space-between", marginBottom: "4rem" }}
             >
-              <SearchBar
-                setAppointments={setAppointments}
-                appointments={appointments}
-                getAppointmentToday={getAppointmentToday}
-              />
-              <input
-                type="submit"
-                value="Appointment limitation"
-                className={styles.btn}
-                onClick={handleOpenLimitSlotFunction}
-                style={{ margin: "0px 1rem", fontSize: "1.6rem" }}
-              />
-              <LimitMaxSlot
-                open={openLimitSlotFuncion}
-                handleOpen={handleOpenLimitSlotFunction}
-                handleClose={handleCloseLimitSlotFunction}
-              />
+              <h1
+                style={{
+                  marginTop: "6rem",
+                  marginBottom: "-2rem",
+                  textAlign: "left",
+                }}
+              >
+                Appointment today
+              </h1>
+              <Box
+                disp
+                display={"flex"}
+                sx={{
+                  marginTop: "7rem",
+                  marginBottom: "-2rem",
+                  // justifyContent: "space-between",
+                  height: "4.5rem",
+                }}
+              >
+                <SearchBar
+                  setAppointments={setAppointments}
+                  appointments={appointments}
+                  getAppointmentToday={getAppointmentToday}
+                />
+                <input
+                  type="submit"
+                  value="Appointment limitation"
+                  className={styles.btn}
+                  onClick={handleOpenLimitSlotFunction}
+                  style={{ margin: "0px 1rem", fontSize: "1.6rem" }}
+                />
+                <LimitMaxSlot
+                  open={openLimitSlotFuncion}
+                  handleOpen={handleOpenLimitSlotFunction}
+                  handleClose={handleCloseLimitSlotFunction}
+                />
+              </Box>
             </Box>
+            <CustomizedTables
+              appointments={appointments}
+              setAppointments={setAppointments}
+            />
           </Box>
-          <CustomizedTables
-            appointments={appointments}
-            setAppointments={setAppointments}
-          />
-        </Box>
-      </ThemeProvider>
-    </Box>
+        </ThemeProvider>
+      </Box>
+    </>
   );
 }
 

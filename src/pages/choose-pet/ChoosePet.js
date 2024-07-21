@@ -1,19 +1,3 @@
-// import axios from "axios";
-// import { useEffect, useState } from "react";
-// import HeaderForCus from "../../components/header/header-customer";
-// import { Helmet } from "react-helmet";
-// import { useNavigate, useParams } from "react-router-dom";
-// import Footer from "../../components/footer/footer";
-// import HeaderColor from "../../components/header/HeaderColor";
-// import UserAuth from "../../hooks/UserAuth";
-// import Box from "@mui/material/Box";
-// import Stepper from "@mui/material/Stepper";
-// import Step from "@mui/material/Step";
-// import StepLabel from "@mui/material/StepLabel";
-// import StepConnector from "@mui/material/StepConnector";
-// import stepperStyle from "./Stepper_style.module.css";
-// import style from "./ChoosePet_style.module.css";
-
 import axios from "axios";
 import UserAuth from "../../hooks/UserAuth";
 import HeaderColor from "../../components/header/HeaderColor";
@@ -26,6 +10,7 @@ import StepLabel from "@mui/material/StepLabel";
 import StepConnector from "@mui/material/StepConnector";
 import stepperStyle from "./Stepper_style.module.css";
 import style from "./ChoosePet_style.module.css";
+import { Helmet } from "react-helmet";
 
 function ChoosePet() {
   const [customerID, setCustomerID] = useState("");
@@ -33,7 +18,7 @@ function ChoosePet() {
   const [petData, setPetData] = useState([]);
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
-  const steps = ["Choose Pet", "Choose Services", "Choose Time","Payment"];
+  const steps = ["Choose Pet", "Choose Services", "Choose Time", "Payment"];
   const [activeStep, setActiveStep] = useState(0);
 
   UserAuth(["CUS"]);
@@ -80,6 +65,9 @@ function ChoosePet() {
   }
   return (
     <>
+      <Helmet>
+        <title>Choose Pet</title>
+      </Helmet>
       <HeaderColor />
       <div className={style.wrapper}>
         <main className={style.mainContent}>
@@ -113,7 +101,7 @@ function ChoosePet() {
             }}
           >
             {/* <h1>CHOOSE PET FOR SERVICES</h1> */}
-            <br/> <br></br>
+            <br /> <br></br>
             {petData.map((pet, index) => (
               <div
                 key={index}

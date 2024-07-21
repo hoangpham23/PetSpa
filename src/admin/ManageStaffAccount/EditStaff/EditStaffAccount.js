@@ -142,7 +142,7 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
       if (error.response.data.employeeCIN) {
         setError({
           ...errors,
-          phoneNumberError: "Employee CIN already exists",
+          employeeCINError: "Employee CIN already exists",
         });
       }
     }
