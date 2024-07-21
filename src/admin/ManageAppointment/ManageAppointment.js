@@ -6,7 +6,9 @@ import axios from "axios";
 import * as React from "react";
 import styles from "./ManageAppointment_style.module.css";
 import LimitMaxSlot from "./LimitMaxSlot";
+import UserAuth from "../../hooks/UserAuth";
 function ManageAppointment() {
+  UserAuth(["AD"]);
   const theme = createTheme({
     typography: {
       fontFamily: "Poppins,sans-serif", // Thay đổi font chữ ở đây
