@@ -57,7 +57,7 @@
   .schedule_item {
     display: flex;
     align-items: center;
-    margin: 0 auto; 
+    margin: 0 1.2rem;
     background-color: var(--blue-color);
     height: 20rem;
     width: 100%;
@@ -68,7 +68,7 @@
     align-items: center;
     padding: 10px;
     border-radius: 30px;
-    width: 21rem;
+    width: 23rem;
     justify-content: center;
 }
 
@@ -83,7 +83,7 @@
     display: flex;
     flex-direction: column;
     align-items: left;
-    gap: 1.5rem;
+    gap: 1rem;
     position: relative;
 }
 
@@ -133,4 +133,5 @@
 .filter{
     width: 10rem;
     font-size: 1.5rem;
+    background-color: red;
 }

@@ -169,7 +169,7 @@ const Schedule_box = ({ Schedule_today, setAppointments, selectedDate }) => {
           <thead></thead>
           <tbody>
             <tr className={style.row}>
-              <td className={style.filter}>MORNING</td>
+              <td className={style.filter}>MORNING    </td>
               {morningSlots.map((slot) => renderScheduleItem(slot))}
             </tr>
             <tr className={style.row}>
