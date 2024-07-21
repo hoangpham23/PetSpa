@@ -95,7 +95,12 @@ function ChooseService() {
     }
   }; // lưu vô localStorage
   function handleSubmit() {
-    localStorage.setItem("cart", JSON.stringify(selectedServices));
+    if (!Array.isArray(selectedServices) || selectedServices.length === 0) {
+      alert("Please select services before next step");
+      return;
+    }
+    if (selectedServices)
+      localStorage.setItem("cart", JSON.stringify(selectedServices));
     console.log(selectedServices);
     console.log("cart ne", localStorage.getItem("cart"));
     navigate("/choose-time");
