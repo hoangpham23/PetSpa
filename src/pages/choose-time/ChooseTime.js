@@ -163,7 +163,8 @@ function ChooseTime2() {
               ))}
             </Stepper>
           </Box>
-        <h1>Complete your appointment</h1>
+          <br/>
+
         <div className={style.boxInfo}>
           {/* <CalendarV2 /> */}
           <DateCalendarValue />

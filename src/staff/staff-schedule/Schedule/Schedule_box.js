@@ -20,8 +20,20 @@ const Schedule_box = ({ Schedule_today, setAppointments }) => {
     navigate(`/staff/viewfeedback/feedback/${appointmentID}`);
   };
 
-  const morningSlots = ["08:00:00", "09:00:00", "10:00:00", "11:00:00", "12:00:00"];
-  const afternoonSlots = ["13:00:00", "14:00:00", "15:00:00", "16:00:00", "17:00:00"];
+  const morningSlots = [
+    "08:00:00",
+    "09:00:00",
+    "10:00:00",
+    "11:00:00",
+    "12:00:00",
+  ];
+  const afternoonSlots = [
+    "13:00:00",
+    "14:00:00",
+    "15:00:00",
+    "16:00:00",
+    "17:00:00",
+  ];
 
   const findScheduleForSlot = (slot) =>
     Schedule_today.find((schedule) => schedule.startTime === slot);
@@ -81,6 +93,16 @@ const Schedule_box = ({ Schedule_today, setAppointments }) => {
     }
   };
 
+  const isToday = (dateString) => {
+    const today = new Date();
+    const date = new Date(dateString);
+    return (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    );
+  };
+
   const renderScheduleItem = (slot) => {
     const schedule = findScheduleForSlot(slot);
     return schedule ? (
@@ -137,10 +159,15 @@ const Schedule_box = ({ Schedule_today, setAppointments }) => {
                     ? "#FFC107"
                     : null,
                 color:
-                  schedule.appointmentStatus === "In Progress" ? "#FFF" : "inherit",
+                  schedule.appointmentStatus === "In Progress"
+                    ? "#FFF"
+                    : "inherit",
                 boxSizing: "content-box",
               }}
-              disabled={schedule.appointmentStatus === "Completed"}
+              disabled={
+                schedule.appointmentStatus === "Completed" ||
+                !isToday(schedule.date) // Kiểm tra nếu không phải ngày hôm nay thì vô hiệu hóa nút
+              }
             >
               {schedule.appointmentStatus}
             </Button>
@@ -178,4 +205,3 @@ const Schedule_box = ({ Schedule_today, setAppointments }) => {
 };
 
 export default Schedule_box;
-

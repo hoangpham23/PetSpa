@@ -44,6 +44,7 @@ function HeaderForCus() {
               ))}
             </div>
           </div>
+          <a href="/choose-pet">MAKE APPOINTMENT</a>
           <a href="/payment-history">HISTORY PAYMENT</a>
           <a href="/sign-in">SIGN OUT</a>
         </nav>

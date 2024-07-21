@@ -37,7 +37,7 @@ function HeaderForGuest() {
               ))}
             </div>
           </div>
-
+          <a href="/sign-in">MAKE APPOINTMENT</a>
           <a href="/sign-in">SIGN IN</a>
         </nav>
         <p>GUEST</p>
