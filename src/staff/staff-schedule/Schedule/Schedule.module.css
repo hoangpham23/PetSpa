@@ -13,10 +13,10 @@
 .schedule_entry_empty{
     position: relative;
     align-items: center;
-    margin: 0 auto; 
+    margin: 0 1.2rem;
     background-color: blue;
     height: 20rem;
-    width: 100%;
+    width: 23rem;
     z-index: -1;
 }
 
@@ -50,14 +50,14 @@
   
   .schedule_table th,
   .schedule_table td {
-    padding: 5px 0px;
+    padding: 8rem 0px;
 
   }
   
   .schedule_item {
     display: flex;
     align-items: center;
-    margin: 0 auto; 
+    margin: 0 1.2rem 2rem 1.2rem;
     background-color: var(--blue-color);
     height: 20rem;
     width: 100%;
@@ -68,7 +68,7 @@
     align-items: center;
     padding: 10px;
     border-radius: 30px;
-    width: 21rem;
+    width: 23rem;
     justify-content: center;
 }
 
@@ -83,7 +83,7 @@
     display: flex;
     flex-direction: column;
     align-items: left;
-    gap: 1.5rem;
+    gap: 1rem;
     position: relative;
 }
 

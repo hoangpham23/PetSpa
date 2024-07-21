@@ -10,16 +10,6 @@ const Timetable = () => {
   const [schedule, setSchedule] = useState([]);
   const [Schedule_today, setSchedule_today] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
-  // const formatDate = useCallback((date) => {
-  //   const year = date.getFullYear();
-  //   const month = String(date.getMonth() + 1).padStart(2, '0'); // Months start at 0
-  //   const day = String(date.getDate()).padStart(2, '0');
-  //   return `${year}-${month}-${day}`; // Format as yyyy-mm-dd
-  // }, []);
-  // useEffect(() => {
-  //   const today = new Date();
-  //   setSelectedDate(formatDate(today)); // Initialize selectedDate as today's date
-  // }, []);
 
   const fetchSchedule = async () => {
     try {

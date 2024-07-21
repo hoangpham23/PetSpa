@@ -4,7 +4,7 @@
 :root {
   --bg-color: #ffffff;
   --text-color: #333;
-  --header-color: #c2e1e6;
+  --header-color: rgba(194, 225, 230, 0.48);
   --footer-color: rgba(255, 46, 255, 0.11);
   --pink-div-color: rgba(251, 226, 228, 1);
   --shadow-color: rgba(0, 0, 0, 0.2);
@@ -21,10 +21,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: .8rem 3rem;
+    padding: .8rem 4.5rem;
     background-color: #fff;
     border-radius: 50%;
-    width: 40px;
+    width: 70px;
     text-align: center;
     font-size: 1.5rem;
 }
@@ -37,7 +37,7 @@
 }
 
 .day.active {
-    background-color: rgba(194, 225, 230, 0.48);
+    background-color: var(--header-color);
     color: rgb(4, 49, 250);
     transition: background-color 0.2s ease, color 0.2s ease; 
 }
