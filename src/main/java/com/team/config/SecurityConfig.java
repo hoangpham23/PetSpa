@@ -53,8 +53,10 @@ public class SecurityConfig {
                         request
                                 .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                                 .requestMatchers(CUSTOMER_ENDPOINTS).hasRole("CUS")
+                                .requestMatchers("/manage-appointment").hasAnyRole("EM", "AD")
                                 .requestMatchers(EMPLOYEE_ENDPOINTS).hasRole("EM")
                                 .requestMatchers(ADMIN_ENDPOINTS).hasRole("AD")
+
                                 .anyRequest().authenticated()
 //                                .anyRequest().permitAll()
                 )
