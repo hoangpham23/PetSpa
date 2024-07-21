@@ -2,10 +2,7 @@ package com.team.service;
 
 import com.team.dto.*;
 import com.team.model.*;
-import com.team.repository.AccountRepository;
-import com.team.repository.AppointmentRepository;
-import com.team.repository.EmployeeRepository;
-import com.team.repository.EmployeeScheduleRepository;
+import com.team.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +22,9 @@ public class EmployeeService {
     private final AccountService accountService;
     private final EmployeeScheduleRepository employeeScheduleRepository;
     private final AppointmentRepository appointmentRepository;
+    private static final String CIN_PATTERN = "\\d{2}-\\d{2}-\\d{2}-\\d{4}";
+    private static final String PHONE_PATTERN = "\\d{3}-\\d{3}-\\d{4}";
+
 
     public EmployeeService(EmployeeRepository employeeRepository, AccountRepository accountRepository, AccountService accountService, EmployeeScheduleRepository employeeScheduleRepository, AppointmentRepository appointmentRepository) {
         this.employeeRepository = employeeRepository;
@@ -77,15 +77,15 @@ public class EmployeeService {
         Map<String, String> error = new HashMap<>();
         boolean alreadyExists = false;
 
-        if (employeeRepository.existsByEmail(email)){
+        if (accountRepository.existsAccountByEmail(email)) {
             error.put("errorEmail", "Email Already Exists");
             alreadyExists = true;
         }
-        if (employeeRepository.existsByPhoneNumber(phoneNumber)){
+        if (employeeRepository.existsByPhoneNumber(phoneNumber)) {
             error.put("errorPhoneNumber", "Phone Number Already Exists");
             alreadyExists = true;
         }
-        if (employeeRepository.existsByEmployeeCIN(employeeCIN)){
+        if (employeeRepository.existsByEmployeeCIN(employeeCIN)) {
             error.put("errorEmployeeCIN", "Employee CIN Already Exists");
             alreadyExists = true;
         }
@@ -197,21 +197,23 @@ public class EmployeeService {
             return errors;
         }
 
-        if (employeeDTO.getPhoneNumber() != null && !employeeDTO.getPhoneNumber().equals(employee.getPhoneNumber())) {
-            String phoneNumber = formatPhoneNumber(employeeDTO.getPhoneNumber());
+
+        String phoneNumber = formatPhoneNumber(employeeDTO.getPhoneNumber());
+        if (!phoneNumber.equals(employee.getPhoneNumber())) {
             if (employeeRepository.existsByPhoneNumberAndIdNot(phoneNumber, employeeDTO.getEmployeeID())) {
                 errors.put("phoneNumber", "Phone number already exists");
             }
         }
 
         if (employeeDTO.getEmail() != null && !employeeDTO.getEmail().equals(employee.getEmail())) {
-            if (employeeRepository.existsByEmailAndIdNot(employee.getEmail(), employeeDTO.getEmployeeID())) {
+            if (employeeRepository.existsByEmailAndIdNot(employee.getEmail(), employeeDTO.getEmployeeID())
+                    || accountRepository.existsAccountByEmail(employeeDTO.getEmail())) {
                 errors.put("email", "Email already exists");
             }
         }
 
-        if (employeeDTO.getEmployeeCIN() != null && !employeeDTO.getEmployeeCIN().equals(employee.getEmployeeCIN())) {
-            String employeeCIN = formatCIN(employeeDTO.getEmployeeCIN());
+        String employeeCIN = formatCIN(employeeDTO.getEmployeeCIN());
+        if (!employeeDTO.getEmployeeCIN().equals(employee.getEmployeeCIN())) {
             if (employeeRepository.existsByEmployeeCINAndIdNot(employeeCIN, employeeDTO.getEmployeeID())) {
                 errors.put("employeeCIN", "EmployeeCIN already exists");
             }
@@ -227,10 +229,10 @@ public class EmployeeService {
             employee.setEmployeeName(employeeDTO.getEmployeeName());
         }
         if (employeeDTO.getPhoneNumber() != null) {
-            employee.setPhoneNumber(employeeDTO.getPhoneNumber());
+            employee.setPhoneNumber(phoneNumber);
         }
-        if (employeeDTO.getEmployeeCIN() != null){
-            employee.setEmployeeCIN(employeeDTO.getEmployeeCIN());
+        if (employeeDTO.getEmployeeCIN() != null) {
+            employee.setEmployeeCIN(employeeCIN);
         }
         if (employeeDTO.getEmail() != null) {
             employee.setEmail(employeeDTO.getEmail());
@@ -238,7 +240,7 @@ public class EmployeeService {
         if (employeeDTO.getPassword() != null) {
             accounts.setPassword(employeeDTO.getPassword());
         }
-        if (employeeDTO.getStatus() != null){
+        if (employeeDTO.getStatus() != null) {
             employee.setStatus(employeeDTO.getStatus());
         }
 
@@ -248,17 +250,31 @@ public class EmployeeService {
         return errors; // Will be empty if update was successful
     }
 
+    // if already format then don't need to format
     private String formatPhoneNumber(String phoneNumber) {
-        StringBuilder formattedPhoneNumber = new StringBuilder(phoneNumber);
+        phoneNumber = phoneNumber.trim();
+        if (phoneNumber.matches(PHONE_PATTERN)) {
+            return phoneNumber;
+        }
+        String digits = phoneNumber.replaceAll("\\D", "");
+
+        StringBuilder formattedPhoneNumber = new StringBuilder(digits);
         formattedPhoneNumber.insert(3, "-").insert(7, "-");
         return formattedPhoneNumber.toString();
     }
 
-    private String formatCIN(String cin){
-        StringBuilder formattedCIN = new StringBuilder(cin);
+    private String formatCIN(String cin) {
+        cin = cin.trim();
+        if (cin.matches(CIN_PATTERN)) {
+            return cin;
+        }
+
+        // remove non-digit characters
+        String digits = cin.replaceAll("\\D", "");
+
+        StringBuilder formattedCIN = new StringBuilder(digits);
         formattedCIN.insert(2, "-").insert(6, "-").insert(10, "-");
         return formattedCIN.toString();
-
     }
 
 }

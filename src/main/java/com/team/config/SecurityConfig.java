@@ -56,7 +56,6 @@ public class SecurityConfig {
                                 .requestMatchers(EMPLOYEE_ENDPOINTS).hasRole("EM")
                                 .requestMatchers(ADMIN_ENDPOINTS).hasRole("AD")
                                 .anyRequest().authenticated()
-//                                .anyRequest().permitAll()
                 )
                 .oauth2Login(oauth2 ->
                         oauth2.loginPage("http://localhost:3000/sign-in")
