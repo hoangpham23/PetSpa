@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import Timeline from "@mui/lab/Timeline";
 import TimelineItem from "@mui/lab/TimelineItem";
@@ -13,27 +13,15 @@ import style from "./Schedule.module.css";
 import { Button, Box } from "@mui/material";
 import axios from "axios";
 
-const Schedule_box = ({ Schedule_today, setAppointments }) => {
+const Schedule_box = ({ Schedule_today, setAppointments, selectedDate }) => {
   const navigate = useNavigate();
 
   const handleFeedbackClick = (appointmentID) => {
     navigate(`/staff/viewfeedback/feedback/${appointmentID}`);
   };
 
-  const morningSlots = [
-    "08:00:00",
-    "09:00:00",
-    "10:00:00",
-    "11:00:00",
-    "12:00:00",
-  ];
-  const afternoonSlots = [
-    "13:00:00",
-    "14:00:00",
-    "15:00:00",
-    "16:00:00",
-    "17:00:00",
-  ];
+  const morningSlots = ["08:00:00", "09:00:00", "10:00:00", "11:00:00", "12:00:00"];
+  const afternoonSlots = ["13:00:00", "14:00:00", "15:00:00", "16:00:00", "17:00:00"];
 
   const findScheduleForSlot = (slot) =>
     Schedule_today.find((schedule) => schedule.startTime === slot);
@@ -93,18 +81,14 @@ const Schedule_box = ({ Schedule_today, setAppointments }) => {
     }
   };
 
-  const isToday = (dateString) => {
-    const today = new Date();
-    const date = new Date(dateString);
-    return (
-      date.getDate() === today.getDate() &&
-      date.getMonth() === today.getMonth() &&
-      date.getFullYear() === today.getFullYear()
-    );
-  };
-
   const renderScheduleItem = (slot) => {
     const schedule = findScheduleForSlot(slot);
+
+    // Compare selectedDate with today's date
+    const today = new Date();
+    const isToday =
+      selectedDate === `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
     return schedule ? (
       <div key={slot} className={style.schedule_item}>
         <div className={style.time}>
@@ -159,15 +143,10 @@ const Schedule_box = ({ Schedule_today, setAppointments }) => {
                     ? "#FFC107"
                     : null,
                 color:
-                  schedule.appointmentStatus === "In Progress"
-                    ? "#FFF"
-                    : "inherit",
+                  schedule.appointmentStatus === "In Progress" ? "#FFF" : "inherit",
                 boxSizing: "content-box",
               }}
-              disabled={
-                schedule.appointmentStatus === "Completed" ||
-                !isToday(schedule.date) // Kiểm tra nếu không phải ngày hôm nay thì vô hiệu hóa nút
-              }
+              disabled={schedule.appointmentStatus === "Completed" || !isToday}
             >
               {schedule.appointmentStatus}
             </Button>
