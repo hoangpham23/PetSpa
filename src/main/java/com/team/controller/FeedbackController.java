@@ -24,7 +24,7 @@ public class FeedbackController {
     }
 
     @GetMapping("/check")
-    public ResponseEntity<Boolean> checkFeedback(@RequestParam Integer customerID) {
+    public ResponseEntity<Boolean> checkFeedback(@RequestParam(value = "customerID", required = false)Integer customerID) {
         Customers customer = customerService.getCustomerById(customerID);
         Optional<Feedback> feedback = feedbackService.getFeedbackByCustomerAndStatus(customer, "Have not feedback");
         return ResponseEntity.ok(feedback.isPresent());
