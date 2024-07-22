@@ -36,6 +36,12 @@ export default function EditInfo({
     phoneNumber: cusInfo.phoneNumber,
     role: cusInfo.role,
   });
+  const [errors, setErrors] = React.useState({
+    email: "",
+    phoneNumber: "",
+    customerName: "",
+  });
+
   React.useEffect(() => {
     setNewInfo({
       customerID: cusInfo.customerID,
@@ -54,8 +60,32 @@ export default function EditInfo({
   console.log(newInfo, "ne");
   console.log(cusInfo);
   async function onSave() {
+    let valid = true;
+    let errors = {};
+
+    if (!newInfo.email) {
+      errors.email = "Email cannot be empty";
+      valid = false;
+    }
+
+    if (!newInfo.phoneNumber) {
+      errors.phoneNumber = "Phone Number cannot be empty";
+      valid = false;
+    }
+
+    if (!newInfo.customerName) {
+      errors.customerName = "Name cannot be empty";
+      valid = false;
+    }
+
+    if (!valid) {
+      setErrors(errors);
+      return;
+    }
+
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
+      console.log(newInfo);
       const response = await axios.put(
         "http://localhost:8090/edit-account",
         {
@@ -89,6 +119,16 @@ export default function EditInfo({
       console.log(response.status);
     } catch (error) {
       console.log(error);
+      let errorMessages = {};
+      if (error.response.status === 409) {
+        if (error.response.data.includes("Email")) {
+          errorMessages.email = "This email is already exist";
+        }
+        if (error.response.data.includes("Phone")) {
+          errorMessages.phoneNumber = "This phone number is already exist";
+        }
+      }
+      setErrors(errorMessages);
     }
   }
   function handleInput(event) {
@@ -127,6 +167,7 @@ export default function EditInfo({
                     InputProps={{
                       style: { fontSize: "1.6rem" },
                     }}
+                    helperText={errors.email}
                   />
                 </Box>
               </Grid>
@@ -154,6 +195,7 @@ export default function EditInfo({
                     InputProps={{
                       style: { fontSize: "1.6rem" },
                     }}
+                    helperText={errors.phoneNumber}
                   />
                 </Box>
               </Grid>
