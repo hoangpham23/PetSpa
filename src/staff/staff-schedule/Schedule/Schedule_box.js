@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Timeline from "@mui/lab/Timeline";
 import TimelineItem from "@mui/lab/TimelineItem";
@@ -15,6 +15,27 @@ import axios from "axios";
 
 const Schedule_box = ({ Schedule_today, setAppointments, selectedDate }) => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Hàm này sẽ được gọi khi tab của người dùng trở nên hiển thị (visible) trở lại
+    const handleVisibilityChange = () => {
+      // Kiểm tra nếu tab hiện tại đang hiển thị
+      if (document.visibilityState === "visible") {
+        // Tải lại trang khi tab trở nên hiển thị
+        window.location.reload();
+      }
+    };
+
+    // Thêm một sự kiện để lắng nghe khi tab của người dùng thay đổi trạng thái hiển thị
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    
+    // Hàm này sẽ được gọi khi component bị gỡ bỏ khỏi DOM hoặc khi useEffect được chạy lại
+    // Nó sẽ xóa bỏ sự kiện lắng nghe, giúp tránh rò rỉ bộ nhớ
+    return () => {
+      // Xóa bỏ sự kiện lắng nghe khi component không còn cần thiết
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
 
   const handleFeedbackClick = (appointmentID) => {
     navigate(`/staff/viewfeedback/feedback/${appointmentID}`);
@@ -48,7 +69,7 @@ const Schedule_box = ({ Schedule_today, setAppointments, selectedDate }) => {
     }
 
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.put(
         "http://localhost:8090/manage-appointment",
         {
