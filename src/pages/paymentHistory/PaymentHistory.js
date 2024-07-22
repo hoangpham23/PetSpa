@@ -34,7 +34,7 @@ function PaymentHistory() {
       const token = sessionStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:8090/payment-history",
-        { customerID: sessionStorage.getItem("accountID") },
+        { customerID: sessionStorage.getItem("customerID") },
         {
           headers: {
             Authorization: `Bearer ${token}`,

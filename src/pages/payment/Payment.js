@@ -65,7 +65,7 @@ function Payment() {
       const response = await axios.post(
         "http://localhost:8090/payment",
         {
-          customerID: sessionStorage.getItem("accountID"),
+          customerID: sessionStorage.getItem("customerID"),
           serviceIds: JSON.parse(sessionStorage.getItem("serviceIds")),
           appointmentTimes: JSON.parse(
             sessionStorage.getItem("appointmentTimes")
