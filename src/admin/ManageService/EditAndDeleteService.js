@@ -146,7 +146,7 @@ export default function EditAndDeleteService({
     formData.append("image", serviceInfo.imageFile);
     formData.append("status", serviceInfo.status);
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       console.log(formData.get("serviceName"), "name");
       console.log(formData.get("image"), "img");
       console.log(formData.get("status"), "status");

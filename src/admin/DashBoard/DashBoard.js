@@ -12,17 +12,17 @@ import LineChartMonthly from "./LineChart/LineChartMonthly";
 import UserAuth from "../../hooks/UserAuth";
 import { Helmet } from "react-helmet";
 
-function getOffsetFromLocalStorage() {
-  // Lấy giá trị offset từ localStorage
-  const offset = localStorage.getItem("offset");
-  // Nếu không có giá trị trong localStorage, mặc định là 0
+function getOffsetFromsessionStorage() {
+  // Lấy giá trị offset từ sessionStorage
+  const offset = sessionStorage.getItem("offset");
+  // Nếu không có giá trị trong sessionStorage, mặc định là 0
   return offset ? parseInt(offset, 10) : 0;
 }
 
 function DashBoard() {
   //  Prepare data to send
   UserAuth(["AD"]);
-  const offset = getOffsetFromLocalStorage();
+  const offset = getOffsetFromsessionStorage();
   // khi nhấn vào mũi tên thì nó sẽ cập nhật offset
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -34,7 +34,7 @@ function DashBoard() {
     console.log(report);
   }, [offset, startDate, endDate, report]);
   useEffect(() => {
-    localStorage.setItem("offset", 0);
+    sessionStorage.setItem("offset", 0);
   }, []);
   useEffect(() => {
     async function init() {
@@ -68,7 +68,7 @@ function DashBoard() {
   }
 
   async function handleClick(action) {
-    let offset = parseInt(localStorage.getItem("offset"), 10) || 0;
+    let offset = parseInt(sessionStorage.getItem("offset"), 10) || 0;
     if (action === "Previous") {
       offset += 1;
     } else if (action === "Next") {
@@ -77,7 +77,7 @@ function DashBoard() {
       }
       offset -= 1;
     }
-    localStorage.setItem("offset", offset.toString());
+    sessionStorage.setItem("offset", offset.toString());
 
     const { startOfWeek, endOfWeek } = await getStartAndEndOfWeek(offset);
     setStartDate(startOfWeek);
@@ -86,7 +86,7 @@ function DashBoard() {
   }
   async function getData(startOfWeek, endOfWeek) {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.get(
         `http://localhost:8090/weekly-revenue?startDate=${startOfWeek}&endDate=${endOfWeek}`,
         {

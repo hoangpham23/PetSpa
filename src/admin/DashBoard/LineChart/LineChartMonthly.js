@@ -35,7 +35,7 @@ export default function LineChartMonthly() {
 
   async function getData(startDate, endDate) {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.get(
         `http://localhost:8090/weekly-revenue?startDate=${startDate}&endDate=${endDate}`,
         {

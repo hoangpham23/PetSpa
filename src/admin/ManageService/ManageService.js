@@ -36,7 +36,7 @@ function ManageService() {
   const handleCloseCreate = () => setCreate(false);
   async function getData() {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.get(" http://localhost:8090/add-service", {
         headers: {
           "Content-Type": "application/json",

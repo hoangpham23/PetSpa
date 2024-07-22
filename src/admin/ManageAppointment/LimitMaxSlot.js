@@ -25,10 +25,10 @@ export default function LimitMaxSlot({ handleClose, open }) {
   async function getData() {
     setMaxSlot(0);
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.get(
         "http://localhost:8090/admin/getMaxBooking",
-       
+
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -37,9 +37,8 @@ export default function LimitMaxSlot({ handleClose, open }) {
       );
       console.log(response.status);
       if (response.status === 200) {
-        console.log(response.data.maxBooking); 
+        console.log(response.data.maxBooking);
         setMaxSlot(JSON.stringify(response.data.maxBooking));
-        
       }
     } catch (error) {
       console.log(error);
@@ -53,7 +52,7 @@ export default function LimitMaxSlot({ handleClose, open }) {
     getData();
   }, []);
   React.useEffect(() => {
-    if(open){
+    if (open) {
       getData();
     }
   }, []);
@@ -69,9 +68,10 @@ export default function LimitMaxSlot({ handleClose, open }) {
       return;
     }
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.put(
-        "http://localhost:8090/admin/updateMaxBooking", { maxBooking: maxSlot },
+        "http://localhost:8090/admin/updateMaxBooking",
+        { maxBooking: maxSlot },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -79,7 +79,7 @@ export default function LimitMaxSlot({ handleClose, open }) {
         }
       );
       if (response.status === 200) {
-        alert("Successfully update")
+        alert("Successfully update");
       }
     } catch (error) {
       console.log(error);
@@ -102,9 +102,9 @@ export default function LimitMaxSlot({ handleClose, open }) {
             MAX APPOINTMENT IN A SLOT
           </Typography>
           <TextField
-           required
-           id="filled-required"
-           label="Required"
+            required
+            id="filled-required"
+            label="Required"
             value={maxSlot}
             helperText={error}
             sx={{ marginTop: "3rem", width: "100%" }}

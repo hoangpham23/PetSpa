@@ -29,7 +29,7 @@ function ManageStaffAccount() {
   }, [search]);
   async function getData(search) {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.get(
         `http://localhost:8090/admin/employees?search=${search}`,
         {
@@ -65,7 +65,7 @@ function ManageStaffAccount() {
   }));
   async function deleteEmployee(id) {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       console.log(id);
       const response = await axios.delete(
         `http://localhost:8090/admin/employees/${id}`,

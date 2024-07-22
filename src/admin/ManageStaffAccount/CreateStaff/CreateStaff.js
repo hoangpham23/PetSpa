@@ -78,7 +78,7 @@ function CreateStaff({ open, onClose, getData }) {
       if (newEmployee.phoneNumber === "") {
         newErrors.phoneNumberError = "Phone Number is required";
       }
-      if(newEmployee.employeeCIN === ""){
+      if (newEmployee.employeeCIN === "") {
         newErrors.employeeCINError = "Employee CIN is required";
       }
       if (!validateEmployeeCIN(newEmployee.employeeCIN)) {
@@ -99,7 +99,7 @@ function CreateStaff({ open, onClose, getData }) {
         return;
       }
 
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:8090/admin/create-employee",
         newEmployee,

@@ -18,7 +18,7 @@ function SearchBar({ data, setData, getData }) {
         return;
       }
       try {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         const response = await axios.get(
           `http://localhost:8090/add-service/search?serviceName=${inputValue}`,
           {
