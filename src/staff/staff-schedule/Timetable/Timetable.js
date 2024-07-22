@@ -13,9 +13,9 @@ const Timetable = () => {
 
   const fetchSchedule = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:8090/employee/schedule?employeeID=${localStorage.getItem("employeeID")}&date=${selectedDate}`,
+        `http://localhost:8090/employee/schedule?employeeID=${sessionStorage.getItem("employeeID")}&date=${selectedDate}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
