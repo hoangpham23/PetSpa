@@ -1,0 +1,320 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  border: none;
+  outline: none;
+  scroll-behavior: smooth;
+  font-family: "Poppins", sans-serif;
+}
+
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333;
+  --header-color: #c2e1e6;
+  --footer-color: rgba(255, 46, 255, 0.11);
+  --pink-div-color: rgba(251, 226, 228, 1);
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --icon-color: #c2bcbc;
+}
+
+html {
+  font-size: 62.5%;
+  color: var(--text-color);
+}
+
+/* body {
+    background: var(--bg-color);
+    color: var(--text-color);
+} */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: transparent;
+  align-items: center;
+  z-index: 100;
+  transition: 0.5s;
+  justify-content: space-between;
+  padding-bottom: 0.7rem;
+}
+
+.header.sticky {
+  background: var(--bg-color);
+  box-shadow: 0 0.1rem 1rem var(--shadow-color);
+}
+
+.header .navbar-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2.5rem 0rem 1.4rem;
+}
+
+.header .navbar-header .navbar {
+  display: flex;
+  align-items: center;
+}
+
+.header .navbar-header .navbar a {
+  font-size: 2rem;
+  color: var(--text-color);
+  font-weight: 500;
+  padding-right: 1.5rem;
+}
+
+.header .navbar a:hover {
+  text-decoration: none;
+}
+
+.header.sticky .navbar a {
+  color: var(--text-color);
+}
+
+.header.sticky .navbar a.active {
+  color: var(--main-color);
+}
+
+.header .navbar-header p {
+  margin-top: 0.6rem;
+  font-size: 2rem;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  padding: 14px 10px;
+  text-decoration: none;
+  color: black;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--bg-color);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  border-radius: 10px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+  border-radius: 10px;
+}
+
+.dropdown-content a:hover {
+  background-color: var(--header-color);
+}
+
+.tittle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tittle .tittle-name h1 {
+  font-size: 4rem;
+  margin: 15rem 10rem;
+}
+
+.tittle-decoration {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10rem;
+}
+
+.blue-background-rectangle {
+  width: 65rem;
+  height: 44rem;
+  background: #c2e1e6;
+  transform-origin: 0 0;
+  z-index: -1;
+  display: flex;
+  margin-bottom: 18rem;
+  margin-right: 45rem;
+  background: linear-gradient(115deg, transparent 50%, var(--header-color) 50%);
+}
+
+.pink-background-rectangle {
+  display: flex;
+  width: 26rem;
+  height: 24.8rem;
+  background: #fbe2e4;
+  border-top-left-radius: 120px;
+  z-index: 0;
+  margin-right: 32rem;
+}
+
+.blue-background-rectangle,
+.pink-background-rectangle {
+  position: absolute;
+}
+
+.introduce {
+  display: flex;
+  justify-content: space-around;
+  margin-top: -5rem;
+  text-align: center;
+  /* background-color: rgb(247, 245, 247); */
+  background-color: #f8f8f8;
+  z-index: -1;
+  padding: 5rem 0;
+}
+
+.introduce-img {
+  flex: 3;
+}
+.introduce-content {
+  flex: 5;
+}
+
+.introduce .introduce-img .img-container {
+  position: absolute;
+  width: 27rem;
+  height: 25rem;
+  background-color: var(--pink-div-color);
+  z-index: 10;
+  border-radius: 20px;
+  transition: 0.5s ease;
+  margin-left: 14rem;
+}
+
+.introduce .introduce-img .img-container img {
+  width: 23rem;
+  border-radius: 20px;
+  margin-top: 1rem;
+}
+
+.introduce .introduce-content {
+  text-align: right;
+  z-index: 10;
+}
+
+.introduce .introduce-content .content-container {
+  position: absolute;
+  width: 52%;
+  height: 15rem;
+  background-color: var(--header-color);
+  z-index: -1;
+  border-radius: 20px;
+  transition: 0.5s ease;
+  margin: 6rem 8rem 0 8rem;
+}
+
+.introduce .introduce-content p {
+  text-align: center;
+  margin: 9rem;
+  z-index: 999;
+  font-size: 2rem;
+}
+.service {
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(247, 245, 247);
+  z-index: -1;
+  margin-top: -5rem;
+  padding-bottom: 5rem;
+}
+
+.service .service-display {
+  display: flex;
+  margin: 0 14rem;
+  margin-top: 20rem;
+  align-items: center;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1.4rem;
+  background: var(--header-color);
+  border-radius: 60px;
+  box-shadow: 0 0.2rem 0.5rem var(--shadow-color);
+  font-size: 2rem;
+  color: var(--text-color);
+  letter-spacing: 0.1rem;
+  font-weight: 600;
+  border: 0.2rem solid transparent;
+  transition: 0.5s ease;
+}
+
+.btn:hover {
+  background: transparent;
+  color: #0b5864;
+  border-color: #0b5864;
+}
+
+.service_display {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  z-index: 1;
+  margin-top: 5rem;
+  margin: 2rem 4rem;
+}
+
+.service_display .service_container {
+  position: block;
+  margin: 4rem 8rem;
+  background-color: var(--header-color);
+  z-index: 1;
+  border-radius: 20px;
+  transition: 0.5s ease;
+  flex: 1;
+}
+.service_display .service_container .service_img {
+  margin-top: 1rem;
+}
+
+.service_display .service_container .service_img img {
+  position: relative;
+  width: 19rem;
+  height: 19rem;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.service_name {
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  margin: 2rem 0;
+  font-size: 2rem;
+}
+
+.footer {
+  margin: 10rem 0 0 0;
+  display: flex;
+  justify-content: space-around;
+  background-color: var(--footer-color);
+  height: 15rem;
+}
+
+.footer h1 {
+  padding-top: 5rem;
+  font-weight: 800;
+  font-size: 4rem;
+  cursor: default;
+}
+
+.footer .footer-content {
+  font-size: 2rem;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* Slider.css */

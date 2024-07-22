@@ -1,0 +1,11 @@
+.boxInfo .item .customtextField {
+  min-width: 30rem;
+  padding: "2rem 0rem";
+}
+.boxInfo .item .description {
+  display: flex;
+  align-items: center;
+}
+.boxInfo .item {
+  margin-top: 3rem;
+}

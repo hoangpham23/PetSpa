@@ -1,0 +1,254 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  border: none;
+  outline: none;
+  scroll-behavior: smooth;
+  font-family: "Poppins", sans-serif;
+}
+
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333;
+  --btn-color: #c2e1e6;
+  --purple-div-color: #ebe0eb;
+  --footer-color: rgba(255, 46, 255, 0.11);
+  --pink-div-color: rgba(251, 226, 228, 1);
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --icon-color: #c2bcbc;
+}
+
+html {
+  font-size: 62.5%;
+  color: var(--text-color);
+} */
+
+.msg{
+  font-size: 1.6rem;
+  color: red;
+  padding: 0.6rem 0;
+}
+
+.wrapperSignup {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 100%;
+}
+.mainContent {
+  flex: 1;
+}
+
+.signIn_page {
+  display: flex;
+  min-height: 100vh;
+  padding-top: 4rem;
+  justify-content: space-around;
+}
+
+.signIn_container .signIn {
+  /* position: relative; */
+  background-color: var(--purple-div-color);
+  z-index: -1;
+  border-radius: 10px;
+  transition: 0.5s ease;
+  opacity: 90%;
+  padding-bottom: 2rem;
+}
+
+.signIn_img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-left: 8rem;
+}
+
+.signIn_img img {
+  max-width: 40rem;
+  height: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.signIn_img::before {
+  content: "";
+  position: absolute;
+  top: -5rem;
+  left: -10px;
+  right: -10px;
+  bottom: -5rem;
+  background: url("../../assets/img/SignInPage2.jpg");
+  filter: blur(15px);
+  z-index: -1;
+  border-radius: 8px;
+  clip-path: inset(10px);
+  opacity: 80%;
+  min-height: 130dvh;
+}
+ 
+.signIn_page .signIn_container {
+  padding-right: 6rem;
+}
+
+.signIn {
+  text-align: center;
+}
+
+.signIn_container .signIn h3 {
+  font-size: 4rem;
+  padding: 1rem 16rem;
+}
+
+.signIn_container .signIn .signIn_form .input_box {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background-color: rgba(235, 224, 235, 0.1);
+  margin-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 0.3rem;
+  z-index: 20;
+}
+
+.signIn_container .signIn .signIn_form .input_box p {
+  font-size: 2rem;
+  padding: 1.2rem 0 0 0;
+}
+
+.signIn_container .signIn .signIn_form .input_box input {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.7rem;
+  color: var(--text-color);
+  background: var(--bg-color);
+  border-radius: 8px;
+  margin: 0.7rem 0;
+  box-shadow: 0 0.1rem 0.5rem var(--shadow-color);
+  z-index: 20;
+}
+
+.signIn_container .signIn .signIn_form form .input_box input {
+  width: 59%;
+}
+
+.signIn_container .signIn .signIn_form .signIn_box {
+  margin-top: 1rem;
+}
+
+.forget_password {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.forget_password:hover {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.signIn_page .signIn_container .signIn .signIn_form a {
+  font-size: 2rem;
+}
+
+.signIn_btn {
+  display: inline-block;
+  padding: 0.5rem 1.4rem;
+  background: var(--btn-color);
+  border-radius: 10px;
+  box-shadow: 0 0.2rem 0.5rem var(--shadow-color);
+  font-size: 2rem;
+  color: var(--text-color);
+  letter-spacing: 0.1rem;
+  font-weight: 600;
+  border: 0.2rem solid transparent;
+  transition: 0.5s ease;
+  margin-top: 1.5rem;
+  width: 40rem;
+}
+
+.signUp_btn {
+  display: inline-block;
+  padding: 0.5rem 1.4rem;
+  background: var(--btn-color);
+  border-radius: 60px;
+  box-shadow: 0 0.2rem 0.5rem var(--shadow-color);
+  font-size: 2rem;
+  color: var(--text-color);
+  letter-spacing: 0.1rem;
+  font-weight: 600;
+  border: 0.2rem solid transparent;
+  transition: 0.5s ease;
+  margin-top: 1.5rem;
+}
+
+.signIn_btn:hover,
+.signUp_btn:hover {
+  background: transparent;
+  color: #0b5864;
+  border-color: #0b5864;
+}
+
+.signIn_Google {
+  margin: 1rem 0;
+}
+
+.signIn_Google_container {
+  background: var(--bg-color);
+  opacity: 0.9;
+  border-radius: 10px;
+  margin: 1rem 2.4rem;
+  display: flex;
+}
+
+.signIn_Google_container a{
+  padding-top: 1.5rem;
+}
+
+.signIn_google {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.signIn_google:hover {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.signIn_container .register {
+  /* position: relative; */
+  transition: 0.5s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(251, 226, 228, 0.9);
+  z-index: -1;
+  border-radius: 10px;
+  transition: 0.5s ease;
+  margin-top: 3rem;
+}
+
+/* .signIn_container .register .pink_background_rectangle {
+  position: absolute;
+  width: 45rem;
+  height: 10rem;
+  background-color: rgba(251, 226, 228, 0.9);
+  z-index: -1;
+  border-radius: 10px;
+  transition: 0.5s ease;
+} */
+
+
+
+.signIn_container .register .register_content {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.signIn_container .register .register_content .signUp_btn {
+  margin: 1rem 8.5rem;
+} 
