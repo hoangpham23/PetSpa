@@ -46,7 +46,6 @@ function HomePage() {
       const response = await axios.get("http://localhost:8090/home-page", {
         withCredentials: true,
       });
-
       // const accountData = sessionStorage.getItem("account");
       const accountData = sessionStorage.getItem("account");
       console.log(accountData, "data");
@@ -54,7 +53,7 @@ function HomePage() {
         account = JSON.parse(accountData);
       } else {
         // Xử lý trường hợp Local Storage không có dữ liệu "account"
-        console.error("No account data found in Local Storage");
+        console.error("No account data found in session Storage");
         account = {}; // hoặc giá trị mặc định khác phù hợp với ứng dụng của bạn
         const combinedData = Cookies.get("customerData");
         if (combinedData) {
@@ -64,9 +63,11 @@ function HomePage() {
           const account = JSON.parse(decodedData);
           account.customerName = decodeString(accountData.customerName);
           account.numberOfPets = parseInt(accountData.numberOfPets);
+          account.customerID = decodeString(accountData.customerID);
           sessionStorage.setItem("account", JSON.stringify(account));
           sessionStorage.setItem("token", account.token);
           sessionStorage.setItem("role", account.role);
+          sessionStorage.setItem("customerID", account.customerID);
         }
       }
       console.log(account.role);

@@ -69,6 +69,8 @@ function SignIn() {
         const account = JSON.parse(accountData);
         console.log(account);
         sessionStorage.setItem("account", account);
+
+        sessionStorage.setItem("customerID", account.customerID);
       } catch (error) {
         console.error("Failed to parse cookie data:", error);
       }
