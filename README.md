@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 # Pet Spa Management 🐕🐕🐶🐶
 
