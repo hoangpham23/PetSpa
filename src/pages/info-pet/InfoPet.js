@@ -15,7 +15,7 @@ function InfoPet() {
   const [newNumofPets, setNewNumberOfPets] = useState("");
   // make sure that having customerID
   useEffect(() => {
-    const customer = JSON.parse(sessionStorage.getItem("accountSession"));
+    const customer = JSON.parse(sessionStorage.getItem("account"));
     if (customer) {
       setCustomerID(customer.customerID);
       setPetInfo({

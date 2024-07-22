@@ -42,7 +42,7 @@ function ChoosePet() {
     const response = await axios.post(
       "http://localhost:8090/choose-pet",
       {
-        customerID: sessionStorage.getItem("accountID"),
+        customerID: sessionStorage.getItem("customerID"),
       },
       {
         headers: {
