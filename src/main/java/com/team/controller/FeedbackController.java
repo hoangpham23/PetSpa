@@ -9,6 +9,7 @@ import com.team.service.FeedbackService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,12 +26,18 @@ public class FeedbackController {
 
     @GetMapping("/check")
     public ResponseEntity<Boolean> checkFeedback(@RequestParam(value = "customerID", required = false)Integer customerID) {
+        if (customerID == null) {
+            return ResponseEntity.ok(false);
+        }
         Customers customer = customerService.getCustomerById(customerID);
         Optional<Feedback> feedback = feedbackService.getFeedbackByCustomerAndStatus(customer, "Have not feedback");
         return ResponseEntity.ok(feedback.isPresent());
     }
     @GetMapping("/choose-feedback")
-    public ResponseEntity<List<CustomerFeedbackDTO>> getCustomerFeedbacks(@RequestParam Integer customerID) {
+    public ResponseEntity<List<CustomerFeedbackDTO>> getCustomerFeedbacks(@RequestParam (value = "customerID", required = false) Integer customerID) {
+        if (customerID == null) {
+            return ResponseEntity.ok().body(Collections.emptyList());
+        }
         Customers customer = customerService.getCustomerById(customerID);
         List<CustomerFeedbackDTO> feedbacks = feedbackService.getFeedbacksByCustomerAndStatus(customer, "Have not feedback");
         return ResponseEntity.ok(feedbacks);

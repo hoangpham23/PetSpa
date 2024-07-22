@@ -47,7 +47,6 @@ public class PaypalService {
         amount.setTotal(String.format(Locale.forLanguageTag("USD"), "%.2f", total)); // 9.99$ - 9,99€
 
         Transaction transaction = new Transaction();
-//        transaction.setDescription(description);
         transaction.setAmount(amount);
 
         List<Transaction> transactions = new ArrayList<>();
@@ -57,12 +56,6 @@ public class PaypalService {
         payer.setPaymentMethod("Paypal");
 
         Payment payment = new Payment();
-//        String customUrl = "?customerID=" + customerID + "&amount=" + total;
-//        if (listAppointments != null) {
-//            for (Appointments appointmentID : listAppointments) {
-//                customUrl += "&appointmentID=" + appointmentID.getAppointmentID();
-//            }
-//        }
 
         StringBuilder customUrl = new StringBuilder("?customerID=" + customerID + "&amount=" + total);
         if (listAppointments != null) {
