@@ -45,6 +45,18 @@ function ChooseTime2() {
     console.log();
   }, []);
   useEffect(() => {
+    // Check if the page has been reloaded before
+    const isPageReloaded = sessionStorage.getItem("isPageReloaded");
+    console.log(isPageReloaded);
+    if (!isPageReloaded) {
+      // If not, set the flag and reload the page
+      sessionStorage.setItem("isPageReloaded", true);
+      window.location.reload();
+    } else {
+      console.log("The page has already been reloaded once.");
+    }
+  }, []);
+  useEffect(() => {
     if (
       !Array.isArray(JSON.parse(sessionStorage.getItem("cart"))) ||
       sessionStorage.getItem("cart").length === 0

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "../../pages/home-page/HomeGuest_style.css";
 function HeaderForGuest() {
-  const dataArray = JSON.parse(localStorage.getItem("dataArray")) || [];
+  const dataArray = JSON.parse(sessionStorage.getItem("dataArray")) || [];
   useEffect(() => {
     const handleScroll = () => {
       let header = document.querySelector(".header");
@@ -17,8 +17,8 @@ function HeaderForGuest() {
     };
   }, []);
   useEffect(() => {
-    console.log(dataArray, " neee");
-  }, [dataArray]);
+    console.log(dataArray, "neee");
+  }, []);
   return (
     <header className="header">
       <div className="navbar-header">

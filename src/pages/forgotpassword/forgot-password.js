@@ -23,7 +23,7 @@ function ForgotPassword() {
       if (response.status === 200) {
         setMsg("OTP has sent to your email");
         setIsSent(true);
-        localStorage.setItem("resetPasswordEmail", email);
+        sessionStorage.setItem("resetPasswordEmail", email);
         navigate("/forgot-password/verify-otp");
       }
     } catch (error) {

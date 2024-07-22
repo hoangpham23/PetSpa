@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function HeaderForCus() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  const dataArray = JSON.parse(localStorage.getItem("dataArray")) || [];
+  const dataArray = JSON.parse(sessionStorage.getItem("dataArray")) || [];
   useEffect(() => {
     const handleScroll = () => {
       let header = document.querySelector(".header");
