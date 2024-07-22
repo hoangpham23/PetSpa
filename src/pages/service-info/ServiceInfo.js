@@ -17,7 +17,7 @@ import HeaderColor from "../../components/header/HeaderColor";
 // từ trang này nhấn vô phải xem xét số lượng thú của khác hàng, >=1, chuyển sang trang choose Pet, <=1 qua trang insert info cho pet
 function ServiceInfo() {
   let { serviceName } = useParams();
-  const [numberOfPets, setNumberOfPets] = useState("");
+  const [numberOfPets, setNumberOfPets] = useState(0);
   const navigate = useNavigate();
 
   const [serviceData, setServiceData] = useState({
@@ -31,7 +31,7 @@ function ServiceInfo() {
   });
   async function getData() {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       console.log(serviceName);
       const response = await axios.get(
         `http://localhost:8090/home-page/${serviceName}`
@@ -45,14 +45,13 @@ function ServiceInfo() {
       console.log(error);
     }
   }
-
+  let accountData = sessionStorage.getItem("account");
   useEffect(() => {
     getData();
   }, []);
-  const accountData = localStorage.getItem("account");
 
   useEffect(() => {
-    // Lấy dữ liệu từ localStorage
+    // Lấy dữ liệu từ sessionStorage
 
     if (accountData) {
       const account = JSON.parse(accountData);
@@ -60,25 +59,48 @@ function ServiceInfo() {
       console.log("Number of pets:", numberOfPets);
       setNumberOfPets(numberOfPets);
     } else {
-      console.log("Account data not found in localStorage");
+      console.log("Account data not found in sessionStorage");
     }
   }, []);
   // làm handle submit cho nút make appointment
+  // function handleSubmit() {
+  //   console.log(numberOfPets, accountData);
+  //   console.log(typeof numberOfPets);
+  //   if (numberOfPets > 0 && accountData !== null) {
+  //     console.log(true);
+  //   }
+  //   if (numberOfPets > 0 && accountData !== null) {
+  //     navigate("/choose-pet");
+  //   } else if (numberOfPets === 0 && accountData !== null) {
+  //     navigate("/info-pet");
+  //   } else {
+  //     navigate("/sign-in");
+  //   }
+  // }
   function handleSubmit() {
-    if (numberOfPets > 0 && accountData !== null) {
-      navigate("/choose-pet");
-    } else if (numberOfPets === 0 && accountData !== null) {
-      navigate("/info-pet");
+    console.log("numberOfPets:", numberOfPets, "accountData:", accountData);
+
+    const numPets = Number(numberOfPets);
+
+    if (accountData !== null) {
+      if (numPets > 0) {
+        console.log("Navigating to /choose-pet");
+        navigate("/choose-pet");
+      } else {
+        console.log("Navigating to /info-pet");
+        navigate("/info-pet");
+      }
     } else {
+      console.log("Navigating to /sign-in");
       navigate("/sign-in");
     }
   }
+
   return (
     <>
       {" "}
       <Helmet>
         <title>Service information</title>
-
         <link
           href="https://unpkg.com/css.gg@2.0.0/icons/css/quote.css"
           rel="stylesheet"
@@ -88,7 +110,7 @@ function ServiceInfo() {
           rel="stylesheet"
         ></link>
       </Helmet>
-      {localStorage.getItem("role") === "CUS" ? (
+      {sessionStorage.getItem("role") === "CUS" ? (
         <HeaderColor />
       ) : (
         <HeaderForGuest />

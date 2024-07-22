@@ -32,13 +32,14 @@ function ChooseService() {
   const [activeStep, setActiveStep] = useState(1);
   // chỉ nhận lịch trong 3 ngày, tính từ thời điểm hiện tại
   const startDay = format(today, "yyyy-MM-dd");
-  localStorage.setItem(
+  console.log(format(addDays(startDay, 1), "yyyy-MM-dd"), "start");
+  sessionStorage.setItem(
     "selectedDate",
     format(addDays(startDay, 1), "yyyy-MM-dd")
   );
-  localStorage.setItem("appointmentTimes", []);
-  localStorage.setItem("selectedTimes", []);
-  // lưu các id dịch vụ đã chọn  selectedServices lên localStorage
+  sessionStorage.setItem("appointmentTimes", []);
+  sessionStorage.setItem("selectedTimes", []);
+  // lưu các id dịch vụ đã chọn  selectedServices lên sessionStorage
   // useEffect(() => {
   //   services.map((service) => {
   //     setDisplayService([
@@ -52,14 +53,14 @@ function ChooseService() {
     selectedServices.map((service) => {
       idService.push(service.serviceID);
     });
-    localStorage.setItem("serviceIds", JSON.stringify(idService));
+    sessionStorage.setItem("serviceIds", JSON.stringify(idService));
   }, [selectedServices]);
   useEffect(() => {
     getData();
   }, []);
 
   async function getData() {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     const response = await axios.get("http://localhost:8090/choose-service", {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -91,16 +92,17 @@ function ChooseService() {
         selectedServices.filter((service) => service.name !== name)
       );
     }
-  }; // lưu vô localStorage
+  }; // lưu vô sessionStorage
   function handleSubmit() {
     if (!Array.isArray(selectedServices) || selectedServices.length === 0) {
       alert("Please select services before next step");
       return;
     }
-    if (selectedServices)
-      localStorage.setItem("cart", JSON.stringify(selectedServices));
+    if (selectedServices) {
+      sessionStorage.setItem("cart", JSON.stringify(selectedServices));
+    }
     console.log(selectedServices);
-    console.log("cart ne", localStorage.getItem("cart"));
+    console.log("cart ne", sessionStorage.getItem("cart"));
     navigate("/choose-time");
   }
   useEffect(() => {
@@ -162,7 +164,7 @@ function ChooseService() {
                     style={{
                       transform: "scale(3)",
                       marginTop: "3rem",
-                      index:"11",
+                      index: "11",
                     }}
                   >
                     {label}

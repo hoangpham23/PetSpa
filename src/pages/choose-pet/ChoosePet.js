@@ -12,7 +12,6 @@ import stepperStyle from "./Stepper_style.module.css";
 import style from "./ChoosePet_style.module.css";
 import { Helmet } from "react-helmet";
 
-
 function ChoosePet() {
   const [customerID, setCustomerID] = useState("");
   const [isCustomerIDSent, setIsCustomerIDSent] = useState(false);
@@ -24,7 +23,7 @@ function ChoosePet() {
 
   UserAuth(["CUS"]);
   useEffect(() => {
-    const customer = JSON.parse(localStorage.getItem("account"));
+    const customer = JSON.parse(sessionStorage.getItem("account"));
     if (customer) {
       setCustomerID(customer.customerID);
       //setIsCustomerIDSent(true);
@@ -38,12 +37,12 @@ function ChoosePet() {
     }
   }, [customerID]);
   async function handleData() {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     console.log(customerID);
     const response = await axios.post(
       "http://localhost:8090/choose-pet",
       {
-        customerID: customerID,
+        customerID: sessionStorage.getItem("accountID"),
       },
       {
         headers: {
@@ -52,7 +51,6 @@ function ChoosePet() {
       }
     );
     console.log(response.status);
-    console.log(customerID);
     if (response.status === 200) {
       setIsCustomerIDSent(true);
       console.log("data", response.data);
@@ -61,7 +59,7 @@ function ChoosePet() {
     }
   }
   function handleSubmit(petID) {
-    localStorage.setItem("petID", petID);
+    sessionStorage.setItem("petID", petID);
     navigate("/appointment/service");
   }
   return (
@@ -88,7 +86,7 @@ function ChoosePet() {
                     style={{
                       transform: "scale(3)",
                       marginTop: "3rem",
-                      index:"11",
+                      index: "11",
                     }}
                   >
                     {label}

@@ -5,7 +5,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 function NewPass() {
   const [newPass, setNewPass] = useState({
-    email: localStorage.getItem("resetPasswordEmail"),
+    email: sessionStorage.getItem("resetPasswordEmail"),
     password: "",
     otp: "",
   });
@@ -30,7 +30,7 @@ function NewPass() {
       return; // Prevent sending the request if passwords don't match
     }
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.put(
         "http://localhost:8090/forgotpassword/verify-otp",
         {
@@ -54,11 +54,11 @@ function NewPass() {
   }
   async function handleSendOtp() {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:8090/forgotpassword",
         {
-          email: localStorage.getItem("resetPasswordEmail"),
+          email: sessionStorage.getItem("resetPasswordEmail"),
         },
         {
           headers: {

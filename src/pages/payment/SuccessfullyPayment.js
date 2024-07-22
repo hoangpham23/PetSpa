@@ -10,7 +10,7 @@ function SuccessfullyPayment() {
   const navigate = useNavigate();
   useEffect(() => {
     //const isPaid = localStorage.getItem("isPaid") || false;
-    const isPaid = localStorage.getItem("isPaid") === "true" || false;
+    const isPaid = sessionStorage.getItem("isPaid") === "true" || false;
     console.log(isPaid);
     if (isPaid === false) {
       navigate("/payment");

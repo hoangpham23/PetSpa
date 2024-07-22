@@ -20,6 +20,7 @@ import StepLabel from "@mui/material/StepLabel";
 import StepConnector from "@mui/material/StepConnector";
 import stepperStyle from "./Stepper_style.module.css";
 import { Helmet } from "react-helmet";
+import { WifiFind } from "@mui/icons-material";
 function ChooseTime2() {
   UserAuth(["CUS"]);
   const navigate = useNavigate();
@@ -27,11 +28,6 @@ function ChooseTime2() {
   const today = new Date();
   // chỉ nhận lịch trong 3 ngày, tính từ thời điểm hiện tại
   let startDay = format(today, "yyyy-MM-dd");
-  // const currentHour = today.getHours();
-  // if (currentHour > 17) {
-  //   const tomorrow = addDays(today, 1);
-  //   startDay = format(tomorrow, "yyyy-MM-dd");
-  // }
   const endDay = format(addDays(startDay, 3), "yyyy-MM-dd");
   console.log(endDay);
   const [appointments, setAppointments] = useState([]);
@@ -41,16 +37,17 @@ function ChooseTime2() {
   const [activeStep, setActiveStep] = useState(2);
 
   useEffect(() => {
-    const accountData = localStorage.getItem("account");
+    const accountData = sessionStorage.getItem("account");
     if (accountData) {
       const account = JSON.parse(accountData);
       setCustomerID(account.customerID);
     }
+    console.log();
   }, []);
   useEffect(() => {
     if (
-      !Array.isArray(localStorage.getItem("cart")) ||
-      localStorage.getItem("cart").length === 0
+      !Array.isArray(JSON.parse(sessionStorage.getItem("cart"))) ||
+      sessionStorage.getItem("cart").length === 0
     ) {
       navigate("/choose-pet");
     }
@@ -89,9 +86,9 @@ function ChooseTime2() {
   async function handleSubmit() {
     try {
       const selectedTimes = JSON.parse(
-        localStorage.getItem("selectedTimes") || "[]"
+        sessionStorage.getItem("selectedTimes") || "[]"
       );
-      const cartsystem = JSON.parse(localStorage.getItem("cart"));
+      const cartsystem = JSON.parse(sessionStorage.getItem("cart"));
       const numOfServices = cartsystem.length;
       if (selectedTimes.length === numOfServices) {
         navigate("/payment");
@@ -105,14 +102,15 @@ function ChooseTime2() {
   }, []);
   useEffect(() => {
     console.log(appointments);
-    localStorage.setItem("appointments", JSON.stringify(appointments));
+    sessionStorage.setItem("appointments", JSON.stringify(appointments));
   }, [appointments]);
   useEffect(() => {
     console.log(isFullSlot);
     setIsFullSlot(isFullSlot);
   }, [isFullSlot]);
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
+    console.log(token);
     async function getData() {
       const response = await axios.get(
         "http://localhost:8090/appointment/time",
@@ -140,7 +138,10 @@ function ChooseTime2() {
         return { ...appointment, status: isFull };
       });
       setAppointments(updatedAppointments);
-      localStorage.setItem("appointments", JSON.stringify(updatedAppointments));
+      sessionStorage.setItem(
+        "appointments",
+        JSON.stringify(updatedAppointments)
+      );
     }
   }, [isFullSlot]);
   // so sánh và set trạng thái
@@ -155,7 +156,7 @@ function ChooseTime2() {
           <Stepper
             activeStep={activeStep}
             alternativeLabel
-            sx={{ padding: "2rem", borderRadius: "10px", mt:"2rem"}}
+            sx={{ padding: "2rem", borderRadius: "10px", mt: "2rem" }}
           >
             {steps.map((label, index) => (
               <Step key={label}>
@@ -167,7 +168,7 @@ function ChooseTime2() {
                   style={{
                     transform: "scale(3)",
                     marginTop: "3rem",
-                    index:"11",
+                    index: "11",
                   }}
                 >
                   {label}

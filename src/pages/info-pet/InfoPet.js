@@ -15,7 +15,7 @@ function InfoPet() {
   const [newNumofPets, setNewNumberOfPets] = useState("");
   // make sure that having customerID
   useEffect(() => {
-    const customer = JSON.parse(localStorage.getItem("account"));
+    const customer = JSON.parse(sessionStorage.getItem("accountSession"));
     if (customer) {
       setCustomerID(customer.customerID);
       setPetInfo({
@@ -67,7 +67,7 @@ function InfoPet() {
       return;
     }
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:8090/insert-pet-info",
         {
@@ -89,9 +89,9 @@ function InfoPet() {
         console.log("Sucessfully");
         setMsg("Sucessfully add pet");
         // set lại số lượng pet trong local
-        const account = JSON.parse(localStorage.getItem("account"));
+        const account = JSON.parse(sessionStorage.getItem("account"));
         account.numberOfPets = parseInt(account.numberOfPets) + 1;
-        localStorage.setItem("account", JSON.stringify(account));
+        sessionStorage.setItem("account", JSON.stringify(account));
         setTimeout(() => {
           navigate("/choose-pet");
         }, 2000);

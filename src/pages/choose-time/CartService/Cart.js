@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import style from "./Cart_style.module.css";
 
 function Cart() {
-  const cartsystem = localStorage.getItem("cart") || "[]";
+  const cartsystem = sessionStorage.getItem("cart") || "[]";
   const [cartItems, setCartItems] = useState(JSON.parse(cartsystem) || []);
 
   useEffect(() => {
@@ -10,7 +10,7 @@ function Cart() {
       (total, item) => total + item.price,
       0
     );
-    localStorage.setItem("depositAmount", totalAmount);
+    sessionStorage.setItem("depositAmount", totalAmount);
   }, [cartItems]);
 
   const depositAmount = cartItems.reduce(
@@ -34,10 +34,8 @@ function Cart() {
         </ul>
       </div>
       <div className={style.total_bill}>
-        <p>Total Bill:{" "} </p>
-          <span className={style.total_amount}>
-            ${depositAmount.toFixed(2)}
-          </span>
+        <p>Total Bill: </p>
+        <span className={style.total_amount}>${depositAmount.toFixed(2)}</span>
       </div>
     </div>
   );

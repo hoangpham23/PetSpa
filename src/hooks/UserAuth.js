@@ -5,7 +5,7 @@ const UserAuth = (allowedRoles) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const role = localStorage.getItem("role");
+    const role = sessionStorage.getItem("role");
     if (!allowedRoles.includes(role)) {
       navigate("/sign-in");
     }

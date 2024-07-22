@@ -10,7 +10,7 @@ import { Pagination, Navigation } from "swiper/modules";
 
 function Service() {
   const navigate = useNavigate();
-  const dataArray = JSON.parse(localStorage.getItem("dataArray")) || [];
+  const dataArray = JSON.parse(sessionStorage.getItem("dataArray")) || [];
 
   function handleNavigate(item) {
     navigate(`/home-page/${item.serviceName}`);

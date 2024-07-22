@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import signInPageImg from "../../assets/img/SignInPage2.jpg";
 import emailIconImg from "../../assets/img/email_icon.png";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, json } from "react-router-dom";
 import axios from "axios";
 import { Helmet } from "react-helmet";
 import styles from "./SignIn_style.module.css";
@@ -12,10 +12,11 @@ import Cookies from "js-cookie";
 
 function SignIn() {
   Cookies.remove("customerData");
-  localStorage.setItem("role", "");
-  localStorage.setItem("account", "");
-  localStorage.setItem("resetPasswordEmail", "");
-  localStorage.setItem("customerID", "");
+  localStorage.clear();
+  sessionStorage.setItem("role", "");
+  sessionStorage.setItem("account", "");
+  sessionStorage.setItem("resetPasswordEmail", "");
+  sessionStorage.setItem("customerID", "");
   const [account, setAccount] = useState({
     customerID: "",
     customerName: "",
@@ -61,14 +62,23 @@ function SignIn() {
         };
         console.log(updatedAccount);
         setAccount(updatedAccount);
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("account", JSON.stringify(updatedAccount));
-        localStorage.setItem("role", response.data.role);
-        localStorage.setItem("customerID", response.data.customerID);
-        if(response.data.employeeID){
-          localStorage.setItem("employeeID",response.data.employeeID);
+        sessionStorage.setItem("token", response.data.token);
+        sessionStorage.setItem("account", JSON.stringify(updatedAccount));
+        sessionStorage.setItem("role", response.data.role);
+        sessionStorage.setItem("customerID", response.data.customerID);
+        if (response.data.employeeID) {
+          sessionStorage.setItem("employeeID", response.data.employeeID);
         }
-       
+        sessionStorage.setItem(
+          "accountSession",
+          JSON.stringify(updatedAccount)
+        );
+        sessionStorage.setItem(
+          "accountID",
+          JSON.stringify(response.data.customerID)
+        );
+        sessionStorage.setItem("token", response.data.token);
+
         if (response.data.role === "CUS") {
           navigate("/home-page");
         } else if (response.data.role === "AD") {

@@ -36,7 +36,9 @@ export default function CustomerInfo() {
   });
   function getData() {
     try {
-      const savedCus = JSON.parse(localStorage.getItem("account")) || {};
+      const savedCus =
+        JSON.parse(sessionStorage.getItem("accountSession")) || {};
+      console.log(sessionStorage.getItem("accountSession"));
       if (savedCus) {
         setCusInfo({
           customerID: savedCus.customerID || "",
@@ -49,7 +51,7 @@ export default function CustomerInfo() {
         });
       }
     } catch (error) {
-      console.error("Error parsing customer data from localStorage:", error);
+      console.error("Error parsing customer data from sessionStorage:", error);
     }
   }
   useEffect(() => {

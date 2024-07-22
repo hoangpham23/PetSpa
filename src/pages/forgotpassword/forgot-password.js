@@ -15,7 +15,7 @@ function ForgotPassword() {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:8090/forgotpassword",
         { email: email }

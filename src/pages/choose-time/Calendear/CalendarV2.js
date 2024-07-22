@@ -9,7 +9,8 @@ import "./CalendarV2_style.css";
 import { Box } from "@mui/material";
 
 export default function DateCalendarValue() {
-  const initialSelectedDate = localStorage.getItem("selectedDate");
+  // const initialSelectedDate = sessionStorage.getItem("selectedDate");
+  const initialSelectedDate = sessionStorage.getItem("selectedDate");
   const parsedDate = initialSelectedDate
     ? dayjs(parseISO(initialSelectedDate))
     : dayjs();
@@ -18,15 +19,17 @@ export default function DateCalendarValue() {
   const handleDateChange = (newDate) => {
     if (newDate) {
       setSelectedDate(newDate);
-      const storedSelectedDate = localStorage.getItem("selectedDate");
+      const storedSelectedDate = sessionStorage.getItem("selectedDate");
       if (storedSelectedDate !== newDate.format("YYYY-MM-DD")) {
-        // Nếu có thay đổi, lưu ngày mới vào localStorage và thực hiện reload trang
-        localStorage.setItem("selectedDate", newDate.format("YYYY-MM-DD"));
+        // Nếu có thay đổi, lưu ngày mới vào sessionStorage và thực hiện reload trang
+        sessionStorage.setItem("selectedDate", newDate.format("YYYY-MM-DD"));
         window.location.reload();
       }
     }
   };
-
+  React.useEffect(() => {
+    handleDateChange(parsedDate);
+  }, []);
   return (
     <Box
       sx={{

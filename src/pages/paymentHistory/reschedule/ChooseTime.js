@@ -77,7 +77,7 @@ export default function ChooseTime({
     generateAppointment();
   }, []);
   React.useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     async function getData() {
       const response = await axios.get(
         "http://localhost:8090/appointment/time",
@@ -105,7 +105,10 @@ export default function ChooseTime({
         return { ...appointment, status: isFull };
       });
       setAppointments(updatedAppointments);
-      localStorage.setItem("appointments", JSON.stringify(updatedAppointments));
+      sessionStorage.setItem(
+        "appointments",
+        JSON.stringify(updatedAppointments)
+      );
     }
   }, [isFullSlot]);
   // React.useEffect(() => {
@@ -124,7 +127,7 @@ export default function ChooseTime({
 
       const appointmentTime = selectedTimes.map((time) => time.time);
       console.log(appointmentTime, "apapappap");
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:8090/appointment/reschedule",
         { appointmentID: appointmentID, appointmentTime: appointmentTime },

@@ -30,20 +30,20 @@ function Payment() {
 
   useEffect(() => {
     if (
-      !Array.isArray(localStorage.getItem("cart")) ||
-      localStorage.getItem("cart").length === 0
+      !Array.isArray(JSON.parse(sessionStorage.getItem("cart"))) ||
+      sessionStorage.getItem("cart").length === 0
     ) {
       navigate("/choose-pet");
     }
   }, []);
   const location = useLocation();
-  localStorage.setItem("isPaid", false);
+  sessionStorage.setItem("isPaid", false);
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const status = searchParams.get("status");
 
     if (status === "successful") {
-      localStorage.setItem("isPaid", true);
+      sessionStorage.setItem("isPaid", true);
       navigate("/successfully-payment");
       // Xử lý logic khi thanh toán thành công
     } else if (status === "failed") {
@@ -61,17 +61,17 @@ function Payment() {
 
   async function handleSubmit() {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:8090/payment",
         {
-          customerID: localStorage.getItem("customerID"),
-          serviceIds: JSON.parse(localStorage.getItem("serviceIds")),
+          customerID: sessionStorage.getItem("accountID"),
+          serviceIds: JSON.parse(sessionStorage.getItem("serviceIds")),
           appointmentTimes: JSON.parse(
-            localStorage.getItem("appointmentTimes")
+            sessionStorage.getItem("appointmentTimes")
           ),
-          petID: localStorage.getItem("petID"),
-          depositAmount: localStorage.getItem("depositAmount"),
+          petID: sessionStorage.getItem("petID"),
+          depositAmount: sessionStorage.getItem("depositAmount"),
         },
         {
           headers: {
@@ -111,7 +111,7 @@ function Payment() {
                     style={{
                       transform: "scale(3)",
                       marginTop: "3rem",
-                      index:"11",
+                      index: "11",
                     }}
                   >
                     {label}

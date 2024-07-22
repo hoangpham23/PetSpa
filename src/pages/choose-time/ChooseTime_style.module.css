@@ -8,53 +8,52 @@
   --icon-color: #c2bcbc;
 }
 
-.displayTime{
+.displayTime {
   display: block;
   margin-left: 7rem;
-
 }
 
-.timeDisplay{
-    background-color: var(--bg-color);
-    border-radius: 10px;
-    padding: 3rem;
-    width: 100%;
-    box-shadow: 0px 0px 5px 1px var(--shadow-color);
-
+.timeDisplay {
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  padding: 3rem;
+  width: 100%;
+  box-shadow: 0px 0px 5px 1px var(--shadow-color);
 }
 
-.timeContent p{
-    font-size: 2rem;
-    gap: 3.5rem;
-    flex: 8;
+.timeContent p {
+  font-size: 2rem;
+  gap: 3.5rem;
+  flex: 8;
 }
 
-.timeContent{
-    display: flex;
-    position: block;
-
+.timeContent {
+  display: flex;
+  position: block;
 }
 
-.timeColor1, .timeColor2, .timeColor3{
-  flex:2;
-    margin-top: .3rem;
-    margin-left: 10%;
-    height: 2.5rem;
-    border-radius: 7px;
-    position: relative;
-    justify-content: right;
+.timeColor1,
+.timeColor2,
+.timeColor3 {
+  flex: 2;
+  margin-top: 0.3rem;
+  margin-left: 10%;
+  height: 2.5rem;
+  border-radius: 7px;
+  position: relative;
+  justify-content: right;
 }
 
-.timeColor1{
-    background-color: rgba(184, 244, 224, 1);
+.timeColor1 {
+  background-color: rgba(184, 244, 224, 1);
 }
 
-.timeColor2{
-    background-color: rgba(224, 231, 254, 1);
+.timeColor2 {
+  background-color: rgba(224, 231, 254, 1);
 }
 
-.timeColor3{
-    background-color: rgba(237, 143, 181, 1);
+.timeColor3 {
+  background-color: rgba(237, 143, 181, 1);
 }
 
 .flexRow {
@@ -64,6 +63,7 @@
 
 .backGround {
   padding: 8rem;
+  overflow: hidden;
 }
 
 .boxInfo {
@@ -100,7 +100,6 @@
   width: 350px;
   height: 300px;
   box-shadow: 0px 0px 5px 1px var(--shadow-color);
-
 }
 /* .scheduleContainer h3 {
   font-size: 1.5rem;

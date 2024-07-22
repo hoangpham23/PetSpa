@@ -47,7 +47,9 @@ function HomePage() {
         withCredentials: true,
       });
 
-      const accountData = localStorage.getItem("account");
+      // const accountData = sessionStorage.getItem("account");
+      const accountData = sessionStorage.getItem("accountSession");
+      console.log(accountData, "data");
       if (accountData) {
         account = JSON.parse(accountData);
       } else {
@@ -62,21 +64,20 @@ function HomePage() {
           const account = JSON.parse(decodedData);
           account.customerName = decodeString(accountData.customerName);
           account.numberOfPets = parseInt(accountData.numberOfPets);
-          localStorage.setItem("account", JSON.stringify(account));
-          localStorage.setItem("token", account.token);
-          localStorage.setItem("role", account.role);
+          sessionStorage.setItem("account", JSON.stringify(account));
+          sessionStorage.setItem("token", account.token);
+          sessionStorage.setItem("role", account.role);
         }
       }
       console.log(account.role);
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
 
       const responseData = response.data; // Lưu dữ liệu từ API vào biến tạm
       setItems(responseData); // Cập nhật state với dữ liệu từ API
-      localStorage.setItem("dataArray", JSON.stringify(responseData)); // Lưu dữ liệu vào localStorage sau khi đã cập nhật items
-
-      localStorage.setItem("petID", "");
-      localStorage.setItem("cart", "");
-      localStorage.setItem("serviceIds", "");
+      sessionStorage.setItem("dataArray", JSON.stringify(responseData)); // Lưu dữ liệu vào sessionStorage sau khi đã cập nhật items
+      sessionStorage.setItem("petID", "");
+      sessionStorage.setItem("cart", "");
+      sessionStorage.setItem("serviceIds", "");
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -88,9 +89,9 @@ function HomePage() {
   }, []); //
   async function getFeedback() {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:8090/feedback/check?customerID=${localStorage.getItem(
+        `http://localhost:8090/feedback/check?customerID=${sessionStorage.getItem(
           "customerID"
         )}`,
         {
@@ -128,11 +129,11 @@ function HomePage() {
           rel="stylesheet"
         />
       </Helmet>
-      {localStorage.getItem("role") === "CUS" ? (
+      {sessionStorage.getItem("role") === "CUS" ? (
         <HeaderForCus />
       ) : (
         <>
-          {localStorage.setItem("customerID", "")}
+          {sessionStorage.setItem("customerID", "")}
           <HeaderForGuest />
         </>
       )}
