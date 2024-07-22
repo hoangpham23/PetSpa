@@ -105,18 +105,11 @@ public class EmailService {
 
             String html = templateEngine.process("index2", context);
 
-//            helper.setTo(customerEmail);
-//            helper.setText(html, true);
-//            helper.setSubject("Thank you for using our services");
-//            javaMailSender.send(message);
-
-            long emailStartTime = System.currentTimeMillis();
             helper.setTo(customerEmail);
             helper.setText(html, true);
             helper.setSubject("Thank you for using our services");
             javaMailSender.send(message);
-            long emailEndTime = System.currentTimeMillis();
-            System.out.println("Email sending time: " + (emailEndTime - emailStartTime) + " ms");
+
             response.put("message", "mail send to: " + customerEmail);
             response.put("status", "Successful");
 

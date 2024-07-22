@@ -52,9 +52,7 @@ public class AccountService {
         return accountRepository.existsAccountByEmail(email);
     }
 
-    public boolean checkAccount(String email, String password){
-        return accountRepository.existsAccountByEmailAndPassword(email, password);
-    }
+
 
 
     public Accounts createAccount(String email, String password, String role) {
