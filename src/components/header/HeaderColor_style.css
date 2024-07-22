@@ -1,0 +1,63 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333;
+  --header-color: #c2e1e6;
+  --footer-color: rgba(255, 46, 255, 0.11);
+  --pink-div-color: rgba(251, 226, 228, 1);
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --icon-color: #c2bcbc;
+}
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: transparent;
+  align-items: center;
+  z-index: 100;
+  transition: 0.5s;
+  justify-content: space-between;
+}
+
+.header .header-blue-background-rectangle {
+  position: absolute;
+  width: 100%;
+  height: 5rem;
+  background-color: var(--header-color);
+  z-index: -1;
+  border-radius: 0 0 120px 0;
+  transition: 0.5s ease;
+}
+
+.header .header-pink-background-rectangle {
+  position: absolute;
+  width: 75rem;
+  height: 5rem;
+  background-color: var(--pink-div-color);
+  z-index: -1;
+  border-radius: 0 0 120px 0;
+  transition: 0.5s ease;
+}
+
+.header .navbar-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem 2.5rem 0rem 1.4rem;
+}
+
+.header .navbar-header .navbar {
+  display: flex;
+  align-items: center;
+}
+
+.header .navbar-header .navbar a {
+  font-size: 1.8rem;
+  color: var(--text-color);
+  font-weight: 500;
+  padding-right: 2.5rem;
+}
+
+.header .navbar-header p {
+  margin-top: 0.6rem;
+  font-size: 1.8rem;
+}

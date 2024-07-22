@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 # Pet Spa Management 🐕🐕🐶🐶
 
@@ -94,4 +95,5 @@ Prerequisites
 - [@TranQuocMinh](https://github.com/Tran-Quoc-Minh) - Backend Development
 - [@bibiane-phannh](https://github.com/bibiane-phannh) - Frontend Development
 - [@zolliene](https://github.com/zolliene) - Frontend Development
+
 

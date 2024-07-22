@@ -1,0 +1,178 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333;
+  --header-color: #c2e1e6;
+  --footer-color: rgba(255, 46, 255, 0.11);
+  --pink-div-color: rgba(251, 226, 228, 1);
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --icon-color: #c2bcbc;
+}
+
+.displayTime {
+  display: block;
+  margin-left: 2rem;
+  height: 100px;
+  width: 300px;
+}
+
+.timeDisplay {
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  padding: 1.5rem;
+  width: 100%;
+  box-shadow: 0px 0px 5px 1px var(--shadow-color);
+}
+
+.timeContent p {
+  font-size: 1.6rem;
+  gap: 3.5rem;
+  flex: 8;
+}
+
+.timeContent {
+  display: flex;
+  position: block;
+}
+
+.timeColor1,
+.timeColor2,
+.timeColor3 {
+  flex: 2;
+  margin-top: 0.3rem;
+  margin-left: 10%;
+  height: 2.5rem;
+  border-radius: 7px;
+  position: relative;
+  justify-content: right;
+}
+
+.timeColor1 {
+  background-color: rgba(184, 244, 224, 1);
+}
+
+.timeColor2 {
+  background-color: rgba(224, 231, 254, 1);
+}
+
+.timeColor3 {
+  background-color: rgba(237, 143, 181, 1);
+}
+
+.flexRow {
+  display: flex;
+  /* flex-wrap: nowrap; */
+}
+
+.backGround {
+  padding: 8rem;
+}
+
+.boxInfo {
+  padding-top: 6rem;
+  display: flex;
+  /* flex-wrap: nowrap; */
+  gap: 1.2rem;
+}
+
+.timeInfo {
+  margin-top: auto;
+  width: 400px;
+  height: 300px;
+  background: #ededed;
+  border-radius: 10px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+.timeInfo h2 {
+  margin-bottom: 10rem;
+}
+
+.scheduleContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  /* margin: auto; */
+  width: 300px;
+  height: 250px;
+  box-shadow: 0px 0px 5px 1px var(--shadow-color);
+}
+/* .scheduleContainer h3 {
+    font-size: 1.5rem;
+  } */
+
+.introduction {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: #333;
+}
+/* .scheduleContainer h3 {
+    margin-top: 1.8rem;
+  } */
+.schedule {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.timeSlot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  color: #000;
+  margin: 0.5rem;
+  padding: 1.3rem;
+}
+
+.blue {
+  background-color: #dbe9ff;
+}
+
+.red {
+  background-color: #ff9fb2;
+}
+
+.green {
+  background-color: #c8f7c5;
+}
+.isSelecting {
+  background-color: #c8f7c5;
+  color: black;
+}
+
+.cartContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.2em;
+}
+
+.cart {
+  margin-top: 10px;
+}
+
+.timeDisplay {
+  margin-bottom: 2rem;
+}
+
+.timeContent {
+  display: flex;
+}
+
+/* .colorDisplay1,
+.colorDiaplay2,
+.colorDisplay3 {
+  color: red;
+  width: 3rem;
+  height: 2rem;
+  border-radius: 5px;
+} */
