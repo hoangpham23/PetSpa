@@ -17,7 +17,7 @@ function CustomerFeedback() {
   useEffect(() => {
     const fetchFeedback = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         const response = await axios.get(
           "http://localhost:8090/customer-feedback-for-employee",
           {
