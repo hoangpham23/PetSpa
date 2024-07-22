@@ -41,9 +41,9 @@ export default function FeedBack({ open, handleClose }) {
   }, [dropDownData]);
   async function getFeedbackData() {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:8090/feedback/choose-feedback?customerID=${localStorage.getItem(
+        `http://localhost:8090/feedback/choose-feedback?customerID=${sessionStorage.getItem(
           "customerID"
         )}`,
         {
@@ -101,7 +101,7 @@ export default function FeedBack({ open, handleClose }) {
         alert("Feedback is empty");
         return;
       }
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:8090/feedback/submit",
         {
@@ -131,10 +131,10 @@ export default function FeedBack({ open, handleClose }) {
   };
   async function saveCloseData() {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:8090/feedback/close",
-        { customerID: parseInt(localStorage.getItem("customerID")) },
+        { customerID: parseInt(sessionStorage.getItem("customerID")) },
         {
           headers: {
             Authorization: `Bearer ${token}`,
