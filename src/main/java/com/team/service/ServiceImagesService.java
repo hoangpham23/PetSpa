@@ -264,7 +264,7 @@ public class ServiceImagesService {
         try {
             Files.deleteIfExists(filePath);
         } catch (IOException e) {
-            // Handle the exception, e.g., log it
+            // Handle the exception
             e.printStackTrace();
         }
     }

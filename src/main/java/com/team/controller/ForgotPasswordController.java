@@ -34,12 +34,12 @@ public class ForgotPasswordController {
     public ResponseEntity<String> verifyMail(@RequestBody Map<String, String> customerEmail) {
         try {
             String email = customerEmail.get("email");
-            Customers customers = customerRepository.findByEmail(email);
-            if (customers == null) {
+            Accounts findAccounts = accountRepository.findByEmail(email);
+            if (findAccounts == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This account does not exist");
             }
 
-            Accounts accounts = accountRepository.findById(customers.getCustomerID()).get();
+            Accounts accounts = accountRepository.findById(findAccounts.getAccountID()).get();
 
             // create otp from otp generator
             int otp = otpGenerator();
@@ -62,12 +62,12 @@ public class ForgotPasswordController {
             String password = customerVerify.get("password");
             int otp = Integer.parseInt(customerVerify.get("otp"));
 
-            Customers customers = customerRepository.findByEmail(email);
-            if (customers == null) {
+            Accounts findAccounts = accountRepository.findByEmail(email);
+            if (findAccounts == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This account does not exist");
             }
 
-            Accounts accounts = accountRepository.findById(customers.getCustomerID()).get();
+            Accounts accounts = accountRepository.findById(findAccounts.getAccountID()).get();
 
             if (!accounts.getOtp().equals(String.valueOf(otp))) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid OTP");
