@@ -1,0 +1,246 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333;
+  --header-color: #c2e1e6;
+  --footer-color: rgba(255, 46, 255, 0.11);
+  --pink-div-color: rgba(251, 226, 228, 1);
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --icon-color: #c2bcbc;
+}
+
+html {
+  font-size: 62.5%;
+  color: var(--text-color);
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.mainContent {
+  background-image: url('../../assets/img/cutebg.jpg');
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat;
+} 
+
+/* ====================SWIPER DES==================== */
+
+
+.swiper-pagination{
+  display: none;
+}
+
+.swiper-wrapper{
+  margin: 2rem 5rem;
+}
+
+/* ================================================== */
+.gg-profile,
+.gg-profile::after,
+.gg-profile::before {
+  display: block;
+  box-sizing: border-box;
+  border: 2px solid;
+  border-radius: 100px;
+}
+
+.gg-profile {
+  overflow: hidden;
+  transform: scale(var(--ggs, 1));
+  width: 22px;
+  height: 22px;
+  position: relative;
+}
+
+.gg-profile::after,
+.gg-profile::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 8px;
+  height: 8px;
+}
+
+.gg-profile::after {
+  border-radius: 200px;
+  top: 11px;
+  left: 0px;
+  width: 18px;
+  height: 18px;
+}
+
+.service_div {
+  margin: 8rem 7% 2rem;
+  display: flex;
+}
+
+.service_div .service_img {
+  position: absolute;
+  width: 30rem;
+  height: 28rem;
+  background-color: #97dde8;
+  z-index: 1;
+  border-radius: 20px;
+  transition: 0.5s ease;
+  flex: 1;
+}
+
+.service_div .service_img img {
+  position: relative;
+  width: 27rem;
+  height: 26rem;
+  border-radius: 20px;
+  margin-top: 1rem;
+  margin-left: 1.5rem;
+}
+
+.service_display {
+  display: flex;
+  margin-right: 10rem;
+  margin-bottom: 3rem;
+}
+
+.service_price {
+  background: var(--pink-div-color);
+  box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
+  border-top-left-radius: 15.03px;
+  border-top-right-radius: 67.63px;
+  border-bottom-right-radius: 67.63px;
+  border-bottom-left-radius: 15.03px;
+  padding: 10px 20px;
+  font-size: 2rem;
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+  width: 20rem;
+  height: 8rem;
+  position: relative;
+  margin-top: 20rem;
+  margin-left: 27rem;
+  padding-top: 2.5rem;
+}
+
+.service_div h1 {
+  font-size: 4rem;
+}
+
+.service_div p {
+  font-size: 2rem;
+  margin-top: 2rem;
+}
+
+.service_content{
+  flex: 1;
+}
+
+.service_content p {
+  font-size: 2rem;
+  margin: 2rem;
+  height: 22dvh;
+  justify-content: center;
+  text-align: center;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1.4rem;
+  background: var(--header-color);
+  border-radius: 60px;
+  box-shadow: 0 0.2rem 0.5rem var(--shadow-color);
+  font-size: 2rem;
+  color: var(--text-color);
+  letter-spacing: 0.1rem;
+  font-weight: 600;
+  border: 0.2rem solid transparent;
+  transition: 0.5s ease;
+  margin-top: 1.5rem;
+}
+
+.btn:hover {
+  background: transparent;
+  color: #0b5864;
+  border-color: #0b5864;
+}
+
+.book {
+  display: flex;
+  justify-content: center;
+  align-self: flex-end;
+}
+
+.feedback_div h1 {
+  font-size: 4rem;
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+}
+
+.feedback_div .feedback_display {
+  display: flex;
+  justify-content: space-between;
+  margin: 3rem 4rem 2rem 4rem;
+  text-align: center;
+  z-index: 999;
+}
+
+.feedback_display .service_container i {
+  color: hotpink;
+  z-index: 1;
+}
+
+.quote {
+  display: flex;
+  justify-content: center;
+  padding: 1.2rem 0;
+}
+
+.feedback_display .service_container .ava_img img {
+  position: relative;
+  width: 6rem;
+  border-radius: 50%;
+  margin-top: 2rem;
+  border: 2px solid var(--bg-color);
+}
+
+.feedback_display .service_container p {
+  /* position: block; */
+  display: flex;
+  text-align: center;
+  padding-top: 1rem;
+  padding-bottom: 3rem;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.feedback_div {
+  position: relative; 
+  margin: 5rem 2rem;
+  box-shadow: 0 0 30px var(--shadow-color); 
+  padding-bottom: 3rem;
+  background-color: var(--bg-color); 
+  z-index: 0; 
+}
+
+.feedback_display .service_container {
+  margin: 0 6rem;
+  position: relative; 
+  background-color: var(--header-color);
+  z-index: 1; 
+  border-radius: 10px;
+  transition: 0.5s ease;
+  flex: 1;
+  min-height: 30rem;
+  margin-bottom: 3rem;
+}
+
+.service_container:hover .feedback_div {
+  display: block;
+}
+
+
