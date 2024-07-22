@@ -48,7 +48,7 @@ function HomePage() {
       });
 
       // const accountData = sessionStorage.getItem("account");
-      const accountData = sessionStorage.getItem("accountSession");
+      const accountData = sessionStorage.getItem("account");
       console.log(accountData, "data");
       if (accountData) {
         account = JSON.parse(accountData);

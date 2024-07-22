@@ -36,9 +36,8 @@ export default function CustomerInfo() {
   });
   function getData() {
     try {
-      const savedCus =
-        JSON.parse(sessionStorage.getItem("accountSession")) || {};
-      console.log(sessionStorage.getItem("accountSession"));
+      const savedCus = JSON.parse(sessionStorage.getItem("account")) || {};
+      console.log(sessionStorage.getItem("account"));
       if (savedCus) {
         setCusInfo({
           customerID: savedCus.customerID || "",

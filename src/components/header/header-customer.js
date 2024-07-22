@@ -19,7 +19,7 @@ function HeaderForCus() {
     };
   }, []);
   useEffect(() => {
-    const accountData = sessionStorage.getItem("accountSession");
+    const accountData = sessionStorage.getItem("account");
     if (accountData) {
       const account = JSON.parse(accountData);
       setName(account.customerName);

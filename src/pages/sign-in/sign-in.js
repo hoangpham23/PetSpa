@@ -42,7 +42,41 @@ function SignIn() {
       setMsg("Email is already exist");
     }
   }, [location]);
+  // Hàm để lấy cookie
+  function getCookie(name) {
+    let cookieName = name + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let cookieArray = decodedCookie.split(";");
 
+    console.log("Decoded Cookie:", decodedCookie); // Debugging line
+    console.log("Cookie Array:", cookieArray); // Debugging line
+
+    for (let i = 0; i < cookieArray.length; i++) {
+      let cookie = cookieArray[i].trim();
+      console.log("Checking Cookie:", cookie); // Debugging line
+      if (cookie.indexOf(cookieName) === 0) {
+        console.log("Found Cookie Value:", cookie.substring(cookieName.length)); // Debugging line
+        return cookie.substring(cookieName.length);
+      }
+    }
+    return "";
+  }
+  useEffect(() => {
+    const accountData = getCookie("customerData");
+    console.log("Account Data from Cookie:", accountData);
+    if (accountData) {
+      try {
+        const account = JSON.parse(accountData);
+        console.log(account);
+        sessionStorage.setItem("account", account);
+      } catch (error) {
+        console.error("Failed to parse cookie data:", error);
+      }
+    } else {
+      // Xử lý khi cookie không có giá trị
+      console.log("Cookie 'userData' not found");
+    }
+  }, [location]);
   async function handleSubmit(event) {
     event.preventDefault();
     try {
