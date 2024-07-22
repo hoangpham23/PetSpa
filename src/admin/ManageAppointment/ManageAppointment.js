@@ -26,7 +26,7 @@ function ManageAppointment() {
   const handleCloseLimitSlotFunction = () => setOpenLimitSlotFuncion(false);
   async function getAppointmentToday() {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const currentDate = new Date().toISOString().split("T")[0];
       const response = await axios.get(
         "http://localhost:8090/manage-appointment",

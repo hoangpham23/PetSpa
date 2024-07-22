@@ -73,7 +73,7 @@ export default function CustomizedTables({ appointments, setAppointments }) {
     }
 
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.put(
         "http://localhost:8090/manage-appointment",
         {
@@ -87,7 +87,7 @@ export default function CustomizedTables({ appointments, setAppointments }) {
           },
         }
       );
-      
+
       if (response.status === 200) {
         setAppointments((prevAppointments) =>
           prevAppointments.map((appointment) =>

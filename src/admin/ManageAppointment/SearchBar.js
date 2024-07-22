@@ -21,7 +21,7 @@ function SearchBar({ setAppointments, appointments, getAppointmentToday }) {
           return;
         }
 
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         const currentDate = new Date().toISOString().split("T")[0];
         console.log(currentDate);
         const response = await axios.get(

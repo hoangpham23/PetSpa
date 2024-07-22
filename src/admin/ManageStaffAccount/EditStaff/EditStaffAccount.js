@@ -97,7 +97,7 @@ export default function EditStaffAccount({ open, employee, onClose, getData }) {
     }
 
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.put(
         "http://localhost:8090/admin/update",
         {

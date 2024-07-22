@@ -72,7 +72,7 @@ function AddService({ open, handleClose, getData }) {
     formData.append("image", image);
 
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:8090/add-service",
         formData,
