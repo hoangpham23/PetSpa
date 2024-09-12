@@ -15,6 +15,7 @@ public class ApplicationInitConfig {
     @Bean
     ApplicationRunner applicationRunner(AccountRepository accountRepository) {
         return args -> {
+
             if (!accountRepository.existsAccountByEmail("pawfection392@gmail.com")) {
                 Accounts accounts = new Accounts();
                 accounts.setEmail("pawfection392@gmail.com");
